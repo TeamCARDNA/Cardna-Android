@@ -1,11 +1,17 @@
 package com.example.cardna
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.cardna.base.baseutil.BaseViewUtil
+import com.example.cardna.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity :
+    BaseViewUtil.BaseAppCompatActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        initView()
+    }
+
+    override fun initView() {
+
     }
 }
