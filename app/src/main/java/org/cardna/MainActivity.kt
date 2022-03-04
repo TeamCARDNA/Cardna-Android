@@ -1,7 +1,8 @@
-package com.example.cardna
+package org.cardna
 
 import android.os.Bundle
-import com.example.cardna.presentation.base.baseutil.BaseViewUtil
+import com.example.cardna.R
+import org.cardna.presentation.base.baseutil.BaseViewUtil
 import com.example.cardna.databinding.ActivityMainBinding
 
 class MainActivity :

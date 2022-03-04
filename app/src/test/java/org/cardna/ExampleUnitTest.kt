@@ -1,4 +1,4 @@
-package com.example.cardna
+package org.cardna
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.cardna.presentation.base.baseutil
+package org.cardna.presentation.base.baseutil
 
 import android.os.Bundle
 import android.view.LayoutInflater
