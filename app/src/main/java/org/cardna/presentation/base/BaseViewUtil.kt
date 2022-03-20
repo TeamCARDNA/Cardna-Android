@@ -1,4 +1,4 @@
-package org.cardna.presentation.base.baseutil
+package org.cardna.presentation.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -34,6 +34,7 @@ sealed class BaseViewUtil {
     abstract class BaseAppCompatActivity<T : ViewDataBinding>(@LayoutRes val layoutRes: Int) :
         AppCompatActivity() {
         protected lateinit var binding: T
+
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             binding = DataBindingUtil.setContentView(this, layoutRes)
@@ -41,6 +42,4 @@ sealed class BaseViewUtil {
 
         abstract fun initView()
     }
-
-    abstract fun initView()
 }
