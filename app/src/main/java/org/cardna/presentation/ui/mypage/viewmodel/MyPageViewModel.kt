@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.cardpack.viewmodel
+package org.cardna.presentation.ui.mypage.viewmodel
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -6,5 +6,5 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class CardPackViewModel @Inject constructor(
+class MyPageViewModel @Inject constructor(
 ) : ViewModel() {}

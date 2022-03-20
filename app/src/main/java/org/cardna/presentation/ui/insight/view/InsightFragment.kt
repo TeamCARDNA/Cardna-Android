@@ -1,12 +1,11 @@
-package org.cardna.presentation.ui.insight
+package org.cardna.presentation.ui.insight.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.example.cardna.R
+import com.example.cardna.databinding.FragmentInsightBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.presentation.base.BaseViewUtil
 
 @AndroidEntryPoint
 class InsightFragment : BaseViewUtil.BaseFragment<FragmentInsightBinding>(R.layout.fragment_insight) {

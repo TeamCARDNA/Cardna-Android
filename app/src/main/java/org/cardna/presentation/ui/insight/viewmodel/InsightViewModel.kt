@@ -1,4 +1,4 @@
-package com.android.dabincardna.presentation.ui.insight.viewmodel
+package org.cardna.presentation.ui.insight.viewmodel
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
