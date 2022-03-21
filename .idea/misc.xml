@@ -10,8 +10,13 @@
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/selector_insight.xml" value="0.1" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/selector_maincard.xml" value="0.1" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/selector_mypage.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_developer_info.xml" value="0.11930091185410334" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_privacy_policy.xml" value="0.11930091185410334" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_secession.xml" value="0.11930091185410334" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_service_operation.xml" value="0.11930091185410334" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_setting.xml" value="0.264" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_version_info.xml" value="0.11930091185410334" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/fragment_card_pack.xml" value="0.2318840579710145" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/fragment_insight.xml" value="0.2318840579710145" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/fragment_main_card.xml" value="0.2318840579710145" />

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_black"
-        tools:context="org.cardna.presentation.ui.mypage.SettingActivity">
+        tools:context="org.cardna.presentation.ui.mypage.view.setting.SettingActivity">
 
         <TextView
             android:id="@+id/tv_setting_title"

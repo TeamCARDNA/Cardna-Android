@@ -14,7 +14,22 @@
         android:theme="@style/Theme.Cardna"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="org.cardna.presentation.ui.mypage.SettingActivity"
+            android:name="org.cardna.presentation.ui.mypage.view.setting.SecessionActivity"
+            android:exported="false" />
+        <activity
+            android:name="org.cardna.presentation.ui.mypage.view.setting.ServiceOperationActivity"
+            android:exported="false" />
+        <activity
+            android:name="org.cardna.presentation.ui.mypage.view.setting.PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name="org.cardna.presentation.ui.mypage.view.setting.DeveloperInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name="org.cardna.presentation.ui.mypage.view.setting.VersionInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name="org.cardna.presentation.ui.mypage.view.setting.SettingActivity"
             android:exported="false" />
         <activity
             android:name="org.cardna.presentation.MainActivity"
