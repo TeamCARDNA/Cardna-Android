@@ -2,4 +2,22 @@
     <string name="app_name">cardna</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--  Setting  -->
+    <string name="setting_title">설정</string>
+    <string name="setting_account_info_title">계정 정보</string>
+    <string name="setting_account_info_social_login">소셜로그인 정보</string>
+    <string name="setting_question_title">문의</string>
+    <string name="setting_question_by_email">메일로 문의하기</string>
+    <string name="setting_app_setting_title">앱 설정</string>
+    <string name="setting_app_alarm">알림 설정</string>
+    <string name="setting_app_info_title">앱 정보</string>
+    <string name="setting_app_info_version">버전 정보</string>
+    <string name="setting_app_info_developer">개발자 정보</string>
+    <string name="setting_app_info_privacy_policy">개인정보 처리방침</string>
+    <string name="setting_app_info_service_operation_policy">서비스 이용약관</string>
+    <string name="setting_app_info_opensource_license">오픈소스 라이선스</string>
+    <string name="setting_etc_title">기타</string>
+    <string name="setting_etc_secession">회원 탈퇴</string>
+    <string name="setting_etc_logout">로그아웃</string>
 </resources>

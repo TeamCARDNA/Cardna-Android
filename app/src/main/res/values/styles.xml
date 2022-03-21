@@ -45,7 +45,7 @@
     <style name="create_card_complete">
         <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/main_black</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
@@ -82,4 +82,24 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="mypage_title_style">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="setting_title_style">
+        <item name="android:textColor">@color/white_3</item>
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/pretendard_light</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="setting_sentence_style">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
 </resources>
