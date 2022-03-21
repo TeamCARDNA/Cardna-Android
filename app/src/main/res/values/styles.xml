@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="fragment_title_text">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textSize">28sp</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="cardpack_recyclerview_tv">
+        <item name="android:textColor">@color/real_black</item>
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="detail_card_text_hint">
+        <item name="android:textColor">@color/white_3</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="cardpack_bottomsheet_title">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="cardpack_bottomsheet_detail">
+        <item name="android:textColor">@color/white_2</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="create_card_complete_title">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="create_card_complete">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="represent_card_edit_title_white">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textSize">22sp</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="card_edit_tablayout_selected_style">
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+
+    <style name="card_edit_tablayout_style">
+        <item name="android:textColor">@color/white_2</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+
+    <style name="mypage_edittext_style">
+        <item name="android:includeFontPadding">false</item>
+        <item name="colorControlActivated">@color/white_2</item>
+        <item name="android:textCursorDrawable">@color/main_green</item>
+        <item name="colorControlNormal">@color/white_4</item>
+        <item name="android:textSelectHandle">@color/main_green</item>
+        <item name="android:textColorHighlight">#8C5ECC9C</item>
+        <item name="android:textColorHint">@color/white_2</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+</resources>
