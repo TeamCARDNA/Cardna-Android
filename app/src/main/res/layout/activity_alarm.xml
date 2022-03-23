@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="mypageViewModel"
-            type="org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel" />
+            name="alarmViewModel"
+            type="org.cardna.presentation.ui.mypage.viewmodel.AlarmViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,6 +56,8 @@
                         android:layout_height="0dp"
                         android:layout_marginHorizontal="16dp"
                         android:background="@drawable/bg_dark_gray_radius_10dp"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -121,11 +123,12 @@
                         android:id="@+id/rcv_alarm_write_cardyou"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/ctl_alarm_bg"
-                        app:layout_constraintStart_toStartOf="@+id/ctl_alarm_bg"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/ctl_alarm_bg"
                         app:layout_constraintVertical_bias="0"
                         tools:itemCount="4"

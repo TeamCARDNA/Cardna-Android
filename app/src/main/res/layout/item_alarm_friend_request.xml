@@ -47,6 +47,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_item_alarm_friend_request_friend_name" />
 
+        <TextView
+            android:id="@+id/tv_item_friend_request_accept_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_regular"
+            tools:text="@string/item_friend_request_accept_text"
+            android:textColor="@color/white_1"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/tv_item_alarm_friend_request_friend_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_alarm_friend_request_friend_name"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctl_item_alarm_friend_request_btn"
             android:layout_width="0dp"
@@ -55,7 +68,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_item_alarm_friend_request_friend_name"
             app:layout_constraintTop_toBottomOf="@id/tv_item_alarm_friend_request_friend_name">
-
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/mb_item_alarm_friend_request_accept"

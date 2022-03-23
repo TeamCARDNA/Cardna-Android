@@ -32,6 +32,7 @@
     <string name="item_friend_request_date">2022/03/12</string>
     <string name="item_friend_request_accept">수락</string>
     <string name="item_friend_request_refuse">거절</string>
+    <string name="item_friend_request_accept_text">님과 친구가 되었어요</string>
 
     <!--  Alarm Item Write CardYou  -->
     <string name="item_write_cardyou_friend_name">혜원</string>
