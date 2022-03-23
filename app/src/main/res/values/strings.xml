@@ -25,7 +25,7 @@
     <string name="alarm_title">알림</string>
 
     <!--  Alarm Item Friend Request  -->
-    <string name="item_friend_request_title">설정</string>
+    <string name="item_friend_request_title">친구 요청</string>
     <string name="item_friend_request_count">3</string>
     <string name="item_friend_request_view_all">모두 보기</string>
     <string name="item_friend_request_friend_name">신혜원</string>

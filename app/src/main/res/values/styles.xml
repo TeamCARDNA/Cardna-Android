@@ -118,7 +118,7 @@
     </style>
 
     <!--  Material Button  -->
-    <style name="MaterialButton.Bold.16" parent="Widget.MaterialComponents.Button">
+    <style name="materialButton_semiBold12_style" parent="Widget.MaterialComponents.Button">
         <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="android:textSize">12sp</item>
         <item name="cornerRadius">5dp</item>

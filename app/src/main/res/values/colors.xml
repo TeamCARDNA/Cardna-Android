@@ -21,10 +21,12 @@
     <color name="white_2">#A0A0A0</color>
     <color name="white_3">#6C6C6C</color>
     <color name="white_4">#474747</color>
+    <color name="white_5">#444444</color>
 
     <!--  black  -->
     <color name="main_black">#121212</color>
     <color name="real_black">#000000</color>
+    <color name="black">#000000</color>
 
     <!--  gray  -->
     <color name="dark_gray">#323232</color>
