@@ -20,4 +20,21 @@
     <string name="setting_etc_title">기타</string>
     <string name="setting_etc_secession">회원 탈퇴</string>
     <string name="setting_etc_logout">로그아웃</string>
+
+    <!--  Alarm  -->
+    <string name="alarm_title">알림</string>
+
+    <!--  Alarm Item Friend Request  -->
+    <string name="item_friend_request_title">설정</string>
+    <string name="item_friend_request_count">3</string>
+    <string name="item_friend_request_view_all">모두 보기</string>
+    <string name="item_friend_request_friend_name">신혜원</string>
+    <string name="item_friend_request_date">2022/03/12</string>
+    <string name="item_friend_request_accept">수락</string>
+    <string name="item_friend_request_refuse">거절</string>
+
+    <!--  Alarm Item Write CardYou  -->
+    <string name="item_write_cardyou_friend_name">혜원</string>
+    <string name="item_write_cardyou_title">님이 소개를 적어줬어요</string>
+    <string name="item_write_cardyou_date">2022/01/12</string>
 </resources>
