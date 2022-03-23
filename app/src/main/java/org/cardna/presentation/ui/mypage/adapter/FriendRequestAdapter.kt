@@ -1,15 +1,14 @@
 package org.cardna.presentation.ui.mypage.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import com.example.cardna.R
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cardna.databinding.ItemAlarmFriendRequestBinding
 import org.cardna.presentation.ui.mypage.view.setting.AlarmActivity
 
 class FriendRequestAdapter(
-    private val friendRequestList: List<FriendRequestData>,
     private val clickListener: (FriendRequestData) -> Unit
 ) : androidx.recyclerview.widget.ListAdapter<FriendRequestData, FriendRequestAdapter.FriendRequestViewHolder>(diffUtil) {
 
@@ -25,6 +24,11 @@ class FriendRequestAdapter(
                 root.setOnClickListener {
                     clickListener(data)
                 }
+                if (defaultStatus) {
+                    viewItemAlarmFriendRequestDiv.visibility = View.INVISIBLE
+                } else {
+                    viewItemAlarmFriendRequestDiv.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -38,11 +42,11 @@ class FriendRequestAdapter(
         if (defaultStatus) {
             AlarmActivity.DEFAULT_COUNT
         } else {
-            friendRequestList.size
+            currentList.size
         }
 
     override fun onBindViewHolder(holder: FriendRequestAdapter.FriendRequestViewHolder, position: Int) {
-        holder.onBind(friendRequestList[position])
+        holder.onBind(getItem(position))
     }
 
     companion object {

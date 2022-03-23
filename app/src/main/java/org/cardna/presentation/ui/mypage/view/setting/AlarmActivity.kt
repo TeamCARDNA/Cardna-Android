@@ -8,12 +8,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.mypage.adapter.FriendRequestAdapter
 import org.cardna.presentation.ui.mypage.adapter.FriendRequestData
-import org.cardna.presentation.util.HorizontalItemDecorator
-import org.cardna.presentation.util.convertDPtoPX
+import org.cardna.presentation.ui.mypage.adapter.WriteCardYouAdapter
 
 @AndroidEntryPoint
 class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R.layout.activity_alarm) {
     private lateinit var friendRequestAdapter: FriendRequestAdapter
+    private lateinit var writeCardYouAdapter: WriteCardYouAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,24 +22,45 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
 
     override fun initView() {
         setFriendRequestAdapter()
-     //   setWriteCardYouAdapter()
+        setWriteCardYouAdapterr()
     }
 
     private fun setFriendRequestAdapter() {
+        //TODO 서버연결 후 삭제
         val dataList = mutableListOf(
             FriendRequestData("김다빈", "2022/24/42"),
             FriendRequestData("박민우", "2022/24/42"),
             FriendRequestData("이종찬", "2022/24/42"),
-
+            FriendRequestData("김다빈", "2022/24/42"),
             )
-        friendRequestAdapter = FriendRequestAdapter(dataList) { item ->
-            //  startActivity(Intent(this, DetailInfoActivity::class.java))  //TODO 친구 대표카드 뷰로 이동
+
+        //TODO 친구 대표카드 뷰로 이동
+        friendRequestAdapter = FriendRequestAdapter { item ->
+            //  startActivity(Intent(this, DetailInfoActivity::class.java))
         }
         with(binding.rcvAlarmFriendRequest) {
             adapter = friendRequestAdapter
             layoutManager = LinearLayoutManager(this@AlarmActivity)
-            addItemDecoration(HorizontalItemDecorator(this@AlarmActivity, R.drawable.divider_white_5_1dp, convertDPtoPX(30)))
             setUnfoldListener(friendRequestAdapter)
+            friendRequestAdapter.submitList(dataList)
+        }
+    }
+
+    private fun setWriteCardYouAdapterr() {
+        val dataList = mutableListOf(
+            FriendRequestData("김다빈", "2022/24/42"),
+            FriendRequestData("박민우", "2022/24/42"),
+            FriendRequestData("이종찬", "2022/24/42"),
+        )
+
+        //TODO 카드상세 페이지로 이동
+        writeCardYouAdapter = WriteCardYouAdapter { item ->
+            //  startActivity(Intent(this, DetailInfoActivity::class.java))
+        }
+        with(binding.rcvAlarmWriteCardyou) {
+            adapter = writeCardYouAdapter
+            layoutManager = LinearLayoutManager(this@AlarmActivity)
+            writeCardYouAdapter.submitList(dataList)
         }
     }
 
@@ -53,7 +74,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
                     tvAlarmFriendViewAll.text = VIEW_ALL
                     adapter.defaultStatus = true
                 }
-                adapter.notifyDataSetChanged()
+                adapter.notifyDataSetChanged() //TODO viewmodel연결
             }
         }
     }
