@@ -47,7 +47,7 @@
     <!--  Dialog Logout  -->
     <string name="dialog_logout_title">로그아웃 하시겠어요?</string>
     <string name="dialog_logout_cancle">취소</string>
-    <string name="dialog_logout_confirm">로그아웃</string>
+    <string name="dialog_logout_confirm">확인</string>
 
     <!--  Secession  -->
     <string name="secession_title">탈퇴하실 건가요?</string>

@@ -286,12 +286,13 @@
             app:layout_constraintTop_toBottomOf="@+id/ctl_secssion_top" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_secession"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_white_3_radius_10dp"
-            android:enabled="false"
+            android:enabled="true"
             android:fontFamily="@font/pretendard_regular"
             android:text="@string/secession_btn"
             android:textColor="@color/white_2"

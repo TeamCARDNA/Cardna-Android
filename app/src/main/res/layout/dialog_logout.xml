@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dark_gray_radius_16dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_logout_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@string/dialog_logout_title"
+            android:textColor="@color/white_1"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tv_logout_dialog_cancel"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/bg_white_4_radius_5dp"
+            android:backgroundTint="@color/white_4"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/dialog_logout_cancle"
+            android:textColor="@color/white_2"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_lougout_dialog_confirm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_logout_dialog_title" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tv_lougout_dialog_confirm"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_white_4_radius_5dp"
+            android:backgroundTint="@color/white_4"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/dialog_logout_confirm"
+            android:textColor="@color/white_2"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_logout_dialog_cancel"
+            app:layout_constraintTop_toBottomOf="@id/tv_logout_dialog_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
