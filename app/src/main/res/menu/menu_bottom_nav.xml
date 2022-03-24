@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_bottom_maincard"
-        android:icon="@drawable/selector_maincard"
+        android:icon="@drawable/ic_selector_maincard"
         android:title="대표카드" />
     <item
         android:id="@+id/menu_bottom_cardpack"
-        android:icon="@drawable/selector_cardpack"
+        android:icon="@drawable/ic_selector_cardpack"
         android:title="카드팩" />
     <item
         android:id="@+id/menu_bottom_insight"
-        android:icon="@drawable/selector_insight"
+        android:icon="@drawable/ic_selector_insight"
         android:title="인사이트" />
     <item
         android:id="@+id/menu_bottom_mypage"
-        android:icon="@drawable/selector_mypage"
+        android:icon="@drawable/ic_selector_mypage"
         android:title="마이페이지" />
 </menu>

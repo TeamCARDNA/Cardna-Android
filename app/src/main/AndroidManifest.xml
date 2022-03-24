@@ -16,11 +16,6 @@
         <activity
             android:name="org.cardna.presentation.ui.mypage.view.setting.AlarmActivity"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="org.cardna.presentation.ui.mypage.view.setting.SecessionActivity"
@@ -43,6 +38,11 @@
         <activity
             android:name="org.cardna.presentation.MainActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
