@@ -8,7 +8,7 @@
     <string name="setting_account_info_title">계정 정보</string>
     <string name="setting_account_info_social_login">소셜로그인 정보</string>
     <string name="setting_question_title">문의</string>
-    <string name="setting_question_by_email">메일로 문의하기</string>
+    <string name="setting_question">문의하기</string>
     <string name="setting_app_setting_title">앱 설정</string>
     <string name="setting_app_alarm">알림 설정</string>
     <string name="setting_app_info_title">앱 정보</string>
