@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">42dp</dimen>
-    <dimen name="design_bottom_navigation_icon_size">42dp</dimen>
 
-    <!--  Setting  -->
+    <!--  Main Activity  -->
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">40dp</dimen>
+    <dimen name="design_bottom_navigation_icon_size">40dp</dimen>
+
+    <!--  Setting Activity -->
     <dimen name="setting_text_margin_top">16dp</dimen>
 </resources>
