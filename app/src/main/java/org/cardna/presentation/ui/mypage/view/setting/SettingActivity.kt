@@ -1,11 +1,14 @@
 package org.cardna.presentation.ui.mypage.view.setting
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySettingBinding
+import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 
+@AndroidEntryPoint
 class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBinding>(R.layout.activity_setting) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -13,6 +16,7 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
     }
 
     override fun initView() {
+       setClickListener()
         setAlarmSwitchListener()
     }
 
@@ -28,4 +32,21 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
             }
         }
     }
+
+    private fun setClickListener() {
+        with(binding) {
+            tvSettingAppInfoVersion.setOnClickListener {
+                startActivity(Intent(this@SettingActivity, VersionInfoActivity::class.java))
+            }
+            tvSettingAppInfoDeveloper.setOnClickListener {
+                startActivity(Intent(this@SettingActivity, DeveloperInfoActivity::class.java))
+            }
+            tvSettingEtcSecession.setOnClickListener {
+                startActivity(Intent(this@SettingActivity, SecessionActivity::class.java))
+            }
+            tvSettingEtcLogout.setOnClickListener {
+            }
+        }
+    }
 }
+
