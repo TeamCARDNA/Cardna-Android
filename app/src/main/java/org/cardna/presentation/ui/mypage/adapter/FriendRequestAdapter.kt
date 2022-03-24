@@ -1,6 +1,5 @@
 package org.cardna.presentation.ui.mypage.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cardna.databinding.ItemAlarmFriendRequestBinding
 import org.cardna.presentation.ui.mypage.view.setting.AlarmActivity
-import org.cardna.presentation.ui.mypage.viewmodel.AlarmViewModel
 
 class FriendRequestAdapter(
     private val clickListener: (FriendRequestData) -> Unit,
@@ -19,7 +17,7 @@ class FriendRequestAdapter(
     var defaultStatus = true
 
     inner class FriendRequestViewHolder(private val binding: ItemAlarmFriendRequestBinding) : RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("SetTextI18n")
+
         fun onBind(data: FriendRequestData) {
             binding.apply {
 
@@ -32,8 +30,8 @@ class FriendRequestAdapter(
                 //TODO  서버연결 후 수락 api
                 mbItemAlarmFriendRequestAccept.setOnClickListener {
                     ctlItemAlarmFriendRequestBtn.visibility = View.INVISIBLE
-                    tvItemFriendRequestAcceptText.visibility = View.VISIBLE
-                    tvItemFriendRequestAcceptText.text=data.friendName+"님과 친구가 되었어요"
+                    ctlItemAlarmFriendRequestAccept.visibility = View.VISIBLE
+                    tvItemAlarmFriendRequestAcceptFriendName.text = data.friendName
                     friendRequestAcceptListener(data)
                 }
                 //TODO  서버연결 후 거절 api

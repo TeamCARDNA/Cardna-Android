@@ -42,6 +42,18 @@
 
 
         <TextView
+            android:id="@+id/tv_item_alarm_write_cardyou_sentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:includeFontPadding="false"
+            android:text="@string/item_write_cardyou_sentence"
+            android:textColor="@color/white_1"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/tv_item_alarm_write_cardyou_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_alarm_write_cardyou_title" />
+
+        <TextView
             android:id="@+id/tv_item_alarm_write_cardyou_friend_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

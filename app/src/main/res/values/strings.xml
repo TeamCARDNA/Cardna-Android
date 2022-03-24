@@ -36,6 +36,6 @@
 
     <!--  Alarm Item Write CardYou  -->
     <string name="item_write_cardyou_friend_name">혜원</string>
-    <string name="item_write_cardyou_title">님이 소개를 적어줬어요</string>
+    <string name="item_write_cardyou_sentence">님이 소개를 적어줬어요</string>
     <string name="item_write_cardyou_date">2022/01/12</string>
 </resources>

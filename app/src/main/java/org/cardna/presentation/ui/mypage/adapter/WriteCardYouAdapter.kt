@@ -15,7 +15,7 @@ class WriteCardYouAdapter(
             binding.apply {
 
                 //TODO  서버연결 후 data 연결
-                tvItemAlarmWriteCardyouFriendName.text = data.friendName + "님이 카드를 적어줬어요"
+                tvItemAlarmWriteCardyouFriendName.text = data.friendName
                 tvItemAlarmWriteCardyouDate.text = data.requestDate
                 root.setOnClickListener {
                     clickListener(data)
