@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_item_alarm_write_cardyou"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_dark_gray_radius_10dp">
+
+        <ImageView
+            android:id="@+id/iv_item_alarm_write_cardyou"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/img_item_friend_write_cardyou_dummy"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_item_alarm_write_cardyou_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:includeFontPadding="false"
+            android:text="@string/item_write_cardyou_friend_name"
+            android:textColor="@color/white_1"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/iv_item_alarm_write_cardyou"
+            app:layout_constraintTop_toTopOf="@+id/iv_item_alarm_write_cardyou" />
+
+
+        <TextView
+            android:id="@+id/tv_item_alarm_write_cardyou_sentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:includeFontPadding="false"
+            android:text="@string/item_write_cardyou_sentence"
+            android:textColor="@color/white_1"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/tv_item_alarm_write_cardyou_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_alarm_write_cardyou_title" />
+
+        <TextView
+            android:id="@+id/tv_item_alarm_write_cardyou_friend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="@string/item_write_cardyou_friend_name"
+            android:textColor="@color/white_2"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_item_alarm_write_cardyou_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_alarm_write_cardyou_title" />
+
+        <TextView
+            android:id="@+id/tv_item_alarm_write_cardyou_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="@string/item_write_cardyou_date"
+            android:textColor="@color/white_2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_alarm_write_cardyou_friend_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_item_alarm_write_cardyou_friend_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  default  -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+
+    <!--  representative  -->
+    <color name="main_purple_60">#99AA87D4</color>
+    <color name="main_green_60">#995ECC9C</color>
+    <color name="main_green">#5ECC9C</color>
+    <color name="main_purple">#AA87D4</color>
+    <color name="main_purple_darker">#9775bf</color>
+
+    <!--  white  -->
     <color name="white">#FFFFFFFF</color>
+    <color name="white_1">#E0E0E0</color>
+    <color name="white_1_5">#C6C6C6</color>
+    <color name="white_2">#A0A0A0</color>
+    <color name="white_3">#6C6C6C</color>
+    <color name="white_4">#474747</color>
+    <color name="white_5">#444444</color>
+
+    <!--  black  -->
     <color name="main_black">#121212</color>
+    <color name="real_black">#000000</color>
+    <color name="black">#000000</color>
+
+    <!--  gray  -->
+    <color name="dark_gray">#323232</color>
+
+    <!--  etc  -->
+    <color name="signup_warning_red">#E86A5D</color>
+    <color name="transparent">#00000000</color>
 </resources>

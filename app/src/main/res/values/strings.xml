@@ -2,4 +2,40 @@
     <string name="app_name">cardna</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--  Setting  -->
+    <string name="setting_title">설정</string>
+    <string name="setting_account_info_title">계정 정보</string>
+    <string name="setting_account_info_social_login">소셜로그인 정보</string>
+    <string name="setting_question_title">문의</string>
+    <string name="setting_question_by_email">메일로 문의하기</string>
+    <string name="setting_app_setting_title">앱 설정</string>
+    <string name="setting_app_alarm">알림 설정</string>
+    <string name="setting_app_info_title">앱 정보</string>
+    <string name="setting_app_info_version">버전 정보</string>
+    <string name="setting_app_info_developer">개발자 정보</string>
+    <string name="setting_app_info_privacy_policy">개인정보 처리방침</string>
+    <string name="setting_app_info_service_operation_policy">서비스 이용약관</string>
+    <string name="setting_app_info_opensource_license">오픈소스 라이선스</string>
+    <string name="setting_etc_title">기타</string>
+    <string name="setting_etc_secession">회원 탈퇴</string>
+    <string name="setting_etc_logout">로그아웃</string>
+
+    <!--  Alarm  -->
+    <string name="alarm_title">알림</string>
+
+    <!--  Alarm Item Friend Request  -->
+    <string name="item_friend_request_title">친구 요청</string>
+    <string name="item_friend_request_count">3</string>
+    <string name="item_friend_request_view_all">모두 보기</string>
+    <string name="item_friend_request_friend_name">신혜원</string>
+    <string name="item_friend_request_date">2022/03/12</string>
+    <string name="item_friend_request_accept">수락</string>
+    <string name="item_friend_request_refuse">거절</string>
+    <string name="item_friend_request_accept_text">님과 친구가 되었어요</string>
+
+    <!--  Alarm Item Write CardYou  -->
+    <string name="item_write_cardyou_friend_name">혜원</string>
+    <string name="item_write_cardyou_sentence">님이 소개를 적어줬어요</string>
+    <string name="item_write_cardyou_date">2022/01/12</string>
 </resources>
