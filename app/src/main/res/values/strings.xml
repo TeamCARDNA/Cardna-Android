@@ -7,6 +7,8 @@
     <string name="setting_title">설정</string>
     <string name="setting_account_info_title">계정 정보</string>
     <string name="setting_account_info_social_login">소셜로그인 정보</string>
+    <string name="setting_social_login_kakao">카카오</string>
+    <string name="setting_social_login_naver">네이버</string>
     <string name="setting_question_title">문의</string>
     <string name="setting_question">문의하기</string>
     <string name="setting_app_setting_title">앱 설정</string>
@@ -23,6 +25,41 @@
 
     <!--  Alarm  -->
     <string name="alarm_title">알림</string>
+
+    <!--  Version Info  -->
+    <string name="version_info_title">버전 정보</string>
+    <string name="version_info_current_version_sentence">현재 버전</string>
+    <string name="version_info_current_version">1.0.0</string>
+
+    <!--  Developer Info  -->
+    <string name="developer_info_title">개발자 정보</string>
+    <string name="developer_info_plan">기획</string>
+    <string name="developer_info_design">디자인</string>
+    <string name="developer_info_android">Front_end(Android)</string>
+    <string name="developer_info_ios">Front_end(iOS)</string>
+    <string name="developer_info_back_end">Back_end</string>
+    <string name="developer_info_plan_member">곽민주, &#160;이정재</string>
+    <string name="developer_info_design_member">신혜원, &#160;이정아, &#160;한지우</string>
+    <string name="developer_info_android_member">김다빈, &#160;박민우, &#160;이종찬</string>
+    <string name="developer_info_ios_member">김혜수, &#160;이경민, &#160;이남준</string>
+    <string name="developer_info_back_end_member">김희빈, &#160;이솔</string>
+
+    <!--  Dialog Logout  -->
+    <string name="dialog_logout_title">로그아웃 하시겠어요?</string>
+    <string name="dialog_logout_cancle">취소</string>
+    <string name="dialog_logout_confirm">로그아웃</string>
+
+    <!--  Secession  -->
+    <string name="secession_title">탈퇴하실 건가요?</string>
+    <string name="secession_btn">탈퇴하기</string>
+    <string name="secession_title_sentence">탈퇴 이유를 알려주세요ㅠㅠ</string>
+    <string name="secession_reason_one">삭제하고 싶은 콘텐츠가 있어요</string>
+    <string name="secession_reason_two">개인정보 보호에 문제가 있어요</string>
+    <string name="secession_reason_three">새 계정을 만들고 싶어요</string>
+    <string name="secession_reason_four">오류가 많아요</string>
+    <string name="secession_reason_five">기능이 마음에 들지 않아요</string>
+    <string name="secession_reason_six">기타</string>
+    <string name="secession_warning">탈퇴하면 모든 데이터가 삭제되어 복구 할 수 없어요.</string>
 
     <!--  Alarm Item Friend Request  -->
     <string name="item_friend_request_title">친구 요청</string>
