@@ -93,5 +93,7 @@
     <string name="insight_blind_explain">타인이 써 준 카드 중 가장 많은 공감을 받은 카드</string>
     <string name="insight_open_area_title">배신을 잘해</string>
     <string name="insight_blind_title">요리를 잘해</string>
+    <string name="insight_data_null_one">아직 인사이트를 얻기에</string>
+    <string name="insight_data_null_two">데이터가 부족해요!</string>
 
 </resources>
