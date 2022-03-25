@@ -1,17 +1,15 @@
 package org.cardna.presentation.ui.mypage.view.setting
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.CheckedTextView
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.activity.viewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySecessionBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.mypage.viewmodel.SettingViewModel
-import org.cardna.presentation.util.showCenterDialog
 
 @AndroidEntryPoint
 class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBinding>(R.layout.activity_secession) {
@@ -25,12 +23,35 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
 
     override fun initView() {
         setObserve()
+        setEtcContentListener()
     }
 
     private fun setObserve() {
-        //TODO 6번 이유 TRUE시 VIEW보이기
-        // binding.etSecessionReason.visibility = View.INVISIBLE
-        //TODO 이유 하나라도 false없으면 탈퇴하기 버튼 클릭되게하기
+        settingViewModel.isSecessionReasonValid.observe(this) { isSecessionReasonValid ->
+            with(binding.buttonSecession) {
+                if (isSecessionReasonValid) {
+                    setBackgroundResource(R.drawable.bg_mainpurple_maingreen_gradient_radius_10dp)
+                } else {
+                    setBackgroundResource(R.drawable.bg_white_3_radius_10dp)
+                }
+            }
+        }
+    }
+
+    private fun setEtcContentListener() {
+        binding.etSecessionReason.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.isNullOrEmpty()) {
+                    settingViewModel.setEtcContent("")
+                } else {
+                    settingViewModel.setEtcContent(s.toString())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     companion object {

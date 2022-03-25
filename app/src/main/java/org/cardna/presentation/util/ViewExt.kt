@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.Window
+import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -34,4 +35,8 @@ fun Context.showCenterDialog(@IdRes layout: Int): Dialog {
     dialog.getWindow()!!.setGravity(Gravity.CENTER)
     dialog.show()
     return dialog
+}
+
+fun Context.shortToast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

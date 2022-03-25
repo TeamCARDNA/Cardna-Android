@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="settingViewModel"
             type="org.cardna.presentation.ui.mypage.viewmodel.SettingViewModel" />
@@ -265,11 +267,15 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="18dp"
             android:background="@drawable/bg_stroke_white_2_1dp"
+            android:ems="1"
             android:fontFamily="@font/pretendard_regular"
-            android:maxLines="3"
+            android:gravity="top"
+            android:includeFontPadding="false"
+            android:maxLength="115"
+            android:padding="10dp"
             android:textColor="@color/white_1"
             android:textSize="14sp"
-            android:visibility="invisible"
+            android:visibility="@{settingViewModel.secessionReasonSixCheck ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/tv_secession_warning"
             app:layout_constraintTop_toBottomOf="@+id/ctl_secssion_top" />
 
@@ -292,10 +298,11 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_white_3_radius_10dp"
-            android:enabled="true"
-            android:fontFamily="@font/pretendard_regular"
+            android:enabled="@{settingViewModel.isSecessionReasonValid}"
+            android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{() -> settingViewModel.deleteUser()}"
             android:text="@string/secession_btn"
-            android:textColor="@color/white_2"
+            android:textColor="@{settingViewModel.isSecessionReasonValid ?  @color/main_black : @color/white_2}"
             android:textSize="20sp"
             app:layout_constraintTop_toBottomOf="@id/tv_secession_warning" />
 
