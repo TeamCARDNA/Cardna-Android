@@ -5,6 +5,7 @@
 
     <data>
 
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,8 +35,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mt_setting_title"
-            app:layout_constraintVertical_bias="1.0"
-            tools:layout_editor_absoluteX="167dp">
+            app:layout_constraintVertical_bias="1.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/setting_text_margin_top"
-                    android:text="@string/setting_question_by_email"
+                    android:text="@string/setting_question"
                     app:layout_constraintStart_toStartOf="@+id/tv_setting_question_title"
                     app:layout_constraintTop_toBottomOf="@id/tv_setting_question_title" />
 
@@ -104,6 +104,29 @@
                     android:text="@string/setting_app_alarm"
                     app:layout_constraintStart_toStartOf="@id/tv_setting_app_setting_title"
                     app:layout_constraintTop_toBottomOf="@id/tv_setting_app_setting_title" />
+
+                <ImageView
+                    android:id="@+id/iv_setting_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_switch_track_on"
+                    app:layout_constraintBottom_toBottomOf="@+id/switch_btn_setting"
+                    app:layout_constraintEnd_toEndOf="@+id/switch_btn_setting"
+                    app:layout_constraintTop_toTopOf="@+id/switch_btn_setting" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_btn_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:minWidth="32dp"
+                    android:thumb="@drawable/bg_oval_switch_thumb"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_setting_app_alarm"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_setting_app_alarm"
+                    app:trackTint="@color/transparent" />
 
 
                 <TextView
@@ -156,15 +179,6 @@
                     app:layout_constraintStart_toStartOf="@+id/tv_setting_app_info_privacy_policy"
                     app:layout_constraintTop_toBottomOf="@id/tv_setting_app_info_privacy_policy" />
 
-                <TextView
-                    android:id="@+id/tv_setting_app_info_opensource_license"
-                    style="@style/setting_sentence_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/setting_app_info_opensource_license"
-                    app:layout_constraintStart_toStartOf="@+id/tv_setting_app_info_service_operation_policy"
-                    app:layout_constraintTop_toBottomOf="@id/tv_setting_app_info_service_operation_policy" />
 
                 <TextView
                     android:id="@+id/tv_setting_etc_title"
@@ -173,8 +187,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:text="@string/setting_etc_title"
-                    app:layout_constraintStart_toStartOf="@+id/tv_setting_app_info_opensource_license"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_setting_app_info_opensource_license" />
+                    app:layout_constraintStart_toStartOf="@+id/tv_setting_app_info_service_operation_policy"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_setting_app_info_service_operation_policy" />
 
                 <TextView
                     android:id="@+id/tv_setting_etc_secession"
@@ -192,7 +206,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:text="@string/setting_etc_logout"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@id/tv_setting_etc_secession"
                     app:layout_constraintTop_toBottomOf="@id/tv_setting_etc_secession" />
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,8 +10,62 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="org.cardna.presentation.ui.mypage.view.setting.VersionInfoActivity">
+        android:background="@color/main_black"
+        tools:context="org.cardna.presentation.ui.mypage.view.setting.SettingActivity">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mt_version_info"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_version_info_title"
+                style="@style/mypage_title_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/version_info_title" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+
+        <ImageView
+            android:id="@+id/iv_version_info_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="180dp"
+            android:src="@drawable/img_version_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mt_version_info" />
+
+        <TextView
+
+            android:id="@+id/tv_version_info_sentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@string/version_info_current_version_sentence"
+            android:textColor="@color/white_2"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@id/iv_version_info_logo"
+            app:layout_constraintStart_toStartOf="@id/iv_version_info_logo"
+            app:layout_constraintTop_toBottomOf="@+id/iv_version_info_logo" />
+
+        <TextView
+
+            android:id="@+id/tv_version_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@string/version_info_current_version"
+            android:textColor="@color/white_2"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_version_info_sentence"
+            app:layout_constraintStart_toStartOf="@id/tv_version_info_sentence"
+            app:layout_constraintTop_toBottomOf="@+id/tv_version_info_sentence" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
