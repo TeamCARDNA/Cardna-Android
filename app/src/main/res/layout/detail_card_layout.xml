@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.maincard.DetailCardMeActivity">
+
+        <ImageView
+            android:id="@+id/iv_detailcard_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white_1_5"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@id/cl_detailcard_setting_layout"
+            app:layout_constraintDimensionRatio="360:378"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_detailcard_setting_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/iv_detailcard_image">
+            android:background="@drawable/rectangle_left_right_main_green_radius_2"
+            <TextView
+                android:id="@+id/tv_detailcard_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="12dp"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@string/detail_card_title"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
