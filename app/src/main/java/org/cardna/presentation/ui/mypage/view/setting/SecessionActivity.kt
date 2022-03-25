@@ -18,7 +18,7 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
     private val settingViewModel: SettingViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.secessionActivity = this
+
         binding.settingViewModel = settingViewModel
         initView()
     }
