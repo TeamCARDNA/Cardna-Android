@@ -78,6 +78,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
                 android:background="@color/black"
+                android:padding="2dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/img_insight_open_area_dummy"
                 app:layout_constraintBottom_toBottomOf="@+id/ctl_insight_blind_area_card"
