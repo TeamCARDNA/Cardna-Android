@@ -20,6 +20,7 @@ sealed class BaseViewUtil {
             savedInstanceState: Bundle?
         ): View? {
             _binding = DataBindingUtil.inflate(inflater, layout, container, false)
+            binding.lifecycleOwner = viewLifecycleOwner
             return binding.root
         }
 
@@ -42,5 +43,9 @@ sealed class BaseViewUtil {
         }
 
         abstract fun initView()
+    }
+
+    companion object{
+        const val CARD_ID="CARD_ID"
     }
 }

@@ -1,16 +1,23 @@
 package org.cardna.presentation.ui.insight.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.FragmentInsightBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.insight.adapter.InsightAdapter
+import org.cardna.presentation.ui.insight.viewmodel.InsightViewModel
+import org.cardna.presentation.ui.mypage.viewmodel.AlarmViewModel
 
 @AndroidEntryPoint
 class InsightFragment : BaseViewUtil.BaseFragment<FragmentInsightBinding>(R.layout.fragment_insight) {
     private lateinit var insightAdapter: InsightAdapter
+    private val insightViewModel: InsightViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -18,7 +25,18 @@ class InsightFragment : BaseViewUtil.BaseFragment<FragmentInsightBinding>(R.layo
     }
 
     override fun initView() {
+        initData()
         setInsightAdapter()
+        setCurrentPositionObserve()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initData()
+    }
+
+    fun initData() {
+        insightViewModel.getInsight()
     }
 
     private fun setInsightAdapter() {
@@ -26,5 +44,22 @@ class InsightFragment : BaseViewUtil.BaseFragment<FragmentInsightBinding>(R.layo
         insightAdapter = InsightAdapter(requireActivity())
         insightAdapter.fragments.addAll(fragmentList)
         binding.vpInsight.adapter = insightAdapter
+    }
+
+    fun setCurrentPositionObserve() {
+        insightViewModel.currentPosition.observe(viewLifecycleOwner) { currentPosition ->
+            with(binding.vpInsight) {
+                if (currentPosition == OPEN_AREA) {
+                    setCurrentItem(2, true)
+                } else {
+                    setCurrentItem(currentItem - 1, true)
+                }
+            }
+        }
+    }
+
+    companion object {
+        const val OPEN_AREA = "OPEN_AREA"
+        const val BLIND_AREA = "BLIND_AREA"
     }
 }
