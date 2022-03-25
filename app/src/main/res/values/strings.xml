@@ -38,4 +38,22 @@
     <string name="item_write_cardyou_friend_name">혜원</string>
     <string name="item_write_cardyou_sentence">님이 소개를 적어줬어요</string>
     <string name="item_write_cardyou_date">2022/01/12</string>
+
+    <!--  Detail Card  -->
+    <string name="detail_card_title">퍼블리싱도 하는 디자이너</string>
+    <string name="detail_card_content">정말 대단해</string>
+    <string name="detail_card_name">다빈</string>
+    <string name="detail_card_createdat">2022/01/12</string>
+    <string name="detail_card_likecount">353</string>
+
+    <!--  Insight  -->
+    <string name="insight_title">인사이트</string>
+    <string name="insight_open_area">Open Area</string>
+    <string name="insight_blind_area">Blind Area</string>
+    <string name="insight_open_area_sentence">나도 알고, 타인도 아는 나의 모습이에요</string>
+    <string name="insight_blind_sentence">나는 몰랐지만, 타인이 아는 나의 모습이에요</string>
+    <string name="insight_open_area_explain">내가 쓴 카드 중 가장 많은 공감을 받은 카드</string>
+    <string name="insight_blind_explain">타인이 써 준 카드 중 가장 많은 공감을 받은 카드</string>
+    <string name="insight_open_area_title">배신을 잘해</string>
+    <string name="insight_blind_title">요리를 잘해</string>
 </resources>
