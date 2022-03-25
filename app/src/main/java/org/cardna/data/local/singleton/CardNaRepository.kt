@@ -1,0 +1,6 @@
+package org.cardna.data.local.singleton
+
+object CardNaRepository {
+     val userToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtaW5qdUBnbWFpbC5jb20iLCJuYW1lIjoi66-87KO8IiwiZmlyZWJhc2VJZCI6Ilo2c1RtdDB3ZGRNN0R0cWpUc01qdTh5RGpncDEiLCJpYXQiOjE2NDgwMDUyMTYsImV4cCI6MTY1MDU5NzIxNiwiaXNzIjoiY2FyZG5hIn0.ISMfuKBcJ6Yzfawb_MuZ0DjKL2-rsld1IOFLjoO-sf8"
+}
