@@ -4,7 +4,14 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.cardna.data.remote.api.*
+import org.cardna.data.remote.api.alarm.AlarmService
+import org.cardna.data.remote.api.auth.AuthService
+import org.cardna.data.remote.api.card.CardService
+import org.cardna.data.remote.api.friend.FriendService
+import org.cardna.data.remote.api.insight.InsightService
+import org.cardna.data.remote.api.like.LikeService
+import org.cardna.data.remote.api.mypage.MyPageService
+import org.cardna.data.remote.api.user.UserService
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
