@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.mypage.view.setting
+package org.cardna.presentation.ui.setting.view
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -19,18 +19,15 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
 
     override fun initView() {
         setClickListener()
-        setAlarmSwitchListener()
+        setAlarmSwitchClickListener()
     }
 
     @SuppressLint("ResourceType")
-    private fun setAlarmSwitchListener() {
+    private fun setAlarmSwitchClickListener() {
         with(binding) {
             switchBtnSetting.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    ivSettingAlarm.setBackgroundResource(R.drawable.bg_switch_track_on)
-                } else {
-                    ivSettingAlarm.setBackgroundResource(R.drawable.bg_switch_track_off)
-                }
+                if (isChecked) ivSettingAlarm.setBackgroundResource(R.drawable.bg_switch_track_on)
+                else ivSettingAlarm.setBackgroundResource(R.drawable.bg_switch_track_off)
             }
         }
     }

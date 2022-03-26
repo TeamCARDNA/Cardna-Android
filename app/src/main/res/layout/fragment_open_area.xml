@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="insightViewModel"
+            type="org.cardna.presentation.ui.insight.viewmodel.InsightViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctl_insight_open_area_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_insight_open_area"
+        tools:context="org.cardna.presentation.ui.insight.view.OpenAreaFragment">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctl_insight_open_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_insight_open_area_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="64dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:includeFontPadding="false"
+                android:text="@string/insight_open_area"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_insight_open_area_allow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
+                android:src="@drawable/ic_insight_allow_open_area"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_insight_open_area_title" />
+
+            <TextView
+                android:id="@+id/tv_insight_open_area_sentence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@string/insight_open_area_sentence"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/tv_insight_open_area_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_insight_open_area_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="172dp"
+            android:visibility="@{insightViewModel.isOpenAreaInsightEmpty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ctl_insight_open_area">
+
+            <TextView
+                android:id="@+id/tv_insight_data_null_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@string/insight_data_null_one"
+                android:textColor="@color/white_3"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@string/insight_data_null_two"
+                android:textColor="@color/white_3"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@id/tv_insight_data_null_one"
+                app:layout_constraintStart_toStartOf="@id/tv_insight_data_null_one"
+                app:layout_constraintTop_toBottomOf="@id/tv_insight_data_null_one" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctl_insight_open_area_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="56dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_maingreen_radius10dp_stroke_black_2dp"
+            android:paddingBottom="8dp"
+            android:visibility="@{insightViewModel.isOpenAreaInsightEmpty ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toBottomOf="@id/ctl_insight_open_area">
+
+            <ImageView
+                android:id="@+id/iv_insight_open_area_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:background="@color/black"
+                android:padding="2dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/ctl_insight_open_area_card"
+                app:layout_constraintDimensionRatio="227:343"
+                app:layout_constraintEnd_toEndOf="@+id/ctl_insight_open_area_card"
+                app:layout_constraintStart_toStartOf="@+id/ctl_insight_open_area_card"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/img_insight_open_area_dummy" />
+
+            <TextView
+                android:id="@+id/tv_insight_open_area_user_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="@{insightViewModel.blindAreaInsight.title}"
+                android:textColor="@color/real_black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/ctl_insight_open_area_card"
+                app:layout_constraintStart_toStartOf="@+id/iv_insight_open_area_image"
+                app:layout_constraintTop_toBottomOf="@+id/iv_insight_open_area_image"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="@string/insight_open_area_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{insightViewModel.isOpenAreaInsightEmpty ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="@id/ctl_insight_open_area_card"
+            app:layout_constraintStart_toStartOf="@id/ctl_insight_open_area_card"
+            app:layout_constraintTop_toBottomOf="@+id/ctl_insight_open_area_card">
+
+            <TextView
+                android:id="@+id/tv_insight_open_area_explain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@string/insight_open_area_explain"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view_insight_open_area_line"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:background="@color/black"
+                app:layout_constraintEnd_toEndOf="@id/tv_insight_open_area_explain"
+                app:layout_constraintStart_toStartOf="@id/tv_insight_open_area_explain"
+                app:layout_constraintTop_toBottomOf="@+id/tv_insight_open_area_explain" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

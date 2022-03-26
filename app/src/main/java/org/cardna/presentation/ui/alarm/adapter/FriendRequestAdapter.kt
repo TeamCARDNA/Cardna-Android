@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.mypage.adapter
+package org.cardna.presentation.ui.alarm.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cardna.databinding.ItemAlarmFriendRequestBinding
-import org.cardna.presentation.ui.mypage.view.setting.AlarmActivity
+import org.cardna.presentation.ui.alarm.view.AlarmActivity
 
 class FriendRequestAdapter(
     private val clickListener: (FriendRequestData) -> Unit,
@@ -48,7 +48,7 @@ class FriendRequestAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendRequestAdapter.FriendRequestViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendRequestViewHolder {
         val binding = ItemAlarmFriendRequestBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FriendRequestViewHolder(binding)
     }
@@ -60,7 +60,7 @@ class FriendRequestAdapter(
             currentList.size
         }
 
-    override fun onBindViewHolder(holder: FriendRequestAdapter.FriendRequestViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FriendRequestViewHolder, position: Int) {
         holder.onBind(getItem(position))
     }
 

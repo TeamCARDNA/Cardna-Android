@@ -9,18 +9,18 @@
 
         <variable
             name="settingViewModel"
-            type="org.cardna.presentation.ui.mypage.viewmodel.SettingViewModel" />
+            type="org.cardna.presentation.ui.setting.viewmodel.SettingViewModel" />
 
         <variable
             name="secessionActivity"
-            type="org.cardna.presentation.ui.mypage.view.setting.SecessionActivity" />
+            type="org.cardna.presentation.ui.setting.view.SecessionActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_black"
-        tools:context="org.cardna.presentation.ui.mypage.view.setting.SecessionActivity">
+        tools:context="org.cardna.presentation.ui.setting.view.SecessionActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctl_secssion_top"

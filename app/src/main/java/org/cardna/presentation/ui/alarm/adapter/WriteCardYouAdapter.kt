@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.mypage.adapter
+package org.cardna.presentation.ui.alarm.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -24,12 +24,12 @@ class WriteCardYouAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WriteCardYouAdapter.WriteCardYouViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WriteCardYouViewHolder {
         val binding = ItemAlarmWriteCardyouBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return WriteCardYouViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: WriteCardYouAdapter.WriteCardYouViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: WriteCardYouViewHolder, position: Int) {
         holder.onBind(getItem(position))
     }
 

@@ -1,10 +1,8 @@
-package org.cardna.data.remote.api.insight
+package org.cardna.data.remote.datasource
 
 import org.cardna.data.remote.model.insight.ResponseInsightData
-import retrofit2.http.GET
 
-interface InsightService {
+interface InsightDataSource {
 
-    @GET("insight")
     suspend fun getInsight(): ResponseInsightData
 }
