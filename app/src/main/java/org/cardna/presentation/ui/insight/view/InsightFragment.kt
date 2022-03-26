@@ -42,14 +42,11 @@ class InsightFragment : BaseViewUtil.BaseFragment<FragmentInsightBinding>(R.layo
         binding.vpInsight.adapter = insightAdapter
     }
 
-   private fun setCurrentPositionObserve() {
+    private fun setCurrentPositionObserve() {
         insightViewModel.currentPosition.observe(viewLifecycleOwner) { currentPosition ->
             with(binding.vpInsight) {
-                if (currentPosition == OPEN_AREA) {
-                    setCurrentItem(2, true)
-                } else {
-                    setCurrentItem(currentItem - 1, true)
-                }
+                if (currentPosition == OPEN_AREA) setCurrentItem(2, true)
+                else setCurrentItem(currentItem - 1, true)
             }
         }
     }
