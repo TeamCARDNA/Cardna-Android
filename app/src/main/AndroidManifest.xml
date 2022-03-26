@@ -18,10 +18,12 @@
             android:exported="false" />
         <activity
             android:name="org.cardna.presentation.ui.alarm.view.AlarmActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
         <activity
             android:name="org.cardna.presentation.ui.setting.view.SecessionActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+
+        </activity>
         <activity
             android:name="org.cardna.presentation.ui.setting.view.ServiceOperationActivity"
             android:exported="false" />
@@ -36,7 +38,7 @@
             android:exported="false" />
         <activity
             android:name="org.cardna.presentation.ui.setting.view.SettingActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
         <activity
             android:name="org.cardna.presentation.MainActivity"
             android:exported="true">

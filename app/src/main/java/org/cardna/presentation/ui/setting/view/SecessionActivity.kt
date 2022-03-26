@@ -1,9 +1,8 @@
 package org.cardna.presentation.ui.setting.view
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.activity.viewModels
+import androidx.core.widget.doAfterTextChanged
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySecessionBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,7 +14,6 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
     private val settingViewModel: SettingViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding.settingViewModel = settingViewModel
         initView()
     }
@@ -30,27 +28,18 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
             with(binding.buttonSecession) {
                 if (isSecessionReasonValid) {
                     setBackgroundResource(R.drawable.bg_mainpurple_maingreen_gradient_radius_10dp)
-                } else {
-                    setBackgroundResource(R.drawable.bg_white_3_radius_10dp)
-                }
+                } else setBackgroundResource(R.drawable.bg_white_3_radius_10dp)
+
             }
         }
     }
 
     private fun setEtcContentListener() {
-        binding.etSecessionReason.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.isNullOrEmpty()) {
-                    settingViewModel.setEtcContent("")
-                } else {
-                    settingViewModel.setEtcContent(s.toString())
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        binding.etSecessionReason.doAfterTextChanged {
+            if (it.isNullOrEmpty()) {
+                settingViewModel.setEtcContent("")
+            } else settingViewModel.setEtcContent(it.toString())
+        }
     }
 
     companion object {

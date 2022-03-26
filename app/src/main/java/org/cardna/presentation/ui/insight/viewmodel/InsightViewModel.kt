@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.cardna.data.remote.model.insight.*
+import org.cardna.data.remote.model.insight.BlindAreaCard
+import org.cardna.data.remote.model.insight.OpenAreaCard
+import org.cardna.data.remote.model.insight.ResponseInsightData
 import org.cardna.domain.repository.InsightRepository
 import javax.inject.Inject
 
