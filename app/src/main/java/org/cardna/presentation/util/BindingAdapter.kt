@@ -3,7 +3,7 @@ package org.cardna.presentation.util
 import android.widget.CheckedTextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModel
-import org.cardna.presentation.ui.mypage.viewmodel.SettingViewModel
+import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 
 
 @BindingAdapter("viewModel", "reasonNumber")

@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.mypage.view.setting
+package org.cardna.presentation.ui.setting.view
 
 import android.annotation.SuppressLint
 import android.content.Intent

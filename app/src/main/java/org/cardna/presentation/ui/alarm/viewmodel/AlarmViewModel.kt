@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.mypage.viewmodel
+package org.cardna.presentation.ui.alarm.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

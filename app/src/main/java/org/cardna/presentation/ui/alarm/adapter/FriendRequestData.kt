@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.mypage.adapter
+package org.cardna.presentation.ui.alarm.adapter
 
 
 //TODO  서버연결 후 더미 리스트 삭제

@@ -1,11 +1,11 @@
-package org.cardna.presentation.ui.mypage.view.setting
+package org.cardna.presentation.ui.setting.view
 
 import android.os.Bundle
 import com.example.cardna.R
-import com.example.cardna.databinding.ActivityServiceOperationBinding
+import com.example.cardna.databinding.ActivityVersionInfoBinding
 import org.cardna.presentation.base.BaseViewUtil
 
-class ServiceOperationActivity : BaseViewUtil.BaseAppCompatActivity<ActivityServiceOperationBinding>(R.layout.activity_service_operation) {
+class VersionInfoActivity : BaseViewUtil.BaseAppCompatActivity<ActivityVersionInfoBinding>(R.layout.activity_version_info) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()

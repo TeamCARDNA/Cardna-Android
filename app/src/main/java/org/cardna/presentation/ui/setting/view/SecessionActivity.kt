@@ -1,15 +1,14 @@
-package org.cardna.presentation.ui.mypage.view.setting
+package org.cardna.presentation.ui.setting.view
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.activity.viewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySecessionBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.mypage.viewmodel.SettingViewModel
+import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 
 @AndroidEntryPoint
 class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBinding>(R.layout.activity_secession) {

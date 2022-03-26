@@ -17,25 +17,25 @@
             android:name="org.cardna.presentation.ui.detailcard.DetailCardActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.mypage.view.setting.AlarmActivity"
+            android:name="org.cardna.presentation.ui.alarm.view.AlarmActivity"
             android:exported="true"></activity>
         <activity
-            android:name="org.cardna.presentation.ui.mypage.view.setting.SecessionActivity"
+            android:name="org.cardna.presentation.ui.setting.view.SecessionActivity"
             android:exported="true"></activity>
         <activity
-            android:name="org.cardna.presentation.ui.mypage.view.setting.ServiceOperationActivity"
+            android:name="org.cardna.presentation.ui.setting.view.ServiceOperationActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.mypage.view.setting.PrivacyPolicyActivity"
+            android:name="org.cardna.presentation.ui.setting.view.PrivacyPolicyActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.mypage.view.setting.DeveloperInfoActivity"
+            android:name="org.cardna.presentation.ui.setting.view.DeveloperInfoActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.mypage.view.setting.VersionInfoActivity"
+            android:name="org.cardna.presentation.ui.setting.view.VersionInfoActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.mypage.view.setting.SettingActivity"
+            android:name="org.cardna.presentation.ui.setting.view.SettingActivity"
             android:exported="true"></activity>
         <activity
             android:name="org.cardna.presentation.MainActivity"
