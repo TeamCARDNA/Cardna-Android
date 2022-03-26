@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.mypage.view.setting
+package org.cardna.presentation.ui.alarm.view
 
 import android.os.Bundle
 import android.view.View
@@ -8,10 +8,10 @@ import com.example.cardna.R
 import com.example.cardna.databinding.ActivityAlarmBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.mypage.adapter.FriendRequestAdapter
-import org.cardna.presentation.ui.mypage.adapter.FriendRequestData
-import org.cardna.presentation.ui.mypage.adapter.WriteCardYouAdapter
-import org.cardna.presentation.ui.mypage.viewmodel.AlarmViewModel
+import org.cardna.presentation.ui.alarm.adapter.FriendRequestAdapter
+import org.cardna.presentation.ui.alarm.adapter.FriendRequestData
+import org.cardna.presentation.ui.alarm.adapter.WriteCardYouAdapter
+import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
 
 @AndroidEntryPoint
 class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R.layout.activity_alarm) {

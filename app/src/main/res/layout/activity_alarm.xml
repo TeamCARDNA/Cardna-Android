@@ -7,14 +7,14 @@
 
         <variable
             name="alarmViewModel"
-            type="org.cardna.presentation.ui.mypage.viewmodel.AlarmViewModel" />
+            type="org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_black"
-        tools:context="org.cardna.presentation.ui.mypage.view.setting.AlarmActivity">
+        tools:context="org.cardna.presentation.ui.alarm.view.AlarmActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/mt_setting_title"
