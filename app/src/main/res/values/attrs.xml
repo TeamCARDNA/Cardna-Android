@@ -4,4 +4,11 @@
         <attr name="title" format="reference|string" />
         <attr name="imageUrl" format="reference|string" />
     </declare-styleable>
+
+
+<declare-styleable name="OutlineTextView">
+    <attr format="boolean" name="textStroke"/>
+    <attr format="float" name="textStrokeWidth"/>
+    <attr format="color" name="textStrokeColor"/>
+</declare-styleable>
 </resources>
