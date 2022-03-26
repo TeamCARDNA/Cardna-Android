@@ -18,32 +18,89 @@
             android:layout_height="0dp"
             android:background="@color/white_1_5"
             android:scaleType="fitXY"
-            app:layout_constraintBottom_toTopOf="@id/cl_detailcard_setting_layout"
             app:layout_constraintDimensionRatio="360:378"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_detailcard_setting_layout"
-            android:layout_width="match_parent"
+            android:id="@+id/ctl_detailcard_like"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/iv_detailcard_image">
-            android:background="@drawable/rectangle_left_right_main_green_radius_2"
-            <TextView
-                android:id="@+id/tv_detailcard_title"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_detailcard_image"
+            app:layout_constraintEnd_toEndOf="@id/iv_detailcard_image">
+
+            <CheckedTextView
+                android:id="@+id/ctv_detailcard_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="12dp"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/pretendard_bold"
+                android:layout_marginBottom="20dp"
+                android:checkMark="@drawable/ic_selector_detailcard_like"
+                android:checked="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="99"
+                android:textColor="@color/main_black"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/ctv_detailcard_like"
+                app:layout_constraintStart_toStartOf="@id/ctv_detailcard_like"
+                app:layout_constraintTop_toBottomOf="@id/ctv_detailcard_like" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/iv_detailcard_image">
+
+            <TextView
+                android:id="@+id/tv_detailcard_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_maingreen_stroke_real_black_2dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:paddingVertical="12dp"
+                android:paddingStart="18dp"
                 android:text="@string/detail_card_title"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_detailcard_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_detailcard_title">
 
+                <ImageButton
+                    android:id="@+id/ibtn_detailcard_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/transparent"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_detail_card_me_trash"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/ibtn_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_transparent_stroke_right_left_real_black_2dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp"
+                    android:src="@drawable/ic_share"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ibtn_detailcard_delete"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -12,6 +12,13 @@
         android:layout_height="match_parent"
         tools:context="org.cardna.presentation.ui.detailcard.DetailCardActivity">
 
+        <org.cardna.presentation.ui.customview.DetailCardLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:imageUrl="https://upload.wikimedia.org/wikipedia/ko/thumb/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png/230px-%EC%8B%A0%EC%A7%B1%EA%B5%AC.png"
+            app:title="@string/detail_card_title"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

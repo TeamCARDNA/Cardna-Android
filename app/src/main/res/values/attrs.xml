@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="DetailCardLayout">
         <attr name="title" format="reference|string" />
+        <attr name="imageUrl" format="reference|string" />
     </declare-styleable>
 </resources>
