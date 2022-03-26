@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Cardna"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="org.cardna.presentation.ui.detailcard.DetailCardActivity"
+            android:name="org.cardna.presentation.ui.detailcard.view.DetailCardActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+<variable
+    name="detailCardViewModel"
+    type="org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="org.cardna.presentation.ui.detailcard.DetailCardActivity">
+        tools:context="org.cardna.presentation.ui.detailcard.view.DetailCardActivity">
 
         <org.cardna.presentation.ui.customview.DetailCardLayout
             android:layout_width="match_parent"
