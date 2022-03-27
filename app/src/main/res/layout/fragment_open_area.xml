@@ -133,7 +133,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:includeFontPadding="false"
-                android:text="@{insightViewModel.blindAreaInsight.title}"
+                android:text="@{insightViewModel.openAreaInsight.title}"
                 android:textColor="@color/real_black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/ctl_insight_open_area_card"
