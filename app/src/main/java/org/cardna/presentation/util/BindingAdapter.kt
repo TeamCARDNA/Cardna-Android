@@ -1,8 +1,10 @@
 package org.cardna.presentation.util
 
+import android.util.Log
 import android.widget.CheckedTextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModel
+import org.cardna.presentation.ui.customview.DetailCardLayout
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 
 
@@ -19,4 +21,9 @@ fun setOnCheckedChanged(view: CheckedTextView, viewModel: ViewModel, reasonNumbe
             6 -> (viewModel as? SettingViewModel)?.setSecessionReasonSixStatus(view.isChecked)
         }
     }
+}
+
+@BindingAdapter("title")
+fun setOnChecked(view: DetailCardLayout, title: String) {
+view.text = title
 }

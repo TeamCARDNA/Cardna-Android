@@ -9,7 +9,7 @@ data class ResponseDetailCardData(
     data class Data(
         val id: String,
         val type: String,
-        val cardImg: String,
+        val cardImg: String?,
         val title: String,
         val content: String,
         val name: String?,

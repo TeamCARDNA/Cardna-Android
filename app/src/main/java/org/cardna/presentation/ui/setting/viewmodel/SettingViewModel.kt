@@ -110,7 +110,7 @@ class SettingViewModel @Inject constructor(
             }.onSuccess {
 
             }.onFailure {
-
+                Log.e("탈퇴 에러", it.toString())
             }
         }
     }

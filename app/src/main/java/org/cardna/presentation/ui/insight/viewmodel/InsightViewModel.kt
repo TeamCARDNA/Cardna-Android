@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.insight.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -55,7 +56,7 @@ class InsightViewModel @Inject constructor(
                 _blindAreaCardId.value = _blindAreaInsight.value?.id ?: 0
                 _openAreaCardId.value = _openAreaInsight.value?.id ?: 0
             }.onFailure {
-
+                Log.e("인사이트 조회 에러", it.toString())
             }
         }
     }

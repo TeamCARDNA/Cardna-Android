@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-<variable
-    name="detailCardViewModel"
-    type="org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel" />
+
+        <variable
+            name="detailCardViewModel"
+            type="org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,13 +16,56 @@
         android:layout_height="match_parent"
         tools:context="org.cardna.presentation.ui.detailcard.view.DetailCardActivity">
 
-        <org.cardna.presentation.ui.customview.DetailCardLayout
+        <ImageView
+            android:id="@+id/iv_detailcard_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:imageUrl="https://upload.wikimedia.org/wikipedia/ko/thumb/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png/230px-%EC%8B%A0%EC%A7%B1%EA%B5%AC.png"
-            app:title="@string/detail_card_title"/>
+            android:layout_height="0dp"
+            android:background="@color/white_1_5"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="360:378"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctl_detailcard_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_detailcard_image"
+            app:layout_constraintEnd_toEndOf="@id/iv_detailcard_image">
+
+            <CheckedTextView
+                android:id="@+id/ctv_detailcard_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:checkMark="@drawable/ic_selector_detailcard_like"
+                android:checked="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <org.cardna.presentation.ui.customview.OutlineTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="99"
+                android:textColor="@color/main_black"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/ctv_detailcard_like"
+                app:layout_constraintStart_toStartOf="@id/ctv_detailcard_like"
+                app:layout_constraintTop_toBottomOf="@id/ctv_detailcard_like"
+                app:textStroke="true"
+                app:textStrokeColor="@color/white"
+                app:textStrokeWidth="6.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <org.cardna.presentation.ui.customview.DetailCardLayout
+            android:id="@+id/dcl_detail_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/iv_detailcard_image"
+            app:title="@{detailCardViewModel.title}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
