@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.card.ResponseDetailCardData
 import org.cardna.domain.repository.CardRepository
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,8 +20,14 @@ class DetailCardViewModel @Inject constructor(
     private val _detailCard = MutableLiveData<ResponseDetailCardData.Data>()
     val detailCard: LiveData<ResponseDetailCardData.Data> = _detailCard
 
-    private val _title = MutableLiveData("")
-    val title: LiveData<String> = _title
+    private val _type = MutableLiveData<String>()
+    val type: LiveData<String> = _type
+
+    private val _isMineCard = MutableLiveData(false)
+    val isMineCard: LiveData<Boolean> = _isMineCard
+
+    private val _isStorage = MutableLiveData(true)
+    val isStorage: LiveData<Boolean> = _isStorage
 
     fun getDetailCard(id: Int) {
         viewModelScope.launch {
@@ -28,7 +35,9 @@ class DetailCardViewModel @Inject constructor(
                 cardRepository.getDetailCard(id).data
             }.onSuccess {
                 _detailCard.value = it
-                _title.value = it.title
+                _type.value = it.type
+                if (it.type == DetailCardActivity.STORAGE) _isStorage.value = true
+                if (it.likeCount != null) _isMineCard.value = true
             }.onFailure {
                 Log.e("상세카드 조회 에러", it.toString())
             }

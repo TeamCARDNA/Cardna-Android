@@ -20,7 +20,7 @@ class MainCardFragment : BaseViewUtil.BaseFragment<FragmentMainCardBinding>(R.la
     override fun initView() {
         binding.btn.setOnClickListener{
             Intent(requireContext(), DetailCardActivity::class.java).apply {
-                putExtra("id",277)
+                putExtra(BaseViewUtil.CARD_ID,277)
                 startActivity(this)
             }
         }
