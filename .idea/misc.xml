@@ -57,7 +57,9 @@
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/item_alarm_write_cardyou.xml" value="0.264" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/menu/menu_bottom_nav.xml" value="0.4" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/activity_alarm.xml" value="0.14108409321175278" />
-        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_card_pack.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_card_me.xml" value="0.23233695652173914" />
+        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_card_pack.xml" value="0.5" />
+        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_card_you.xml" value="0.23233695652173914" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_my_page.xml" value="0.3482789855072464" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2671875" />
       </map>
