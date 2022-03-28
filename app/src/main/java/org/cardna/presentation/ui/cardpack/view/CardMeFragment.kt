@@ -9,4 +9,6 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
     override fun initView() {
     }
 
+
+    // 친구의 카드나이면 공감버튼 추가해줘야함
 }

@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.cardna.R
+import com.example.cardna.databinding.CardpackCustomTablayoutBinding
 import com.example.cardna.databinding.FragmentCardPackBinding
 import com.example.cardna.databinding.FragmentInsightBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -54,17 +55,9 @@ class CardPackFragment :
     }
 
 
-    // 번들로 현재 카드팩프래그먼트로 넘어온 id, name값에 따라 카드나, 카드너 프래그먼트 인스턴스를 생성해주고
-    // tabLayout Adapter 객체 생성해서 거기에 fragment 들 연결하고 그 Adapter 를 ViewPager2의 Adapter 로 설정
+    // 카드나, 카드너 프래그먼트 인스턴스를 생성해주고 tabLayout Adapter 객체 생성해서 거기에 fragment 들 연결하고 그 Adapter 를 ViewPager2의 Adapter 로 설정
     private fun initCardPackAdapter() { // onResume()에 이거 넣어줘도 될듯 ? 애초에 onResume이 필요 ?
         val fragmentList: List<Fragment>
-//        if (getArguments() != null) { // 프래그먼트를 생성할 때, 번들로 넘겨준 값들을 확인 => null이 아니라면, id와 name을 넘겨줬을 것.
-//            fragmentList = listOf(CardMeFragment(), CardYouFragment())
-//            initCardYouLayout(id)
-//        } else { // null 이라면, 유저 본인의 카드팩 프래그먼트 접근
-//            fragmentList = listOf(CardMeFragment(), CardYouFragment())
-//            initCardMeLayout()
-//        }
 
         fragmentList = listOf(
             CardMeFragment(),
@@ -106,15 +99,15 @@ class CardPackFragment :
                 "카드나" -> {
                     tvCardmeTab.text = tabName
                     isCardme = true
-                    ivCardpackTab.setImageResource(R.drawable.selector_cardpack_tab_cardme)
-                    viewCardpackLine.setBackgroundResource(R.drawable.selector_cardpack_tab_cardme_line)
+                    ivCardpackTab.setImageResource(R.drawable.ic_selector_cardpack_tab_cardme)
+                    viewCardpackLine.setBackgroundResource(R.drawable.ic_selector_cardpack_tab_cardme_line)
                 }
 
                 "카드너" -> {
                     tvCardyouTab.text = tabName
                     isCardme = false
-                    ivCardpackTab.setImageResource(R.drawable.selector_cardpack_tab_cardyou)
-                    viewCardpackLine.setBackgroundResource(R.drawable.selector_cardpack_tab_cardyou_line)
+                    ivCardpackTab.setImageResource(R.drawable.ic_selector_cardpack_tab_cardyou)
+                    viewCardpackLine.setBackgroundResource(R.drawable.ic_selector_cardpack_tab_cardyou_line)
                 }
             }
         }
@@ -128,12 +121,14 @@ class CardPackFragment :
         // 카드팩 총 개수 세팅
         if (cardPackViewModel.id == null) { // 유저 본인의 카드팩 접근
             lifecycleScope.launch {
-                val totalCardCnt = ApiService.cardService.getCardMe().data.totalCardCnt
+
                 // totalCardCnt ViewModel 의 프로퍼티로 두고, 이 메서드도 ViewModel 안에 정의하고, 레이아웃의 tvCardpackCnt 에
                 // 이 프로퍼티 결합하면 자동 업데이트 되지 않나 ?
-                withContext(Dispatchers.Main) {
-                    binding.tvCardpackCnt.text = totalCardCnt.toString()
-                }
+
+//                val totalCardCnt = ApiService.cardService.getCardMe().data.totalCardCnt
+//                withContext(Dispatchers.Main) {
+//                    binding.tvCardpackCnt.text = totalCardCnt.toString()
+//                }
             }
             setMakeCardIvListener()
         } else { // 친구의 카드팩 접근
@@ -141,7 +136,7 @@ class CardPackFragment :
                 // 친구의 카드팩이면 그냥 카드팩 텍스트뷰,
                 // "카드팩" 텍스트뷰, 카드 총 개수, 카드 작성 버튼이 담겨있는 ctl_cardpack_top  => invisible
                 // FriendCardPackActivity에서 xx님의 카드팩, 카드너작성버튼 추가 시키면 될듯
-                ctlCardpackTop.visibility = View.INVISIBLE // 이러면 자식뷰 다 invisible 되나 ?
+                ctlCardpackTop.visibility = View.GONE // 이러면 자식뷰 다 GONE 되나 ?
             }
         }
     }
