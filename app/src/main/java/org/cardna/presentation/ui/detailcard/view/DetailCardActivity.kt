@@ -1,7 +1,7 @@
 package org.cardna.presentation.ui.detailcard.view
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityDetailCardBinding
@@ -22,13 +22,14 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     }
 
     override fun initView() {
-        initData()
+  initData()  //TODO API완성 후 다시 test
         setObserve()
+        setLikeClickListener()
     }
 
     private fun initData() {
         val id = intent.getIntExtra(BaseViewUtil.CARD_ID, 0)
-        detailCardViewModel.getDetailCard(id)
+        detailCardViewModel.getDetailCard(277)
     }
 
     private fun setObserve() {
@@ -39,12 +40,13 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         detailCardViewModel.type.observe(this) { type ->
             with(binding) {
                 when (type) {
-                    ME -> {
+                    CARD_ME -> {
+                        ctlDetailcardFriend.visibility = View.GONE
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_maingreen_stroke_real_black_2dp)
+                        ibtnDetailcardRight.setImageResource(R.drawable.ic_detail_card_me_trash)
                     }
-                    YOU -> {
+                    CARD_YOU -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_mainpurple_stroke_real_black_2dp)
-                        ibtnDetailcardDelete.setBackgroundResource(R.drawable.ic_detail_3dot)
                     }
                     STORAGE -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_white_1_5_stroke_real_black_2dp)
@@ -54,9 +56,22 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         }
     }
 
+    private fun setLikeClickListener() {
+        with(binding) {
+            ctvDetailcardLike.setOnClickListener {
+                ctvDetailcardLike.toggle()
+                if (ctvDetailcardLike.isChecked) {
+                    tvDetailcardLikecount.text = (++detailCardViewModel!!.likeCount).toString()
+                } else if (!ctvDetailcardLike.isChecked) {
+                    tvDetailcardLikecount.text = (--detailCardViewModel!!.likeCount).toString()
+                }
+            }
+        }
+    }
+
     companion object {
-        const val ME = "me"
-        const val YOU = "you"
+        const val CARD_ME = "me"
+        const val CARD_YOU = "you"
         const val STORAGE = "storage"
     }
 }

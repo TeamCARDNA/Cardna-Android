@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item
-        android:bottom="-5dp"
-        android:top="-5dp">
-        <shape android:shape="rectangle" >
-            <solid android:color="@color/transparent" />
-            <stroke
-                android:width="2dp"
-                android:color="@color/main_black" />
-        </shape>
-    </item>
-</layer-list>
+    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:right="-1dp"
+            android:end="-1dp">
+            <shape android:shape="rectangle">
+                <solid android:color="@color/transparent" />
+                <stroke
+                    android:width="2dp"
+                    android:color="@color/main_black" />
+            </shape>
+        </item>
+    </layer-list>

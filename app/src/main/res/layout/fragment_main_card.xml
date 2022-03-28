@@ -11,13 +11,6 @@
         android:layout_height="match_parent"
         tools:context="org.cardna.presentation.ui.cardpack.MainCardFragment">
 
-        <TextView
-            android:id="@+id/btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@color/main_green"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

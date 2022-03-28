@@ -82,6 +82,7 @@
     <string name="detail_card_name">다빈</string>
     <string name="detail_card_createdat">2022/01/12</string>
     <string name="detail_card_likecount">353</string>
+    <string name="detail_card_from">From.</string>
 
    <!--  Insight  -->
     <string name="insight_title">인사이트</string>
