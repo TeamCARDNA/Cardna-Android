@@ -21,7 +21,7 @@ class DetailCardViewModel @Inject constructor(
     private val _detailCard = MutableLiveData<ResponseDetailCardData.Data>()
     val detailCard: LiveData<ResponseDetailCardData.Data> = _detailCard
 
-    private val _type = MutableLiveData<String>("me")
+    private val _type = MutableLiveData<String>("you")
     val type: LiveData<String> = _type
 
     private val _isMineCard = MutableLiveData(true)
