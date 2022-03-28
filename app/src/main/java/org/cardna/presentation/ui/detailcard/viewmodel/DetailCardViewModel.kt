@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.card.ResponseDetailCardData
 import org.cardna.domain.repository.CardRepository
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,7 +40,7 @@ class DetailCardViewModel @Inject constructor(
                 if (it.type == DetailCardActivity.STORAGE) _isStorage.value = true
                 if (it.likeCount != null) _isMineCard.value = true
             }.onFailure {
-                Log.e("상세카드 조회 에러", it.toString())
+                Timber.e(it.toString())
             }
         }
     }
