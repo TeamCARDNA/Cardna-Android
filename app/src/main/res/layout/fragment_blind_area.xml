@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="56dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/bg_mainpurple_radius10dp_stroke_black_2dp"
+            android:background="@drawable/bg_mainpurple_10dp_stroke_black_2dp"
             android:paddingBottom="8dp"
             android:visibility="@{insightViewModel.isBlindAreaInsightEmpty() ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/ctl_insight_blind_area">

@@ -18,5 +18,11 @@ class MainCardFragment : BaseViewUtil.BaseFragment<FragmentMainCardBinding>(R.la
     }
 
     override fun initView() {
+        binding.ctl.setOnClickListener {
+            val intent = Intent(requireContext(), DetailCardActivity::class.java).apply {
+                putExtra(BaseViewUtil.CARD_ID, 277)
+            }
+            startActivity(intent)
+        }
     }
 }

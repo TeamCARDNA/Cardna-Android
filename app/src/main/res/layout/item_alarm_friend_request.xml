@@ -93,7 +93,7 @@
                 android:id="@+id/mb_item_alarm_friend_request_accept"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_mainpurple_maingreen_gradient_radius_5dp"
+                android:background="@drawable/bg_mainpurple_maingreen_gradient_5dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:includeFontPadding="false"
                 android:text="@string/item_friend_request_accept"

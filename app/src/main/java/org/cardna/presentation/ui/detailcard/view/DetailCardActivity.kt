@@ -1,8 +1,12 @@
 package org.cardna.presentation.ui.detailcard.view
 
 import android.animation.Animator
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowManager
+import android.widget.Button
 import androidx.activity.viewModels
 import com.airbnb.lottie.LottieAnimationView
 import com.example.cardna.R
@@ -11,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel
 import org.cardna.presentation.util.setSrcWithGlide
+import org.cardna.presentation.util.showCenterDialog
 
 @AndroidEntryPoint
 class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCardBinding>(R.layout.activity_detail_card) {
@@ -27,11 +32,12 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         initData()  //TODO API완성 후 다시 test
         setObserve()
         setLikeClickListener()
+        setClickListener()
     }
 
     private fun initData() {
         val id = intent.getIntExtra(BaseViewUtil.CARD_ID, 0)
-        detailCardViewModel.getDetailCard(277)
+        detailCardViewModel.getDetailCard(id)  //TODO API완성 후 다시 test
     }
 
     private fun setObserve() {
@@ -49,19 +55,30 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                     }
                     CARD_YOU -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_mainpurple_stroke_real_black_2dp)
+                        //보관삭제
                     }
                     STORAGE -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_white_1_5_stroke_real_black_2dp)
+                        //신고삭제
                     }
                 }
             }
         }
     }
 
+    private fun setClickListener(){
+        binding.ibtnDetailcardRight.setOnClickListener{
+        }
+    }
+
+
+
+
     private fun setLikeClickListener() {
         with(binding) {
             ctvDetailcardLike.setOnClickListener {
                 ctvDetailcardLike.toggle()
+                detailCardViewModel?.postLike() ?: return@setOnClickListener
                 if (ctvDetailcardLike.isChecked) {
                     showLikeLottie()
                     tvDetailcardLikecount.text = (++detailCardViewModel!!.likeCount).toString()
@@ -77,7 +94,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
 
         detailCardViewModel.type.observe(this) { type ->
             when (CARD_YOU) {   //TODO 서버 API 완성 시 type으로 변환환
-               CARD_ME -> {
+                CARD_ME -> {
                     lottie.setAnimation("lottie_cardme.json")
                 }
                 CARD_YOU -> {
@@ -106,7 +123,6 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         })
         lottie.visibility = View.GONE
     }
-
 
     companion object {
         const val CARD_ME = "me"

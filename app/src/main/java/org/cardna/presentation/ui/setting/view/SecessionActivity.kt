@@ -26,8 +26,8 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
     private fun setObserve() {
         settingViewModel.isSecessionReasonValid.observe(this) { isSecessionReasonValid ->
             with(binding.buttonSecession) {
-                if (isSecessionReasonValid) setBackgroundResource(R.drawable.bg_mainpurple_maingreen_gradient_radius_10dp)
-                else setBackgroundResource(R.drawable.bg_white_3_radius_10dp)
+                if (isSecessionReasonValid) setBackgroundResource(R.drawable.bg_mainpurple_maingreen_gradient_10dp)
+                else setBackgroundResource(R.drawable.bg_white_3_10dp)
             }
         }
     }

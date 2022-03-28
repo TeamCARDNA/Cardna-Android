@@ -1,13 +1,13 @@
 package org.cardna.presentation.ui.detailcard.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.card.ResponseDetailCardData
+import org.cardna.data.remote.model.like.RequestLikeData
 import org.cardna.domain.repository.CardRepository
+import org.cardna.domain.repository.LikeRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import timber.log.Timber
@@ -15,8 +15,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailCardViewModel @Inject constructor(
-    private val cardRepository: CardRepository
+    private val savedStateHandle: SavedStateHandle,
+    private val cardRepository: CardRepository,
+    private val likeRepository: LikeRepository,
 ) : ViewModel() {
+
+    private var id = savedStateHandle.get<Int>(BaseViewUtil.CARD_ID)
 
     private val _detailCard = MutableLiveData<ResponseDetailCardData.Data>()
     val detailCard: LiveData<ResponseDetailCardData.Data> = _detailCard
@@ -38,8 +42,13 @@ class DetailCardViewModel @Inject constructor(
     * 너가 카드나 : me false false
     * 너가 카드너 : you false false*/
 
+    private fun setCardId(cardId: Int) {
+        id = cardId
+    }
 
     fun getDetailCard(id: Int) {
+        setCardId(id)
+
         viewModelScope.launch {
             runCatching {
                 cardRepository.getDetailCard(id).data
@@ -51,6 +60,18 @@ class DetailCardViewModel @Inject constructor(
                     _isMineCard.value = true
                     likeCount = it.likeCount
                 }
+            }.onFailure {
+                Timber.e(it.toString())
+            }
+        }
+    }
+
+    fun postLike() {
+        viewModelScope.launch {
+            runCatching {
+                likeRepository.postLike(RequestLikeData(id ?: return@launch))
+            }.onSuccess {
+                Timber.d(it.message)
             }.onFailure {
                 Timber.e(it.toString())
             }
