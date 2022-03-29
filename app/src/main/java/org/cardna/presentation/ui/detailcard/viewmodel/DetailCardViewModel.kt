@@ -55,7 +55,8 @@ class DetailCardViewModel @Inject constructor(
             }.onSuccess {
                 _detailCard.value = it
                 _type.value = it.type
-                if (it.type == DetailCardActivity.STORAGE) _isStorage.value = true
+                if (it.type == DetailCardActivity.STORAGE)
+                    _isStorage.value = true
                 if (it.likeCount != null) {
                     _isMineCard.value = true
                     likeCount = it.likeCount

@@ -84,7 +84,7 @@
     <string name="detail_card_likecount">353</string>
     <string name="detail_card_from">From.</string>
 
-   <!--  Insight  -->
+    <!--  Insight  -->
     <string name="insight_title">인사이트</string>
     <string name="insight_open_area">Open Area</string>
     <string name="insight_blind_area">Blind Area</string>

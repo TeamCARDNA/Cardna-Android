@@ -52,14 +52,15 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                         ctlDetailcardFriend.visibility = View.GONE
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_maingreen_stroke_real_black_2dp)
                         ibtnDetailcardRight.setImageResource(R.drawable.ic_detail_card_me_trash)
+                        //공유하기  /  삭제 리스너
                     }
                     CARD_YOU -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_mainpurple_stroke_real_black_2dp)
-                        //보관삭제
+                        //공유하기  /  더보기 리스너-보관 삭제
                     }
                     STORAGE -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_white_1_5_stroke_real_black_2dp)
-                        //신고삭제
+                        //더보기 리스너-신고 삭제
                     }
                 }
             }
@@ -78,7 +79,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         with(binding) {
             ctvDetailcardLike.setOnClickListener {
                 ctvDetailcardLike.toggle()
-                detailCardViewModel?.postLike() ?: return@setOnClickListener
+                //detailCardViewModel?.postLike() ?: return@setOnClickListener
                 if (ctvDetailcardLike.isChecked) {
                     showLikeLottie()
                     tvDetailcardLikecount.text = (++detailCardViewModel!!.likeCount).toString()
