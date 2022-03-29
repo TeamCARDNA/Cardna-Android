@@ -39,14 +39,23 @@ class CardPackFragment :
         initView()
     }
 
+    override fun onResume() { // 카드팩프래그먼트에서 카드를 눌러 카드 상세페이지로 가서 삭제한다음 왔을 때, 카드팩의 카드들이 업데이트 되어야 하므로 onResume이 필요하다
+        super.onResume()
+        if (cardPackViewModel.id == null) // id가 null일 때, 즉 유저 본인의 카드팩 접근할 때,
+           initCardPackAdapter()
+    }
+
+
     private fun initViewModel() {
         binding.cardPackViewModel = cardPackViewModel
         binding.lifecycleOwner = this@CardPackFragment
 
         if (getArguments() != null) { // 로직 변경 필요
+            // 이전 Fragment 로부터 id, name 받아옴
             cardPackViewModel.setUserId(getArguments()?.getInt("id", 0))
             cardPackViewModel.setUserName(getArguments()?.getString("name", null))
         }
+        // null 이면 본인의 카드팩 접근이므로 id, name 다 초기값인 null로 있을 것것
     }
 
     override fun initView() {
@@ -141,7 +150,7 @@ class CardPackFragment :
         }
     }
 
-    // 오른쪽 상단 카드나, 카드너 추가 버튼에 리스너 다는 함수 => 이 함수는 xml 상에서 onClick 으로 넣어줘도 될 듯 ?
+    // 오른쪽 상단 카드나, 카드너 추가 버튼에 리스너 다는 함수 => 이 함수는 xml 상에서 onClick으로 넣어줘도 될 듯 ?
     // 이를 클릭하면 MainActivity의 함수를 실행시켜 줘야함
     private fun setMakeCardIvListener() {
         binding.ivAddCard.setOnClickListener {

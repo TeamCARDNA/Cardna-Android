@@ -25,7 +25,7 @@ class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriend
         // 카드팩 프래그먼트 생성
     }
 
-    fun makeCardYou() { // xml파일에서 onClick 설정해주었음.
+    fun makeCardYou() { // xml파일에서 iv_make_card_you 눌렀을 때 onClick 설정해주었음.
         val intent = Intent(this, CardCreateActivity::class.java).apply {
             putExtra("id", id)
             putExtra("name", name)
