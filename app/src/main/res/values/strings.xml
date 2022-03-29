@@ -123,4 +123,11 @@
     <string name="setnamefinished_btn_negative_text">다음에 할래요</string>
     <string name="setnamefinished_btn_positive_text">좋아요</string>
 
+<!--    MainCardFragment-->
+    <stirng name="maincard_tv_user_name">님은</stirng>
+    <string name="maincard_tv_title">힘이들땐 하늘을 봐!</string>
+    <string name="maincard_tv_edit">edit</string>
+
+
+
 </resources>
