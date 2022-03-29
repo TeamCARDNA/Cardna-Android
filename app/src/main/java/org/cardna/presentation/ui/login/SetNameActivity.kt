@@ -16,9 +16,11 @@ import androidx.core.widget.addTextChangedListener
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySetNameBinding
 import com.example.cardna.databinding.AlertSetNameBinding
+import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan
 
+@AndroidEntryPoint
 class SetNameActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivitySetNameBinding>(R.layout.activity_set_name) {
 

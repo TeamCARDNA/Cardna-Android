@@ -6,9 +6,11 @@ import androidx.core.text.set
 import androidx.core.text.toSpannable
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySetNameFinishedBinding
+import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan
 
+@AndroidEntryPoint
 class SetNameFinishedActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivitySetNameFinishedBinding>(R.layout.activity_set_name_finished) {
     override fun onCreate(savedInstanceState: Bundle?) {
