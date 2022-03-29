@@ -1,6 +1,5 @@
 package org.cardna.presentation.ui.detailcard.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -34,7 +33,7 @@ class DetailCardViewModel @Inject constructor(
     private val _isStorage = MutableLiveData(false)
     val isStorage: LiveData<Boolean> = _isStorage
 
-    var likeCount = 4  //TODO 서버완성 후 다시 test
+    var currentLikeCount = 4  //TODO 서버완성 후 다시 test
 
     /* 저장소 : storage true true
     * 내가 카드나 : me true false
@@ -53,13 +52,16 @@ class DetailCardViewModel @Inject constructor(
             runCatching {
                 cardRepository.getDetailCard(id).data
             }.onSuccess {
-                _detailCard.value = it
-                _type.value = it.type
-                if (it.type == DetailCardActivity.STORAGE)
-                    _isStorage.value = true
-                if (it.likeCount != null) {
-                    _isMineCard.value = true
-                    likeCount = it.likeCount
+                it.apply {
+                    _detailCard.value = it
+                    _type.value = type
+
+                    if (type == DetailCardActivity.STORAGE)
+                        _isStorage.value = true
+                    if (likeCount != null) {
+                        _isMineCard.value = true
+                        currentLikeCount = likeCount
+                    }
                 }
             }.onFailure {
                 Timber.e(it.toString())
@@ -75,6 +77,42 @@ class DetailCardViewModel @Inject constructor(
                 Timber.d(it.message)
             }.onFailure {
                 Timber.e(it.toString())
+            }
+        }
+    }
+
+    fun deleteCard() {
+        Timber.d("카드삭제")
+        viewModelScope.launch {
+            runCatching {
+                //      cardRepository.deleteCard(id ?: return@launch)
+            }.onSuccess {
+                //       Timber.d(it.message)
+            }.onFailure {
+                //     Timber.e(it.toString())
+            }
+        }
+    }
+
+    fun keepCard() {
+        Timber.d("카드보관")
+        viewModelScope.launch {
+            runCatching {
+                //        cardRepository.putKeepOrAddCard(id ?: return@launch)
+            }.onSuccess {
+                //        Timber.d(it.message)
+            }.onFailure {
+                //        Timber.e(it.toString())
+            }
+        }
+    }
+
+    fun reportUser() {
+        Timber.d("유저신고")
+        viewModelScope.launch {
+            runCatching {
+            }.onSuccess {
+            }.onFailure {
             }
         }
     }

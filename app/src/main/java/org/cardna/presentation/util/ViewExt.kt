@@ -1,6 +1,5 @@
 package org.cardna.presentation.util
 
-import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
@@ -8,16 +7,13 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
-import android.view.View
 import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
-import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import kotlin.math.roundToInt
 
 fun AppCompatActivity.replace(@IdRes frameId: Int, fragment: Fragment) {
@@ -33,10 +29,19 @@ fun Context.convertDPtoPX(dp: Int): Int {
 }
 
 @SuppressLint("ResourceType")
-fun Context.showCenterDialog(@IdRes layout: Int): Dialog {
+fun Context.showCustomDialog(@IdRes layout: Int, paramsX: Int? = null, paramsY: Int? = null): Dialog {
     val dialog = Dialog(this)
+    val params = dialog.window?.attributes
+
+    if (paramsX != null && paramsY != null) {
+        params?.y = paramsY
+        params?.x = paramsX
+        dialog.window?.attributes = params
+    }
+
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.setContentView(layout)
     dialog.setContentView(layout)
     dialog.setCancelable(false)
     dialog.getWindow()!!.setGravity(Gravity.CENTER)

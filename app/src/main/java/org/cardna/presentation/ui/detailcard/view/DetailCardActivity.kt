@@ -12,14 +12,16 @@ import com.example.cardna.databinding.ActivityDetailCardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel
+import org.cardna.presentation.util.setHandler
 import org.cardna.presentation.util.setSrcWithGlide
-import org.cardna.presentation.util.showCenterDialog
+import org.cardna.presentation.util.showCustomDialog
 import org.cardna.presentation.util.showLottie
 
 @AndroidEntryPoint
 class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCardBinding>(R.layout.activity_detail_card) {
     private val detailCardViewModel: DetailCardViewModel by viewModels()
     private var cardType = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.detailCardViewModel = detailCardViewModel
@@ -41,7 +43,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     private fun setObserve() {
         detailCardViewModel.detailCard.observe(this) { detailCard ->
             // cardType = detailCard.type   //TODO API완성 후 다시 test
-            cardType = CARD_YOU
+            cardType = "you"
             setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
 
             with(binding) {
@@ -68,36 +70,72 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     @SuppressLint("ResourceType")
     private fun showEditDialog(@IdRes layout: Int) {
         binding.ibtnDetailcardEdit.setOnClickListener {
-            val dialog = this.showCenterDialog(layout)
-            val deleteButton = dialog.findViewById<Button>(R.id.tv_dialog_delete)
+            val dialog = this.showCustomDialog(layout, 1400, 410)
+            val deleteBtn = dialog.findViewById<Button>(R.id.tv_dialog_delete)
 
             when (cardType) {
                 CARD_ME -> {
-                    val noButton = dialog.findViewById<Button>(R.id.tv_dialog_cardme_no)
-                    noButton.setOnClickListener {
-                        dialog.dismiss()
+                    val noBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardme_no)
+                    noBtn.setOnClickListener {
+                        setHandler(dialog)
                     }
                 }
                 CARD_YOU -> {
-                    val saveButton = dialog.findViewById<Button>(R.id.tv_dialog_cardyou_save)
-                    saveButton.setOnClickListener {
-                        dialog.dismiss()
+                    val saveBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardyou_save)
+                    saveBtn.setOnClickListener {
+                        detailCardViewModel.keepCard() //TODO API완성 후 다시 test
+                        setHandler(dialog)
                     }
                 }
                 STORAGE -> {
-                    val declarationButton = dialog.findViewById<Button>(R.id.tv_dialog_storage_declaration)
-                    declarationButton.setOnClickListener {
-                        dialog.dismiss()
+                    val declarationBtn = dialog.findViewById<Button>(R.id.tv_dialog_storage_report)
+                    declarationBtn.setOnClickListener {
+                        showUerReportDialog()
+                        setHandler(dialog)
                     }
                 }
             }
-            deleteButton.setOnClickListener {
-                dialog.dismiss()
+            deleteBtn.setOnClickListener {
+                detailCardViewModel.deleteCard()  //TODO API완성 후 다시 test
+                finish()
             }
         }
     }
 
-    fun setShareClickListener() {
+    @SuppressLint("ResourceType")
+    fun showUerReportDialog() {
+        val dialog = this.showCustomDialog(R.layout.dialog_user_report)
+        val reasonOneBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_reason_one)
+        val reasonTwoBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_reason_two)
+        val reasonThreeBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_reason_three)
+        val reasonFourBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_reason_four)
+        val cancelBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_cancel)
+
+        reasonOneBtn.setOnClickListener {
+            detailCardViewModel.reportUser()
+            setHandler(dialog)
+        }
+
+        reasonTwoBtn.setOnClickListener {
+            detailCardViewModel.reportUser()
+            setHandler(dialog)
+        }
+
+        reasonThreeBtn.setOnClickListener {
+            detailCardViewModel.reportUser()
+            setHandler(dialog)
+        }
+
+        reasonFourBtn.setOnClickListener {
+            detailCardViewModel.reportUser()
+            setHandler(dialog)
+        }
+        cancelBtn.setOnClickListener {
+            setHandler(dialog)
+        }
+    }
+
+    fun setCardShareClickListener() {
         startActivity(Intent(this@DetailCardActivity, CardShareActivity::class.java))
     }
 
@@ -108,9 +146,9 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
 
             if (ctvDetailcardLike.isChecked) {
                 showLikeLottie()
-                tvDetailcardLikecount.text = (++detailCardViewModel!!.likeCount).toString()
+                tvDetailcardLikecount.text = (++detailCardViewModel!!.currentLikeCount).toString()
             } else {
-                tvDetailcardLikecount.text = (--detailCardViewModel!!.likeCount).toString()
+                tvDetailcardLikecount.text = (--detailCardViewModel!!.currentLikeCount).toString()
             }
         }
     }
