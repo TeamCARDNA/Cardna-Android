@@ -3,6 +3,7 @@ package org.cardna.presentation.ui.detailcard.view
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
@@ -14,6 +15,7 @@ import org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel
 import org.cardna.presentation.util.setHandler
 import org.cardna.presentation.util.setSrcWithGlide
 import org.cardna.presentation.util.showCustomDialog
+import org.cardna.presentation.util.showLottie
 
 @AndroidEntryPoint
 class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCardBinding>(R.layout.activity_detail_card) {
