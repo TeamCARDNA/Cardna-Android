@@ -78,10 +78,12 @@
 
     <!--  Detail Card  -->
     <string name="detail_card_title">퍼블리싱도 하는 디자이너</string>
-    <string name="detail_card_content">정말 대단해</string>
+    <string name="detail_card_content">정말말 대단해정말 대단해단해정말 대단해정말 대단해정말 대단해정말 단해단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말단해단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말단해단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말단해단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해정말 대단해단해</string>
     <string name="detail_card_name">다빈</string>
     <string name="detail_card_createdat">2022/01/12</string>
     <string name="detail_card_likecount">353</string>
+    <string name="detail_card_from">From.</string>
+    <string name="detail_card_cardyou_add">카드너 추가하기</string>
 
     <!--  Insight  -->
     <string name="insight_title">인사이트</string>

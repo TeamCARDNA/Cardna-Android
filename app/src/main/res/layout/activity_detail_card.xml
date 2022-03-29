@@ -1,17 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="detailCardViewModel"
+            type="org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel" />
+
+        <variable
+            name="detailCardActivity"
+            type="org.cardna.presentation.ui.detailcard.view.DetailCardActivity" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="org.cardna.presentation.ui.detailcard.DetailCardActivity">
+        android:background="@color/main_black"
+        tools:context="org.cardna.presentation.ui.detailcard.view.DetailCardActivity">
 
+        <ImageView
+            android:id="@+id/iv_detailcard_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white_1_5"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="360:378"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctl_detailcard_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="14dp"
+            android:visibility="@{detailCardViewModel.isStorage ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_detailcard_image"
+            app:layout_constraintEnd_toEndOf="@id/iv_detailcard_image">
+
+            <CheckedTextView
+                android:id="@+id/ctv_detailcard_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:checkMark="@drawable/ic_selector_detailcard_like"
+                android:checked="@{detailCardViewModel.detailCard.isLiked ? true : false}"
+                android:onClick="@{()->detailCardActivity.setLikeClickListener()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <org.cardna.presentation.ui.customview.OutlineTextView
+                android:id="@+id/tv_detailcard_likecount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="4"
+                android:textColor="@color/main_black"
+                android:textSize="12sp"
+                android:visibility="@{detailCardViewModel.isMineCard ?  View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="@id/ctv_detailcard_like"
+                app:layout_constraintStart_toStartOf="@id/ctv_detailcard_like"
+                app:layout_constraintTop_toBottomOf="@id/ctv_detailcard_like"
+                app:textStroke="true"
+                app:textStrokeColor="@color/white"
+                app:textStrokeWidth="5.0"
+                tools:text="@string/detail_card_likecount" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/iv_detailcard_image">
+
+            <TextView
+                android:id="@+id/tv_detailcard_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_maingreen_stroke_real_black_2dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:paddingVertical="12dp"
+                android:paddingStart="18dp"
+                android:text="@{detailCardViewModel.detailCard.title}"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ctl_detailcard_tab"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="@{detailCardViewModel.isMineCard ?  View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_detailcard_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_detailcard_title">
+
+                <ImageButton
+                    android:id="@+id/ibtn_detailcard_share"
+                    android:layout_width="52dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_transparent_stroke_right_left_real_black_2dp"
+                    android:onClick="@{()->detailCardActivity.setCardShareClickListener()}"
+                    android:src="@drawable/ic_share"
+                    android:visibility="@{detailCardViewModel.isStorage ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ibtn_detailcard_edit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+
+                    android:id="@+id/ibtn_detailcard_edit"
+                    android:layout_width="52dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_transparent_stroke_right_left_real_black_2dp"
+                    android:paddingVertical="18dp"
+                    android:src="@drawable/ic_detail_three_dot"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/sv_detailcard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/bt_detailcard_card_add"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ctl_detailcard_friend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_detailcard_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:paddingBottom="12dp"
+                        android:text="@string/detail_card_from"
+                        android:textColor="@color/white_2"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_detailcard_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@{detailCardViewModel.detailCard.name}"
+                        android:textColor="@color/white_2"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toEndOf="@id/tv_detailcard_from"
+                        app:layout_constraintTop_toTopOf="@id/tv_detailcard_from"
+                        tools:text="@string/detail_card_name" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_detailcard_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:lineSpacingExtra="5dp"
+                    android:text="@{detailCardViewModel.detailCard.content}"
+                    android:textColor="@color/white_1"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ctl_detailcard_friend"
+                    tools:layout_editor_absoluteY="22dp"
+                    tools:text="@string/detail_card_content" />
+
+                <TextView
+                    android:id="@+id/tv_detailcard_creatat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="48dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@{detailCardViewModel.detailCard.createdAt}"
+                    android:textColor="@color/white_3"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detailcard_content"
+                    tools:text="@string/detail_card_createdat" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_detailcard_card_add"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_white_1_5_10dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{()->detailCardViewModel.keepOrAddCard()}"
+            android:text="@string/detail_card_cardyou_add"
+            android:textColor="@color/main_black"
+            android:textSize="20sp"
+            android:visibility="@{detailCardViewModel.isStorage ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/sv_detailcard"
+            app:layout_constraintStart_toStartOf="@+id/sv_detailcard" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/la_detailcard_lottie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="280dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

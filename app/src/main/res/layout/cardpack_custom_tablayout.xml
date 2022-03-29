@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="isCardme"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="20dp"
+        android:background="@color/main_black">
+
+        <ImageView
+            android:id="@+id/iv_cardpack_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_selector_cardpack_tab_cardme" />
+
+        <TextView
+            android:id="@+id/tv_cardme_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/selector_cardpack_tab_cardme_text"
+            android:visibility="@{isCardme? View.VISIBLE : View.GONE}"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_cardpack_tab"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_cardpack_tab"
+            app:layout_constraintTop_toTopOf="@+id/iv_cardpack_tab"
+            tools:text="카드나" />
+
+        <TextView
+            android:id="@+id/tv_cardyou_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/selector_cardpack_tab_cardyou_text"
+            android:visibility="@{isCardme? View.GONE : View.VISIBLE}"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_cardpack_tab"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_cardpack_tab"
+            app:layout_constraintTop_toTopOf="@+id/iv_cardpack_tab"
+            tools:text="카드나" />
+
+        <View
+            android:id="@+id/view_cardpack_line"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:background="@color/main_purple" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

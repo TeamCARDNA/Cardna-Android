@@ -8,7 +8,7 @@ import com.example.cardna.R
 import com.example.cardna.databinding.FragmentOpenAreaBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.detailcard.DetailCardActivity
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.insight.viewmodel.InsightViewModel
 import org.cardna.presentation.util.setSrcWithGlide
 
