@@ -11,6 +11,10 @@
             name="detailCardViewModel"
             type="org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel" />
 
+        <variable
+            name="detailCardActivity"
+            type="org.cardna.presentation.ui.detailcard.view.DetailCardActivity" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,6 +49,7 @@
                 android:layout_marginBottom="20dp"
                 android:checkMark="@drawable/ic_selector_detailcard_like"
                 android:checked="@{detailCardViewModel.detailCard.isLiked ? true : false}"
+                android:onClick="@{()->detailCardActivity.setLikeClickListener()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -96,19 +101,20 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_detailcard_title">
 
                 <ImageButton
-                    android:id="@+id/ibtn_detailcard_left"
+                    android:id="@+id/ibtn_detailcard_share"
                     android:layout_width="52dp"
                     android:layout_height="0dp"
                     android:background="@drawable/bg_transparent_stroke_right_left_real_black_2dp"
+                    android:onClick="@{()->detailCardActivity.setShareClickListener()}"
                     android:src="@drawable/ic_share"
                     android:visibility="@{detailCardViewModel.isStorage ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/ibtn_detailcard_right"
+                    app:layout_constraintEnd_toStartOf="@+id/ibtn_detailcard_edit"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
 
-                    android:id="@+id/ibtn_detailcard_right"
+                    android:id="@+id/ibtn_detailcard_edit"
                     android:layout_width="52dp"
                     android:layout_height="0dp"
                     android:background="@drawable/bg_transparent_stroke_right_left_real_black_2dp"

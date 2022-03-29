@@ -1,14 +1,12 @@
 package org.cardna.presentation.ui.detailcard.view
 
-import android.animation.Animator
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
 import androidx.activity.viewModels
-import com.airbnb.lottie.LottieAnimationView
+import androidx.annotation.IdRes
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityDetailCardBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,23 +14,22 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel
 import org.cardna.presentation.util.setSrcWithGlide
 import org.cardna.presentation.util.showCenterDialog
+import org.cardna.presentation.util.showLottie
 
 @AndroidEntryPoint
 class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCardBinding>(R.layout.activity_detail_card) {
     private val detailCardViewModel: DetailCardViewModel by viewModels()
-
+    private var cardType = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.detailCardViewModel = detailCardViewModel
-
+        binding.detailCardActivity = this
         initView()
     }
 
     override fun initView() {
         initData()  //TODO API완성 후 다시 test
         setObserve()
-        setLikeClickListener()
-        setClickListener()
     }
 
     private fun initData() {
@@ -40,89 +37,91 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         detailCardViewModel.getDetailCard(id)  //TODO API완성 후 다시 test
     }
 
+    @SuppressLint("ResourceType")
     private fun setObserve() {
         detailCardViewModel.detailCard.observe(this) { detailCard ->
-            setSrcWithGlide(detailCard.cardImg!!, binding.ivDetailcardImage)
-        }
+            // cardType = detailCard.type   //TODO API완성 후 다시 test
+            cardType = CARD_YOU
+            setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
 
-        detailCardViewModel.type.observe(this) { type ->
             with(binding) {
-                when (type) {
+                when (cardType) {
                     CARD_ME -> {
                         ctlDetailcardFriend.visibility = View.GONE
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_maingreen_stroke_real_black_2dp)
-                        ibtnDetailcardRight.setImageResource(R.drawable.ic_detail_card_me_trash)
-                        //공유하기  /  삭제 리스너
+                        ibtnDetailcardEdit.setImageResource(R.drawable.ic_detail_card_me_trash)
+                        showEditDialog(R.layout.dialog_detail_cardme)
                     }
                     CARD_YOU -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_mainpurple_stroke_real_black_2dp)
-                        //공유하기  /  더보기 리스너-보관 삭제
+                        showEditDialog(R.layout.dialog_detail_cardyou)
                     }
                     STORAGE -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_white_1_5_stroke_real_black_2dp)
-                        //더보기 리스너-신고 삭제
+                        showEditDialog(R.layout.dialog_detail_storage)
                     }
                 }
             }
         }
     }
 
-    private fun setClickListener(){
-        binding.ibtnDetailcardRight.setOnClickListener{
+    @SuppressLint("ResourceType")
+    private fun showEditDialog(@IdRes layout: Int) {
+        binding.ibtnDetailcardEdit.setOnClickListener {
+            val dialog = this.showCenterDialog(layout)
+            val deleteButton = dialog.findViewById<Button>(R.id.tv_dialog_delete)
+
+            when (cardType) {
+                CARD_ME -> {
+                    val noButton = dialog.findViewById<Button>(R.id.tv_dialog_cardme_no)
+                    noButton.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                }
+                CARD_YOU -> {
+                    val saveButton = dialog.findViewById<Button>(R.id.tv_dialog_cardyou_save)
+                    saveButton.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                }
+                STORAGE -> {
+                    val declarationButton = dialog.findViewById<Button>(R.id.tv_dialog_storage_declaration)
+                    declarationButton.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                }
+            }
+            deleteButton.setOnClickListener {
+                dialog.dismiss()
+            }
         }
     }
 
+    fun setShareClickListener() {
+        startActivity(Intent(this@DetailCardActivity, CardShareActivity::class.java))
+    }
 
-
-
-    private fun setLikeClickListener() {
+    fun setLikeClickListener() {
         with(binding) {
-            ctvDetailcardLike.setOnClickListener {
-                ctvDetailcardLike.toggle()
-                //detailCardViewModel?.postLike() ?: return@setOnClickListener
-                if (ctvDetailcardLike.isChecked) {
-                    showLikeLottie()
-                    tvDetailcardLikecount.text = (++detailCardViewModel!!.likeCount).toString()
-                } else if (!ctvDetailcardLike.isChecked) {
-                    tvDetailcardLikecount.text = (--detailCardViewModel!!.likeCount).toString()
-                }
+            ctvDetailcardLike.toggle()
+            detailCardViewModel?.postLike() ?: return
+
+            if (ctvDetailcardLike.isChecked) {
+                showLikeLottie()
+                tvDetailcardLikecount.text = (++detailCardViewModel!!.likeCount).toString()
+            } else {
+                tvDetailcardLikecount.text = (--detailCardViewModel!!.likeCount).toString()
             }
         }
     }
 
     private fun showLikeLottie() {
-        val lottie = findViewById<LottieAnimationView>(R.id.la_detailcard_lottie)
-
-        detailCardViewModel.type.observe(this) { type ->
-            when (CARD_YOU) {   //TODO 서버 API 완성 시 type으로 변환환
-                CARD_ME -> {
-                    lottie.setAnimation("lottie_cardme.json")
-                }
-                CARD_YOU -> {
-                    lottie.setAnimation("lottie_cardyou.json")
-                }
+        with(binding) {
+            when (cardType) {
+                CARD_ME -> showLottie(laDetailcardLottie, CARD_ME, "lottie_cardme.json")
+                CARD_YOU -> showLottie(laDetailcardLottie, CARD_YOU, "lottie_cardyou.json")
             }
         }
-
-        binding.laDetailcardLottie.visibility = View.VISIBLE
-        lottie.loop(false)
-        lottie.playAnimation()
-        lottie.repeatCount = 1
-
-        lottie.addAnimatorListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {
-                lottie.visibility = View.VISIBLE
-            }
-
-            override fun onAnimationEnd(animation: Animator?) {
-                lottie.visibility = View.GONE
-            }
-
-            override fun onAnimationCancel(animation: Animator?) {}
-            override fun onAnimationRepeat(animation: Animator?) {
-            }
-        })
-        lottie.visibility = View.GONE
     }
 
     companion object {

@@ -17,13 +17,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/tv_dialog_cardyou_save"
+            android:id="@+id/tv_dialog_storage_declaration"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_semibold"
             android:includeFontPadding="false"
-            android:text="보관"
+            android:text="신고"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/view_dialog"
@@ -37,7 +37,7 @@
             android:layout_height="1dp"
             android:background="@color/black"
             android:fontFamily="@font/pretendard_semibold"
-            app:layout_constraintTop_toBottomOf="@id/tv_dialog_cardyou_save" />
+            app:layout_constraintTop_toBottomOf="@id/tv_dialog_storage_declaration" />
 
         <Button
             android:id="@+id/tv_dialog_delete"
@@ -50,8 +50,8 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/tv_dialog_cardyou_save"
-            app:layout_constraintStart_toStartOf="@+id/tv_dialog_cardyou_save"
+            app:layout_constraintEnd_toEndOf="@+id/tv_dialog_storage_declaration"
+            app:layout_constraintStart_toStartOf="@+id/tv_dialog_storage_declaration"
             app:layout_constraintTop_toBottomOf="@id/view_dialog" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

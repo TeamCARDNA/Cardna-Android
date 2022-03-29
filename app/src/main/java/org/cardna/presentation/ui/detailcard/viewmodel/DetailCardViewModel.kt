@@ -34,7 +34,7 @@ class DetailCardViewModel @Inject constructor(
     private val _isStorage = MutableLiveData(false)
     val isStorage: LiveData<Boolean> = _isStorage
 
-    var likeCount = 4
+    var likeCount = 4  //TODO 서버완성 후 다시 test
 
     /* 저장소 : storage true true
     * 내가 카드나 : me true false
