@@ -5,9 +5,10 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.FragmentCardMeBinding
+import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
-
+@AndroidEntryPoint
 class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout.fragment_card_me) {
 
     private val cardPackViewModel: CardPackViewModel by activityViewModels() // id, name

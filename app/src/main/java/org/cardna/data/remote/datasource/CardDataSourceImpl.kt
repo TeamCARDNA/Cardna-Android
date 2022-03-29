@@ -4,6 +4,7 @@ import org.cardna.data.remote.api.card.CardService
 import org.cardna.data.remote.model.card.ResponseDeleteCardData
 import org.cardna.data.remote.model.card.ResponseDetailCardData
 import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
+import org.cardna.data.remote.model.card.ResponseMainCardData
 import javax.inject.Inject
 
 class CardDataSourceImpl @Inject constructor(
@@ -20,5 +21,9 @@ class CardDataSourceImpl @Inject constructor(
 
     override suspend fun putKeepOrAddCard(cardId: Int): ResponseKeepOrAddCardData {
         return cardService.putKeepOrAddCard(cardId)
+    }
+
+    override suspend fun getMainCard(): ResponseMainCardData {
+        return cardService.getMainCard()
     }
 }
