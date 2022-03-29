@@ -3,6 +3,7 @@ package org.cardna.data.remote.api.card
 import org.cardna.data.remote.model.card.ResponseDeleteCardData
 import org.cardna.data.remote.model.card.ResponseDetailCardData
 import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
+import org.cardna.data.remote.model.card.ResponseMainCardData
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PUT
@@ -24,4 +25,7 @@ interface CardService {
     suspend fun putKeepOrAddCard(
         @Path("cardId") cardId: Int
     ): ResponseKeepOrAddCardData
+
+    @GET("card/main/{userId}")
+    suspend fun getMainCard() : ResponseMainCardData
 }
