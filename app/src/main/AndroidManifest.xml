@@ -14,14 +14,20 @@
         android:theme="@style/Theme.Cardna"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="org.cardna.presentation.ui.detailcard.DetailCardActivity"
+            android:name="org.cardna.presentation.ui.detailcard.view.UserReportActivity"
             android:exported="false" />
         <activity
+            android:name="org.cardna.presentation.ui.detailcard.view.CardShareActivity"
+            android:exported="false" />
+        <activity
+            android:name="org.cardna.presentation.ui.detailcard.view.DetailCardActivity"
+            android:exported="true" />
+        <activity
             android:name="org.cardna.presentation.ui.alarm.view.AlarmActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name="org.cardna.presentation.ui.setting.view.SecessionActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name="org.cardna.presentation.ui.setting.view.ServiceOperationActivity"
             android:exported="false" />
@@ -36,7 +42,7 @@
             android:exported="false" />
         <activity
             android:name="org.cardna.presentation.ui.setting.view.SettingActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name="org.cardna.presentation.MainActivity"
             android:exported="true">

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:background="@drawable/bg_dark_gray_radius_10dp">
+        android:background="@drawable/bg_dark_gray_10dp">
 
         <ImageView
             android:id="@+id/iv_item_alarm_write_cardyou"

@@ -29,10 +29,19 @@ fun Context.convertDPtoPX(dp: Int): Int {
 }
 
 @SuppressLint("ResourceType")
-fun Context.showCenterDialog(@IdRes layout: Int): Dialog {
+fun Context.showCustomDialog(@IdRes layout: Int, paramsX: Int? = null, paramsY: Int? = null): Dialog {
     val dialog = Dialog(this)
+    val params = dialog.window?.attributes
+
+    if (paramsX != null && paramsY != null) {
+        params?.y = paramsY
+        params?.x = paramsX
+        dialog.window?.attributes = params
+    }
+
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.setContentView(layout)
     dialog.setContentView(layout)
     dialog.setCancelable(false)
     dialog.getWindow()!!.setGravity(Gravity.CENTER)
@@ -50,3 +59,4 @@ fun Activity.setSrcWithGlide(imageUrl: String, imageView: ImageView) {
         .load(imageUrl)
         .into(imageView)
 }
+

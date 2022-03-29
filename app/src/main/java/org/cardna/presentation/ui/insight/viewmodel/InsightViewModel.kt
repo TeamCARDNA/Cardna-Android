@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.insight.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import org.cardna.data.remote.model.insight.BlindAreaCard
 import org.cardna.data.remote.model.insight.OpenAreaCard
 import org.cardna.data.remote.model.insight.ResponseInsightData
 import org.cardna.domain.repository.InsightRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,8 +48,8 @@ class InsightViewModel @Inject constructor(
             runCatching {
                 insightRepository.getInsight().data
             }.onSuccess {
-                _blindAreaInsight.value = it.blindAreaCard
-                _openAreaInsight.value = it.openAreaCard
+                it.blindAreaCard.also { _blindAreaInsight.value = it }
+                it.openAreaCard.also { _openAreaInsight.value = it }
 
                 _isBlindAreaInsightEmpty.value = _blindAreaInsight.value == null
                 _isOpenAreaInsightEmpty.value = _openAreaInsight.value == null
@@ -55,7 +57,7 @@ class InsightViewModel @Inject constructor(
                 _blindAreaCardId.value = _blindAreaInsight.value?.id ?: 0
                 _openAreaCardId.value = _openAreaInsight.value?.id ?: 0
             }.onFailure {
-
+                Timber.e(it.toString())
             }
         }
     }

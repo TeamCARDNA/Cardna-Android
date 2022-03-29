@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable-v24/ic_cardyou_active.xml" value="0.1415" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable-v24/ic_detail_card_me_trash.xml" value="0.234" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2175" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable-v24/ic_represent_card_pick_count_cricle.xml" value="0.13" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable-v24/ic_selector_detailcard_like.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable-v24/selector_detailcard_like.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/anim_translate_right.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_dark_gray_radius_10dp.xml" value="0.13" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_dark_gray_radius_16dp.xml" value="0.1585" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_gradient_radius10dp.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_gradient_radius_10.xml" value="0.1365" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_main_green_radius_2.xml" value="0.1685" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_maingreen_radius10dp_stroke_black_2dp.xml" value="0.114" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_maingreen_stroke_black_2dp.xml" value="0.117" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_maingreen_stroke_real_black_2dp.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_mainpurple_10dp_stroke_black_2dp.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_mainpurple_maingreen_gradient_radius_10dp.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_mainpurple_maingreen_gradient_radius_5dp.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_mainpurple_radius10dp_stroke_black_2dp.xml" value="0.2025" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_mainpurple_stroke_real_black_2dp.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_oval_switch_thumb.xml" value="0.11" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_selector_dialog_logout.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_stroke_white_2_1dp.xml" value="0.13" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_switch_track_off.xml" value="0.11" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_switch_track_on.xml" value="0.11" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_tranparence_stroke_vertical_real_black_2dp.xml" value="0.103" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_tranparent_stroke_vertical_real_black_2dp.xml" value="0.1815" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_transparent_stroke_left_real_black_2dp.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_transparent_stroke_real_black_2dp.xml" value="0.1685" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_transparent_stroke_right_left_real_black_2dp.xml" value="0.1505" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_white1_radius_10dp.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_white_1_10dp.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_white_1_5_10dp.xml" value="0.121" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_white_1_5_stroke_real_black_2dp.xml" value="0.104" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_white_3_radius_10dp.xml" value="0.13" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/bg_white_4_radius_5dp.xml" value="0.182" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/divider_white_5_1dp.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_cardpack_checked.xml" value="0.2175" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_detail_3dot.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_empty_profile.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_icicic.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_insight_checked.xml" value="0.1415" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_insight_unchecked.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_maincard_checked.xml" value="0.1415" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_maincard_unchecked.xml" value="0.2175" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_mypage_checked.xml" value="0.1415" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_mypage_unchecked.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_selector_maincard.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_selector_mypage.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/ic_selector_secession_checkbox.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/item_write_cardyou.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/rectangle_black_radius_2.xml" value="0.103" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/rectangle_dark_gray_radius_10dp.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/rectangle_left_right_main_green_radius_2.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/selector_cardpack.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/selector_insight.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/selector_maincard.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/selector_mypage.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/selector_switch_alarm.xml" value="0.11" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/font/pretendard_font.xml" value="0.1037037037037037" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_alarm.xml" value="0.264" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_animation.xml" value="0.136" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_card_share.xml" value="0.12273550724637682" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_detail_card.xml" value="0.264" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_developer_info.xml" value="0.176" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_privacy_policy.xml" value="0.11930091185410334" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_secession.xml" value="0.2" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_service_operation.xml" value="0.11930091185410334" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_setting.xml" value="0.2" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_user_report.xml" value="0.10185185185185185" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_version_info.xml" value="0.264" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/anim_translate_right.xml" value="0.12158054711246201" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/bg_dark_gray_radius_10dp.xml" value="0.1111111111111111" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/custom_detail_card_layout.xml" value="0.176" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/detail_card_layout.xml" value="0.152" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/dialog_detail_cardme.xml" value="0.264" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/dialog_detail_cardyou.xml" value="0.16799999999999998" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/dialog_detail_storage.xml" value="0.2" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/dialog_logout.xml" value="0.264" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/dialog_user_report.xml" value="0.176" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/fragment_blind_area.xml" value="0.264" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/fragment_card_pack.xml" value="0.2318840579710145" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/fragment_insight.xml" value="0.2318840579710145" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/fragment_main_card.xml" value="0.2318840579710145" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/fragment_my_page.xml" value="0.2318840579710145" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/fragment_open_area.xml" value="0.176" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/item_alarm_friend_request.xml" value="0.3786407766990291" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/item_alarm_write_cardyou.xml" value="0.264" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/menu/menu_bottom_nav.xml" value="0.4" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2671875" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

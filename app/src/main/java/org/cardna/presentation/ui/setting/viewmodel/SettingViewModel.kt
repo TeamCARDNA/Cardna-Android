@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.domain.repository.UserRepository
 import org.cardna.presentation.ui.setting.view.SecessionActivity
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -110,7 +111,7 @@ class SettingViewModel @Inject constructor(
             }.onSuccess {
 
             }.onFailure {
-
+                Timber.e(it.toString())
             }
         }
     }

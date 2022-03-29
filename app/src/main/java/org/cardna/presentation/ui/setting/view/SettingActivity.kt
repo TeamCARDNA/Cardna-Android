@@ -8,7 +8,7 @@ import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.util.showCenterDialog
+import org.cardna.presentation.util.showCustomDialog
 
 @AndroidEntryPoint
 class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBinding>(R.layout.activity_setting) {
@@ -51,7 +51,7 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
 
     @SuppressLint("ResourceType")
     private fun showLogOutDialog() {
-        val dialog = this.showCenterDialog(R.layout.dialog_logout)
+        val dialog = this.showCustomDialog(R.layout.dialog_logout)
         val confirmBtn = dialog.findViewById<Button>(R.id.tv_lougout_dialog_confirm)
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_logout_dialog_cancel)
 
