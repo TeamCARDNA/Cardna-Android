@@ -24,12 +24,7 @@ class MainCardFragment :
 
     override fun initView() {
         initData()
-        binding.ctl.setOnClickListener {
-            val intent = Intent(requireContext(), DetailCardActivity::class.java).apply {
-                putExtra(BaseViewUtil.CARD_ID, 277)
-            }
-            startActivity(intent)
-        }
+
     }
 
     override fun onResume() {

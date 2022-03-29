@@ -33,7 +33,7 @@ class MainCardViewModel @Inject constructor(
     fun getMainCardList() {
         viewModelScope.launch {
             kotlin.runCatching {
-                cardRepository.getRepresentCardList().mainCardList
+                cardRepository.getMainCard().data.mainCardList
             }.onSuccess { it ->
                 it.map {
                     _cardImg.value = it.cardImg
