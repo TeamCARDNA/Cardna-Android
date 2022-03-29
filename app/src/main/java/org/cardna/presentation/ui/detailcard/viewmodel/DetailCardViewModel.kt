@@ -24,7 +24,7 @@ class DetailCardViewModel @Inject constructor(
     private val _detailCard = MutableLiveData<ResponseDetailCardData.Data>()
     val detailCard: LiveData<ResponseDetailCardData.Data> = _detailCard
 
-    private val _type = MutableLiveData<String>("you")
+    private val _type = MutableLiveData<String>("me")
     val type: LiveData<String> = _type
 
     private val _isMineCard = MutableLiveData(true)
@@ -94,7 +94,7 @@ class DetailCardViewModel @Inject constructor(
         }
     }
 
-    fun keepCard() {
+    fun keepOrAddCard() {
         Timber.d("카드보관")
         viewModelScope.launch {
             runCatching {

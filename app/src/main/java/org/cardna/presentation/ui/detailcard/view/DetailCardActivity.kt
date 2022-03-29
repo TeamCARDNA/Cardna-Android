@@ -3,7 +3,6 @@ package org.cardna.presentation.ui.detailcard.view
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
@@ -15,7 +14,6 @@ import org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel
 import org.cardna.presentation.util.setHandler
 import org.cardna.presentation.util.setSrcWithGlide
 import org.cardna.presentation.util.showCustomDialog
-import org.cardna.presentation.util.showLottie
 
 @AndroidEntryPoint
 class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCardBinding>(R.layout.activity_detail_card) {
@@ -43,7 +41,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     private fun setObserve() {
         detailCardViewModel.detailCard.observe(this) { detailCard ->
             // cardType = detailCard.type   //TODO API완성 후 다시 test
-            cardType = "you"
+            cardType = "me"
             setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
 
             with(binding) {
@@ -52,7 +50,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                         ctlDetailcardFriend.visibility = View.GONE
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_maingreen_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setImageResource(R.drawable.ic_detail_card_me_trash)
-                        showEditDialog(R.layout.dialog_detail_cardme)
+                        showEditDialog(R.layout.dialog_detail_cardme, null, null)
                     }
                     CARD_YOU -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_mainpurple_stroke_real_black_2dp)
@@ -68,9 +66,9 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     }
 
     @SuppressLint("ResourceType")
-    private fun showEditDialog(@IdRes layout: Int) {
+    private fun showEditDialog(@IdRes layout: Int, paramsX: Int? = 1400, paramsY: Int? = 410) {
         binding.ibtnDetailcardEdit.setOnClickListener {
-            val dialog = this.showCustomDialog(layout, 1400, 410)
+            val dialog = this.showCustomDialog(layout, paramsX, paramsY)
             val deleteBtn = dialog.findViewById<Button>(R.id.tv_dialog_delete)
 
             when (cardType) {
@@ -83,7 +81,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                 CARD_YOU -> {
                     val saveBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardyou_save)
                     saveBtn.setOnClickListener {
-                        detailCardViewModel.keepCard() //TODO API완성 후 다시 test
+                        detailCardViewModel.keepOrAddCard() //TODO API완성 후 다시 test
                         setHandler(dialog)
                     }
                 }
@@ -111,6 +109,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         val reasonFourBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_reason_four)
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_cancel)
 
+        //TODO API완성 후 다시 test
         reasonOneBtn.setOnClickListener {
             detailCardViewModel.reportUser()
             setHandler(dialog)
@@ -142,7 +141,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     fun setLikeClickListener() {
         with(binding) {
             ctvDetailcardLike.toggle()
-            detailCardViewModel?.postLike() ?: return
+            // detailCardViewModel?.postLike() ?: return   //TODO API완성 후 다시 test
 
             if (ctvDetailcardLike.isChecked) {
                 showLikeLottie()

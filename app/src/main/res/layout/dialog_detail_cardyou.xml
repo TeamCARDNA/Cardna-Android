@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="40dp"
-    android:layout_marginEnd="20dp"
-    android:layout_marginStart="160dp">
+    android:layout_marginStart="160dp"
+    android:layout_marginEnd="20dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,11 +17,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/tv_dialog_cardyou_save"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/white_1"
             android:fontFamily="@font/pretendard_semibold"
             android:includeFontPadding="false"
             android:text="보관"
@@ -40,11 +41,12 @@
             android:fontFamily="@font/pretendard_semibold"
             app:layout_constraintTop_toBottomOf="@id/tv_dialog_cardyou_save" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/tv_dialog_delete"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/white_1"
             android:fontFamily="@font/pretendard_semibold"
             android:includeFontPadding="false"
             android:text="삭제"
