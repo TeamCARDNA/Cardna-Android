@@ -26,12 +26,10 @@ import org.cardna.presentation.ui.cardpack.adapter.CardPackTabLayoutAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 
 @AndroidEntryPoint
-class CardPackFragment :
-    BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.layout.fragment_card_pack) {
+class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.layout.fragment_card_pack) {
 
-    private val cardPackViewModel: CardPackViewModel by activityViewModels()
+    private val cardPackViewModel: CardPackViewModel by activityViewModels() // MainActivity의 생명주기와 같이함 ?
     private lateinit var cardPackTabLayoutAdapter: CardPackTabLayoutAdapter // tabLayout 에 data 띄워주는 adapter
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,7 +47,7 @@ class CardPackFragment :
 
     private fun initViewModel() {
         binding.cardPackViewModel = cardPackViewModel
-        binding.lifecycleOwner = this@CardPackFragment
+        // binding.lifecycleOwner = this@CardPackFragment
 
         if (getArguments() != null) { // 로직 변경 필요
             // 이전 Fragment 로부터 id, name 받아옴
@@ -72,7 +70,7 @@ class CardPackFragment :
         fragmentList = listOf(
             CardMeFragment(),
             CardYouFragment()
-        ) // 그냥 이렇게 해주고, 각 카드나, 카드너 프래그먼트에서는 뷰 모델의 id 값에따라 생성해주면 됨.
+        ) // 그냥 이렇게 인자없이 생성만 해주고, 각 카드나, 카드너 프래그먼트에서는 뷰 모델의 id 값에따라 생성해주면 됨.
         initMeOrFriendCardLayout() // 이걸 따로 빼서 그냥 initView() 에다 넣으면 안되나
         cardPackTabLayoutAdapter = CardPackTabLayoutAdapter(this)
         cardPackTabLayoutAdapter.fragments.addAll(fragmentList)

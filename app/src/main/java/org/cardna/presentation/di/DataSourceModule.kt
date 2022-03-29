@@ -4,9 +4,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.cardna.data.remote.api.card.CardService
+import org.cardna.data.remote.api.insight.InsightService
+import org.cardna.data.remote.api.like.LikeService
 import org.cardna.data.remote.api.user.UserService
-import org.cardna.data.remote.datasource.UserDataSource
-import org.cardna.data.remote.datasource.UserDataSourceImpl
+import org.cardna.data.remote.datasource.*
 import javax.inject.Singleton
 
 @Module
@@ -17,5 +19,23 @@ object DataSourceModule {
     @Singleton
     fun provideUserDataSource(userService: UserService): UserDataSource {
         return UserDataSourceImpl(userService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideInsightDataSource(insightService: InsightService): InsightDataSource {
+        return InsightDataSourceImpl(insightService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCardDataSource(cardService: CardService): CardDataSource {
+        return CardDataSourceImpl(cardService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLikeDataSource(likeService: LikeService): LikeDataSource {
+        return LikeDataSourceImpl(likeService)
     }
 }

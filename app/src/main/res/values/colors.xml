@@ -34,4 +34,5 @@
     <!--  etc  -->
     <color name="signup_warning_red">#E86A5D</color>
     <color name="transparent">#00000000</color>
+    <color name="main_black_65">#A6121212</color>
 </resources>

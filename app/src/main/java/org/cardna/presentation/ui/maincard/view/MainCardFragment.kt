@@ -1,11 +1,13 @@
 package org.cardna.presentation.ui.maincard.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.example.cardna.R
 import com.example.cardna.databinding.FragmentMainCardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 
 @AndroidEntryPoint
 class MainCardFragment : BaseViewUtil.BaseFragment<FragmentMainCardBinding>(R.layout.fragment_main_card) {
@@ -16,5 +18,11 @@ class MainCardFragment : BaseViewUtil.BaseFragment<FragmentMainCardBinding>(R.la
     }
 
     override fun initView() {
+        binding.ctl.setOnClickListener {
+            val intent = Intent(requireContext(), DetailCardActivity::class.java).apply {
+                putExtra(BaseViewUtil.CARD_ID, 277)
+            }
+            startActivity(intent)
+        }
     }
 }

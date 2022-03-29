@@ -1,6 +1,8 @@
 package org.cardna.presentation.ui.cardpack.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,8 +25,8 @@ class CardPackViewModel @Inject constructor(
         get() = _name
 
     // 그 사람의 카드팩의 총 카드 개수 => CardPackFragment 의 textView 에 바인딩
-    private var _totalCardCnt:Int? = null // liveData 가 아니더라도 뷰에 바인딩 가능한가 ?
-    val totalCardCnt: Int?
+    private val _totalCardCnt = MutableLiveData<Int>(1) // liveData 가 아니더라도 뷰에 바인딩 가능한가 ?
+    val totalCardCnt: LiveData<Int>
         get() = _totalCardCnt
 
 
