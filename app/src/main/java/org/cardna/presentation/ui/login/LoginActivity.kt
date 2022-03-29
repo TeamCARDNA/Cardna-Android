@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 
+@AndroidEntryPoint
 class LoginActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityLoginBinding>(R.layout.activity_login) {
     override fun onCreate(savedInstanceState: Bundle?) {
