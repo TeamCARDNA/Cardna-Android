@@ -41,6 +41,7 @@ class CardPackFragment :
 
     override fun onResume() { // 카드팩프래그먼트에서 카드를 눌러 카드 상세페이지로 가서 삭제한다음 왔을 때, 카드팩의 카드들이 업데이트 되어야 하므로 onResume이 필요하다
         super.onResume()
+        cardPackViewModel.setTotalCardCnt()
         if (cardPackViewModel.id == null) // id가 null일 때, 즉 유저 본인의 카드팩 접근할 때,
            initCardPackAdapter()
     }

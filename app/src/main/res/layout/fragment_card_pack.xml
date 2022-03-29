@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="23"
+                android:text="@{cardPackViewModel.totalCardCnt}"
                 android:textColor="@color/white_3"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_cardpack_title"
                 app:layout_constraintStart_toEndOf="@+id/tv_cardpack_title"
