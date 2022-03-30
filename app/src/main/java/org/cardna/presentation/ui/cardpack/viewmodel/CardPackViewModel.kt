@@ -7,20 +7,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.cardna.data.remote.model.card.ResponseCardMeData
+import org.cardna.domain.repository.CardRepository
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
+import timber.log.Timber
 import javax.inject.Inject
 
 
 @HiltViewModel
 class CardPackViewModel @Inject constructor(
-) : ViewModel() { // CardPack, CardYou, CardMeFragment 가 이를 공유 ?
+    private val cardRepository: CardRepository, // 이렇게 쓰는 거 맞나
+) : ViewModel() { // CardPack, CardYou, CardMeFragment 가 CardPackViewModel 공유
 
     // 어떤 id 의 사람의 카드팩 프래그먼트에 접근하는지
-    private var _id:Int? = null
+    private var _id: Int? = null
     val id: Int?
         get() = _id
 
     // 어떤 name 의 사람의 카드팩 프래그먼트에 접근하는지
-    private var _name:String? = null
+    private var _name: String? = null
     val name: String?
         get() = _name
 
@@ -29,20 +34,21 @@ class CardPackViewModel @Inject constructor(
     val totalCardCnt: LiveData<Int>
         get() = _totalCardCnt
 
+    // 카드나 list => CardMeFragement 에서 사용
+    private var _cardMeList: MutableLiveData<MutableList<ResponseCardMeData.CardList.CardMe>>? = null // val 로 해줘도 되나 ?
+    val cardMeList: LiveData<MutableList<ResponseCardMeData.CardList.CardMe>>?
+        get() = _cardMeList
 
-    // 일단 id를 null로 할당해놓고, 타인의 카드팩 접근할 때는 이를 타인의 id로 초기화해줘야 할듯.
-    // 그 method 구현 필요 => 메인 액티비티 마이페이지 프래그먼트에서 친구의 id를 넘겨줘서 친구 액티비티 띄우고, 여기서
-    // 카드팩 프래그먼트 생성할 때, 인자로 넘겨서 생성 ? 그러면 viewModel도 생성자에 id를 넘겨줘야하나
 
-    fun setUserId(id: Int?){
+    fun setUserId(id: Int?) {
         _id = id
     } // 타인의 프래그먼트 생성시, 그 프래그먼트 코드 단에서 getArguments로 받아온 newId를 setUserId(newId) 이런형식으로 설정 ?
 
-    fun setUserName(name: String?){
+    fun setUserName(name: String?) {
         _name = name
     }
 
-    fun setTotalCardCnt(){
+    fun setTotalCardCnt() {
         viewModelScope.launch {
             // 수정 필요
 //            try {
@@ -50,6 +56,34 @@ class CardPackViewModel @Inject constructor(
 //            } catch (e: Exception) {
 //                Log.d("2LogIn test Log",e.toString())
 //            }
+        }
+    }
+
+    fun updateCardMeList() {
+        if (_id == null) { // 본인의 카드나 접근
+            viewModelScope.launch {
+                runCatching {
+                    cardRepository.getCardMe().data
+                }.onSuccess {
+                    it.apply {
+                        _cardMeList?.value = it.cardMeList
+                    }
+                }.onFailure {
+                    Timber.e(it.toString())
+                }
+            }
+        } else { // 타인의 카드나 접근
+            viewModelScope.launch {
+                runCatching {
+                    cardRepository.getOtherCardMe(_id!!).data
+                }.onSuccess {
+                    it.apply {
+                        _cardMeList?.value= it.cardMeList
+                    }
+                }.onFailure {
+                    Timber.e(it.toString())
+                }
+            }
         }
     }
 }

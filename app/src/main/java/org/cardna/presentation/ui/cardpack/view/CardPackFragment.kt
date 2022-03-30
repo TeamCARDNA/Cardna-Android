@@ -53,12 +53,15 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
             // 이전 Fragment 로부터 id, name 받아옴
             cardPackViewModel.setUserId(getArguments()?.getInt("id", 0))
             cardPackViewModel.setUserName(getArguments()?.getString("name", null))
+            // 이렇게 안하고 그냥 viewModel의 생성자에 id, name을 넣어주면, 그 값으로 초기화되도록 ?
+            //  binding.cardPackViewModel = cardPackViewModel(userId, userName) 이렇게 ?
         }
         // null 이면 본인의 카드팩 접근이므로 id, name 다 초기값인 null로 있을 것것
     }
 
     override fun initView() {
         initCardPackAdapter()
+        initMeOrFriendCardLayout()
         initCardPackTabLayout()
     }
 
@@ -66,12 +69,11 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
     // 카드나, 카드너 프래그먼트 인스턴스를 생성해주고 tabLayout Adapter 객체 생성해서 거기에 fragment 들 연결하고 그 Adapter 를 ViewPager2의 Adapter 로 설정
     private fun initCardPackAdapter() { // onResume()에 이거 넣어줘도 될듯 ? 애초에 onResume이 필요 ?
         val fragmentList: List<Fragment>
-
         fragmentList = listOf(
             CardMeFragment(),
             CardYouFragment()
         ) // 그냥 이렇게 인자없이 생성만 해주고, 각 카드나, 카드너 프래그먼트에서는 뷰 모델의 id 값에따라 생성해주면 됨.
-        initMeOrFriendCardLayout() // 이걸 따로 빼서 그냥 initView() 에다 넣으면 안되나
+//        initMeOrFriendCardLayout() // 이걸 따로 빼서 그냥 initView() 에다 넣으면 안되나
         cardPackTabLayoutAdapter = CardPackTabLayoutAdapter(this)
         cardPackTabLayoutAdapter.fragments.addAll(fragmentList)
         binding.vpCardpack.adapter = cardPackTabLayoutAdapter
