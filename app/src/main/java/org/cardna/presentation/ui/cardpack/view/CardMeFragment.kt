@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cardna.R
 import com.example.cardna.databinding.FragmentCardMeBinding
+import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardPackMeRecyclerViewAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
@@ -15,6 +16,8 @@ import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.util.SpacesItemDecoration
 import kotlin.math.roundToInt
 
+
+@AndroidEntryPoint
 class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout.fragment_card_me) {
 
     private val cardPackViewModel: CardPackViewModel by activityViewModels() // id,

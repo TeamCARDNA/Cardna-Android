@@ -1,6 +1,11 @@
 package org.cardna.domain.repository
 
 import org.cardna.data.remote.model.card.*
+import org.cardna.domain.model.RepresentCardListData
+import org.cardna.data.remote.model.card.ResponseDeleteCardData
+import org.cardna.data.remote.model.card.ResponseDetailCardData
+import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
+import org.cardna.data.remote.model.card.ResponseMainCardData
 
 interface CardRepository {
 
@@ -17,4 +22,6 @@ interface CardRepository {
     suspend fun getCardYou(): ResponseCardYouData
 
     suspend fun getOtherCardYou(cardId: Int): ResponseCardYouData
+
+    suspend fun getMainCard() : ResponseMainCardData
 }
