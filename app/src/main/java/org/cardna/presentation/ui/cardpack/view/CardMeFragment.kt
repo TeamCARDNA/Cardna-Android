@@ -16,12 +16,10 @@ import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.util.SpacesItemDecoration
 import kotlin.math.roundToInt
 
-
 @AndroidEntryPoint
 class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout.fragment_card_me) {
 
-    private val cardPackViewModel: CardPackViewModel by activityViewModels() // id,
-//  private var isMyCard: Boolean = true // 유저 본인의 카드나에 접근하는건지, 타인의 카드나에 접근하는 건지 이는 나중에
+    private val cardPackViewModel: CardPackViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,17 +37,10 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
 
     // 카드나가 없을 때, 엠티 뷰 처리하기
 
+
     private fun getCardMe(){
         initCardMeRvAdapter() // 리사이클러뷰 및 어댑터 설정
         cardPackViewModel.updateCardMeList() // 카드나 카드들을 서버로부터 불러오기
-
-        if(cardPackViewModel.id == null){ // 본인의 카드나 접
-
-        }
-        else{ // 타인의 카드나 접근
-
-            // 뷰에 공감버튼 추가해줘야함
-        }
     }
 
 
@@ -62,7 +53,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
                 startActivity(this)
             }
 
-            // 2. 타인의 카드나일 때는, 공감버튼에 달아줄 리스너 하나 더 전달해야 된다.
+            // 2. 타인의 카드나일 때는, 공감버튼에 달아줄 리스너 하나 더 전달해줘야 한다.
         }
 
         with(binding) {

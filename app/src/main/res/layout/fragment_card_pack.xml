@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="cardPackViewModel"
             type="org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel" />
@@ -17,6 +18,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctl_cardpack_top"
+            android:visibility="@{cardPackViewModel.id? View.GONE : View.VISIBLE}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
