@@ -26,7 +26,7 @@ class InsightViewModel @Inject constructor(
     private val _blindAreaInsight = MutableLiveData<BlindArea>()
     val blindAreaInsight: LiveData<BlindArea> = _blindAreaInsight
 
-    private val _isOpenAreaInsightEmpty = MutableLiveData<Boolean>()
+    private val _isOpenAreaInsightEmpty = MutableLiveData<Boolean>(null)
     val isOpenAreaInsightEmpty: LiveData<Boolean> = _isOpenAreaInsightEmpty
 
     private val _isBlindAreaInsightEmpty = MutableLiveData<Boolean>()
@@ -53,8 +53,8 @@ class InsightViewModel @Inject constructor(
                     _blindAreaInsight.value = it.blindArea
                     _openAreaInsight.value = it.openArea
 
-                    _isBlindAreaInsightEmpty.value = false
-                    _isOpenAreaInsightEmpty.value = false
+                 //   _isBlindAreaInsightEmpty.value = false
+                  //  _isOpenAreaInsightEmpty.value = false
 
                     _blindAreaCardId.value = _blindAreaInsight.value?.id ?: return@launch
                     _openAreaCardId.value = _openAreaInsight.value?.id ?: return@launch
