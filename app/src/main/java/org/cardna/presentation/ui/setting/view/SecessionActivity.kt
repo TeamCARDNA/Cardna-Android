@@ -34,8 +34,8 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
 
     private fun setEtcContentListener() {
         binding.etSecessionReason.doAfterTextChanged {
-            if (it.isNullOrEmpty()) settingViewModel.setEtcContent("")
-            else settingViewModel.setEtcContent(it.toString())
+            if (it.isNullOrEmpty()) settingViewModel.setEtcContent("",it.isNullOrEmpty())
+            else settingViewModel.setEtcContent(it.toString(),it.isNullOrEmpty())
         }
     }
 

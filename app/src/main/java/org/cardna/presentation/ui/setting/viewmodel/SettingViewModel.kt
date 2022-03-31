@@ -35,6 +35,9 @@ class SettingViewModel @Inject constructor(
     private val _secessionReasonSixCheck = MutableLiveData(false)
     val secessionReasonSixCheck: LiveData<Boolean> = _secessionReasonSixCheck
 
+    private val _isEtcContentValid = MutableLiveData(false)
+    val isEtcContentValid: LiveData<Boolean> = _isEtcContentValid
+
     private val _isSecessionReasonValid = MutableLiveData(false)
     val isSecessionReasonValid: LiveData<Boolean> = _isSecessionReasonValid
 
@@ -74,13 +77,21 @@ class SettingViewModel @Inject constructor(
         setSecessionReasonValid()
     }
 
+    fun setEtcContentStatus(status: Boolean) {
+        _isEtcContentValid.value = status
+        setSecessionReasonValid()
+    }
+
     private fun setSecessionReasonValid() {
         _isSecessionReasonValid.value =
             _secessionReasonOneCheck.value == true || _secessionReasonTwoCheck.value == true || _secessionReasonThreeCheck.value == true ||
-                    _secessionReasonFourCheck.value == true || _secessionReasonFiveCheck.value == true || _secessionReasonSixCheck.value == true
+                    _secessionReasonFourCheck.value == true || _secessionReasonFiveCheck.value == true || (_secessionReasonSixCheck.value == true && _isEtcContentValid.value == true)
+
+        if (_secessionReasonSixCheck.value == true && _isEtcContentValid.value == false) _isSecessionReasonValid.value = false
     }
 
-    fun setEtcContent(etcContent: String) {
+    fun setEtcContent(etcContent: String, status: Boolean) {
+        setEtcContentStatus(!status)
         _etcContent.value = etcContent
     }
 
