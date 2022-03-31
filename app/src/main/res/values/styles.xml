@@ -151,4 +151,5 @@
         <item name="queryHint">"이름 검색"</item>
         <item name="queryBackground">@android:color/transparent</item>
     </style>
+
 </resources>

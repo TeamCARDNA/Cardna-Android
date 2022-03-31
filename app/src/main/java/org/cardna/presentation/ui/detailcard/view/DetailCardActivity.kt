@@ -1,21 +1,25 @@
 package org.cardna.presentation.ui.detailcard.view
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
+import androidx.core.view.WindowCompat
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityDetailCardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel
-import org.cardna.presentation.util.setHandler
-import org.cardna.presentation.util.setSrcWithGlide
-import org.cardna.presentation.util.showCustomDialog
-import org.cardna.presentation.util.showLottie
+import org.cardna.presentation.util.*
 
 @AndroidEntryPoint
 class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCardBinding>(R.layout.activity_detail_card) {
@@ -30,6 +34,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     }
 
     override fun initView() {
+        this.setStatusBarTransparent()
         initData()  //TODO API완성 후 다시 test
         setObserve()
     }

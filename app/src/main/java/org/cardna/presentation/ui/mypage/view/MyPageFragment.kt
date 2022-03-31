@@ -59,7 +59,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     fun setInputField() {
         with(binding.etMypageNameSearchBackground) {
-            setTextSize(requireContext().convertDPtoPX(16).toFloat())
+            setTextSize(16f)
             setTextColor(requireContext(), R.color.white_2, R.color.white_1)
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
