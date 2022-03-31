@@ -130,11 +130,16 @@
     <!--    <string name="maincard_tv_title">힘이들땐 하늘을 봐!</string>-->
     <!--    <string name="maincard_tv_edit">edit</string>-->
 
-    <!--    My Page-->
+    <!--    My Page  -->
     <string name="mypage_name">김다빈</string>
     <string name="mypage_title">MY</string>
     <string name="mypage_code">김다빈#0318</string>
     <string name="mypage_friend">친구</string>
     <string name="mypage_search_name_hint">이름 검색</string>
+    <string name="mypage_search_code_hint">친구코드 검색</string>
+    <string name="mypage_search_code_friend_name">신혜원</string>
+    <string name="mypage_search_code_apply_friend">친구 신청</string>
+    <string name="mypage_search_code_waiting_friend">친구 요청 대기 중</string>
+    <string name="mypage_search_code_friend">친구</string>
 
 </resources>

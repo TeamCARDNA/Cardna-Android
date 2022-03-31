@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.friend.ResponseFriendNameData
-import org.cardna.data.remote.model.insight.ResponseInsightData
 import org.cardna.data.remote.model.mypage.ResponseMyPageData
 import org.cardna.domain.repository.FriendRepository
 import org.cardna.domain.repository.MyPageRepository
@@ -28,11 +27,17 @@ class MyPageViewModel @Inject constructor(
     private val _friendCount = MutableLiveData<String>()
     val friendCount: LiveData<String> = _friendCount
 
-    private val _searchQuery = MutableLiveData<String>()
-    val searchQuery: LiveData<String> = _searchQuery
+    private val _searchNameQuery = MutableLiveData<String>()
+    val searchNameQuery: LiveData<String> = _searchNameQuery
+
+    private val _searchCodeQuery = MutableLiveData<String>()
+    val searchCodeQuery: LiveData<String> = _searchCodeQuery
 
     private val _searchFriendNameResult = MutableLiveData<ResponseFriendNameData.Data>()
     val searchFriendNameResult: LiveData<ResponseFriendNameData.Data> = _searchFriendNameResult
+
+    private val _searchFriendCodeResult = MutableLiveData<ResponseFriendNameData.Data>()
+    val searchFriendCodeResult: LiveData<ResponseFriendNameData.Data> = _searchFriendCodeResult
 
     val searchFriendName = MutableLiveData<MutableList<ResponseMyPageData.Data.FriendList>>()
 
@@ -56,12 +61,16 @@ class MyPageViewModel @Inject constructor(
 
     }
 
-    fun updateSearchQuery(query: String) {
-        _searchQuery.value = query
+    fun updateSearchNameQuery(query: String) {
+        _searchNameQuery.value = query
     }
 
-    fun searchPost() {
-        val query = _searchQuery.value ?: return
+    fun updateSearchCodeQuery(query: String) {
+        _searchCodeQuery.value = query
+    }
+
+    fun searchNamePost() {
+        val query = _searchNameQuery.value ?: return
         viewModelScope.launch {
             runCatching {
                 friendRepository.getFriendName(query).data
@@ -74,6 +83,19 @@ class MyPageViewModel @Inject constructor(
                 }
             }.onFailure {
                 _isNonExistFriend.value = true
+                Timber.e(it.toString())
+            }
+        }
+    }
+
+    fun searchCodePost() {
+        val query = _searchCodeQuery.value ?: return
+        viewModelScope.launch {
+            runCatching {
+            }.onSuccess {
+                it.apply {
+                }
+            }.onFailure {
                 Timber.e(it.toString())
             }
         }

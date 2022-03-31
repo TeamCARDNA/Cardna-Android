@@ -1,11 +1,8 @@
 package org.cardna.presentation.ui.mypage.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,9 +13,7 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.adapter.MyPageFriendAdapter
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
-import org.cardna.presentation.ui.setting.view.SecessionActivity
 import org.cardna.presentation.ui.setting.view.SettingActivity
-import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 import org.cardna.presentation.util.*
 
 @AndroidEntryPoint
@@ -94,7 +89,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(newText: String?): Boolean {
-                    myPageViewModel.updateSearchQuery(newText.toString())
+                    myPageViewModel.updateSearchNameQuery(newText.toString())
                     return false
                 }
 
@@ -107,8 +102,8 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun setObserve() {
-        myPageViewModel.searchQuery.observe(viewLifecycleOwner) {
-            myPageViewModel.searchPost()
+        myPageViewModel.searchNameQuery.observe(viewLifecycleOwner) {
+            myPageViewModel.searchNamePost()
         }
 
         myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->

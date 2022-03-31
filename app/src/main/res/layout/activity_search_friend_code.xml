@@ -10,7 +10,122 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/main_black"
         tools:context="org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/et_mypage_code_search_background"
+            style="@style/search_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_white_4_10dp"
+            android:inputType="text"
+            android:textColorHint="@color/main_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryHint="@string/mypage_search_code_hint" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctl_mypage_code_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/bg_dark_gray_10dp"
+            app:layout_constraintTop_toBottomOf="@+id/et_mypage_code_search_background">
+
+
+            <ImageView
+                android:id="@+id/iv_mypage_code_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:src="@drawable/img_mypage_code_search"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_mypage_code_search_friend_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@string/mypage_search_code_friend_name"
+                android:textColor="@color/white_1"
+                app:layout_constraintEnd_toEndOf="@id/iv_mypage_code_search"
+                app:layout_constraintStart_toStartOf="@id/iv_mypage_code_search"
+                app:layout_constraintTop_toBottomOf="@id/iv_mypage_code_search" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_mypage_code_search_apply"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/ic_searchemail_add_friend"
+                android:drawableLeft="@drawable/ic_apply_friend"
+                android:fontFamily="@font/pretendard_semibold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingStart="14dp"
+                android:paddingEnd="12dp"
+                android:text="@string/mypage_search_code_apply_friend"
+                android:textColor="@color/dark_gray"
+                android:textSize="12sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/ctl_mypage_code_search"
+                app:layout_constraintEnd_toEndOf="@+id/tv_mypage_code_search_friend_name"
+                app:layout_constraintStart_toStartOf="@+id/tv_mypage_code_search_friend_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mypage_code_search_friend_name" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_mypage_code_search_apply_waiting"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_stroke_white_3_20dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingStart="14dp"
+                android:paddingEnd="12dp"
+                android:text="@string/mypage_search_code_waiting_friend"
+                android:textColor="@color/white_3"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/ctl_mypage_code_search"
+                app:layout_constraintEnd_toEndOf="@+id/tv_mypage_code_search_friend_name"
+                app:layout_constraintStart_toStartOf="@+id/tv_mypage_code_search_friend_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mypage_code_search_friend_name" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_mypage_code_search_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_stroke_white_3_20dp"
+                android:drawableLeft="@drawable/ic_friend_check"
+                android:fontFamily="@font/pretendard_semibold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingStart="24dp"
+                android:paddingEnd="18dp"
+                android:text="@string/mypage_search_code_friend"
+                android:textColor="@color/white_3"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/ctl_mypage_code_search"
+                app:layout_constraintEnd_toEndOf="@+id/tv_mypage_code_search_friend_name"
+                app:layout_constraintStart_toStartOf="@+id/tv_mypage_code_search_friend_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mypage_code_search_friend_name" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
