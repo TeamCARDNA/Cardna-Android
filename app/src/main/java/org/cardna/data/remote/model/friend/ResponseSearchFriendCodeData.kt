@@ -1,7 +1,7 @@
 package org.cardna.data.remote.model.friend
 
+class ResponseSearchFriendCodeData(
 
-data class ResponseFriendNameData(
     val message: String,
     val status: Int,
     val success: Boolean,
@@ -10,7 +10,7 @@ data class ResponseFriendNameData(
     data class Data(
         val id: Int,
         val name: String,
-        val sentence: String,
+        val relationType: Int,
         val userImg: String
     )
 }

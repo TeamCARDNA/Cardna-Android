@@ -1,7 +1,8 @@
 package org.cardna.data.repository
 
 import org.cardna.data.remote.datasource.FriendDataSource
-import org.cardna.data.remote.model.friend.ResponseFriendNameData
+import org.cardna.data.remote.model.friend.ResponseSearchFriendCodeData
+import org.cardna.data.remote.model.friend.ResponseSearchFriendNameData
 import org.cardna.domain.repository.FriendRepository
 import javax.inject.Inject
 
@@ -9,7 +10,11 @@ class FriendRepositoryImpl @Inject constructor(
     private val friendDataSource: FriendDataSource
 ) : FriendRepository {
 
-    override suspend fun getFriendName(name: String): ResponseFriendNameData {
-        return friendDataSource.getFriendName(name)
+    override suspend fun getSearchFriendName(name: String): ResponseSearchFriendNameData {
+        return friendDataSource.getSearchFriendName(name)
+    }
+
+    override suspend fun getSearchFriendCode(code: String): ResponseSearchFriendCodeData {
+        return friendDataSource.getSearchFriendCode(code)
     }
 }

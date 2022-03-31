@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.cardna.data.remote.model.friend.ResponseFriendNameData
+import org.cardna.data.remote.model.friend.ResponseSearchFriendNameData
 import org.cardna.data.remote.model.mypage.ResponseMyPageData
 import org.cardna.domain.repository.FriendRepository
 import org.cardna.domain.repository.MyPageRepository
@@ -33,11 +33,11 @@ class MyPageViewModel @Inject constructor(
     private val _searchCodeQuery = MutableLiveData<String>()
     val searchCodeQuery: LiveData<String> = _searchCodeQuery
 
-    private val _searchFriendNameResult = MutableLiveData<ResponseFriendNameData.Data>()
-    val searchFriendNameResult: LiveData<ResponseFriendNameData.Data> = _searchFriendNameResult
+    private val _searchFriendNameResult = MutableLiveData<ResponseSearchFriendNameData.Data>()
+    val searchFriendNameResult: LiveData<ResponseSearchFriendNameData.Data> = _searchFriendNameResult
 
-    private val _searchFriendCodeResult = MutableLiveData<ResponseFriendNameData.Data>()
-    val searchFriendCodeResult: LiveData<ResponseFriendNameData.Data> = _searchFriendCodeResult
+    private val _searchFriendCodeResult = MutableLiveData<ResponseSearchFriendNameData.Data>()
+    val searchFriendCodeResult: LiveData<ResponseSearchFriendNameData.Data> = _searchFriendCodeResult
 
     val searchFriendName = MutableLiveData<MutableList<ResponseMyPageData.Data.FriendList>>()
 
