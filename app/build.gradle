@@ -37,6 +37,9 @@ android {
 }
 
 dependencies {
+    //Timber
+    implementation "com.jakewharton.timber:timber:5.0.1"
+
     // Lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"
 

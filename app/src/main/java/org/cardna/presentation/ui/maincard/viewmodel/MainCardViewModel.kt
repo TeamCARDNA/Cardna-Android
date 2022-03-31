@@ -1,12 +1,11 @@
 package org.cardna.presentation.ui.maincard.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.domain.repository.CardRepository
+import org.cardna.presentation.base.BaseViewUtil
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -47,6 +46,4 @@ class MainCardViewModel @Inject constructor(
             }
         }
     }
-
-
 }
