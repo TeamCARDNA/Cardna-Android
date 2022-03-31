@@ -45,7 +45,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun initData() {
-        myPageViewModel.getUserMyPage()  //내정보 뿌리기
+        myPageViewModel.getUserMyPage()
     }
 
     private fun setStickyScroll() {
