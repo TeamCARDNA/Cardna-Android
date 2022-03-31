@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="myPageViewModel"
             type="org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel" />
@@ -57,7 +59,7 @@
                     app:layout_constraintTop_toTopOf="@+id/tv_mypage_title" />
 
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_mypage_userimg"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
@@ -162,6 +164,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="@{myPageViewModel.isNonExistFriend ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toBottomOf="@+id/ctl_mypage_header">
 
                 <androidx.recyclerview.widget.RecyclerView

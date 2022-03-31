@@ -26,6 +26,7 @@ class BlindAreaFragment : BaseViewUtil.BaseFragment<FragmentBlindAreaBinding>(R.
         setImageObserve()
         setArrowClickListener()
         setCardClickListener()
+
     }
 
     private fun setArrowClickListener() {
@@ -45,7 +46,7 @@ class BlindAreaFragment : BaseViewUtil.BaseFragment<FragmentBlindAreaBinding>(R.
 
     private fun setImageObserve() {
         insightViewModel.blindAreaInsight.observe(viewLifecycleOwner) { blindAreaInsight ->
-            requireActivity().setSrcWithGlide(blindAreaInsight.imageUrl, binding.ivInsightBlindAreaImage)
+            requireActivity().setSrcWithGlide(blindAreaInsight.image, binding.ivInsightBlindAreaImage)
         }
     }
 }

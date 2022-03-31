@@ -24,13 +24,13 @@ class DetailCardViewModel @Inject constructor(
     private val _detailCard = MutableLiveData<ResponseDetailCardData.Data>()
     val detailCard: LiveData<ResponseDetailCardData.Data> = _detailCard
 
-    private val _type = MutableLiveData<String>("me")
+    private val _type = MutableLiveData<String>()
     val type: LiveData<String> = _type
 
-    private val _isMineCard = MutableLiveData(true)
+    private val _isMineCard = MutableLiveData<Boolean>()
     val isMineCard: LiveData<Boolean> = _isMineCard
 
-    private val _isStorage = MutableLiveData(false)
+    private val _isStorage = MutableLiveData<Boolean>()
     val isStorage: LiveData<Boolean> = _isStorage
 
     var currentLikeCount = 4  //TODO 서버완성 후 다시 test
@@ -41,16 +41,16 @@ class DetailCardViewModel @Inject constructor(
     * 너가 카드나 : me false false
     * 너가 카드너 : you false false*/
 
-    private fun setCardId(cardId: Int) {
+    fun setCardId(cardId: Int) {
         id = cardId
+        getDetailCard()
     }
 
-    fun getDetailCard(cardId: Int) {
-        setCardId(cardId)
-
+    private fun getDetailCard() {
+        val cardId = id ?: return
         viewModelScope.launch {
             runCatching {
-                cardRepository.getDetailCard(id ?: return@launch).data
+                cardRepository.getDetailCard(cardId).data
             }.onSuccess {
                 it.apply {
                     _detailCard.value = it
@@ -62,6 +62,8 @@ class DetailCardViewModel @Inject constructor(
                         _isMineCard.value = true
                         currentLikeCount = likeCount
                     }
+                    //카드 좋아요 null로 오는거 서버 확인
+                    //    android:checked="@{detailCardViewModel.detailCard.isLiked ? true : false}"
                 }
             }.onFailure {
                 Timber.e(it.toString())
