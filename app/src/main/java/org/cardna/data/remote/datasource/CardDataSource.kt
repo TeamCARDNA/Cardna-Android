@@ -1,5 +1,6 @@
 package org.cardna.data.remote.datasource
 
+import org.cardna.data.remote.model.card.*
 import org.cardna.data.remote.model.card.ResponseDeleteCardData
 import org.cardna.data.remote.model.card.ResponseDetailCardData
 import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
@@ -14,5 +15,14 @@ interface CardDataSource {
 
     suspend fun putKeepOrAddCard(cardId: Int): ResponseKeepOrAddCardData
 
-    suspend fun getMainCard(): ResponseMainCardData
+    suspend fun getCardMe() : ResponseCardMeData
+
+    suspend fun getOtherCardMe(cardId: Int) : ResponseCardMeData
+
+    suspend fun getCardYou() : ResponseCardYouData
+
+    suspend fun getOtherCardYou(cardId: Int) : ResponseCardYouData
+
+    suspend fun getMainCard() : ResponseMainCardData
+
 }
