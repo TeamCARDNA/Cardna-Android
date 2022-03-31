@@ -27,5 +27,5 @@ interface CardService {
     ): ResponseKeepOrAddCardData
 
     @GET("card/main/{userId}")
-    suspend fun getMainCard() : ResponseMainCardData
+    suspend fun getMainCard(): ResponseMainCardData
 }
