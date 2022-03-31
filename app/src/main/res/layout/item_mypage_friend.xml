@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_rv_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dark_gray_10dp">
+
+        <ImageView
+            android:id="@+id/iv_friend_userimg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="24dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_my_profile"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_friend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="혜원"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/iv_friend_userimg"
+            app:layout_constraintStart_toStartOf="@+id/iv_friend_userimg"
+            app:layout_constraintTop_toBottomOf="@+id/iv_friend_userimg" />
+
+        <TextView
+            android:id="@+id/tv_friend_sentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="28dp"
+            android:fontFamily="@font/pretendard_light"
+            android:text="딩가딩가딩"
+            android:textColor="@color/white_2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tv_friend_name"
+            app:layout_constraintStart_toStartOf="@id/tv_friend_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_friend_name"
+            app:layout_goneMarginTop="8dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

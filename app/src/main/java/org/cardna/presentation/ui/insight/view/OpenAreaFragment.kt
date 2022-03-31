@@ -26,6 +26,7 @@ class OpenAreaFragment : BaseViewUtil.BaseFragment<FragmentOpenAreaBinding>(R.la
         setImageObserve()
         setArrowClickListener()
         setCardClickListener()
+
     }
 
 
@@ -38,7 +39,7 @@ class OpenAreaFragment : BaseViewUtil.BaseFragment<FragmentOpenAreaBinding>(R.la
     private fun setCardClickListener() {
         binding.ivInsightOpenAreaImage.setOnClickListener {
             val intent = Intent(requireContext(), DetailCardActivity::class.java).let {
-                it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.openAreaCardId.value.toString())
+                it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.openAreaCardId.value)
             }
             startActivity(intent)
         }
@@ -46,7 +47,7 @@ class OpenAreaFragment : BaseViewUtil.BaseFragment<FragmentOpenAreaBinding>(R.la
 
     private fun setImageObserve() {
         insightViewModel.openAreaInsight.observe(viewLifecycleOwner) { openAreaInsight ->
-            requireActivity().setSrcWithGlide(openAreaInsight.imageUrl, binding.ivInsightOpenAreaImage)
+                requireActivity().setSrcWithGlide(openAreaInsight.image, binding.ivInsightOpenAreaImage)
         }
     }
 }

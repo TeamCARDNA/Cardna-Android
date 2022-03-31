@@ -2,12 +2,14 @@ package org.cardna.presentation.ui.setting.view
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.showCustomDialog
 
 @AndroidEntryPoint
@@ -18,6 +20,7 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
     }
 
     override fun initView() {
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setClickListener()
         setAlarmSwitchClickListener()
     }

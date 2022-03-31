@@ -1,21 +1,25 @@
 package org.cardna.presentation.ui.detailcard.view
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
+import androidx.core.view.WindowCompat
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityDetailCardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel
-import org.cardna.presentation.util.setHandler
-import org.cardna.presentation.util.setSrcWithGlide
-import org.cardna.presentation.util.showCustomDialog
-import org.cardna.presentation.util.showLottie
+import org.cardna.presentation.util.*
 
 @AndroidEntryPoint
 class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCardBinding>(R.layout.activity_detail_card) {
@@ -30,20 +34,20 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     }
 
     override fun initView() {
-        initData()  //TODO API완성 후 다시 test
+        this.setStatusBarTransparent()
+        initData()
         setObserve()
     }
 
     private fun initData() {
         val id = intent.getIntExtra(BaseViewUtil.CARD_ID, 0)
-        detailCardViewModel.getDetailCard(id)  //TODO API완성 후 다시 test
+        detailCardViewModel.setCardId(id)
     }
 
     @SuppressLint("ResourceType")
     private fun setObserve() {
         detailCardViewModel.detailCard.observe(this) { detailCard ->
-            // cardType = detailCard.type   //TODO API완성 후 다시 test
-            cardType = "me"
+            cardType = detailCard.type
             setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
 
             with(binding) {
@@ -143,7 +147,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     fun setLikeClickListener() {
         with(binding) {
             ctvDetailcardLike.toggle()
-            // detailCardViewModel?.postLike() ?: return   //TODO API완성 후 다시 test
+            detailCardViewModel?.postLike() ?: return   //TODO API완성 후 다시 test
 
             if (ctvDetailcardLike.isChecked) {
                 showLikeLottie()

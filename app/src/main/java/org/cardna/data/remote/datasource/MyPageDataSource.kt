@@ -1,14 +1,11 @@
-package org.cardna.data.remote.api.mypage
+package org.cardna.data.remote.datasource
 
 import org.cardna.data.remote.model.mypage.ResponseMyPageData
 import org.cardna.data.remote.model.mypage.ResponseMyPageUserData
-import retrofit2.http.GET
 
-interface MyPageService {
+interface MyPageDataSource {
 
-    @GET("my-page")
     suspend fun getMyPage(): ResponseMyPageData
 
-    @GET("my-page/user")
     suspend fun getMyPageUser(): ResponseMyPageUserData
 }

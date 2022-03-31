@@ -49,7 +49,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:checkMark="@drawable/ic_selector_detailcard_like"
-                android:checked="@{detailCardViewModel.detailCard.isLiked ? true : false}"
                 android:onClick="@{()->detailCardActivity.setLikeClickListener()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="4"
+                android:text="@{detailCardViewModel.detailCard.likeCount.toString()}"
                 android:textColor="@color/main_black"
                 android:textSize="12sp"
                 android:visibility="@{detailCardViewModel.isMineCard ?  View.VISIBLE : View.GONE}"

@@ -1,6 +1,7 @@
 package org.cardna.presentation
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityMainBinding
@@ -11,6 +12,7 @@ import org.cardna.presentation.ui.cardpack.view.CardPackFragment
 import org.cardna.presentation.ui.insight.view.InsightFragment
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.view.MyPageFragment
+import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.replace
 import org.cardna.ui.cardpack.BottomDialogCardFragment
 
@@ -38,21 +40,25 @@ class MainActivity :
             when (it.itemId) {
                 R.id.menu_bottom_maincard -> {
                     supportFragmentManager.popBackStack()
+                    StatusBarUtil.setStatusBar(this, Color.BLACK)
                     replace(R.id.fcv_main, mainCardFragment)
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_bottom_cardpack -> {
                     supportFragmentManager.popBackStack()
+                    StatusBarUtil.setStatusBar(this, Color.BLACK)
                     replace(R.id.fcv_main, CardPackFragment())
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_bottom_insight -> {
                     supportFragmentManager.popBackStack()
+                    StatusBarUtil.setStatusBar(this, Color.BLACK)
                     replace(R.id.fcv_main, insightFragment)
                     return@setOnItemSelectedListener true
                 }
                 else -> {
                     supportFragmentManager.popBackStack()
+                    StatusBarUtil.setStatusBar(this, Color.BLACK)
                     replace(R.id.fcv_main, myPageFragment)
                     return@setOnItemSelectedListener true
                 }
@@ -69,7 +75,7 @@ class MainActivity :
     // 즉, MainActivity에서 BottomsheetDialog를 띄워주는 함수
 
     // 그럼 이 함수 FriendCardPackActivity에서도 리스너 달아줘야 할 듯듯
-   fun showBottomDialogCardFragment() {
+    fun showBottomDialogCardFragment() {
         // 바텀싯 다이얼로그가 뜬 후, 카드나 or 카드너를 선택했을 때, 그거에 따라 어떤 액티비티를 띄워줘야 하는지를 명세한 Fragment 정의하고
         val bottomDialogCardFragment = BottomDialogCardFragment {
             when (it) {

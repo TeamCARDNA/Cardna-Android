@@ -26,6 +26,7 @@ class BlindAreaFragment : BaseViewUtil.BaseFragment<FragmentBlindAreaBinding>(R.
         setImageObserve()
         setArrowClickListener()
         setCardClickListener()
+
     }
 
     private fun setArrowClickListener() {
@@ -37,7 +38,7 @@ class BlindAreaFragment : BaseViewUtil.BaseFragment<FragmentBlindAreaBinding>(R.
     private fun setCardClickListener() {
         binding.ivInsightBlindAreaImage.setOnClickListener {
             val intent = Intent(requireContext(), DetailCardActivity::class.java).let {
-                it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.blindAreaCardId.value.toString())
+                it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.blindAreaCardId.value)
             }
             startActivity(intent)
         }
@@ -45,7 +46,7 @@ class BlindAreaFragment : BaseViewUtil.BaseFragment<FragmentBlindAreaBinding>(R.
 
     private fun setImageObserve() {
         insightViewModel.blindAreaInsight.observe(viewLifecycleOwner) { blindAreaInsight ->
-            requireActivity().setSrcWithGlide(blindAreaInsight.imageUrl, binding.ivInsightBlindAreaImage)
+            requireActivity().setSrcWithGlide(blindAreaInsight.image, binding.ivInsightBlindAreaImage)
         }
     }
 }

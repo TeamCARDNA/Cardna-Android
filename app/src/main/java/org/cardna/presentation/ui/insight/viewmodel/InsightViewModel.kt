@@ -7,9 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.cardna.data.remote.model.insight.BlindAreaCard
-import org.cardna.data.remote.model.insight.OpenAreaCard
-import org.cardna.data.remote.model.insight.ResponseInsightData
+import org.cardna.data.remote.model.insight.*
 import org.cardna.domain.repository.InsightRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,13 +20,13 @@ class InsightViewModel @Inject constructor(
     private val _insight = MutableLiveData<ResponseInsightData.Data>()
     val insight: LiveData<ResponseInsightData.Data> = _insight
 
-    private val _openAreaInsight = MutableLiveData<OpenAreaCard>()
-    val openAreaInsight: LiveData<OpenAreaCard> = _openAreaInsight
+    private val _openAreaInsight = MutableLiveData<OpenArea>()
+    val openAreaInsight: LiveData<OpenArea> = _openAreaInsight
 
-    private val _blindAreaInsight = MutableLiveData<BlindAreaCard>()
-    val blindAreaInsight: LiveData<BlindAreaCard> = _blindAreaInsight
+    private val _blindAreaInsight = MutableLiveData<BlindArea>()
+    val blindAreaInsight: LiveData<BlindArea> = _blindAreaInsight
 
-    private val _isOpenAreaInsightEmpty = MutableLiveData<Boolean>()
+    private val _isOpenAreaInsightEmpty = MutableLiveData<Boolean>(null)
     val isOpenAreaInsightEmpty: LiveData<Boolean> = _isOpenAreaInsightEmpty
 
     private val _isBlindAreaInsightEmpty = MutableLiveData<Boolean>()
@@ -43,19 +41,24 @@ class InsightViewModel @Inject constructor(
     private val _currentPosition = MutableLiveData<String>()
     val currentPosition: LiveData<String> = _currentPosition
 
+    private val _title = MutableLiveData<String>()
+    val title: LiveData<String> = _title
+
     fun getInsight() {
         viewModelScope.launch {
             runCatching {
                 insightRepository.getInsight().data
             }.onSuccess {
-                it.blindAreaCard.also { _blindAreaInsight.value = it }
-                it.openAreaCard.also { _openAreaInsight.value = it }
+                it.apply {
+                    _blindAreaInsight.value = it.blindArea
+                    _openAreaInsight.value = it.openArea
 
-                _isBlindAreaInsightEmpty.value = _blindAreaInsight.value == null
-                _isOpenAreaInsightEmpty.value = _openAreaInsight.value == null
+                 //   _isBlindAreaInsightEmpty.value = false
+                  //  _isOpenAreaInsightEmpty.value = false
 
-                _blindAreaCardId.value = _blindAreaInsight.value?.id ?: 0
-                _openAreaCardId.value = _openAreaInsight.value?.id ?: 0
+                    _blindAreaCardId.value = _blindAreaInsight.value?.id ?: return@launch
+                    _openAreaCardId.value = _openAreaInsight.value?.id ?: return@launch
+                }
             }.onFailure {
                 Timber.e(it.toString())
             }

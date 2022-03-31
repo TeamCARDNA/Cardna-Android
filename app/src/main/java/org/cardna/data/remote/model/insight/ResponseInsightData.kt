@@ -7,21 +7,21 @@ data class ResponseInsightData(
     val data: Data,
 ) {
     data class Data(
-        val blindAreaCard: BlindAreaCard,
-        val openAreaCard: OpenAreaCard,
+        val blindArea: BlindArea,
+        val openArea: OpenArea,
     )
 }
 
-data class OpenAreaCard(
+data class OpenArea(
     val id: Int,
-    val imageUrl: String,
+    val image: String,
     val isInsight: Boolean,
     val title: String
 )
 
-data class BlindAreaCard(
+data class BlindArea(
     val id: Int,
-    val imageUrl: String,
+    val image: String,
     val isInsight: Boolean,
     val title: String
 )
