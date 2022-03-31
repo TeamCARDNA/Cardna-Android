@@ -40,7 +40,9 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         initRootClickEvent(binding.ctlMypageHeader)
     }
 
-    private fun initData() {}
+    private fun initData() {
+        myPageViewModel.getMyPage()  //내정보 뿌리기
+    }
 
     private fun setStickyScroll() {
         binding.scMypage.run {
@@ -64,7 +66,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(newText: String?): Boolean {
-                    //   viewModel.updateSearchQuery(newText.toString())
+                    myPageViewModel.updateSearchQuery(newText.toString())
                     return false
                 }
 

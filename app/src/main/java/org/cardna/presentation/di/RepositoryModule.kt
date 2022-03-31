@@ -42,4 +42,10 @@ object RepositoryModule {
     fun provideMyPageRepository(myPageDataSource: MyPageDataSource): MyPageRepository {
         return MyPageRepositoryImpl(myPageDataSource)
     }
+
+    @Provides
+    @Singleton
+    fun provideFriendRepository(friendDataSource: FriendDataSource): FriendRepository {
+        return FriendRepositoryImpl(friendDataSource)
+    }
 }

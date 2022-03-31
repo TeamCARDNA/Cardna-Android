@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.cardna.data.remote.api.card.CardService
+import org.cardna.data.remote.api.friend.FriendService
 import org.cardna.data.remote.api.insight.InsightService
 import org.cardna.data.remote.api.like.LikeService
 import org.cardna.data.remote.api.mypage.MyPageService
@@ -44,5 +45,11 @@ object DataSourceModule {
     @Singleton
     fun provideMyPageDataSource(myPageService: MyPageService): MyPageDataSource {
         return MyPageDataSourceImpl(myPageService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFriendDataSource(friendService: FriendService): FriendDataSource {
+        return FriendDataSourceImpl(friendService)
     }
 }
