@@ -126,12 +126,29 @@
         <item name="android:insetBottom">0dp</item>
     </style>
 
-<!--    setNameFinished Button-->
+    <!--    setNameFinished Button-->
     <style name="setnamefinished_btn_style">
         <item name="android:textSize">14sp</item>
         <item name="lineHeight">21dp</item>
         <item name="android:paddingVertical">8dp</item>
         <item name="android:paddingHorizontal">16dp</item>
         <item name="fontFamily">@font/pretendard_semibold</item>
+    </style>
+
+    <!--  search_view  -->
+    <style name="search_view" parent="Widget.AppCompat.SearchView">
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="colorControlActivated">@color/white_2</item>
+        <item name="android:textCursorDrawable">@color/main_green</item>
+        <item name="colorControlNormal">@color/white_4</item>
+        <item name="android:textSelectHandle">@color/main_green</item>
+        <item name="android:textColorHighlight">#8C5ECC9C</item>
+        <item name="android:textSize">86sp</item>
+        <item name="searchIcon">@drawable/ic_magnifier</item>
+        <item name="iconifiedByDefault">false</item>
+        <item name="queryHint">"이름 검색"</item>
+        <item name="queryBackground">@android:color/transparent</item>
     </style>
 </resources>

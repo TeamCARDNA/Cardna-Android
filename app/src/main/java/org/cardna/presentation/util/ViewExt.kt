@@ -8,10 +8,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.Window
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import kotlin.math.roundToInt
@@ -60,3 +62,11 @@ fun Activity.setSrcWithGlide(imageUrl: String, imageView: ImageView) {
         .into(imageView)
 }
 
+fun SearchView.setTextColor(context: Context, hintColorInt: Int, textColorInt: Int) {
+    findViewById<EditText>(androidx.appcompat.R.id.search_src_text).setHintTextColor(context.getColor(hintColorInt))
+    findViewById<EditText>(androidx.appcompat.R.id.search_src_text).setTextColor(context.getColor(textColorInt))
+}
+
+fun SearchView.setTextSize(size: Float) {
+    findViewById<EditText>(androidx.appcompat.R.id.search_src_text).textSize = size
+}

@@ -98,13 +98,13 @@
     <string name="insight_data_null_one">아직 인사이트를 얻기에</string>
     <string name="insight_data_null_two">데이터가 부족해요!</string>
 
-<!--    LoginActivity-->
+    <!--    LoginActivity-->
     <string name="login_policy">가입 시,\nCARDNA의 다음 사항에 동의하는 것으로 간주합니다.</string>
     <string name="login_gwa">과</string>
     <string name="login_policy_term_of_use">이용약관</string>
     <string name="login_private_policy">" 개인정보 정책"</string>
 
-<!--    setNameActivity-->
+    <!--    setNameActivity-->
     <string name="signup_tv_title">이름을 알려주세요!</string>
     <string name="signup_tv_about">원할한 서비스 이용을 위해 실명으로 적어주세요:)</string>
     <string name="signup_et_lastname">성</string>
@@ -112,24 +112,29 @@
     <string name="signup_btn_access">확인</string>
     <string name="signup_tv_username_check">님이 맞으신가요?</string>
 
-<!--   alertDialog-->
+    <!--   alertDialog-->
     <string name="alert_tv_title">님이 맞으신가요?</string>
     <string name="alert_tv_about">이름은 한번 설정하면 변경이 불가해요!</string>
     <string name="alert_btn_negative">다시입력</string>
     <string name="alert_btn_positive">확인</string>
 
-<!--    setNameFinishedActivity-->
+    <!--    setNameFinishedActivity-->
     <string name="setnamefinished_tv_message1">카드를</string>
     <string name="setnamefinished_tv_message2">추가하러</string>
     <string name="setnamefinished_tv_message3">가볼까요?</string>
     <string name="setnamefinished_btn_negative_text">다음에 할래요</string>
     <string name="setnamefinished_btn_positive_text">좋아요</string>
 
-<!--    MainCardFragment-->
-<!--    <stirng name="maincard_tv_user_name">님은</stirng>-->
-<!--    <string name="maincard_tv_title">힘이들땐 하늘을 봐!</string>-->
-<!--    <string name="maincard_tv_edit">edit</string>-->
+    <!--    MainCardFragment-->
+    <!--    <stirng name="maincard_tv_user_name">님은</stirng>-->
+    <!--    <string name="maincard_tv_title">힘이들땐 하늘을 봐!</string>-->
+    <!--    <string name="maincard_tv_edit">edit</string>-->
 
-
+    <!--    My Page-->
+    <string name="mypage_name">김다빈</string>
+    <string name="mypage_title">MY</string>
+    <string name="mypage_code">김다빈#0318</string>
+    <string name="mypage_friend">친구</string>
+    <string name="mypage_search_name_hint">이름 검색</string>
 
 </resources>

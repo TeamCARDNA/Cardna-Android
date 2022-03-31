@@ -87,7 +87,8 @@ class SettingViewModel @Inject constructor(
             _secessionReasonOneCheck.value == true || _secessionReasonTwoCheck.value == true || _secessionReasonThreeCheck.value == true ||
                     _secessionReasonFourCheck.value == true || _secessionReasonFiveCheck.value == true || (_secessionReasonSixCheck.value == true && _isEtcContentValid.value == true)
 
-        if (_secessionReasonSixCheck.value == true && _isEtcContentValid.value == false) _isSecessionReasonValid.value = false
+        if (_secessionReasonSixCheck.value == true && _isEtcContentValid.value == false)
+            _isSecessionReasonValid.value = false
     }
 
     fun setEtcContent(etcContent: String, status: Boolean) {
