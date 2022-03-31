@@ -38,7 +38,7 @@ class OpenAreaFragment : BaseViewUtil.BaseFragment<FragmentOpenAreaBinding>(R.la
     private fun setCardClickListener() {
         binding.ivInsightOpenAreaImage.setOnClickListener {
             val intent = Intent(requireContext(), DetailCardActivity::class.java).let {
-                it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.openAreaCardId.value.toString())
+                it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.openAreaCardId.value)
             }
             startActivity(intent)
         }

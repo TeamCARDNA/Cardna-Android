@@ -45,12 +45,12 @@ class DetailCardViewModel @Inject constructor(
         id = cardId
     }
 
-    fun getDetailCard(id: Int) {
-        setCardId(id)
+    fun getDetailCard(cardId: Int) {
+        setCardId(cardId)
 
         viewModelScope.launch {
             runCatching {
-                cardRepository.getDetailCard(id).data
+                cardRepository.getDetailCard(id ?: return@launch).data
             }.onSuccess {
                 it.apply {
                     _detailCard.value = it

@@ -37,7 +37,7 @@ class BlindAreaFragment : BaseViewUtil.BaseFragment<FragmentBlindAreaBinding>(R.
     private fun setCardClickListener() {
         binding.ivInsightBlindAreaImage.setOnClickListener {
             val intent = Intent(requireContext(), DetailCardActivity::class.java).let {
-                it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.blindAreaCardId.value.toString())
+                it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.blindAreaCardId.value)
             }
             startActivity(intent)
         }
