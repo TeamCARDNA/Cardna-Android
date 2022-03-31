@@ -9,6 +9,93 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctl_cardme_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_black">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctl_bg_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_stroke_white_4_1dp_radius_10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_make_new_cardme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="56dp"
+                android:layout_marginTop="136dp"
+                android:layout_marginEnd="56dp"
+                android:gravity="center"
+                android:text="@string/cardpack_make_new_cardme"
+                android:theme="@style/cardpack_empty_textView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ctl_bg_add_cardme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="136dp"
+                android:background="@drawable/bg_stroke_main_green_darker_1dp_radius_45dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tv_make_new_cardme"
+                app:layout_constraintStart_toStartOf="@+id/tv_make_new_cardme"
+                app:layout_constraintTop_toBottomOf="@+id/tv_make_new_cardme">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/iv_add_cardme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_add_cardme"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_empty_add_cardme" />
+
+                    <TextView
+                        android:id="@+id/tv_add_cardme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="카드나 작성"
+                        android:theme="@style/cardpack_empty_textView_green"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/iv_add_cardme"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctl_cardme_not_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

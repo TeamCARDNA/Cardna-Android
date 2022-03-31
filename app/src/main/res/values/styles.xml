@@ -25,6 +25,13 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <!--  Cardpack Empty textView green  -->
+    <style name="cardpack_empty_textView_green">
+        <item name="android:textColor">@color/main_green_darker</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
+
 
     <!--  Detail Card Text Hint  -->
     <style name="detail_card_text_hint">
