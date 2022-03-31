@@ -33,6 +33,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
 
     override fun initView() {
         getCardMe()
+        initEmptyViewListener()
     }
 
     // 카드나가 없을 때, 엠티 뷰 처리하기
@@ -63,9 +64,23 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
             rvCardme.addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt())) // 화면 비율 조정
 
             // onResume 될 때, cardMeList 를 업데이트 시키고 cardMeList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
-            cardPackViewModel.cardMeList?.observe(viewLifecycleOwner, Observer { it ->
+            cardPackViewModel.cardMeList.observe(viewLifecycleOwner, Observer { it ->
                 it?.let { cardMeAdapter.submitList(it)}
             })
+
+            // isCardMeEmpty 에도 옵저버 달아서, true 이면 뷰 바꿔주기
+            // 옵저버 달 필요 없이 그냥
+            // 카드미 empty 아닌 뷰 ctl, empty 인 뷰 ctl 두개 만들어서
+            // 각 2개의 ctl에 setVisibility에 삼항연산자 써서 cardPackViewModel.isCardMeEmpty? View.GONE : View.VISIBLE
+            // 해주면 되지 않을까
+        }
+    }
+
+    private fun initEmptyViewListener(){
+        binding.ctlBgAddCardme.setOnClickListener{
+            // 카드나 작성 액티비티로 이동
+            val intent = Intent(requireActivity(), CardCreateActivity::class.java) // fragment에서 액티비티 띄우기
+            startActivity(intent)
         }
     }
 }

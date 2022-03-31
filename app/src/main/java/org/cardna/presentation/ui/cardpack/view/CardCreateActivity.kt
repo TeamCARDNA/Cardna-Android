@@ -9,4 +9,6 @@ class CardCreateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_create)
     }
+
+    // 카드나 작성, 카드너 작성 둘다 구현
 }

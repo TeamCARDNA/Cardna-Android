@@ -30,15 +30,20 @@ class CardPackViewModel @Inject constructor(
         get() = _name
 
     // 그 사람의 카드팩의 총 카드 개수 => CardPackFragment 의 textView 에 바인딩
-    private val _totalCardCnt = MutableLiveData<Int>(1) // liveData 가 아니더라도 뷰에 바인딩 가능한가 ?
+    private val _totalCardCnt = MutableLiveData<Int>()
     val totalCardCnt: LiveData<Int>
         get() = _totalCardCnt
 
-    // 카드나 list => CardMeFragement 에서 사용
-    private var _cardMeList: MutableLiveData<MutableList<ResponseCardMeData.CardList.CardMe>>? = null // val 로 해줘도 되나 ?
-    val cardMeList: LiveData<MutableList<ResponseCardMeData.CardList.CardMe>>?
+    // 카드나 List => CardMeFragement 에서 사용
+    private val _cardMeList = MutableLiveData<MutableList<ResponseCardMeData.CardList.CardMe>>()
+    val cardMeList: LiveData<MutableList<ResponseCardMeData.CardList.CardMe>>
         get() = _cardMeList
 
+    private val _isCardMeEmpty = MutableLiveData<Boolean>()
+    val isCardMeEmpty: LiveData<Boolean> = _isCardMeEmpty
+
+    private val _isCardYouEmpty = MutableLiveData<Boolean>()
+    val isCardYouEmpty: LiveData<Boolean> = _isCardYouEmpty
 
     fun setUserId(id: Int?) {
         _id = id
@@ -66,7 +71,12 @@ class CardPackViewModel @Inject constructor(
                     cardRepository.getCardMe().data
                 }.onSuccess {
                     it.apply {
-                        _cardMeList?.value = it.cardMeList
+                        _cardMeList.value = it.cardMeList // postValue 사용 ?
+
+                        if(it.totalCardCnt == 0)
+                            _isCardMeEmpty.value = true
+                        else
+                            _isCardMeEmpty.value = true
                     }
                 }.onFailure {
                     Timber.e(it.toString())
@@ -78,7 +88,12 @@ class CardPackViewModel @Inject constructor(
                     cardRepository.getOtherCardMe(_id!!).data
                 }.onSuccess {
                     it.apply {
-                        _cardMeList?.value= it.cardMeList
+                        _cardMeList.value= it.cardMeList
+
+                        if(it.totalCardCnt == 0)
+                            _isCardMeEmpty.value = true
+                        else
+                            _isCardMeEmpty.value = true
                     }
                 }.onFailure {
                     Timber.e(it.toString())
