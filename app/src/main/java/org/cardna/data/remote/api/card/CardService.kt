@@ -28,7 +28,6 @@ interface CardService {
     ): ResponseKeepOrAddCardData
 
 
-
     // 나의 카드나 조회
     @GET("card/me")
     suspend fun getCardMe(): ResponseCardMeData

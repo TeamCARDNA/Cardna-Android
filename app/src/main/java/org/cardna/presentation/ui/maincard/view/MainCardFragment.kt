@@ -58,8 +58,7 @@ class MainCardFragment :
     }
 
     private fun setObserver() {
-//        mainCardTitleObserve()
-//        mainCardCountObserve()
+
     }
 
     private fun setEditCardActivity() {
@@ -68,18 +67,6 @@ class MainCardFragment :
 //            startActivity(intent)
         }
     }
-
-//    private fun mainCardTitleObserve() {
-//        mainCardViewModel.title.observe(viewLifecycleOwner) {
-//            binding.tvMaincardTitle.text = it.toString()
-//        }
-//    }
-
-//    private fun mainCardCountObserve() {
-//        mainCardViewModel.mainOrder.observe(viewLifecycleOwner) {
-//            binding.tvMaincardPageCount.text = it.toString()
-//        }
-//    }
 
     private fun setAlarmActivity() {
         binding.ibtnMaincardAlarm.setOnClickListener {
