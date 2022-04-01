@@ -16,7 +16,6 @@ import org.cardna.presentation.ui.mypage.adapter.MyPageFriendAdapter
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.ui.setting.view.SettingActivity
 import org.cardna.presentation.util.*
-
 @AndroidEntryPoint
 class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
     private val myPageViewModel: MyPageViewModel by viewModels()
@@ -27,6 +26,11 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         binding.myPageViewModel = myPageViewModel
         binding.myPageFragment = this
         initView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initData()
     }
 
 
@@ -40,9 +44,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         initRootClickEvent(binding.ctlMypageHeader)
     }
 
-
     private fun initData() {
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","initData실행")
         myPageViewModel.getUserMyPage()
     }
 
@@ -97,10 +99,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-             //       if (newText.toString() == "") {
-                      //  initData()
-                   // }
-
+                    if (newText.isNullOrEmpty()) initData()
                     return false
                 }
             })
@@ -113,22 +112,12 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         }
 
         myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
-            if (myPage != null) {
-                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","마이페이지전체데이터"+myPage.friendList.toString())
                 myPageFriendAdapter.submitList(myPage.friendList)
                 requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
-            }
         }
 
-        myPageViewModel.searchFriendName.observe(viewLifecycleOwner) { searchFriendName ->
-         //   if (searchFriendName != null)
-         //   binding.ctlSearchInputResultNoPost.isVisible = newData.isEmpty()
-                myPageFriendAdapter.submitList(searchFriendName)
+        myPageViewModel.searchFriendNameResult.observe(viewLifecycleOwner) { searchFriendNameResult ->
+                myPageFriendAdapter.submitList(searchFriendNameResult)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    myPageViewModel.updateSearchNameQuery("")
     }
 }

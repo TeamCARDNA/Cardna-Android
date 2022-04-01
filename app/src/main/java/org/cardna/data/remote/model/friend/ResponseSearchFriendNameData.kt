@@ -5,12 +5,12 @@ data class ResponseSearchFriendNameData(
     val message: String,
     val status: Int,
     val success: Boolean,
-    val data: Data,
+    val data: MutableList<Data>,
 ) {
     data class Data(
         val id: Int,
         val name: String,
-        val sentence: String,
+        val sentence: String?,
         val userImg: String
     )
 }

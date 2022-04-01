@@ -24,7 +24,7 @@ class MyPageViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-   private val _myPage = MutableLiveData<ResponseMyPageData.Data>()
+    private val _myPage = MutableLiveData<ResponseMyPageData.Data>()
     val myPage: LiveData<ResponseMyPageData.Data> = _myPage
 
     private val _friendCount = MutableLiveData<String>()
@@ -38,12 +38,12 @@ class MyPageViewModel @Inject constructor(
     val searchCodeQuery: LiveData<String> = _searchCodeQuery
 
 
-    private val _searchFriendNameResult = MutableLiveData<ResponseSearchFriendNameData.Data>()
-    val searchFriendNameResult: LiveData<ResponseSearchFriendNameData.Data> = _searchFriendNameResult
+    private val _searchFriendNameResult = MutableLiveData<List<ResponseMyPageData.Data.FriendList>>()
+    val searchFriendNameResult: LiveData<List<ResponseMyPageData.Data.FriendList>> = _searchFriendNameResult
 
-    val searchFriendName = MutableLiveData<MutableList<ResponseMyPageData.Data.FriendList>>()
+    //   val searchFriendName = MutableLiveData<MutableList<ResponseMyPageData.Data.FriendList>>()
 
-    private val _isNonExistFriendName = MutableLiveData<Boolean>()
+    private val _isNonExistFriendName = MutableLiveData<Boolean>(false)
     val isNonExistFriend: LiveData<Boolean> = _isNonExistFriendName
 
 
@@ -60,7 +60,6 @@ class MyPageViewModel @Inject constructor(
             }.onSuccess {
                 it.apply {
                     _myPage.value = it
-                    Log.d("마이페이지 데이터 가져옵니다ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",    _myPage.value.toString())
                     _friendCount.value = friendList.size.toString()
                     _isNonExistFriendName.value = friendList.size == 0
                 }
@@ -73,8 +72,6 @@ class MyPageViewModel @Inject constructor(
 
     fun updateSearchNameQuery(query: String) {
         _searchNameQuery.value = query
-     //   searchNamePost()
-        Log.d("이름검색에서 이름 이걸로 합니다ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",query)
     }
 
     fun updateSearchCodeQuery(query: String) {
@@ -82,21 +79,22 @@ class MyPageViewModel @Inject constructor(
     }
 
     fun searchNamePost() {
-        Log.d("이제 검색통신합니다ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","통신")
-     //   searchFriendName.value?.clear()
+
         val query = _searchNameQuery.value ?: return
-        Log.d("통ㅇ신일떄쿼리ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",query)
         viewModelScope.launch {
             runCatching {
                 friendRepository.getSearchFriendName(query).data
             }.onSuccess {
                 it.apply {
                     _isNonExistFriendName.value = false
-                    searchFriendName.value?.add(
-                        ResponseMyPageData.Data.FriendList(id, name, userImg, sentence)
-                    )
-
-                    Log.d("서버성공햇어요ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",   searchFriendName.value.toString())
+                    _searchFriendNameResult.value = map { data ->
+                        ResponseMyPageData.Data.FriendList(
+                            data.id,
+                            data.name,
+                            data.userImg,
+                            data.sentence ?: ""
+                        )
+                    }
                 }
             }.onFailure {
                 _isNonExistFriendName.value = true
