@@ -1,9 +1,11 @@
 package org.cardna.data.remote.api.friend
 
-import org.cardna.data.remote.model.friend.ResponseSearchFriendCodeData
-import org.cardna.data.remote.model.friend.ResponseSearchFriendNameData
-import retrofit2.http.GET
-import retrofit2.http.Query
+import org.cardna.data.remote.model.friend.*
+import org.cardna.data.remote.model.like.RequestLikeData
+import org.cardna.data.remote.model.like.ResponseLikeData
+import org.cardna.data.remote.model.user.RequestDeleteUserData
+import org.cardna.data.remote.model.user.ResponseDeleteUserData
+import retrofit2.http.*
 
 interface FriendService {
 
@@ -16,4 +18,14 @@ interface FriendService {
     suspend fun getSearchFriendCode(
         @Query("code") code: String
     ): ResponseSearchFriendCodeData
+
+    @POST("friend/request")
+    suspend fun postApplyOrCancleFriend(
+        @Body body: RequestApplyOrCancleFriendData
+    ): ResponseApplyOrCancleFriendData
+
+    @POST("friend/response")
+    suspend fun postAcceptOrDenyFriend(
+        @Body body: RequestAcceptOrDenyFriendData
+    ): ResponseAcceptOrDenyFriendData
 }
