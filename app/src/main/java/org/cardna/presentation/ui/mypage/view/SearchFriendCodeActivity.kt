@@ -1,7 +1,10 @@
 package org.cardna.presentation.ui.mypage.view
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import com.example.cardna.R
@@ -9,9 +12,7 @@ import com.example.cardna.databinding.ActivitySearchFriendCodeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
-import org.cardna.presentation.util.StatusBarUtil
-import org.cardna.presentation.util.setTextColor
-import org.cardna.presentation.util.setTextSize
+import org.cardna.presentation.util.*
 
 @AndroidEntryPoint
 class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySearchFriendCodeBinding>(R.layout.activity_search_friend_code) {
@@ -19,6 +20,8 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.myPageViewModel = myPageViewModel
+        binding.searchFriendCodeActivity = this
         initView()
     }
 
@@ -40,8 +43,8 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText.isNullOrEmpty()){
-                        //false로 바꾸기
+                    if (newText.isNullOrEmpty()) {
+                        binding.ctlMypageCodeSearch.visibility = View.INVISIBLE
                     }
                     return false
                 }
@@ -50,15 +53,57 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
     }
 
     private fun setObserve() {
-        //검색 시키기
         myPageViewModel.searchCodeQuery.observe(this) {
             myPageViewModel.searchCodePost()
         }
 
         myPageViewModel.searchFriendCodeResult.observe(this) { searchFriendCodeResult ->
-            if (searchFriendCodeResult != null){
-                //이미지 세팅
+            if (searchFriendCodeResult.userImg != null) {
+                this.setSrcWithGlide(
+                    "https://firebasestorage.googleapis.com/v0/b/cardna-29f5b.appspot.com/o/profile_empty_720x720.png?alt=media&token=779b704b-c6fe-4a9b-9dd7-fc01e7405f05",
+                    binding.ivMypageCodeSearch
+                )
             }
         }
+    }
+
+    @SuppressLint("ResourceType")
+    fun showCancelFriendRequestDialog() {
+        val dialog = this.showCustomDialog(R.layout.dialog_cancle_friend_request)
+        val confirmBtn = dialog.findViewById<Button>(R.id.tv_cancle_friend_request_dialog_confirm)
+        val cancelBtn = dialog.findViewById<Button>(R.id.tv_cancle_friend_request_dialog_cancel)
+
+        //TODO 로그아웃 확인 누르면 서버 통신
+        confirmBtn.setOnClickListener {
+            myPageViewModel.cancelFriendRequest()
+            dialog.dismiss()
+        }
+
+        cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    fun showBreakUpFriendDialog() {
+        val dialog = this.showCustomDialog(R.layout.dialog_breakup_friend)
+        val confirmBtn = dialog.findViewById<Button>(R.id.tv_dialog_break_up_friend_title_confirm)
+        val cancelBtn = dialog.findViewById<Button>(R.id.tv_dialog_break_up_friend_title_cancle)
+
+        //TODO 로그아웃 확인 누르면 서버 통신
+        confirmBtn.setOnClickListener {
+            myPageViewModel.breakUpFriend()
+            dialog.dismiss()
+        }
+
+        cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    companion object {
+        const val RELATION_ONE = 1
+        const val RELATION_TWO = 2
+        const val RELATION_THREE = 3
     }
 }

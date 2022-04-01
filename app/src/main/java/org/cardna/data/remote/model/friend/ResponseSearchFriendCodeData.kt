@@ -11,6 +11,7 @@ class ResponseSearchFriendCodeData(
         val id: Int,
         val name: String,
         val relationType: Int,
-        val userImg: String
+        val userImg: String,
+        val code: String
     )
 }

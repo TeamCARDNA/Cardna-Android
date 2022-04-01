@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.mypage.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
@@ -39,7 +40,9 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         initRootClickEvent(binding.ctlMypageHeader)
     }
 
+
     private fun initData() {
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","initData실행")
         myPageViewModel.getUserMyPage()
     }
 
@@ -94,7 +97,10 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText.isNullOrEmpty()) initData()
+             //       if (newText.toString() == "") {
+                      //  initData()
+                   // }
+
                     return false
                 }
             })
@@ -108,14 +114,21 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
         myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
             if (myPage != null) {
+                Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","마이페이지전체데이터"+myPage.friendList.toString())
                 myPageFriendAdapter.submitList(myPage.friendList)
                 requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
             }
         }
 
         myPageViewModel.searchFriendName.observe(viewLifecycleOwner) { searchFriendName ->
-            if (searchFriendName != null)
+         //   if (searchFriendName != null)
+         //   binding.ctlSearchInputResultNoPost.isVisible = newData.isEmpty()
                 myPageFriendAdapter.submitList(searchFriendName)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    myPageViewModel.updateSearchNameQuery("")
     }
 }

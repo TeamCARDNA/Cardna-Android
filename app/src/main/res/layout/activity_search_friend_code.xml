@@ -5,6 +5,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="searchFriendCodeActivity"
+            type="org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity" />
+
+        <variable
+            name="myPageViewModel"
+            type="org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,13 +44,14 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="28dp"
             android:background="@drawable/bg_dark_gray_10dp"
+            android:visibility="@{myPageViewModel.searchFriendCodeResult==null ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@+id/et_mypage_code_search_background">
 
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_mypage_code_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_marginTop="24dp"
                 android:src="@drawable/img_mypage_code_search"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -54,16 +64,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="@string/mypage_search_code_friend_name"
+                android:text="@{myPageViewModel.searchFriendCodeResult.name}"
                 android:textColor="@color/white_1"
                 app:layout_constraintEnd_toEndOf="@id/iv_mypage_code_search"
                 app:layout_constraintStart_toStartOf="@id/iv_mypage_code_search"
-                app:layout_constraintTop_toBottomOf="@id/iv_mypage_code_search" />
+                app:layout_constraintTop_toBottomOf="@id/iv_mypage_code_search"
+                tools:text="@string/mypage_search_code_friend_name" />
 
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_mypage_code_search_apply"
-                android:layout_width="wrap_content"
+                activity="@{searchFriendCodeActivity}"
+                relationNumber="@{searchFriendCodeActivity.RELATION_ONE}"
+                viewModel="@{myPageViewModel}"
+                android:layout_width="112dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="24dp"
@@ -77,7 +91,7 @@
                 android:text="@string/mypage_search_code_apply_friend"
                 android:textColor="@color/dark_gray"
                 android:textSize="12sp"
-                android:visibility="visible"
+                android:visibility="@{myPageViewModel.friendRelationType==1 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/ctl_mypage_code_search"
                 app:layout_constraintEnd_toEndOf="@+id/tv_mypage_code_search_friend_name"
                 app:layout_constraintStart_toStartOf="@+id/tv_mypage_code_search_friend_name"
@@ -85,7 +99,10 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_mypage_code_search_apply_waiting"
-                android:layout_width="wrap_content"
+                activity="@{searchFriendCodeActivity}"
+                relationNumber="@{searchFriendCodeActivity.RELATION_THREE}"
+                viewModel="@{myPageViewModel}"
+                android:layout_width="112dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="24dp"
@@ -98,7 +115,7 @@
                 android:text="@string/mypage_search_code_waiting_friend"
                 android:textColor="@color/white_3"
                 android:textSize="12sp"
-                android:visibility="gone"
+                android:visibility="@{myPageViewModel.friendRelationType==3 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/ctl_mypage_code_search"
                 app:layout_constraintEnd_toEndOf="@+id/tv_mypage_code_search_friend_name"
                 app:layout_constraintStart_toStartOf="@+id/tv_mypage_code_search_friend_name"
@@ -106,7 +123,10 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_mypage_code_search_friend"
-                android:layout_width="wrap_content"
+                activity="@{searchFriendCodeActivity}"
+                relationNumber="@{searchFriendCodeActivity.RELATION_TWO}"
+                viewModel="@{myPageViewModel}"
+                android:layout_width="112dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="24dp"
@@ -120,7 +140,7 @@
                 android:text="@string/mypage_search_code_friend"
                 android:textColor="@color/white_3"
                 android:textSize="12sp"
-                android:visibility="gone"
+                android:visibility="@{myPageViewModel.friendRelationType==2 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/ctl_mypage_code_search"
                 app:layout_constraintEnd_toEndOf="@+id/tv_mypage_code_search_friend_name"
                 app:layout_constraintStart_toStartOf="@+id/tv_mypage_code_search_friend_name"

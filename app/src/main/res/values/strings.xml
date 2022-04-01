@@ -142,4 +142,14 @@
     <string name="mypage_search_code_waiting_friend">친구 요청 대기 중</string>
     <string name="mypage_search_code_friend">친구</string>
 
+   <!--  Dialog Cancle Friend Request  -->
+    <string name="dialog_cancle_friend_request">친구 요청을 취소하시겠어요?</string>
+    <string name="dialog_cancle_friend_request_cancle">취소</string>
+    <string name="dialog_cancle_friend_request_confirm">확인</string>
+
+   <!--  Dialog Break Up Friend  -->
+    <string name="dialog_break_up_friend_title_one">친구를 끊으시겠어요?</string>
+    <string name="dialog_break_up_friend_title_two">상대방에게도 친구가 취소돼요</string>
+    <string name="dialog_break_up_friend_confirm">확인</string>
+    <string name="dialog_break_up_friend_cancle">취소</string>
 </resources>
