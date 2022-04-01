@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.setting.view
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
@@ -8,6 +9,7 @@ import com.example.cardna.databinding.ActivitySecessionBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
+import org.cardna.presentation.util.StatusBarUtil
 
 @AndroidEntryPoint
 class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBinding>(R.layout.activity_secession) {
@@ -19,6 +21,7 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
     }
 
     override fun initView() {
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setObserve()
         setEtcContentListener()
     }
