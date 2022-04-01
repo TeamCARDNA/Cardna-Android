@@ -102,8 +102,8 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
     }
 
     companion object {
-        const val RELATION_ONE = 1
-        const val RELATION_TWO = 2
-        const val RELATION_THREE = 3
+        const val RELATION_ONE = 1 //모르는 인간
+        const val RELATION_TWO = 2 //친구
+        const val RELATION_THREE = 3 //요청중
     }
 }

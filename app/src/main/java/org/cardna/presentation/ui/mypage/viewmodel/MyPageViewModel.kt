@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.cardna.data.remote.model.friend.RequestApplyOrCancleFriendData
 import org.cardna.data.remote.model.friend.ResponseSearchFriendCodeData
 import org.cardna.data.remote.model.friend.ResponseSearchFriendNameData
 import org.cardna.data.remote.model.mypage.ResponseMyPageData
@@ -52,6 +53,9 @@ class MyPageViewModel @Inject constructor(
 
     private val _friendRelationType = MutableLiveData<Int>()
     val friendRelationType: LiveData<Int> = _friendRelationType
+
+    private val _friendId = MutableLiveData<Int>()
+    val friendId: LiveData<Int> = _friendId
 
     fun getUserMyPage() {
         viewModelScope.launch {
@@ -112,6 +116,7 @@ class MyPageViewModel @Inject constructor(
                 it.apply {
                     _searchFriendCodeResult.value = it
                     _friendRelationType.value = relationType
+                    _friendId.value = id
                 }
             }.onFailure {
                 Timber.e(it.toString())
@@ -119,18 +124,34 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    //모르는1->요청3
-    fun applyFriend() {
-        _friendRelationType.value = SearchFriendCodeActivity.RELATION_THREE
+    fun applyOrCancleFriend() {
+        val friendId = _friendId.value ?: return
+        viewModelScope.launch {
+            runCatching {
+                friendRepository.postApplyOrCancleFriend(RequestApplyOrCancleFriendData(friendId))
+            }.onSuccess {
+                Timber.e(it.status.toString())
+            }.onFailure {
+                Timber.e(it.toString())
+            }
+        }
     }
 
     //친구2->친구끊기1
     fun breakUpFriend() {
         _friendRelationType.value = SearchFriendCodeActivity.RELATION_ONE
+        applyOrCancleFriend()
     }
 
     //요청3->요청취소1
     fun cancelFriendRequest() {
         _friendRelationType.value = SearchFriendCodeActivity.RELATION_ONE
+        applyOrCancleFriend()
+    }
+
+    //몰라1->요청3
+    fun applyFriend() {
+        _friendRelationType.value = SearchFriendCodeActivity.RELATION_THREE
+        applyOrCancleFriend()
     }
 }
