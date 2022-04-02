@@ -33,6 +33,9 @@ class DetailCardViewModel @Inject constructor(
     private val _isStorage = MutableLiveData<Boolean>(false)
     val isStorage: LiveData<Boolean> = _isStorage
 
+    private val _initLikeCount = MutableLiveData<Int>(0)
+    val initLikeCount: LiveData<Int> = _initLikeCount
+
     var currentLikeCount = 4  //TODO 서버완성 후 다시 test
 
     /* 저장소 : storage true true
@@ -54,14 +57,15 @@ class DetailCardViewModel @Inject constructor(
             }.onSuccess {
                 it.apply {
                     _detailCard.value = it
-                //    _type.value = type
+                    //    _type.value = type
 
                     if (type == DetailCardActivity.STORAGE)
-                     //   _isStorage.value = true
-                    if (likeCount != null) {
-                   //     _isMineCard.value = true
-                        currentLikeCount = likeCount
-                    }
+                    //   _isStorage.value = true
+                        if (likeCount != null) {
+                            //     _isMineCard.value = true
+                            _initLikeCount.value = likeCount!!
+                            currentLikeCount = likeCount
+                        }
                     //카드 좋아요 null로 오는거 서버 확인
                     //    android:checked="@{detailCardViewModel.detailCard.isLiked ? true : false}"
                 }

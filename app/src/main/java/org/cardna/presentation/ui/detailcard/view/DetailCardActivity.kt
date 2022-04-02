@@ -1,29 +1,18 @@
 package org.cardna.presentation.ui.detailcard.view
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.annotation.IdRes
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityDetailCardBinding
 import dagger.hilt.android.AndroidEntryPoint
-import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel
 import org.cardna.presentation.util.*
-import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCardBinding>(R.layout.activity_detail_card) {
@@ -54,145 +43,76 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
             //      cardType = detailCard.type
             cardType = "you"
             setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
-
             with(binding) {
                 when (cardType) {
                     CARD_ME -> {
                         ctlDetailcardFriend.visibility = View.GONE
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_maingreen_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setImageResource(R.drawable.ic_detail_card_me_trash)
-                        showEditDialog(R.layout.dialog_detail_cardme)
+                        showEditDialog()
                     }
                     CARD_YOU -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_mainpurple_stroke_real_black_2dp)
-                        //   showEditDialog(R.layout.dialog_detail_cardyou)
-                        show()
+                        ibtnDetailcardEdit.setOnClickListener {
+                            showEditPopUp()
+                        }
                     }
                     STORAGE -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_white_1_5_stroke_real_black_2dp)
-                        showEditDialog(R.layout.dialog_detail_storage)
+                        ibtnDetailcardEdit.setOnClickListener {
+                            showEditPopUp()
+                        }
                     }
                 }
             }
         }
     }
 
-
-    fun show() {
-        val items = this.resources.getStringArray(R.array.detail_cardyou)
-        val popupAdapter =
-            object : ArrayAdapter<String>(baseContext, R.layout.item_detail, items) {
-                override fun getView(
-                    position: Int,
-                    convertView: View?,
-                    parent: ViewGroup
-                ): View {
-                    val view = super.getView(position, convertView, parent)
-                    val color = if (position == 0) {
-                        R.color.black
-                    } else {
-                        R.color.black
-                    }
-                    (view as TextView).setTextColor(ContextCompat.getColor(context, color))
-                    return view
-                }
-            }
-
-        val popup = ListPopupWindow(this).apply {
-            anchorView = binding.ibtnDetailcardEdit
-            setAdapter(popupAdapter)
-            setDropDownGravity(Gravity.NO_GRAVITY)
-         //   width = dpToPx(112)
-           width = measureContentWidth(baseContext,popupAdapter)
-            height = ListPopupWindow.WRAP_CONTENT
-            isModal=true
-       //  horizontalOffset = -300
-            verticalOffset = -20
-           Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",promptPosition.toString())
-
-            setBackgroundDrawable(ContextCompat.getDrawable(baseContext, R.drawable.img_popup))
-        }
-
-        popup.setOnItemClickListener { _, view, _, _ ->
-            /*      if ((view as TextView).text == "수정하기") {
-                      commentUpdateListener(data)
-                      popup.dismiss()
-                  } else {
-                      commentDeleteListener(data)
-                      popup.dismiss()
-                  }
-              }*/
-        }
-        popup.show()
-    }
-
-
-    private fun measureContentWidth(context: Context, adapter: ListAdapter): Int {
-        val measureParentViewGroup = FrameLayout(context)
-        var itemView: View? = null
-
-        var maxWidth = 0
-        var itemType = 0
-
-        val widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-        val heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-
-        for (index in 0 until adapter.count) {
-            val positionType = adapter.getItemViewType(index)
-            if (positionType != itemType) {
-                itemType = positionType
-                itemView = null
-            }
-            itemView = adapter.getView(index, itemView, measureParentViewGroup)
-            itemView.measure(widthMeasureSpec, heightMeasureSpec)
-            val itemWidth = itemView.measuredWidth
-            if (itemWidth > maxWidth) {
-                maxWidth = itemWidth
-            }
-        }
-        return maxWidth
-    }
-
-    fun convertDPtoPX(dp: Int): Int {
-        val density: Float = this.resources.displayMetrics.density
-        return (dp.toFloat() * density).roundToInt()
-    }
-
-    fun dpToPx(dp: Int): Int {
-        val displayMetrics = resources.displayMetrics
-        return (dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
-    }
-
-    @SuppressLint("ResourceType")
-    private fun showEditDialog(@IdRes layout: Int) {
-        binding.ibtnDetailcardEdit.setOnClickListener {
-            val dialog = this.showCustomDialog(layout)
-            val deleteBtn = dialog.findViewById<Button>(R.id.tv_dialog_delete)
-
+    private fun showEditPopUp() {
+        with(binding.ibtnDetailcardEdit) {
             when (cardType) {
-                CARD_ME -> {
-                    val noBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardme_no)
-                    noBtn.setOnClickListener {
-                        setHandler(dialog)
-                    }
-                }
                 CARD_YOU -> {
-                    val saveBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardyou_save)
-                    saveBtn.setOnClickListener {
-                        detailCardViewModel.keepOrAddCard() //TODO API완성 후 다시 test
-                        setHandler(dialog)
+                    val popup = showCustomPopUp(this, R.array.detail_cardyou_popup, baseContext)
+                    popup.setOnItemClickListener { _, view, _, _ ->
+                        if ((view as TextView).text == "보관") {
+                            detailCardViewModel.keepOrAddCard()
+                            popup.dismiss()
+                        } else {
+                            detailCardViewModel.deleteCard()
+                            popup.dismiss()
+                        }
                     }
+                    popup.show()
                 }
                 STORAGE -> {
-                    val declarationBtn = dialog.findViewById<Button>(R.id.tv_dialog_storage_report)
-                    declarationBtn.setOnClickListener {
-                        showUerReportDialog()
-                        setHandler(dialog)
+                    val popup = showCustomPopUp(this, R.array.detail_storage_popup, baseContext)
+                    popup.setOnItemClickListener { _, view, _, _ ->
+                        if ((view as TextView).text == "신고") {
+                            showUerReportDialog()
+                            popup.dismiss()
+                        } else {
+                            detailCardViewModel.deleteCard()
+                            popup.dismiss()
+                        }
                     }
+                    popup.show()
                 }
             }
+        }
+    }
+
+
+    @SuppressLint("ResourceType")
+    private fun showEditDialog() {
+        binding.ibtnDetailcardEdit.setOnClickListener {
+            val dialog = this.showCustomDialog(R.layout.dialog_detail_cardme)
+            val deleteBtn = dialog.findViewById<Button>(R.id.tv_dialog_delete)
+            val noBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardme_no)
+            noBtn.setOnClickListener {
+                setHandler(dialog)
+            }
             deleteBtn.setOnClickListener {
-                detailCardViewModel.deleteCard()  //TODO API완성 후 다시 test
+                detailCardViewModel.deleteCard()
                 finish()
             }
         }
