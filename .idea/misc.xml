@@ -55,6 +55,7 @@
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/drawable/selector_switch_alarm.xml" value="0.11" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/font/pretendard_font.xml" value="0.1037037037037037" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_alarm.xml" value="0.264" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_animation.xml" value="0.136" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_detail_card.xml" value="0.2" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_developer_info.xml" value="0.176" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -63,7 +64,7 @@
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_secession.xml" value="0.37694704049844235" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_service_operation.xml" value="0.11930091185410334" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_set_name.xml" value="0.264" />
-        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_set_name_finished.xml" value="0.1" />
+        <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_set_name_finished.xml" value="0.176" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_setting.xml" value="0.2" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/activity_version_info.xml" value="0.264" />
         <entry key="..\:/Users/TFX5470H/AndroidStudioProjects/CARDNA_Release/app/src/main/res/layout/bg_dark_gray_radius_10dp.xml" value="0.1111111111111111" />

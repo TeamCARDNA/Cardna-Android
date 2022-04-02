@@ -27,16 +27,13 @@
             android:exported="false" />
         <activity
             android:name="org.cardna.presentation.ui.detailcard.view.DetailCardActivity"
-            android:exported="true" >
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name="org.cardna.presentation.ui.alarm.view.AlarmActivity"
-            android:exported="true" >
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name="org.cardna.presentation.ui.setting.view.SecessionActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name="org.cardna.presentation.ui.setting.view.ServiceOperationActivity"
             android:exported="false" />
@@ -56,6 +53,13 @@
             android:name="org.cardna.presentation.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
+
+        </activity>
+
+
+        <activity
+            android:name="org.cardna.presentation.ui.login.SetNameFinishedActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
