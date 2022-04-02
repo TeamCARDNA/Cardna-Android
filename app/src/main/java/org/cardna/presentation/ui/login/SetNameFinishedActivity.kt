@@ -69,6 +69,7 @@ class SetNameFinishedActivity :
         }
     }
 
+
     private fun setClickListener() {
         negativeButtonClickListener()
         positiveButtonClickListener()
