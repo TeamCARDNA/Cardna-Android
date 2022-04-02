@@ -46,7 +46,7 @@ class BlindAreaFragment : BaseViewUtil.BaseFragment<FragmentBlindAreaBinding>(R.
 
     private fun setImageObserve() {
         insightViewModel.blindAreaInsight.observe(viewLifecycleOwner) { blindAreaInsight ->
-            requireActivity().setSrcWithGlide(blindAreaInsight.image, binding.ivInsightBlindAreaImage)
+            if (blindAreaInsight.image != null) requireActivity().setSrcWithGlide(blindAreaInsight.image, binding.ivInsightBlindAreaImage)
         }
     }
 }

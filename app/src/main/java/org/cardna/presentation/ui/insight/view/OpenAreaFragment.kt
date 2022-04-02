@@ -47,7 +47,7 @@ class OpenAreaFragment : BaseViewUtil.BaseFragment<FragmentOpenAreaBinding>(R.la
 
     private fun setImageObserve() {
         insightViewModel.openAreaInsight.observe(viewLifecycleOwner) { openAreaInsight ->
-                requireActivity().setSrcWithGlide(openAreaInsight.image, binding.ivInsightOpenAreaImage)
+            if (openAreaInsight.image != null) requireActivity().setSrcWithGlide(openAreaInsight.image, binding.ivInsightOpenAreaImage)
         }
     }
 }
