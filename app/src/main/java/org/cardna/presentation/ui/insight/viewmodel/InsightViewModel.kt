@@ -50,14 +50,11 @@ class InsightViewModel @Inject constructor(
                 insightRepository.getInsight().data
             }.onSuccess {
                 it.apply {
-                    _blindAreaInsight.value = it.blindArea
-                    _openAreaInsight.value = it.openArea
+                    _blindAreaInsight.value = blindArea
+                    _openAreaInsight.value = openArea
 
-                 //   _isBlindAreaInsightEmpty.value = false
-                  //  _isOpenAreaInsightEmpty.value = false
-
-                    _blindAreaCardId.value = _blindAreaInsight.value?.id ?: return@launch
-                    _openAreaCardId.value = _openAreaInsight.value?.id ?: return@launch
+                    _blindAreaCardId.value = blindArea.id ?: -1
+                    _openAreaCardId.value = openArea.id ?: -1
                 }
             }.onFailure {
                 Timber.e(it.toString())

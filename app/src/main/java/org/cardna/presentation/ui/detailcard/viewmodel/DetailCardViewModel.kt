@@ -24,13 +24,13 @@ class DetailCardViewModel @Inject constructor(
     private val _detailCard = MutableLiveData<ResponseDetailCardData.Data>()
     val detailCard: LiveData<ResponseDetailCardData.Data> = _detailCard
 
-    private val _type = MutableLiveData<String>()
+    private val _type = MutableLiveData<String>("you")
     val type: LiveData<String> = _type
 
-    private val _isMineCard = MutableLiveData<Boolean>()
+    private val _isMineCard = MutableLiveData<Boolean>(true)
     val isMineCard: LiveData<Boolean> = _isMineCard
 
-    private val _isStorage = MutableLiveData<Boolean>()
+    private val _isStorage = MutableLiveData<Boolean>(false)
     val isStorage: LiveData<Boolean> = _isStorage
 
     var currentLikeCount = 4  //TODO 서버완성 후 다시 test
@@ -54,12 +54,12 @@ class DetailCardViewModel @Inject constructor(
             }.onSuccess {
                 it.apply {
                     _detailCard.value = it
-                    _type.value = type
+                //    _type.value = type
 
                     if (type == DetailCardActivity.STORAGE)
-                        _isStorage.value = true
+                     //   _isStorage.value = true
                     if (likeCount != null) {
-                        _isMineCard.value = true
+                   //     _isMineCard.value = true
                         currentLikeCount = likeCount
                     }
                     //카드 좋아요 null로 오는거 서버 확인

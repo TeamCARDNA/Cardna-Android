@@ -11,6 +11,7 @@ import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySearchFriendCodeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.util.*
 

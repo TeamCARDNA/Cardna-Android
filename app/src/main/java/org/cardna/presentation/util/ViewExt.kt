@@ -37,12 +37,12 @@ fun Context.convertDPtoPX(dp: Int): Int {
 fun Context.showCustomDialog(@IdRes layout: Int, paramsX: Int? = null, paramsY: Int? = null): Dialog {
     val dialog = Dialog(this)
     val params = dialog.window?.attributes
-
+/*
     if (paramsX != null && paramsY != null) {
         params?.y = paramsY
         params?.x = paramsX
         dialog.window?.attributes = params
-    }
+    }*/
 
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

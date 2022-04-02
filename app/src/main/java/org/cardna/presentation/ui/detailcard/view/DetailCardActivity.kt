@@ -1,12 +1,11 @@
 package org.cardna.presentation.ui.detailcard.view
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
@@ -48,7 +47,8 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     @SuppressLint("ResourceType")
     private fun setObserve() {
         detailCardViewModel.detailCard.observe(this) { detailCard ->
-            cardType = detailCard.type
+      //      cardType = detailCard.type
+     cardType = "you"
             setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
 
             with(binding) {
@@ -57,7 +57,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                         ctlDetailcardFriend.visibility = View.GONE
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_maingreen_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setImageResource(R.drawable.ic_detail_card_me_trash)
-                        showEditDialog(R.layout.dialog_detail_cardme, null, null)
+                        showEditDialog(R.layout.dialog_detail_cardme)
                     }
                     CARD_YOU -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_mainpurple_stroke_real_black_2dp)
@@ -72,40 +72,20 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         }
     }
 
-
-    private fun ddd(){
-        binding.ibtnDetailcardEdit.setOnTouchListener { _, event ->
-            when (event?.action) {
-                MotionEvent.ACTION_BUTTON_PRESS -> {
-                    Log.d("viewTest", "RawX : " + event.getRawX() +" RawY : " + event.getRawY());    // View 를 터치한 지점의 절대 좌표값.
-                }
-            }
-            //리턴값이 false면 seekbar 동작 안됨
-            true //or false
-        }
-    }
-
-
-
     @SuppressLint("ResourceType")
-    private fun showEditDialog(@IdRes layout: Int, paramsX: Int? = 1400, paramsY: Int? = 410) {
-
-
-
+    private fun showEditDialog(@IdRes layout: Int) {
         binding.ibtnDetailcardEdit.setOnClickListener {
-            val dialog = this.showCustomDialog(layout, paramsX, paramsY)
+            val dialog = this.showCustomDialog(layout)
             val deleteBtn = dialog.findViewById<Button>(R.id.tv_dialog_delete)
 
             when (cardType) {
                 CARD_ME -> {
-                    ddd()
                     val noBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardme_no)
                     noBtn.setOnClickListener {
                         setHandler(dialog)
                     }
                 }
                 CARD_YOU -> {
-                    ddd()
                     val saveBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardyou_save)
                     saveBtn.setOnClickListener {
                         detailCardViewModel.keepOrAddCard() //TODO API완성 후 다시 test
@@ -113,7 +93,6 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                     }
                 }
                 STORAGE -> {
-                    ddd()
                     val declarationBtn = dialog.findViewById<Button>(R.id.tv_dialog_storage_report)
                     declarationBtn.setOnClickListener {
                         showUerReportDialog()
