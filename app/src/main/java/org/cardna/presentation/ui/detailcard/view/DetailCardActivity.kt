@@ -40,8 +40,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     @SuppressLint("ResourceType")
     private fun setObserve() {
         detailCardViewModel.detailCard.observe(this) { detailCard ->
-            //cardType = detailCard.type
-            cardType = "storage"
+            cardType = detailCard.type
             setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
             with(binding) {
                 when (cardType) {

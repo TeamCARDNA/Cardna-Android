@@ -11,7 +11,6 @@ import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySearchFriendCodeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.util.*
 
@@ -30,6 +29,7 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
         StatusBarUtil.setStatusBar(this, Color.BLACK)
         setInputField()
         setObserve()
+        initRootClickEvent(binding.ctlMypageCodeSearchContainer)
     }
 
     fun setInputField() {
@@ -58,13 +58,11 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
             myPageViewModel.searchCodePost()
         }
 
-        myPageViewModel.searchFriendCodeResult.observe(this) { searchFriendCodeResult ->
-            if (searchFriendCodeResult.userImg != null) {
+        myPageViewModel.searchFriendCodeResult.observe(this) {
+            if (it.userImg.isNotEmpty())  //TODO 현재 서버에서 유저 이미지 temp로 와서 안뜸
                 this.setSrcWithGlide(
-                    "https://firebasestorage.googleapis.com/v0/b/cardna-29f5b.appspot.com/o/profile_empty_720x720.png?alt=media&token=779b704b-c6fe-4a9b-9dd7-fc01e7405f05",
-                    binding.ivMypageCodeSearch
+                    it.userImg, binding.ivMypageCodeSearch
                 )
-            }
         }
     }
 

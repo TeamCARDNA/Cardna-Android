@@ -1,9 +1,12 @@
 package org.cardna.presentation.ui.mypage.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cardna.R

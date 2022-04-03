@@ -106,9 +106,6 @@ class SetNameFinishedActivity :
 
     private fun negativeButtonClickListener() {
         //EmptyView -> 메인 페이지 이동
-        binding.btnSetnamefinishedPositive.setOnClickListener{
-            startActivity(Intent(this,MainActivity::class.java))
-        }
     }
 
     private fun positiveButtonClickListener() {

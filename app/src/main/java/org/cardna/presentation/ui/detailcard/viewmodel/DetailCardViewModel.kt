@@ -30,7 +30,7 @@ class DetailCardViewModel @Inject constructor(
     private val _writerId = MutableLiveData<Int>()
     val writerId: LiveData<Int> = _writerId
 
-    private val _type = MutableLiveData<String>("storage")
+    private val _type = MutableLiveData<String>()
     val type: LiveData<String> = _type
 
     private val _title = MutableLiveData("")
@@ -45,16 +45,19 @@ class DetailCardViewModel @Inject constructor(
     private val _createdAt = MutableLiveData("")
     val createdAt: LiveData<String> = _createdAt
 
-    private val _isMineCard = MutableLiveData<Boolean>(true)
+    private val _isLiked = MutableLiveData<Boolean>()
+    val isLiked: LiveData<Boolean> = _isLiked
+
+    private val _isMineCard = MutableLiveData<Boolean>()
     val isMineCard: LiveData<Boolean> = _isMineCard
 
-    private val _isStorage = MutableLiveData<Boolean>(true)
+    private val _isStorage = MutableLiveData<Boolean>()
     val isStorage: LiveData<Boolean> = _isStorage
 
-    private val _initLikeCount = MutableLiveData(0)
+    private val _initLikeCount = MutableLiveData<Int?>(0)
     val initLikeCount: MutableLiveData<Int?> = _initLikeCount
 
-    var currentLikeCount = 4  //TODO 서버완성 후 다시 test
+    var currentLikeCount: Int = 0
 
     /* 저장소 : storage true true
     * 내가 카드나 : me true false
@@ -81,14 +84,13 @@ class DetailCardViewModel @Inject constructor(
                     _content.value = content
                     _createdAt.value = createdAt
                     _writerId.value = 0    //TODO 서버 수정 시 _writerId로 넣기
+                    _initLikeCount.value = likeCount
+                    currentLikeCount = likeCount ?: 0
+                    _isMineCard.value = isLiked == null
 
-                    if (type == DetailCardActivity.STORAGE)
-                        _isStorage.value = true
-                    if (likeCount != null) {
-                        _isMineCard.value = true
-                        _initLikeCount.value = likeCount
-                        currentLikeCount = likeCount
-                    }
+                    if (type == DetailCardActivity.STORAGE) _isStorage.value = true
+
+                    if (isLiked != null) _isLiked.value = isLiked!!
 
                 }
             }.onFailure {
