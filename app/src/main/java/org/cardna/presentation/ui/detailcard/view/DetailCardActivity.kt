@@ -40,7 +40,8 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     @SuppressLint("ResourceType")
     private fun setObserve() {
         detailCardViewModel.detailCard.observe(this) { detailCard ->
-            cardType = detailCard.type
+            //cardType = detailCard.type
+            cardType = "storage"
             setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
             with(binding) {
                 when (cardType) {
@@ -104,7 +105,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     @SuppressLint("ResourceType")
     private fun showEditDialog() {
         binding.ibtnDetailcardEdit.setOnClickListener {
-            val dialog = this.showCustomDialog(R.layout.dialog_detail_cardme)
+            val dialog = showCustomDialog(R.layout.dialog_detail_cardme)
             val deleteBtn = dialog.findViewById<Button>(R.id.tv_dialog_delete)
             val noBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardme_no)
             noBtn.setOnClickListener {
@@ -112,6 +113,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
             }
             deleteBtn.setOnClickListener {
                 detailCardViewModel.deleteCard()
+                dialog.dismiss()
                 finish()
             }
         }
@@ -167,6 +169,12 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                 tvDetailcardLikecount.text = (--detailCardViewModel!!.currentLikeCount).toString()
             }
         }
+    }
+
+    fun setCardAddClickListener(){
+        detailCardViewModel.keepOrAddCard()
+        shortToast("카드너에 추가되었어요!ㅎ")
+        finish()
     }
 
     private fun showLikeLottie() {

@@ -24,7 +24,7 @@ class DetailCardViewModel @Inject constructor(
     private val _detailCard = MutableLiveData<ResponseDetailCardData.Data>()
     val detailCard: LiveData<ResponseDetailCardData.Data> = _detailCard
 
-    private val _type = MutableLiveData<String>()
+    private val _type = MutableLiveData<String>("storage")
     val type: LiveData<String> = _type
 
     private val _title = MutableLiveData("")
@@ -39,10 +39,10 @@ class DetailCardViewModel @Inject constructor(
     private val _createdAt = MutableLiveData("")
     val createdAt: LiveData<String> = _createdAt
 
-    private val _isMineCard = MutableLiveData<Boolean>()
+    private val _isMineCard = MutableLiveData<Boolean>(true)
     val isMineCard: LiveData<Boolean> = _isMineCard
 
-    private val _isStorage = MutableLiveData<Boolean>()
+    private val _isStorage = MutableLiveData<Boolean>(true)
     val isStorage: LiveData<Boolean> = _isStorage
 
     private val _initLikeCount = MutableLiveData(0)
@@ -73,7 +73,7 @@ class DetailCardViewModel @Inject constructor(
                     _title.value = title
                     _name.value = name
                     _content.value = content
-                    _createdAt.value=createdAt
+                    _createdAt.value = createdAt
 
                     if (type == DetailCardActivity.STORAGE)
                         _isStorage.value = true
@@ -103,27 +103,29 @@ class DetailCardViewModel @Inject constructor(
     }
 
     fun deleteCard() {
+        val cardId = id ?: return
         Timber.d("카드삭제")
         viewModelScope.launch {
             runCatching {
-                //      cardRepository.deleteCard(id ?: return@launch)
+                cardRepository.deleteCard(cardId)
             }.onSuccess {
-                //       Timber.d(it.message)
+                Timber.d(it.message)
             }.onFailure {
-                //     Timber.e(it.toString())
+                Timber.e(it.toString())
             }
         }
     }
 
     fun keepOrAddCard() {
+        val cardId = id ?: return
         Timber.d("카드보관")
         viewModelScope.launch {
             runCatching {
-                //        cardRepository.putKeepOrAddCard(id ?: return@launch)
+                cardRepository.putKeepOrAddCard(cardId)
             }.onSuccess {
-                //        Timber.d(it.message)
+                Timber.d(it.message)
             }.onFailure {
-                //        Timber.e(it.toString())
+                Timber.e(it.toString())
             }
         }
     }

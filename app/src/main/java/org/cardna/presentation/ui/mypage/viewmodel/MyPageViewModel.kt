@@ -37,7 +37,7 @@ class MyPageViewModel @Inject constructor(
     private val _searchFriendNameResult = MutableLiveData<List<ResponseMyPageData.Data.FriendList>>()
     val searchFriendNameResult: LiveData<List<ResponseMyPageData.Data.FriendList>> = _searchFriendNameResult
 
-    private val _isNonExistFriendName = MutableLiveData<Boolean>(false)
+    private val _isNonExistFriendName = MutableLiveData<Boolean>(true)
     val isNonExistFriend: LiveData<Boolean> = _isNonExistFriendName
 
     private val _searchFriendCodeResult = MutableLiveData<ResponseSearchFriendCodeData.Data>()

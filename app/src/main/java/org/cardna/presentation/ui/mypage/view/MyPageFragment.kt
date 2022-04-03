@@ -31,6 +31,11 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         initView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        initData()
+    }
+
     override fun initView() {
         initData()
         setStickyScroll()
@@ -42,7 +47,9 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun initData() {
-        myPageViewModel.getUserMyPage()
+        val query = binding.etMypageNameSearchBackground.query.toString()
+        if (query.isNullOrEmpty()) myPageViewModel.getUserMyPage()
+        else myPageViewModel.updateSearchNameQuery(query)
     }
 
     private fun setStickyScroll() {
@@ -107,11 +114,13 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
             myPageViewModel.searchNamePost()
         }
 
-        myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
-            myPageFriendAdapter.submitList(myPage.friendList)
-            requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
-        }
 
+        if (binding.etMypageNameSearchBackground.query.isNullOrEmpty()) {
+            myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
+                myPageFriendAdapter.submitList(myPage.friendList)
+                requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
+            }
+        }
         myPageViewModel.searchFriendNameResult.observe(viewLifecycleOwner) { searchFriendNameResult ->
             myPageFriendAdapter.submitList(searchFriendNameResult)
         }
