@@ -1,14 +1,10 @@
 package org.cardna.presentation.ui.mypage.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cardna.R
 import com.example.cardna.databinding.FragmentMyPageBinding
@@ -18,7 +14,10 @@ import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.adapter.MyPageFriendAdapter
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.ui.setting.view.SettingActivity
-import org.cardna.presentation.util.*
+import org.cardna.presentation.util.initRootClickEvent
+import org.cardna.presentation.util.setSrcWithGlide
+import org.cardna.presentation.util.setTextColor
+import org.cardna.presentation.util.setTextSize
 
 @AndroidEntryPoint
 class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {

@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ListAdapter
 import androidx.annotation.Px
+import org.cardna.CardNaApplication
+import org.cardna.data.local.singleton.CardNaRepository
 import kotlin.math.roundToInt
 
 class PixelRatio(private val app: Application) {
@@ -30,7 +32,20 @@ class PixelRatio(private val app: Application) {
     fun toDP(@Px pixel: Int) = (pixel / displayMetrics.density).roundToInt()
 }
 
- fun measureContentWidth(context: Context, adapter: ListAdapter): Int {
+val Number.pixel: Int
+    @Px get() = CardNaApplication.pixelRatio.toDP(this.toInt())
+
+val Number.dp: Int
+    get() = CardNaApplication.pixelRatio.toPixel(this.toInt())
+
+val Number.pixelFloat: Float
+    @Px get() = CardNaApplication.pixelRatio.toDP(this.toInt()).toFloat()
+
+val Number.dpFloat: Float
+    get() = CardNaApplication.pixelRatio.toPixel(this.toInt()).toFloat()
+
+
+fun measureContentWidth(context: Context, adapter: ListAdapter): Int {
     val measureParentViewGroup = FrameLayout(context)
     var itemView: View? = null
 
