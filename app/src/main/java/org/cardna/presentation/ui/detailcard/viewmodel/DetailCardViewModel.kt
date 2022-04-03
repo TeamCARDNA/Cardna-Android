@@ -27,6 +27,18 @@ class DetailCardViewModel @Inject constructor(
     private val _type = MutableLiveData<String>()
     val type: LiveData<String> = _type
 
+    private val _title = MutableLiveData("")
+    val title: LiveData<String> = _title
+
+    private val _name = MutableLiveData("")
+    val name: LiveData<String> = _name
+
+    private val _content = MutableLiveData("")
+    val content: LiveData<String> = _content
+
+    private val _createdAt = MutableLiveData("")
+    val createdAt: LiveData<String> = _createdAt
+
     private val _isMineCard = MutableLiveData<Boolean>()
     val isMineCard: LiveData<Boolean> = _isMineCard
 
@@ -58,6 +70,10 @@ class DetailCardViewModel @Inject constructor(
                 it.apply {
                     _detailCard.value = it
                     _type.value = type
+                    _title.value = title
+                    _name.value = name
+                    _content.value = content
+                    _createdAt.value=createdAt
 
                     if (type == DetailCardActivity.STORAGE)
                         _isStorage.value = true

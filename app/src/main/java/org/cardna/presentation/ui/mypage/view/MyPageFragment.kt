@@ -1,10 +1,13 @@
 package org.cardna.presentation.ui.mypage.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cardna.R
@@ -16,9 +19,10 @@ import org.cardna.presentation.ui.mypage.adapter.MyPageFriendAdapter
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.ui.setting.view.SettingActivity
 import org.cardna.presentation.util.*
+
 @AndroidEntryPoint
 class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
-    private val myPageViewModel: MyPageViewModel by viewModels()
+    private val myPageViewModel: MyPageViewModel by activityViewModels()
     private lateinit var myPageFriendAdapter: MyPageFriendAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,12 +31,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         binding.myPageFragment = this
         initView()
     }
-
-    override fun onResume() {
-        super.onResume()
-        initData()
-    }
-
 
     override fun initView() {
         initData()
@@ -63,7 +61,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun setMyPageFriendAdapter() {
-
         myPageFriendAdapter = MyPageFriendAdapter(requireActivity()) { item ->
             val bundle = Bundle().apply {
                 putInt("id", item.id)
@@ -112,12 +109,12 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         }
 
         myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
-                myPageFriendAdapter.submitList(myPage.friendList)
-                requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
+            myPageFriendAdapter.submitList(myPage.friendList)
+            requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
         }
 
         myPageViewModel.searchFriendNameResult.observe(viewLifecycleOwner) { searchFriendNameResult ->
-                myPageFriendAdapter.submitList(searchFriendNameResult)
+            myPageFriendAdapter.submitList(searchFriendNameResult)
         }
     }
 }

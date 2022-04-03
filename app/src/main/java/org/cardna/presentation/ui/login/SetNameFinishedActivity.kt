@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.login
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +14,7 @@ import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySetNameFinishedBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.CardNaApplication
+import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan
 import org.cardna.presentation.util.StatusBarUtil
@@ -104,6 +106,9 @@ class SetNameFinishedActivity :
 
     private fun negativeButtonClickListener() {
         //EmptyView -> 메인 페이지 이동
+        binding.btnSetnamefinishedPositive.setOnClickListener{
+            startActivity(Intent(this,MainActivity::class.java))
+        }
     }
 
     private fun positiveButtonClickListener() {
