@@ -1,10 +1,12 @@
 package org.cardna.presentation.ui.setting.view
 
+import android.graphics.Color
 import android.os.Bundle
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityVersionInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.util.StatusBarUtil
 
 @AndroidEntryPoint
 class VersionInfoActivity : BaseViewUtil.BaseAppCompatActivity<ActivityVersionInfoBinding>(R.layout.activity_version_info) {
@@ -14,5 +16,6 @@ class VersionInfoActivity : BaseViewUtil.BaseAppCompatActivity<ActivityVersionIn
     }
 
     override fun initView() {
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
     }
 }

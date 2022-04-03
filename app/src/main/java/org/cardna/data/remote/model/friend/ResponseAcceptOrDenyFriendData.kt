@@ -1,16 +1,13 @@
 package org.cardna.data.remote.model.friend
 
-
-data class ResponseFriendNameData(
-    val message: String,
+data class ResponseAcceptOrDenyFriendData(
     val status: Int,
     val success: Boolean,
+    val message: String,
     val data: Data,
 ) {
     data class Data(
         val id: Int,
-        val name: String,
-        val sentence: String,
-        val userImg: String
+        val status: String,
     )
 }

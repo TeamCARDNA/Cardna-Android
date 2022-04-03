@@ -49,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:checkMark="@drawable/ic_selector_detailcard_like"
+                android:checked="@{detailCardViewModel.isLiked}"
                 android:onClick="@{()->detailCardActivity.setLikeClickListener()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="@{detailCardViewModel.detailCard.likeCount.toString()}"
+                android:text="@{detailCardViewModel.initLikeCount.toString()}"
                 android:textColor="@color/main_black"
                 android:textSize="12sp"
                 android:visibility="@{detailCardViewModel.isMineCard ?  View.VISIBLE : View.GONE}"
@@ -86,7 +87,7 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:paddingVertical="12dp"
                 android:paddingStart="18dp"
-                android:text="@{detailCardViewModel.detailCard.title}"
+                android:text="@{detailCardViewModel.title}"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -168,7 +169,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:fontFamily="@font/pretendard_regular"
-                        android:text="@{detailCardViewModel.detailCard.name}"
+                        android:text="@{detailCardViewModel.name}"
                         android:textColor="@color/white_2"
                         android:textSize="16sp"
                         app:layout_constraintStart_toEndOf="@id/tv_detailcard_from"
@@ -182,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_regular"
                     android:lineSpacingExtra="5dp"
-                    android:text="@{detailCardViewModel.detailCard.content}"
+                    android:text="@{detailCardViewModel.content}"
                     android:textColor="@color/white_1"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -197,7 +198,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="48dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="@{detailCardViewModel.detailCard.createdAt}"
+                    android:text="@{detailCardViewModel.createdAt}"
                     android:textColor="@color/white_3"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -209,14 +210,15 @@
 
         </androidx.core.widget.NestedScrollView>
 
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_detailcard_card_add"
             android:layout_width="0dp"
             android:layout_height="64dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="48dp"
             android:background="@drawable/bg_white_1_5_10dp"
             android:fontFamily="@font/pretendard_semibold"
-            android:onClick="@{()->detailCardViewModel.keepOrAddCard()}"
+            android:onClick="@{()->detailCardActivity.setCardAddClickListener()}"
             android:text="@string/detail_card_cardyou_add"
             android:textColor="@color/main_black"
             android:textSize="20sp"
@@ -234,6 +236,14 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/iv_dialog_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_black_65"
+            android:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

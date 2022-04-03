@@ -90,12 +90,20 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@{myPageViewModel.myPage.code}"
                     android:textColor="@color/white_3"
+                    android:textIsSelectable="true"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/tv_mypage_name"
                     app:layout_constraintTop_toBottomOf="@id/tv_mypage_name"
                     tools:text="@string/mypage_code" />
 
-
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_mypage_code_copy"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_code"
+                    app:layout_constraintStart_toEndOf="@+id/tv_mypage_code"
+                    app:layout_constraintTop_toTopOf="@+id/tv_mypage_code"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -164,7 +172,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{myPageViewModel.isNonExistFriend ? View.GONE : View.VISIBLE}"
+                android:visibility="@{myPageViewModel.isNonExistFriend==true ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toBottomOf="@+id/ctl_mypage_header">
 
                 <androidx.recyclerview.widget.RecyclerView

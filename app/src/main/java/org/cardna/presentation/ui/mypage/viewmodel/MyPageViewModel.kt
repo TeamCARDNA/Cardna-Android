@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.cardna.data.remote.model.friend.ResponseFriendNameData
-import org.cardna.data.remote.model.insight.ResponseInsightData
+import org.cardna.data.remote.model.friend.RequestApplyOrCancleFriendData
+import org.cardna.data.remote.model.friend.ResponseSearchFriendCodeData
 import org.cardna.data.remote.model.mypage.ResponseMyPageData
 import org.cardna.domain.repository.FriendRepository
 import org.cardna.domain.repository.MyPageRepository
+import org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,61 +22,114 @@ class MyPageViewModel @Inject constructor(
     private val friendRepository: FriendRepository
 ) : ViewModel() {
 
-
     private val _myPage = MutableLiveData<ResponseMyPageData.Data>()
     val myPage: LiveData<ResponseMyPageData.Data> = _myPage
 
     private val _friendCount = MutableLiveData<String>()
     val friendCount: LiveData<String> = _friendCount
 
-    private val _searchQuery = MutableLiveData<String>()
-    val searchQuery: LiveData<String> = _searchQuery
+    private val _searchNameQuery = MutableLiveData<String>()
+    val searchNameQuery: LiveData<String> = _searchNameQuery
 
-    private val _searchFriendNameResult = MutableLiveData<ResponseFriendNameData.Data>()
-    val searchFriendNameResult: LiveData<ResponseFriendNameData.Data> = _searchFriendNameResult
+    private val _searchCodeQuery = MutableLiveData<String>()
+    val searchCodeQuery: LiveData<String> = _searchCodeQuery
 
-    val searchFriendName = MutableLiveData<MutableList<ResponseMyPageData.Data.FriendList>>()
+    private val _searchFriendNameResult = MutableLiveData<List<ResponseMyPageData.Data.FriendList>>()
+    val searchFriendNameResult: LiveData<List<ResponseMyPageData.Data.FriendList>> = _searchFriendNameResult
 
-    private val _isNonExistFriend = MutableLiveData<Boolean>()
-    val isNonExistFriend: LiveData<Boolean> = _isNonExistFriend
+    private val _isNonExistFriendName = MutableLiveData<Boolean>(true)
+    val isNonExistFriend: LiveData<Boolean> = _isNonExistFriendName
+
+    private val _searchFriendCodeResult = MutableLiveData<ResponseSearchFriendCodeData.Data>()
+    val searchFriendCodeResult: LiveData<ResponseSearchFriendCodeData.Data> = _searchFriendCodeResult
+
+    private val _friendRelationType = MutableLiveData<Int>()
+    val friendRelationType: LiveData<Int> = _friendRelationType
+
+    private val _friendId = MutableLiveData<Int>()
+    val friendId: LiveData<Int> = _friendId
 
     fun getUserMyPage() {
         viewModelScope.launch {
             runCatching {
                 myPageRepository.getMyPage().data
-            }.onSuccess {
-                it.apply {
+            }.onSuccess { it.apply {
                     _myPage.value = it
                     _friendCount.value = friendList.size.toString()
-                    _isNonExistFriend.value = friendList.size == 0
+                    _isNonExistFriendName.value = friendList.size == 0
                 }
             }.onFailure {
                 Timber.e(it.toString())
             }
         }
-
     }
 
-    fun updateSearchQuery(query: String) {
-        _searchQuery.value = query
+    fun updateSearchNameQuery(query: String) {
+        _searchNameQuery.value = query
     }
 
-    fun searchPost() {
-        val query = _searchQuery.value ?: return
+    fun updateSearchCodeQuery(query: String) {
+        _searchCodeQuery.value = query
+    }
+
+    fun searchNamePost() {
+        val query = _searchNameQuery.value ?: return
         viewModelScope.launch {
             runCatching {
-                friendRepository.getFriendName(query).data
+                friendRepository.getSearchFriendName(query)
             }.onSuccess {
-                it.apply {
-                    _isNonExistFriend.value = false
-                    searchFriendName.value?.add(
-                        ResponseMyPageData.Data.FriendList(id, name, userImg, sentence)
-                    )
-                }
+                _isNonExistFriendName.value = false
+                _searchFriendNameResult.value = it
             }.onFailure {
-                _isNonExistFriend.value = true
+                _isNonExistFriendName.value = true
                 Timber.e(it.toString())
             }
         }
+    }
+
+    fun searchCodePost() {
+        val query = _searchCodeQuery.value ?: return
+        viewModelScope.launch {
+            runCatching {
+                friendRepository.getSearchFriendCode(query).data
+            }.onSuccess { it.apply {
+                    _searchFriendCodeResult.value = it
+                    _friendRelationType.value = relationType
+                    _friendId.value = id
+                }
+            }.onFailure {
+                Timber.e(it.toString())
+            }
+        }
+    }
+
+    fun applyOrCancelFriend() {
+        val friendId = _friendId.value ?: return
+        viewModelScope.launch {
+            runCatching {
+                friendRepository.postApplyOrCancleFriend(RequestApplyOrCancleFriendData(friendId))
+            }.onSuccess {
+            }.onFailure {
+                Timber.e(it.toString())
+            }
+        }
+    }
+
+    //친구2->손절1
+    fun breakUpFriend() {
+        _friendRelationType.value = SearchFriendCodeActivity.RELATION_ONE
+        applyOrCancelFriend()
+    }
+
+    //요청3->요청취소1
+    fun cancelFriendRequest() {
+        _friendRelationType.value = SearchFriendCodeActivity.RELATION_ONE
+        applyOrCancelFriend()
+    }
+
+    //몰라1->요청3
+    fun applyFriend() {
+        _friendRelationType.value = SearchFriendCodeActivity.RELATION_THREE
+        applyOrCancelFriend()
     }
 }

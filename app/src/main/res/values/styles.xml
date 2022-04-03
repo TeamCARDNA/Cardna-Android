@@ -152,4 +152,10 @@
         <item name="queryBackground">@android:color/transparent</item>
     </style>
 
+    <style name="popup_style" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/main_purple</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

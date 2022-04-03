@@ -40,7 +40,7 @@ class MainCardFragment :
 
     //onResume 에 뿌려질 데이터
     private fun initData() {
-        mainCardViewModel.getMainCardList()
+    //    mainCardViewModel.getMainCardList()
     }
 
     //adapter 관련 모음

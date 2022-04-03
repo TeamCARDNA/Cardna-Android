@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.insight.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.example.cardna.R
@@ -47,6 +48,7 @@ class OpenAreaFragment : BaseViewUtil.BaseFragment<FragmentOpenAreaBinding>(R.la
 
     private fun setImageObserve() {
         insightViewModel.openAreaInsight.observe(viewLifecycleOwner) { openAreaInsight ->
+            if (openAreaInsight.image != null)
                 requireActivity().setSrcWithGlide(openAreaInsight.image, binding.ivInsightOpenAreaImage)
         }
     }

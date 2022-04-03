@@ -13,15 +13,15 @@ data class ResponseInsightData(
 }
 
 data class OpenArea(
-    val id: Int,
-    val image: String,
-    val isInsight: Boolean,
-    val title: String
+    val id: Int?,
+    val image: String?,
+    val isInsight: Boolean?,
+    val title: String?
 )
 
 data class BlindArea(
-    val id: Int,
-    val image: String,
-    val isInsight: Boolean,
-    val title: String
+    val id: Int?,
+    val image: String?,
+    val isInsight: Boolean?,
+    val title: String?
 )

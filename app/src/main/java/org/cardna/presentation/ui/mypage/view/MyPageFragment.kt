@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import androidx.activity.viewModels
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.viewModels
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cardna.R
 import com.example.cardna.databinding.FragmentMyPageBinding
@@ -16,14 +16,15 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.adapter.MyPageFriendAdapter
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
-import org.cardna.presentation.ui.setting.view.SecessionActivity
 import org.cardna.presentation.ui.setting.view.SettingActivity
-import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
-import org.cardna.presentation.util.*
+import org.cardna.presentation.util.initRootClickEvent
+import org.cardna.presentation.util.setSrcWithGlide
+import org.cardna.presentation.util.setTextColor
+import org.cardna.presentation.util.setTextSize
 
 @AndroidEntryPoint
 class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
-    private val myPageViewModel: MyPageViewModel by viewModels()
+    private val myPageViewModel: MyPageViewModel by activityViewModels()
     private lateinit var myPageFriendAdapter: MyPageFriendAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,6 +34,10 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         initView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        initData()
+    }
 
     override fun initView() {
         initData()
@@ -45,7 +50,9 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun initData() {
-        myPageViewModel.getUserMyPage()
+        val query = binding.etMypageNameSearchBackground.query.toString()
+        if (query.isNullOrEmpty()) myPageViewModel.getUserMyPage()
+        else myPageViewModel.updateSearchNameQuery(query)
     }
 
     private fun setStickyScroll() {
@@ -63,7 +70,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun setMyPageFriendAdapter() {
-
         myPageFriendAdapter = MyPageFriendAdapter(requireActivity()) { item ->
             val bundle = Bundle().apply {
                 putInt("id", item.id)
@@ -94,7 +100,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(newText: String?): Boolean {
-                    myPageViewModel.updateSearchQuery(newText.toString())
+                    myPageViewModel.updateSearchNameQuery(newText.toString())
                     return false
                 }
 
@@ -107,20 +113,18 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun setObserve() {
-        myPageViewModel.searchQuery.observe(viewLifecycleOwner) {
-            myPageViewModel.searchPost()
+        myPageViewModel.searchNameQuery.observe(viewLifecycleOwner) {
+            myPageViewModel.searchNamePost()
         }
 
-        myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
-            if (myPage != null) {
+        if (binding.etMypageNameSearchBackground.query.isNullOrEmpty()) {
+            myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
                 myPageFriendAdapter.submitList(myPage.friendList)
                 requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
             }
         }
-
-        myPageViewModel.searchFriendName.observe(viewLifecycleOwner) { searchFriendName ->
-            if (searchFriendName != null)
-                myPageFriendAdapter.submitList(searchFriendName)
+        myPageViewModel.searchFriendNameResult.observe(viewLifecycleOwner) { searchFriendNameResult ->
+            myPageFriendAdapter.submitList(searchFriendNameResult)
         }
     }
 }

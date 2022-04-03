@@ -1,19 +1,12 @@
 package org.cardna.presentation.ui.detailcard.view
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsetsController
-import android.view.WindowManager
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.annotation.IdRes
-import androidx.annotation.RequiresApi
-import androidx.core.view.WindowCompat
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityDetailCardBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,58 +42,77 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         detailCardViewModel.detailCard.observe(this) { detailCard ->
             cardType = detailCard.type
             setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
-
             with(binding) {
                 when (cardType) {
                     CARD_ME -> {
                         ctlDetailcardFriend.visibility = View.GONE
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_maingreen_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setImageResource(R.drawable.ic_detail_card_me_trash)
-                        showEditDialog(R.layout.dialog_detail_cardme, null, null)
+                        showEditDialog()
                     }
                     CARD_YOU -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_mainpurple_stroke_real_black_2dp)
-                        showEditDialog(R.layout.dialog_detail_cardyou)
+                        ibtnDetailcardEdit.setOnClickListener {
+                            showEditPopUp()
+                        }
                     }
                     STORAGE -> {
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_white_1_5_stroke_real_black_2dp)
-                        showEditDialog(R.layout.dialog_detail_storage)
+                        ibtnDetailcardEdit.setOnClickListener {
+                            showEditPopUp()
+                        }
                     }
                 }
             }
         }
     }
 
-    @SuppressLint("ResourceType")
-    private fun showEditDialog(@IdRes layout: Int, paramsX: Int? = 1400, paramsY: Int? = 410) {
-        binding.ibtnDetailcardEdit.setOnClickListener {
-            val dialog = this.showCustomDialog(layout, paramsX, paramsY)
-            val deleteBtn = dialog.findViewById<Button>(R.id.tv_dialog_delete)
-
+    private fun showEditPopUp() {
+        with(binding.ibtnDetailcardEdit) {
             when (cardType) {
-                CARD_ME -> {
-                    val noBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardme_no)
-                    noBtn.setOnClickListener {
-                        setHandler(dialog)
-                    }
-                }
                 CARD_YOU -> {
-                    val saveBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardyou_save)
-                    saveBtn.setOnClickListener {
-                        detailCardViewModel.keepOrAddCard() //TODO API완성 후 다시 test
-                        setHandler(dialog)
+                    val popup = showCustomPopUp(this, R.array.detail_cardyou_popup, baseContext)
+                    popup.setOnItemClickListener { _, view, _, _ ->
+                        if ((view as TextView).text == "보관") {
+                            detailCardViewModel.keepOrAddCard()
+                            popup.dismiss()
+                        } else {
+                            detailCardViewModel.deleteCard()
+                            popup.dismiss()
+                        }
                     }
+                    popup.show()
                 }
                 STORAGE -> {
-                    val declarationBtn = dialog.findViewById<Button>(R.id.tv_dialog_storage_report)
-                    declarationBtn.setOnClickListener {
-                        showUerReportDialog()
-                        setHandler(dialog)
+                    val popup = showCustomPopUp(this, R.array.detail_storage_popup, baseContext)
+                    popup.setOnItemClickListener { _, view, _, _ ->
+                        if ((view as TextView).text == "신고") {
+                            showUerReportDialog()
+                            popup.dismiss()
+                        } else {
+                            detailCardViewModel.deleteCard()
+                            popup.dismiss()
+                        }
                     }
+                    popup.show()
                 }
             }
+        }
+    }
+
+
+    @SuppressLint("ResourceType")
+    private fun showEditDialog() {
+        binding.ibtnDetailcardEdit.setOnClickListener {
+            val dialog = showCustomDialog(R.layout.dialog_detail_cardme)
+            val deleteBtn = dialog.findViewById<Button>(R.id.tv_dialog_delete)
+            val noBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardme_no)
+            noBtn.setOnClickListener {
+                setHandler(dialog)
+            }
             deleteBtn.setOnClickListener {
-                detailCardViewModel.deleteCard()  //TODO API완성 후 다시 test
+                detailCardViewModel.deleteCard()
+                dialog.dismiss()
                 finish()
             }
         }
@@ -115,24 +127,23 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         val reasonFourBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_reason_four)
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_cancel)
 
-        //TODO API완성 후 다시 test
         reasonOneBtn.setOnClickListener {
-            detailCardViewModel.reportUser()
+            detailCardViewModel.reportUser(REPORT_REASON_ONE)
             setHandler(dialog)
         }
 
         reasonTwoBtn.setOnClickListener {
-            detailCardViewModel.reportUser()
+            detailCardViewModel.reportUser(REPORT_REASON_TWO)
             setHandler(dialog)
         }
 
         reasonThreeBtn.setOnClickListener {
-            detailCardViewModel.reportUser()
+            detailCardViewModel.reportUser(REPORT_REASON_THREE)
             setHandler(dialog)
         }
 
         reasonFourBtn.setOnClickListener {
-            detailCardViewModel.reportUser()
+            detailCardViewModel.reportUser(REPORT_REASON_FOUR)
             setHandler(dialog)
         }
         cancelBtn.setOnClickListener {
@@ -158,6 +169,12 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         }
     }
 
+    fun setCardAddClickListener() {
+        detailCardViewModel.keepOrAddCard()
+        shortToast("카드너에 추가되었어요!ㅎ")
+        finish()
+    }
+
     private fun showLikeLottie() {
         with(binding) {
             when (cardType) {
@@ -171,5 +188,9 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         const val CARD_ME = "me"
         const val CARD_YOU = "you"
         const val STORAGE = "storage"
+        const val REPORT_REASON_ONE = "욕설비하"
+        const val REPORT_REASON_TWO = "허위"
+        const val REPORT_REASON_THREE = "부적절"
+        const val REPORT_REASON_FOUR = "성적"
     }
 }
