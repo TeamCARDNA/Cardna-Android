@@ -62,7 +62,7 @@
 
                 <CheckedTextView
                     android:id="@+id/ctv_secession_one"
-                    reasonNumber="@{secessionActivity.ONE}"
+                    reasonNumber="@{secessionActivity.SECESSION_REASON_ONE}"
                     viewModel="@{settingViewModel}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
 
                 <CheckedTextView
                     android:id="@+id/ctv_secession_two"
-                    reasonNumber="@{secessionActivity.TWO}"
+                    reasonNumber="@{secessionActivity.SECESSION_REASON_TWO}"
                     viewModel="@{settingViewModel}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
 
                 <CheckedTextView
                     android:id="@+id/ctv_secession_three"
-                    reasonNumber="@{secessionActivity.THREE}"
+                    reasonNumber="@{secessionActivity.SECESSION_REASON_THREE}"
                     viewModel="@{settingViewModel}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
 
                 <CheckedTextView
                     android:id="@+id/ctv_secession_four"
-                    reasonNumber="@{secessionActivity.FOUR}"
+                    reasonNumber="@{secessionActivity.SECESSION_REASON_FOUR}"
                     viewModel="@{settingViewModel}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -198,7 +198,7 @@
 
                 <CheckedTextView
                     android:id="@+id/ctv_secession_five"
-                    reasonNumber="@{secessionActivity.FIVE}"
+                    reasonNumber="@{secessionActivity.SECESSION_REASON_FIVE}"
                     viewModel="@{settingViewModel}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -232,7 +232,7 @@
 
                 <CheckedTextView
                     android:id="@+id/ctv_secession_six"
-                    reasonNumber="@{secessionActivity.SIX}"
+                    reasonNumber="@{secessionActivity.SECESSION_REASON_SIX}"
                     viewModel="@{settingViewModel}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -114,7 +114,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
             myPageViewModel.searchNamePost()
         }
 
-
         if (binding.etMypageNameSearchBackground.query.isNullOrEmpty()) {
             myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
                 myPageFriendAdapter.submitList(myPage.friendList)

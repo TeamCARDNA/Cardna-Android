@@ -43,11 +43,11 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
     }
 
     companion object {
-        const val ONE = 1
-        const val TWO = 2
-        const val THREE = 3
-        const val FOUR = 4
-        const val FIVE = 5
-        const val SIX = 6
+        const val SECESSION_REASON_ONE = 1
+        const val SECESSION_REASON_TWO = 2
+        const val SECESSION_REASON_THREE = 3
+        const val SECESSION_REASON_FOUR = 4
+        const val SECESSION_REASON_FIVE = 5
+        const val SECESSION_REASON_SIX = 6
     }
 }

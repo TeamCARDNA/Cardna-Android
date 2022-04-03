@@ -5,8 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.card.ResponseDetailCardData
 import org.cardna.data.remote.model.like.RequestLikeData
+import org.cardna.data.remote.model.user.RequestPostReportUserData
 import org.cardna.domain.repository.CardRepository
 import org.cardna.domain.repository.LikeRepository
+import org.cardna.domain.repository.UserRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import timber.log.Timber
@@ -17,12 +19,16 @@ class DetailCardViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val cardRepository: CardRepository,
     private val likeRepository: LikeRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
-    private var id = savedStateHandle.get<Int>(BaseViewUtil.CARD_ID)
+    private var cardId = savedStateHandle.get<Int>(BaseViewUtil.CARD_ID)
 
     private val _detailCard = MutableLiveData<ResponseDetailCardData.Data>()
     val detailCard: LiveData<ResponseDetailCardData.Data> = _detailCard
+
+    private val _writerId = MutableLiveData<Int>()
+    val writerId: LiveData<Int> = _writerId
 
     private val _type = MutableLiveData<String>("storage")
     val type: LiveData<String> = _type
@@ -57,12 +63,12 @@ class DetailCardViewModel @Inject constructor(
     * 너가 카드너 : you false false*/
 
     fun setCardId(cardId: Int) {
-        id = cardId
+        this.cardId = cardId
         getDetailCard()
     }
 
     private fun getDetailCard() {
-        val cardId = id ?: return
+        val cardId = cardId ?: return
         viewModelScope.launch {
             runCatching {
                 cardRepository.getDetailCard(cardId).data
@@ -74,6 +80,7 @@ class DetailCardViewModel @Inject constructor(
                     _name.value = name
                     _content.value = content
                     _createdAt.value = createdAt
+                    _writerId.value = 0    //TODO 서버 수정 시 _writerId로 넣기
 
                     if (type == DetailCardActivity.STORAGE)
                         _isStorage.value = true
@@ -93,7 +100,7 @@ class DetailCardViewModel @Inject constructor(
     fun postLike() {
         viewModelScope.launch {
             runCatching {
-                likeRepository.postLike(RequestLikeData(id ?: return@launch))
+                likeRepository.postLike(RequestLikeData(cardId ?: return@launch))
             }.onSuccess {
                 Timber.d(it.message)
             }.onFailure {
@@ -103,8 +110,7 @@ class DetailCardViewModel @Inject constructor(
     }
 
     fun deleteCard() {
-        val cardId = id ?: return
-        Timber.d("카드삭제")
+        val cardId = cardId ?: return
         viewModelScope.launch {
             runCatching {
                 cardRepository.deleteCard(cardId)
@@ -117,8 +123,7 @@ class DetailCardViewModel @Inject constructor(
     }
 
     fun keepOrAddCard() {
-        val cardId = id ?: return
-        Timber.d("카드보관")
+        val cardId = cardId ?: return
         viewModelScope.launch {
             runCatching {
                 cardRepository.putKeepOrAddCard(cardId)
@@ -130,12 +135,17 @@ class DetailCardViewModel @Inject constructor(
         }
     }
 
-    fun reportUser() {
-        Timber.d("유저신고")
+    //TODO writerId 서버에서 넘겨받은 후 test
+    fun reportUser(reportReason: String) {
+        val cardId = cardId ?: return
+        val writerId = _writerId.value ?: return
         viewModelScope.launch {
             runCatching {
+                userRepository.postReportUser(RequestPostReportUserData(writerId, cardId, reportReason))
             }.onSuccess {
+                Timber.d(it.message)
             }.onFailure {
+                Timber.e(it.toString())
             }
         }
     }

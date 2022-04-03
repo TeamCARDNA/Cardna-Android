@@ -1,6 +1,5 @@
 package org.cardna.presentation.ui.setting.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -98,22 +97,22 @@ class SettingViewModel @Inject constructor(
 
     fun deleteUser() {
         if (_secessionReasonOneCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.ONE)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_ONE)
         }
         if (_secessionReasonTwoCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.TWO)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_TWO)
         }
         if (_secessionReasonThreeCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.THREE)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_THREE)
         }
         if (_secessionReasonFourCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.FOUR)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_FOUR)
         }
         if (_secessionReasonFiveCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.FIVE)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_FIVE)
         }
         if (_secessionReasonSixCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.SIX)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_SIX)
         }
 
         viewModelScope.launch {

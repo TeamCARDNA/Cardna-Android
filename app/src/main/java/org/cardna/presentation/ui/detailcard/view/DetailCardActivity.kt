@@ -128,24 +128,23 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         val reasonFourBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_reason_four)
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_cancel)
 
-        //TODO API완성 후 다시 test
         reasonOneBtn.setOnClickListener {
-            detailCardViewModel.reportUser()
+            detailCardViewModel.reportUser(REPORT_REASON_ONE)
             setHandler(dialog)
         }
 
         reasonTwoBtn.setOnClickListener {
-            detailCardViewModel.reportUser()
+            detailCardViewModel.reportUser(REPORT_REASON_TWO)
             setHandler(dialog)
         }
 
         reasonThreeBtn.setOnClickListener {
-            detailCardViewModel.reportUser()
+            detailCardViewModel.reportUser(REPORT_REASON_THREE)
             setHandler(dialog)
         }
 
         reasonFourBtn.setOnClickListener {
-            detailCardViewModel.reportUser()
+            detailCardViewModel.reportUser(REPORT_REASON_FOUR)
             setHandler(dialog)
         }
         cancelBtn.setOnClickListener {
@@ -171,7 +170,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         }
     }
 
-    fun setCardAddClickListener(){
+    fun setCardAddClickListener() {
         detailCardViewModel.keepOrAddCard()
         shortToast("카드너에 추가되었어요!ㅎ")
         finish()
@@ -190,5 +189,9 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         const val CARD_ME = "me"
         const val CARD_YOU = "you"
         const val STORAGE = "storage"
+        const val REPORT_REASON_ONE = "욕설비하"
+        const val REPORT_REASON_TWO = "허위"
+        const val REPORT_REASON_THREE = "부적절"
+        const val REPORT_REASON_FOUR = "성적"
     }
 }
