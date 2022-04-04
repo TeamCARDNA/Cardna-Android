@@ -49,6 +49,7 @@ class MyPageViewModel @Inject constructor(
     private val _friendId = MutableLiveData<Int>()
     val friendId: LiveData<Int> = _friendId
 
+
     fun getUserMyPage() {
         viewModelScope.launch {
             runCatching {

@@ -103,7 +103,7 @@
                     android:src="@drawable/ic_mypage_code_copy"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_code"
                     app:layout_constraintStart_toEndOf="@+id/tv_mypage_code"
-                    app:layout_constraintTop_toTopOf="@+id/tv_mypage_code"/>
+                    app:layout_constraintTop_toTopOf="@+id/tv_mypage_code" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

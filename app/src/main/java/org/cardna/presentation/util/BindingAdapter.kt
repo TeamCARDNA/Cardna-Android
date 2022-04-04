@@ -40,7 +40,7 @@ fun setOnCheckedChanged(view: AppCompatButton, viewModel: ViewModel, activity: A
 
 @BindingAdapter("imgResId")
 fun setImageResource(view: ImageView, resId: String) {
-    if(resId!=null)
+    if(resId.isNotEmpty())
     Glide.with(view.context)
         .load(resId)
         .into(view)
