@@ -50,10 +50,11 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun initData() {
-        val query = binding.etMypageNameSearchBackground.query.toString()
+        val query = myPageViewModel.searchNameQuery.value
         if (query.isNullOrEmpty()) myPageViewModel.getUserMyPage()
         else myPageViewModel.updateSearchNameQuery(query)
     }
+
 
     private fun setStickyScroll() {
         binding.scMypage.run {
@@ -101,16 +102,21 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(newText: String?): Boolean {
                     myPageViewModel.updateSearchNameQuery(newText.toString())
+                    clearFocus()
                     return false
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText.isNullOrEmpty()) initData()
+                    if (newText.isNullOrEmpty()) {
+                        myPageViewModel.updateSearchNameQuery("")
+                        initData()
+                    }
                     return false
                 }
             })
         }
     }
+
 
     private fun setObserve() {
         myPageViewModel.searchNameQuery.observe(viewLifecycleOwner) {

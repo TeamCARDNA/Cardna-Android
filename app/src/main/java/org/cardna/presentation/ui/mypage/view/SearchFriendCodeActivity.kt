@@ -40,6 +40,7 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(newText: String?): Boolean {
                     myPageViewModel.updateSearchCodeQuery(newText.toString())
+                    clearFocus()
                     return false
                 }
 
