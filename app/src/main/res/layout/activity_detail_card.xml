@@ -105,7 +105,7 @@
                     android:id="@+id/ibtn_detailcard_share"
                     android:layout_width="52dp"
                     android:layout_height="0dp"
-                    android:background="@drawable/bg_transparent_stroke_right_left_real_black_2dp"
+                    android:backgroundTint="@color/transparent"
                     android:onClick="@{()->detailCardActivity.setCardShareClickListener()}"
                     android:src="@drawable/ic_share"
                     android:visibility="@{detailCardViewModel.isStorage ? View.GONE : View.VISIBLE}"
@@ -113,16 +113,31 @@
                     app:layout_constraintEnd_toStartOf="@+id/ibtn_detailcard_edit"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="fill_parent"
+                    android:background="@color/real_black"
+                    android:visibility="@{detailCardViewModel.isStorage ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toStartOf="@+id/ibtn_detailcard_share"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageButton
                     android:id="@+id/ibtn_detailcard_edit"
                     android:layout_width="52dp"
                     android:layout_height="0dp"
                     android:background="@drawable/bg_transparent_stroke_right_left_real_black_2dp"
+                    android:backgroundTint="@color/transparent"
                     android:paddingVertical="18dp"
                     android:src="@drawable/ic_detail_three_dot"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="fill_parent"
+                    android:background="@color/real_black"
+                    app:layout_constraintEnd_toStartOf="@+id/ibtn_detailcard_edit"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
