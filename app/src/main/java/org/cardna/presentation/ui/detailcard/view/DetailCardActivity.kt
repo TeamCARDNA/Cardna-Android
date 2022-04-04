@@ -41,8 +41,8 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     private fun setObserve() {
         detailCardViewModel.detailCard.observe(this) { detailCard ->
             cardType = detailCard.type
-
             setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
+
             with(binding) {
                 when (cardType) {
                     CARD_ME -> {
@@ -63,6 +63,15 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                             showEditPopUp()
                         }
                     }
+                }
+            }
+        }
+
+        detailCardViewModel.isMineCard.observe(this) { isMineCard ->
+            with(binding.ctvDetailcardLike) {
+                if (isMineCard) {
+                    isChecked = true
+                    isClickable = false
                 }
             }
         }
@@ -100,7 +109,6 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
             }
         }
     }
-
 
     @SuppressLint("ResourceType")
     private fun showEditDialog() {
