@@ -33,18 +33,6 @@ class DetailCardViewModel @Inject constructor(
     private val _type = MutableLiveData<String>()
     val type: LiveData<String> = _type
 
-    private val _title = MutableLiveData("")
-    val title: LiveData<String> = _title
-
-    private val _name = MutableLiveData("")
-    val name: LiveData<String> = _name
-
-    private val _content = MutableLiveData("")
-    val content: LiveData<String> = _content
-
-    private val _createdAt = MutableLiveData("")
-    val createdAt: LiveData<String> = _createdAt
-
     private val _isLiked = MutableLiveData<Boolean>()
     val isLiked: LiveData<Boolean> = _isLiked
 
@@ -58,6 +46,8 @@ class DetailCardViewModel @Inject constructor(
     val initLikeCount: MutableLiveData<Int?> = _initLikeCount
 
     var currentLikeCount: Int = 0
+
+    val myDefault = MutableLiveData("")
 
     /* 저장소 : storage true true
     * 내가 카드나 : me true false
@@ -79,11 +69,7 @@ class DetailCardViewModel @Inject constructor(
                 it.apply {
                     _detailCard.value = it
                     _type.value = type
-                    _title.value = title
-                    _name.value = name
-                    _content.value = content
-                    _createdAt.value = createdAt
-                    _writerId.value = 0    //TODO 서버 수정 시 _writerId로 넣기
+                    _writerId.value = writerId
                     _initLikeCount.value = likeCount
                     currentLikeCount = likeCount ?: 0
                     _isMineCard.value = isLiked == null
@@ -137,7 +123,6 @@ class DetailCardViewModel @Inject constructor(
         }
     }
 
-    //TODO writerId 서버에서 넘겨받은 후 test
     fun reportUser(reportReason: String) {
         val cardId = cardId ?: return
         val writerId = _writerId.value ?: return

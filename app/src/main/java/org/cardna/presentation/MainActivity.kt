@@ -47,7 +47,7 @@ class MainActivity :
                 R.id.menu_bottom_cardpack -> {
                     supportFragmentManager.popBackStack()
                     StatusBarUtil.setStatusBar(this, Color.BLACK)
-                    replace(R.id.fcv_main, CardPackFragment())
+                    replace(R.id.fcv_main,CardPackFragment())
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_bottom_insight -> {

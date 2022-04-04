@@ -26,11 +26,11 @@ class InsightViewModel @Inject constructor(
     private val _blindAreaInsight = MutableLiveData<BlindArea>()
     val blindAreaInsight: LiveData<BlindArea> = _blindAreaInsight
 
-    private val _isOpenAreaInsightEmpty = MutableLiveData<Boolean>(null)
-    val isOpenAreaInsightEmpty: LiveData<Boolean> = _isOpenAreaInsightEmpty
+    private val _blindAreaImage = MutableLiveData<String>()
+    val blindAreaImage: LiveData<String> = _blindAreaImage
 
-    private val _isBlindAreaInsightEmpty = MutableLiveData<Boolean>()
-    val isBlindAreaInsightEmpty: LiveData<Boolean> = _isBlindAreaInsightEmpty
+    private val _openAreaImage = MutableLiveData<String>()
+    val openAreaImage: LiveData<String> = _openAreaImage
 
     private val _blindAreaCardId = MutableLiveData<Int>()
     val blindAreaCardId: LiveData<Int> = _blindAreaCardId
@@ -41,8 +41,7 @@ class InsightViewModel @Inject constructor(
     private val _currentPosition = MutableLiveData<String>()
     val currentPosition: LiveData<String> = _currentPosition
 
-    private val _title = MutableLiveData<String>()
-    val title: LiveData<String> = _title
+    val myDefault = MutableLiveData("")
 
     fun getInsight() {
         viewModelScope.launch {
@@ -52,7 +51,8 @@ class InsightViewModel @Inject constructor(
                 it.apply {
                     _blindAreaInsight.value = blindArea
                     _openAreaInsight.value = openArea
-
+                    _blindAreaImage.value = blindArea.image ?: ""
+                    _openAreaImage.value = openArea.image ?: ""
                     _blindAreaCardId.value = blindArea.id ?: -1
                     _openAreaCardId.value = openArea.id ?: -1
                 }
