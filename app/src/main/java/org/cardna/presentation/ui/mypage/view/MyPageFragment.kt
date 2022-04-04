@@ -1,12 +1,11 @@
 package org.cardna.presentation.ui.mypage.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cardna.R
@@ -17,10 +16,8 @@ import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.adapter.MyPageFriendAdapter
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.ui.setting.view.SettingActivity
-import org.cardna.presentation.util.initRootClickEvent
-import org.cardna.presentation.util.setSrcWithGlide
-import org.cardna.presentation.util.setTextColor
-import org.cardna.presentation.util.setTextSize
+import org.cardna.presentation.util.*
+
 
 @AndroidEntryPoint
 class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
@@ -50,9 +47,13 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun initData() {
-        val query = myPageViewModel.searchNameQuery.value
-        if (query.isNullOrEmpty()) myPageViewModel.getUserMyPage()
-        else myPageViewModel.updateSearchNameQuery(query)
+        val query = myPageViewModel.searchNameQuery.value ?: ""
+        if (query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == true) {
+            myPageViewModel.getUserMyPage()
+            myPageViewModel.setUpdateSearchNameQueryState(false)
+        } else if ((query.isNotEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == false)) {
+            myPageViewModel.updateSearchNameQuery(query)
+        }
     }
 
 
@@ -99,24 +100,29 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
             setTextSize(16f)
             setTextColor(requireContext(), R.color.white_2, R.color.white_1)
 
+
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(newText: String?): Boolean {
-                    myPageViewModel.updateSearchNameQuery(newText.toString())
-                    clearFocus()
+                    if (newText?.isNotEmpty() == true) {
+                        myPageViewModel.updateSearchNameQuery(newText.toString())
+                        clearFocus()
+                    }
                     return false
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText.isNullOrEmpty()) {
                         myPageViewModel.updateSearchNameQuery("")
-                        initData()
+                        myPageViewModel.setUpdateSearchNameQueryState(true)
+                        myPageViewModel.updateSearchNameQuerySuccess.observe(viewLifecycleOwner) {
+                            if (it) initData()
+                        }
                     }
                     return false
                 }
             })
         }
     }
-
 
     private fun setObserve() {
         myPageViewModel.searchNameQuery.observe(viewLifecycleOwner) {

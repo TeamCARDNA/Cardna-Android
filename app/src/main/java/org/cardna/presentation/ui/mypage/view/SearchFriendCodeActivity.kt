@@ -1,6 +1,7 @@
 package org.cardna.presentation.ui.mypage.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import com.example.cardna.databinding.ActivitySearchFriendCodeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
+import org.cardna.presentation.ui.setting.view.VersionInfoActivity
 import org.cardna.presentation.util.*
 
 @AndroidEntryPoint
@@ -32,7 +34,7 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
         initRootClickEvent(binding.ctlMypageCodeSearchContainer)
     }
 
-    fun setInputField() {
+    private fun setInputField() {
         with(binding.etMypageCodeSearchBackground) {
             setTextSize(16f)
             setTextColor(this@SearchFriendCodeActivity, com.example.cardna.R.color.white_2, com.example.cardna.R.color.white_1)
@@ -47,6 +49,7 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText.isNullOrEmpty()) {
                         binding.ctlMypageCodeSearch.visibility = View.INVISIBLE
+                        binding.tvMypageCodeSearchFriendEmpty.visibility = View.GONE
                     }
                     return false
                 }
@@ -99,6 +102,12 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
         cancelBtn.setOnClickListener {
             dialog.dismiss()
         }
+    }
+
+    //TODO 메인카드 액티비티 생성시 다시 테스트
+    fun setGoToFriendMainCardClickListener() {
+        shortToast("가즈아")
+        //   startActivity(Intent(this@SearchFriendCodeActivity, MainCardActivity::class.java))
     }
 
     companion object {

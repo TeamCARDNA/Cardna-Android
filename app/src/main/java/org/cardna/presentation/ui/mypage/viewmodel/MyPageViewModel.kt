@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.mypage.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -37,11 +38,14 @@ class MyPageViewModel @Inject constructor(
     private val _searchFriendNameResult = MutableLiveData<List<ResponseMyPageData.Data.FriendList>>()
     val searchFriendNameResult: LiveData<List<ResponseMyPageData.Data.FriendList>> = _searchFriendNameResult
 
-    private val _isNonExistFriendName = MutableLiveData<Boolean>(true)
+    private val _isNonExistFriendName = MutableLiveData<Boolean>(false)
     val isNonExistFriend: LiveData<Boolean> = _isNonExistFriendName
 
     private val _searchFriendCodeResult = MutableLiveData<ResponseSearchFriendCodeData.Data>()
     val searchFriendCodeResult: LiveData<ResponseSearchFriendCodeData.Data> = _searchFriendCodeResult
+
+    private val _isNonExistFriendCode = MutableLiveData<Boolean>(false)
+    val isNonExistFriendCode: LiveData<Boolean> = _isNonExistFriendCode
 
     private val _friendRelationType = MutableLiveData<Int>()
     val friendRelationType: LiveData<Int> = _friendRelationType
@@ -49,12 +53,27 @@ class MyPageViewModel @Inject constructor(
     private val _friendId = MutableLiveData<Int>()
     val friendId: LiveData<Int> = _friendId
 
+    private val _updateSearchNameQuerySuccess = MutableLiveData<Boolean>(true)
+    val updateSearchNameQuerySuccess: LiveData<Boolean> = _updateSearchNameQuerySuccess
+
+    fun updateSearchNameQuery(name: String) {
+        _searchNameQuery.value = name
+    }
+
+    fun setUpdateSearchNameQueryState(state: Boolean) {
+        _updateSearchNameQuerySuccess.value = state
+    }
+
+    fun updateSearchCodeQuery(code: String) {
+        _searchCodeQuery.value = code
+    }
 
     fun getUserMyPage() {
         viewModelScope.launch {
             runCatching {
                 myPageRepository.getMyPage().data
-            }.onSuccess { it.apply {
+            }.onSuccess {
+                it.apply {
                     _myPage.value = it
                     _friendCount.value = friendList.size.toString()
                     _isNonExistFriendName.value = friendList.size == 0
@@ -65,19 +84,11 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    fun updateSearchNameQuery(query: String) {
-        _searchNameQuery.value = query
-    }
-
-    fun updateSearchCodeQuery(query: String) {
-        _searchCodeQuery.value = query
-    }
-
     fun searchNamePost() {
-        val query = _searchNameQuery.value ?: return
+        val query = if (_searchNameQuery.value.isNullOrEmpty()) return else _searchNameQuery.value
         viewModelScope.launch {
             runCatching {
-                friendRepository.getSearchFriendName(query)
+                friendRepository.getSearchFriendName(query!!)
             }.onSuccess {
                 _isNonExistFriendName.value = false
                 _searchFriendNameResult.value = it
@@ -93,12 +104,15 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 friendRepository.getSearchFriendCode(query).data
-            }.onSuccess { it.apply {
+            }.onSuccess {
+                it.apply {
                     _searchFriendCodeResult.value = it
+                    _isNonExistFriendCode.value = false
                     _friendRelationType.value = relationType
                     _friendId.value = id
                 }
             }.onFailure {
+                _isNonExistFriendCode.value = true
                 Timber.e(it.toString())
             }
         }

@@ -87,7 +87,7 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:paddingVertical="12dp"
                 android:paddingStart="18dp"
-                android:text="@{detailCardViewModel.detailCard.title ?? detailCardViewModel.myDefault}"
+                android:text="@{detailCardViewModel.detailCard.title, default=title}"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintTop_toTopOf="parent" />
