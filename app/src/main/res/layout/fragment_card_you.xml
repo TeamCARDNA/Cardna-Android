@@ -6,24 +6,212 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="cardPackViewModel"
+            type="org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_cardyou"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:itemCount="6"
-        tools:listitem="@layout/item_cardpack_cardyou" />
+        <!-- empty일 때 카드너 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctl_cardyou_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_black"
+            android:visibility="@{cardPackViewModel.isCardYouEmpty ? View.VISIBLE : View.GONE}">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ctl_bg_empty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="56dp"
+                android:layout_marginEnd="56dp"
+                android:background="@drawable/bg_stroke_white_4_1dp_radius_10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- empty 일 때 내 카드너 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ctl_my_cardyou_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="136dp"
+                    android:layout_marginBottom="136dp"
+                    android:visibility="@{(cardPackViewModel.id == null) ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="invisible">
+
+                    <TextView
+                        android:id="@+id/tv_make_new_cardyou"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/cardpack_make_new_cardyou"
+                        android:theme="@style/cardpack_empty_textView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- 이 ctl에 카드나 작성 리스너 달기 -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ctl_bg_add_cardyou"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_stroke_main_purple_darker_1dp_radius_45dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_make_new_cardyou"
+                        app:layout_constraintStart_toStartOf="@+id/tv_make_new_cardyou"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_make_new_cardyou">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/ctl_temp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_add_cardyou"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/tv_add_cardyou"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_empty_add_cardyou" />
+
+                            <TextView
+                                android:id="@+id/tv_add_cardyou"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/cardpack_add_cardyou"
+                                android:theme="@style/cardpack_empty_textView_purple"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/iv_add_cardyou"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout> <!-- ctl_temp -->
+                    </androidx.constraintlayout.widget.ConstraintLayout> <!--ctl_bg_add_cardme-->
+                </androidx.constraintlayout.widget.ConstraintLayout> <!-- ctl_my_cardme_empty -->
+
+
+                <!-- empty 일 때 친구 카드너 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ctl_friend_cardyou_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{(cardPackViewModel.id == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_friend_cardyou_empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cardpack_friend_empty_cardyou"
+                        android:theme="@style/cardpack_empty_textView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- 카드너 작성 액티비티로 이동하는 리스너 달기 -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ctl_friend_empty_make_cardyou"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_stroke_white_2_1dp_radius_45dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_friend_cardyou_empty">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/ctl_friend_empty_cardyou"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_friend_add_cardyou"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/tv_friend_add_cardyou"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_pencil_empty" />
+
+                            <TextView
+                                android:id="@+id/tv_friend_add_cardyou"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/cardpack_friend_make_cardyou"
+                                android:theme="@style/cardpack_empty_textView_white2"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/iv_friend_add_cardyou"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout> <!-- ctl_temp -->
+                    </androidx.constraintlayout.widget.ConstraintLayout> <!--ctl_bg_add_cardme-->
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- empty일 때 카드너 -->
+
+        <!-- empty 아닐 때 카드너 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctl_cardyou_not_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{cardPackViewModel.isCardYouEmpty() ? View.GONE : View.VISIBLE}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cardyou"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="6"
+                tools:listitem="@layout/item_cardpack_cardyou" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

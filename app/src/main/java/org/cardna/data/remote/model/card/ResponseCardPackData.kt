@@ -1,6 +1,6 @@
 package org.cardna.data.remote.model.card
 
-data class ResponseCardMeData(
+data class ResponseCardPackData(
     val status: Int,
     val success: Boolean,
     val message: String,
@@ -9,9 +9,9 @@ data class ResponseCardMeData(
     data class CardList(
         val totalCardCnt: Int,
         val isMyCard: Boolean,
-        val cardMeList: MutableList<CardMe>
+        val cardList: MutableList<Card>
     ){
-        data class CardMe(
+        data class Card(
             val id: Int,
             val cardImg: String,
             val title: String,

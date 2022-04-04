@@ -24,16 +24,20 @@ class CardDataSourceImpl @Inject constructor(
         return cardService.putKeepOrAddCard(cardId)
     }
 
-    override suspend fun getCardMe(): ResponseCardMeData {
+    override suspend fun getCardMe(): ResponseCardPackData {
         return cardService.getCardMe()
     }
 
-    override suspend fun getOtherCardMe(cardId: Int): ResponseCardMeData {
+    override suspend fun getOtherCardMe(cardId: Int): ResponseCardPackData {
         return cardService.getOtherCardMe(cardId)
     }
 
-    override suspend fun getCardYou(cardId: Int?): ResponseCardYouData {
-        return cardService.getCardYou(cardId)
+    override suspend fun getCardYou(): ResponseCardPackData {
+        return cardService.getCardYou()
+    }
+
+    override suspend fun getOtherCardYou(cardId: Int): ResponseCardPackData {
+        return cardService.getOtherCardYou(cardId)
     }
 
     override suspend fun getMainCard(): ResponseMainCardData {

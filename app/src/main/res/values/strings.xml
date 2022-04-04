@@ -101,7 +101,7 @@
 
 <!--    CardPackFragment-->
     <string name="cardpack_make_new_cardme">나에 대한 카드를 새로\n작성해보세요</string>
-    <string name="cardpack_make_new_cardyou">타인이 말하는 나를 카드로 만들어보세요</string>
+    <string name="cardpack_make_new_cardyou">타인이 말하는 나를 카드로\n만들어보세요</string>
     <string name="cardpack_add_cardme">카드나 작성</string>
     <string name="cardpack_add_cardyou">카드너 작성</string>
     <string name="cardpack_friend_empty_cardme">아직 카드가 없어요</string>

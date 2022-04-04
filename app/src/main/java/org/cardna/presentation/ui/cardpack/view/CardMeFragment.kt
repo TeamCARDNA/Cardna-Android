@@ -64,7 +64,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
             rvCardme.addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt())) // 화면 비율 조정
 
             // onResume 될 때, cardMeList 를 업데이트 시키고 cardMeList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
-            cardPackViewModel.cardMeList.observe(viewLifecycleOwner, Observer { it ->
+            cardPackViewModel?.cardMeList?.observe(viewLifecycleOwner, Observer { it ->
                 it?.let { cardMeAdapter.submitList(it)}
             })
 

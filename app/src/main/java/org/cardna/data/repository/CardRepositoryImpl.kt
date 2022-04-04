@@ -2,12 +2,10 @@ package org.cardna.data.repository
 
 import org.cardna.data.remote.datasource.CardDataSource
 import org.cardna.data.remote.model.card.*
-import org.cardna.data.remote.mapper.CardToRepresentCardListMapper
 import org.cardna.data.remote.model.card.ResponseDeleteCardData
 import org.cardna.data.remote.model.card.ResponseDetailCardData
 import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
 import org.cardna.data.remote.model.card.ResponseMainCardData
-import org.cardna.domain.model.RepresentCardListData
 import org.cardna.domain.repository.CardRepository
 import javax.inject.Inject
 
@@ -25,16 +23,20 @@ class CardRepositoryImpl @Inject constructor(private val cardDataSource: CardDat
         return cardDataSource.putKeepOrAddCard(cardId)
     }
 
-    override suspend fun getCardMe(): ResponseCardMeData {
+    override suspend fun getCardMe(): ResponseCardPackData {
         return cardDataSource.getCardMe()
     }
 
-    override suspend fun getOtherCardMe(cardId: Int): ResponseCardMeData {
+    override suspend fun getOtherCardMe(cardId: Int): ResponseCardPackData {
         return cardDataSource.getOtherCardMe(cardId)
     }
 
-    override suspend fun getCardYou(cardId: Int?): ResponseCardYouData {
-        return cardDataSource.getCardYou(cardId)
+    override suspend fun getCardYou(): ResponseCardPackData {
+        return cardDataSource.getCardYou()
+    }
+
+    override suspend fun getOtherCardYou(cardId: Int): ResponseCardPackData {
+        return cardDataSource.getOtherCardYou(cardId)
     }
 
     override suspend fun getMainCard(): ResponseMainCardData {

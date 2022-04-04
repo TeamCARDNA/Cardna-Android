@@ -60,7 +60,7 @@ class CardYouFragment : BaseViewUtil.BaseFragment<FragmentCardYouBinding>(R.layo
             rvCardyou.addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt())) // 화면 비율 조정
 
             // onResume 될 때, cardMeList 를 업데이트 시키고 cardMeList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
-            cardPackViewModel.cardYouList.observe(viewLifecycleOwner, Observer { it ->
+            cardPackViewModel?.cardYouList?.observe(viewLifecycleOwner, Observer { it ->
                 it?.let { cardYouAdapter.submitList(it)}
             })
 
@@ -73,10 +73,9 @@ class CardYouFragment : BaseViewUtil.BaseFragment<FragmentCardYouBinding>(R.layo
     }
 
     private fun initEmptyViewListener(){
-        binding.ctlBgAddCardme.setOnClickListener{
-            // CardCreateActivity 로 이동
-            // 근데 카드나 작성이니까 intent로 카드나에 대한 것이라고 정보 전달해줘야함.
-            val intent = Intent(requireActivity(), CardCreateActivity::class.java) // fragment에서 액티비티 띄우기
+        binding.ctlBgAddCardyou.setOnClickListener{
+            // 카드너 보관함 액티비티로 이동
+            val intent = Intent(requireActivity(), CardCreateActivity::class.java)
             startActivity(intent)
         }
     }

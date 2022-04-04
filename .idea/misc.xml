@@ -72,16 +72,22 @@
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_mainpurple_maingreen_gradient_radius_5dp.xml" value="0.1655" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_oval_switch_thumb.xml" value="0.1655" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_radius_8dp_stroke_real_black_2dp.xml" value="0.1995" />
+        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_stroke_main_green_darker_1dp_radius_45dp.xml" value="0.16" />
+        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_stroke_main_purple_darker_1dp_radius_45dp.xml" value="0.1245" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_stroke_maingreen_1dp_radius_45.xml" value="0.243" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_stroke_maingreen_1dp_radius_45dp.xml" value="0.2355" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_stroke_white_2_1dp.xml" value="0.2365" />
+        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_stroke_white_2_1dp_radius_45dp.xml" value="0.118" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_stroke_white_4_1dp_radius_10dp.xml" value="0.243" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_stroke_white_4_radius_10dp.xml" value="0.2365" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_switch_track_off.xml" value="0.1655" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_white_4_5dp.xml" value="0.2365" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/bg_white_4_radius_5dp.xml" value="0.1655" />
+        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/ic_empty_add_cardme.xml" value="0.1645" />
+        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/ic_empty_add_cardyou.xml" value="0.134" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.15" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/ic_pencil.xml" value="0.277" />
+        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/ic_pencil_empty.xml" value="0.125" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/ic_selector_cardpack.xml" value="0.15" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/ic_selector_cardpack_tab_cardme_line.xml" value="0.1905" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/drawable/ic_selector_cardpack_tab_cardyou_line.xml" value="0.1905" />
@@ -98,9 +104,9 @@
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_blind_area.xml" value="0.1" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_bottom_dialog_card.xml" value="0.15715579710144928" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_bottom_dialog_image.xml" value="0.15715579710144928" />
-        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_card_me.xml" value="0.7591623036649214" />
+        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_card_me.xml" value="0.7333333333333334" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_card_pack.xml" value="0.6666666666666666" />
-        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_card_you.xml" value="0.1" />
+        <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_card_you.xml" value="0.6230425055928411" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_insight.xml" value="0.1" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_main_card.xml" value="0.8333333333333334" />
         <entry key="..\:/Users/alsd2/Desktop/Cardna-Android/app/src/main/res/layout/fragment_my_page.xml" value="0.3482789855072464" />
