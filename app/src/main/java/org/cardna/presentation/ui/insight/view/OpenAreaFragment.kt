@@ -20,36 +20,22 @@ class OpenAreaFragment : BaseViewUtil.BaseFragment<FragmentOpenAreaBinding>(R.la
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.insightViewModel = insightViewModel
+        binding.openAreaFragment = this
         initView()
     }
 
     override fun initView() {
-        setImageObserve()
-        setArrowClickListener()
-        setCardClickListener()
-
     }
 
 
-    private fun setArrowClickListener() {
-        binding.ivInsightOpenAreaAllow.setOnClickListener {
-            insightViewModel.setCurrentPosition(InsightFragment.OPEN_AREA)
-        }
+    fun setArrowClickListener() {
+        insightViewModel.setCurrentPosition(InsightFragment.OPEN_AREA)
     }
 
-    private fun setCardClickListener() {
-        binding.ivInsightOpenAreaImage.setOnClickListener {
-            val intent = Intent(requireContext(), DetailCardActivity::class.java).let {
-                it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.openAreaCardId.value)
-            }
-            startActivity(intent)
+    fun setCardClickListener() {
+        val intent = Intent(requireContext(), DetailCardActivity::class.java).let {
+            it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.openAreaCardId.value)
         }
-    }
-
-    private fun setImageObserve() {
-        insightViewModel.openAreaInsight.observe(viewLifecycleOwner) { openAreaInsight ->
-            if (openAreaInsight.image != null)
-                requireActivity().setSrcWithGlide(openAreaInsight.image, binding.ivInsightOpenAreaImage)
-        }
+        startActivity(intent)
     }
 }

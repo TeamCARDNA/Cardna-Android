@@ -23,6 +23,7 @@ class MainActivity :
     private val mainCardFragment: MainCardFragment by lazy { MainCardFragment() }
     private val insightFragment: InsightFragment by lazy { InsightFragment() }
     private val myPageFragment: MyPageFragment by lazy { MyPageFragment() }
+    private val cardPackFragment: CardPackFragment by lazy { CardPackFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +48,7 @@ class MainActivity :
                 R.id.menu_bottom_cardpack -> {
                     supportFragmentManager.popBackStack()
                     StatusBarUtil.setStatusBar(this, Color.BLACK)
-                    replace(R.id.fcv_main, CardPackFragment())
+                    replace(R.id.fcv_main,cardPackFragment)
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_bottom_insight -> {
