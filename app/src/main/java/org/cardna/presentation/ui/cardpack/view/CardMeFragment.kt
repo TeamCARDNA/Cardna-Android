@@ -78,7 +78,8 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
 
     private fun initEmptyViewListener(){
         binding.ctlBgAddCardme.setOnClickListener{
-            // 카드나 작성 액티비티로 이동
+            // CardCreateActivity 로 이동
+            // 근데 카드나 작성이니까 intent로 카드나에 대한 것이라고 정보 전달해줘야함.
             val intent = Intent(requireActivity(), CardCreateActivity::class.java) // fragment에서 액티비티 띄우기
             startActivity(intent)
         }

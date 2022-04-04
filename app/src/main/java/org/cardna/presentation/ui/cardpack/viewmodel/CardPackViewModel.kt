@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.card.ResponseCardMeData
+import org.cardna.data.remote.model.card.ResponseCardYouData
 import org.cardna.domain.repository.CardRepository
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import timber.log.Timber
@@ -34,7 +35,7 @@ class CardPackViewModel @Inject constructor(
     val totalCardCnt: LiveData<Int>
         get() = _totalCardCnt
 
-    // 카드나 List => CardMeFragement 에서 사용
+    // 카드나 List => CardMeFragment 에서 사용
     private val _cardMeList = MutableLiveData<MutableList<ResponseCardMeData.CardList.CardMe>>()
     val cardMeList: LiveData<MutableList<ResponseCardMeData.CardList.CardMe>>
         get() = _cardMeList
@@ -42,8 +43,17 @@ class CardPackViewModel @Inject constructor(
     private val _isCardMeEmpty = MutableLiveData<Boolean>()
     val isCardMeEmpty: LiveData<Boolean> = _isCardMeEmpty
 
+
+    // 카드나 List => CardMeFragement 에서 사용
+    private val _cardYouList = MutableLiveData<MutableList<ResponseCardYouData.CardList.CardYou>>()
+    val cardYouList: LiveData<MutableList<ResponseCardYouData.CardList.CardYou>>
+        get() = _cardYouList
+
     private val _isCardYouEmpty = MutableLiveData<Boolean>()
     val isCardYouEmpty: LiveData<Boolean> = _isCardYouEmpty
+
+
+
 
     fun setUserId(id: Int?) {
         _id = id
@@ -71,12 +81,12 @@ class CardPackViewModel @Inject constructor(
                     cardRepository.getCardMe().data
                 }.onSuccess {
                     it.apply {
-                        _cardMeList.value = it.cardMeList // postValue 사용 ?
+                        _cardMeList.value = it.cardMeList
 
                         if(it.totalCardCnt == 0)
                             _isCardMeEmpty.value = true
                         else
-                            _isCardMeEmpty.value = true
+                            _isCardMeEmpty.value = false
                     }
                 }.onFailure {
                     Timber.e(it.toString())
@@ -93,12 +103,32 @@ class CardPackViewModel @Inject constructor(
                         if(it.totalCardCnt == 0)
                             _isCardMeEmpty.value = true
                         else
-                            _isCardMeEmpty.value = true
+                            _isCardMeEmpty.value = false
                     }
                 }.onFailure {
                     Timber.e(it.toString())
                 }
             }
         }
+    }
+
+
+    fun updateCardYouList() {
+            viewModelScope.launch {
+                runCatching {
+                    cardRepository.getCardYou(id).data
+                }.onSuccess {
+                    it.apply {
+                        _cardYouList.value = it.cardYouList // postValue 사용 ?
+
+                        if(it.totalCardCnt == 0)
+                            _isCardYouEmpty.value = true
+                        else
+                            _isCardYouEmpty.value = false
+                    }
+                }.onFailure {
+                    Timber.e(it.toString())
+                }
+            }
     }
 }

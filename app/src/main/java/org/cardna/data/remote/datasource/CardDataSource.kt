@@ -19,9 +19,7 @@ interface CardDataSource {
 
     suspend fun getOtherCardMe(cardId: Int) : ResponseCardMeData
 
-    suspend fun getCardYou() : ResponseCardYouData
-
-    suspend fun getOtherCardYou(cardId: Int) : ResponseCardYouData
+    suspend fun getCardYou(cardId: Int?) : ResponseCardYouData
 
     suspend fun getMainCard() : ResponseMainCardData
 
