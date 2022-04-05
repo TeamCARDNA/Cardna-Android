@@ -197,7 +197,8 @@
             android:id="@+id/ctl_cardyou_not_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{cardPackViewModel.isCardYouEmpty() ? View.GONE : View.VISIBLE}">
+            android:visibility="@{cardPackViewModel.isCardYouEmpty() ? View.GONE : View.VISIBLE}"
+            tools:visibility="invisible">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cardyou"

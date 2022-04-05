@@ -68,19 +68,24 @@ class MainActivity :
     // cardpackFragment의 버튼을 눌렀을 때, 이 MainActivity의 함수를 실행
     // 즉, MainActivity에서 BottomsheetDialog를 띄워주는 함수
 
-    // 그럼 이 함수 FriendCardPackActivity에서도 리스너 달아줘야 할 듯듯
+    // 그럼 이 함수 FriendCardPackActivity 에서도 리스너 달아줘야 할 듯
    fun showBottomDialogCardFragment() {
         // 바텀싯 다이얼로그가 뜬 후, 카드나 or 카드너를 선택했을 때, 그거에 따라 어떤 액티비티를 띄워줘야 하는지를 명세한 Fragment 정의하고
         val bottomDialogCardFragment = BottomDialogCardFragment {
             when (it) {
                 CARD_ME -> {
-                    val intent = Intent(this, CardCreateActivity::class.java)
+                    // 카드나 작성 액티비티로 이동 => 카드나임을 알 수 있도록 intent로 정보전달
+                    val intent = Intent(this, CardCreateActivity::class.java).apply {
+//                        putExtra("id", id)
+//                        putExtra("name", name)
+                        putExtra("isCardMe", true) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할 듯
+                    }
                     startActivity(intent)
                 }
                 CARD_YOU -> {
-                    // 카드너임을 알 수 있도록 intent에 추가정보 넣어줘야함
-                    val intent = Intent(this, CardCreateActivity::class.java)
-                    startActivity(intent)
+                    // 내 카드너 보관함으로 이동
+//                    val intent = Intent(this, CardCreateActivity::class.java)
+//                    startActivity(intent)
                 }
             }
         }

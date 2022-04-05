@@ -68,7 +68,7 @@ class CardYouFragment : BaseViewUtil.BaseFragment<FragmentCardYouBinding>(R.layo
             // 옵저버 달 필요 없이 그냥
             // 카드미 empty 아닌 뷰 ctl, empty 인 뷰 ctl 두개 만들어서
             // 각 2개의 ctl에 setVisibility에 삼항연산자 써서 cardPackViewModel.isCardMeEmpty? View.GONE : View.VISIBLE
-            // 해주면 되지 않을까
+            // 해주면 되지 않을까 =>
         }
     }
 

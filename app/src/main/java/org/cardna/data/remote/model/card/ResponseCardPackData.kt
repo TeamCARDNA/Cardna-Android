@@ -1,5 +1,7 @@
 package org.cardna.data.remote.model.card
 
+import com.google.gson.annotations.SerializedName
+
 data class ResponseCardPackData(
     val status: Int,
     val success: Boolean,
