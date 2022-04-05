@@ -43,6 +43,9 @@ class MainCardViewModel @Inject constructor(
     private val _cardAllCount = MutableLiveData<Int>()
     val cardAllCount: LiveData<Int> = _cardAllCount
 
+    private val _isBlocked = MutableLiveData<Boolean>()
+    val isBlocked: LiveData<Boolean> = _isBlocked
+
     fun getMainCardList() {
         viewModelScope.launch {
             runCatching {
@@ -51,6 +54,7 @@ class MainCardViewModel @Inject constructor(
                 _isMyCard.value = it.isMyCard
                 _cardList.value = it.mainCardList
                 _cardAllCount.value = it.mainCardList.size
+                _isBlocked.value = it.isBlocked
                 it.mainCardList.map {
                     _cardImg.value = it.cardImg
                     _isMe.value = it.isMe

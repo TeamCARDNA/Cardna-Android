@@ -1,6 +1,9 @@
 package org.cardna.presentation.ui.maincard.view
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -10,6 +13,7 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cardna.R
+import com.example.cardna.databinding.DialogMainCardBlockBinding
 import com.example.cardna.databinding.FragmentMainCardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.remote.model.card.ResponseMainCardData
@@ -34,6 +38,7 @@ class MainCardFragment :
         initData()
         initAdapter()
         setClickListener()
+        userBlockCheck()
     }
 
     override fun onResume() {
@@ -41,9 +46,8 @@ class MainCardFragment :
         initData()
     }
 
-    //onResume 에 뿌려질 데이터
+    //뿌려질 데이터
     private fun initData() {
-        Timber.d("init data")
         binding.mainCardViewModel = mainCardViewModel
         mainCardViewModel.getMainCardList()
         mainCardViewModel.getMyPageUser()
@@ -94,7 +98,7 @@ class MainCardFragment :
 
     private fun setEditCardActivity() {
         binding.llMaincardEditLayout.setOnClickListener {
-//            val intent = Intent(requireActivity(), EditCardActivity::class.java)
+//            val intent = Intent(viewLifecycleOwner, EditCardActivity::class.java)
 //            startActivity(intent)
         }
     }
@@ -103,6 +107,18 @@ class MainCardFragment :
         binding.ibtnMaincardAlarm.setOnClickListener {
             val intent = Intent(requireActivity(), AlarmActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun userBlockCheck() {
+        val isBlock = mainCardViewModel.isBlocked.value
+        if (isBlock == true) {
+            val dialog = Dialog(requireActivity())
+            val dialogBinding = DialogMainCardBlockBinding.inflate(dialog.layoutInflater)
+            dialog.setContentView(dialogBinding.root)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.setCancelable(false)
+            dialog.show()
         }
     }
 }
