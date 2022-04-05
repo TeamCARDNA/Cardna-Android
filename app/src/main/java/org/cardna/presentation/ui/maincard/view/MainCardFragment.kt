@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.remote.model.card.ResponseMainCardData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
+import org.cardna.presentation.ui.editcard.EditCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 import timber.log.Timber
@@ -98,8 +99,8 @@ class MainCardFragment :
 
     private fun setEditCardActivity() {
         binding.llMaincardEditLayout.setOnClickListener {
-//            val intent = Intent(viewLifecycleOwner, EditCardActivity::class.java)
-//            startActivity(intent)
+            val intent = Intent(requireActivity(), EditCardActivity::class.java)
+            startActivity(intent)
         }
     }
 
