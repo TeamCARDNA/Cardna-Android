@@ -31,25 +31,25 @@ interface CardService {
 
     // 나의 카드나 조회
     @GET("card/me")
-    suspend fun getCardMe(): ResponseCardPackData
+    suspend fun getCardMe(): ResponseCardMeData
 
     // 타인의 카드나 조회
     @GET("card/me/{userId}")
     suspend fun getOtherCardMe(
         @Path("userId")
         userId: Int?
-    ): ResponseCardPackData
+    ): ResponseCardMeData
 
     // 친구의 카드나 조회
     @GET("card/you")
-    suspend fun getCardYou(): ResponseCardPackData
+    suspend fun getCardYou(): ResponseCardYouData
 
     // 타인의 카드나 조회
     @GET("card/you/{userId}")
     suspend fun getOtherCardYou(
         @Path("userId")
         userId: Int?
-    ): ResponseCardPackData
+    ): ResponseCardYouData
 
 
 

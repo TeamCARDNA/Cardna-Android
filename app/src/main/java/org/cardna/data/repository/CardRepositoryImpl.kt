@@ -23,24 +23,23 @@ class CardRepositoryImpl @Inject constructor(private val cardDataSource: CardDat
         return cardDataSource.putKeepOrAddCard(cardId)
     }
 
-    override suspend fun getCardMe(): ResponseCardPackData {
+    override suspend fun getCardMe(): ResponseCardMeData {
         return cardDataSource.getCardMe()
     }
 
-    override suspend fun getOtherCardMe(cardId: Int): ResponseCardPackData {
+    override suspend fun getOtherCardMe(cardId: Int): ResponseCardMeData {
         return cardDataSource.getOtherCardMe(cardId)
     }
 
-    override suspend fun getCardYou(): ResponseCardPackData {
+    override suspend fun getCardYou(): ResponseCardYouData {
         return cardDataSource.getCardYou()
     }
 
-    override suspend fun getOtherCardYou(cardId: Int): ResponseCardPackData {
+    override suspend fun getOtherCardYou(cardId: Int): ResponseCardYouData {
         return cardDataSource.getOtherCardYou(cardId)
     }
 
     override suspend fun getMainCard(): ResponseMainCardData {
         return cardDataSource.getMainCard()
-
     }
 }

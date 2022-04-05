@@ -1,8 +1,6 @@
 package org.cardna.data.remote.model.card
 
-import com.google.gson.annotations.SerializedName
-
-data class ResponseCardPackData(
+data class ResponseCardMeData(
     val status: Int,
     val success: Boolean,
     val message: String,
@@ -11,9 +9,9 @@ data class ResponseCardPackData(
     data class CardList(
         val totalCardCnt: Int,
         val isMyCard: Boolean,
-        val cardList: MutableList<Card>
+        val cardMeList: MutableList<CardMe>
     ){
-        data class Card(
+        data class CardMe(
             val id: Int,
             val cardImg: String,
             val title: String,

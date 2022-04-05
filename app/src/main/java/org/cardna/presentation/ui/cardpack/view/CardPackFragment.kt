@@ -27,7 +27,6 @@ import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 
 @AndroidEntryPoint
 class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.layout.fragment_card_pack) {
-
     private val cardPackViewModel: CardPackViewModel by activityViewModels()
     private lateinit var cardPackTabLayoutAdapter: CardPackTabLayoutAdapter // tabLayout 에 data 띄워주는 adapter
 

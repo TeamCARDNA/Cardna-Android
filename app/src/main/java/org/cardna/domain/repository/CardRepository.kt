@@ -14,13 +14,13 @@ interface CardRepository {
 
     suspend fun putKeepOrAddCard(cardId: Int): ResponseKeepOrAddCardData
 
-    suspend fun getCardMe(): ResponseCardPackData
+    suspend fun getCardMe(): ResponseCardMeData
 
-    suspend fun getOtherCardMe(cardId: Int): ResponseCardPackData
+    suspend fun getOtherCardMe(cardId: Int): ResponseCardMeData
 
-    suspend fun getCardYou(): ResponseCardPackData
+    suspend fun getCardYou(): ResponseCardYouData
 
-    suspend fun getOtherCardYou(cardId: Int): ResponseCardPackData
+    suspend fun getOtherCardYou(cardId: Int): ResponseCardYouData
 
     suspend fun getMainCard() : ResponseMainCardData
 }

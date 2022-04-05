@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cardna.databinding.ItemCardpackCardmeBinding
-import org.cardna.data.remote.model.card.ResponseCardPackData
+import org.cardna.data.remote.model.card.ResponseCardMeData
 
 class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
-    private val clickListener: ((ResponseCardPackData.CardList.Card) -> Unit)? = null,
-) : ListAdapter<ResponseCardPackData.CardList.Card, CardPackMeRecyclerViewAdapter.CardPackMeViewHolder>(CardMeComparator()) {
+    private val clickListener: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null,
+) : ListAdapter<ResponseCardMeData.CardList.CardMe, CardPackMeRecyclerViewAdapter.CardPackMeViewHolder>(CardMeComparator()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -22,7 +22,7 @@ class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
     }
 
     override fun onBindViewHolder(holder: CardPackMeViewHolder, position: Int) {
-        val cardMe: ResponseCardPackData.CardList.Card = getItem(position)
+        val cardMe: ResponseCardMeData.CardList.CardMe = getItem(position)
         holder.onBind(cardMe, clickListener)
     }
 
@@ -31,7 +31,7 @@ class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
         private val binding: ItemCardpackCardmeBinding
     ) : RecyclerView.ViewHolder(binding.root){
 
-        fun onBind(cardMe: ResponseCardPackData.CardList.Card, onCardMeClick: ((ResponseCardPackData.CardList.Card) -> Unit) ?= null) {
+        fun onBind(cardMe: ResponseCardMeData.CardList.CardMe, onCardMeClick: ((ResponseCardMeData.CardList.CardMe) -> Unit) ?= null) {
             with(binding){
                 Glide.with(itemView.context).load(cardMe.cardImg).into(binding.ivCardpackRecyclerview)
                 tvCardpackRecyclerview.text = cardMe.title
@@ -46,17 +46,17 @@ class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
         }
     }
 
-    private class CardMeComparator: DiffUtil.ItemCallback<ResponseCardPackData.CardList.Card>(){
+    private class CardMeComparator: DiffUtil.ItemCallback<ResponseCardMeData.CardList.CardMe>(){
         override fun areItemsTheSame(
-            oldItem: ResponseCardPackData.CardList.Card,
-            newItem: ResponseCardPackData.CardList.Card
+            oldItem: ResponseCardMeData.CardList.CardMe,
+            newItem: ResponseCardMeData.CardList.CardMe
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: ResponseCardPackData.CardList.Card,
-            newItem: ResponseCardPackData.CardList.Card
+            oldItem: ResponseCardMeData.CardList.CardMe,
+            newItem: ResponseCardMeData.CardList.CardMe
         ): Boolean {
             return oldItem == newItem
         }

@@ -1,17 +1,24 @@
 package org.cardna.presentation.ui.cardpack.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityFriendCardPackBinding
-import org.cardna.data.remote.model.card.ResponseCardPackData
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 
 class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriendCardPackBinding>(R.layout.activity_friend_card_pack) {
 
     private var id:Int? = 0
     lateinit var name:String
+
+    private val cardPackViewModel: CardPackViewModel by viewModels()
+    // 이러면 이는 FriendCardPackActivity 안에서 생성된 CardPackFragment 와 CardMeFragment, CardYouFragment의 viewModel과 같은 인스턴스가 되는 것
+    // 따라서, intent로 받은 id와 name을 이 viewModel 안의 id와 name 프로퍼티에 넣어주고,
+    // 이를 이용해서 updateCardMeList, updateCardYouList 를 해주면, 알아서 그 친구의 카드나, 카드너가 채워질 것.
+    // 이를 이 Activity의 initView() 같은 메서드에서 해주면 되지 않을까
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

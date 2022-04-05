@@ -11,6 +11,7 @@ import com.example.cardna.databinding.FragmentCardYouBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardPackMeRecyclerViewAdapter
+import org.cardna.presentation.ui.cardpack.adapter.CardPackYouRecyclerViewAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.util.SpacesItemDecoration
@@ -43,7 +44,7 @@ class CardYouFragment : BaseViewUtil.BaseFragment<FragmentCardYouBinding>(R.layo
 
     // Adapter 생성
     private fun initCardYouRvAdapter(){ // CardPack
-        var cardYouAdapter = CardPackMeRecyclerViewAdapter() { // 어댑터 일단 CardPackMeRecyclerViewAdapter로 공유
+        var cardYouAdapter = CardPackYouRecyclerViewAdapter() { // 어댑터 일단 CardPackMeRecyclerViewAdapter로 공유
             // 1. 각 리사이클러뷰 아이템에 달아줄 람다 전달
             val intent = Intent(requireContext(), DetailCardActivity::class.java).apply {
                     putExtra("id", it.id) // 리사이클러뷰의 아이템 중 카드 선택시 그 카드의 id를 전달
