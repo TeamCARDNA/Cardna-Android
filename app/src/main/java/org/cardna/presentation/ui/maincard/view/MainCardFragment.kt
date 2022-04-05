@@ -4,16 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.LiveData
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.example.cardna.R
 import com.example.cardna.databinding.FragmentMainCardBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import org.cardna.data.remote.model.card.ResponseMainCardData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
+import timber.log.Timber
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class MainCardFragment :
@@ -22,13 +27,11 @@ class MainCardFragment :
     private val mainCardViewModel: MainCardViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mainCardViewModel = mainCardViewModel
         initView()
     }
 
     override fun initView() {
         initData()
-        setObserver()
         initAdapter()
         setClickListener()
     }
@@ -40,15 +43,47 @@ class MainCardFragment :
 
     //onResume 에 뿌려질 데이터
     private fun initData() {
-    //    mainCardViewModel.getMainCardList()
+        Timber.d("init data")
+        binding.mainCardViewModel = mainCardViewModel
+        mainCardViewModel.getMainCardList()
+        mainCardViewModel.getMyPageUser()
     }
 
     //adapter 관련 모음
     private fun initAdapter() {
+        Timber.d("init adapter")
         mainCardAdapter = MainCardAdapter()
-        with(binding) {
-            vpMaincardList.adapter = mainCardAdapter
+        mainCardViewModel.cardList.observe(viewLifecycleOwner) {
+            mainCardAdapter.submitList(it)
         }
+        with(binding.vpMaincardList) {
+            adapter = mainCardAdapter
+            viewPagerAnimation()
+        }
+    }
+
+    private fun viewPagerAnimation() {
+        val compositePageTransformer = getPageTransformer()
+        with(binding.vpMaincardList) {
+            clipToPadding = false
+            clipChildren = false
+            offscreenPageLimit = 1
+            setPageTransformer(compositePageTransformer)
+            setPadding(
+                (56 * resources.displayMetrics.density).roundToInt(),
+                0,
+                (56 * resources.displayMetrics.density).roundToInt(),
+                0
+            )
+            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        }
+    }
+
+    private fun getPageTransformer(): ViewPager2.PageTransformer {
+        val compositePageTransformer = CompositePageTransformer()
+        compositePageTransformer.addTransformer(MarginPageTransformer((20 * resources.displayMetrics.density).roundToInt()))
+
+        return compositePageTransformer
     }
 
     //click listener
@@ -57,13 +92,9 @@ class MainCardFragment :
         setAlarmActivity()
     }
 
-    private fun setObserver() {
-
-    }
-
     private fun setEditCardActivity() {
         binding.llMaincardEditLayout.setOnClickListener {
-//            val intent = Intent(requireActivity(),EditCardActivity::class.java)
+//            val intent = Intent(requireActivity(), EditCardActivity::class.java)
 //            startActivity(intent)
         }
     }

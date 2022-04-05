@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.maincard.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,8 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemMainCardViewBinding
 import org.cardna.data.remote.model.card.ResponseMainCardData
+import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
+import timber.log.Timber
 
 class MainCardAdapter :
     ListAdapter<ResponseMainCardData.Data.MainCard, MainCardAdapter.ViewHolder>(MainCardComparator()) {
@@ -26,9 +29,10 @@ class MainCardAdapter :
                 tvMainCardTitle.text = data.title
                 clMaincardContainer.setBackgroundResource(
                     if (data.isMe) {
-                        R.drawable.bg_right_null_black_radius_2
-                    } else {
                         R.drawable.bg_green_null_black_radius_2
+
+                    } else {
+                        R.drawable.bg_right_null_black_radius_2
                     }
                 )
             }
