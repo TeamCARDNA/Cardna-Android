@@ -36,30 +36,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-        <!--            android:id="@+id/cl_maincard_friend"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginEnd="24dp"-->
-        <!--            app:layout_constraintBottom_toBottomOf="@+id/cl_maincard_alarm"-->
-        <!--            app:layout_constraintEnd_toStartOf="@+id/cl_maincard_alarm"-->
-        <!--            app:layout_constraintTop_toTopOf="@+id/cl_maincard_alarm">-->
-
-        <!--            <CheckedTextView-->
-        <!--                android:id="@+id/ctv_maincard_friend"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginStart="24dp"-->
-        <!--                android:layout_marginTop="16dp"-->
-        <!--                android:checkMark="@drawable/selector_add_friend"-->
-        <!--                android:checked="true"-->
-        <!--                android:gravity="center_vertical"-->
-        <!--                app:layout_constraintBottom_toBottomOf="@+id/cl_maincard_friend"-->
-        <!--                app:layout_constraintEnd_toEndOf="@+id/cl_maincard_friend"-->
-        <!--                app:layout_constraintStart_toStartOf="parent"-->
-        <!--                app:layout_constraintTop_toTopOf="parent" />-->
-        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
         <TextView
             android:id="@+id/tv_maincard_user_name"
             style="@style/fragment_title_text"
@@ -79,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_bold"
-            android:text="@{mainCardViewModel.title}"
+            android:text="@{mainCardViewModel.cardList.size()==0 ? @string/maincard_tv_empty_title : mainCardViewModel.title}"
             android:textColor="@color/white_1"
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="@id/tv_maincard_user_name"
@@ -92,6 +68,7 @@
             android:layout_height="4dp"
             android:layout_marginTop="28dp"
             android:background="@{mainCardViewModel.isMe ? @color/main_green_60 : @color/main_purple_60}"
+            android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="@id/tv_maincard_title"
             app:layout_constraintStart_toStartOf="@id/tv_maincard_title"
             app:layout_constraintTop_toTopOf="@+id/tv_maincard_title"
@@ -103,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@id/tv_maincard_page_count"
+            app:layout_constraintBottom_toTopOf="@id/cl_maincard_page_count"
             app:layout_constraintTop_toBottomOf="@+id/ll_maincard_edit_layout">
 
         </androidx.core.widget.NestedScrollView>
@@ -116,8 +93,7 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@id/view_maincard_under_line"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/view_maincard_under_line"
-            app:layout_constraintVertical_bias="0.466">
+            app:layout_constraintTop_toTopOf="@id/view_maincard_under_line">
 
             <ImageView
                 android:id="@+id/iv_maincard_edit_icon"
@@ -141,49 +117,84 @@
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:background="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/tv_maincard_page_count"
+            android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@id/cl_maincard_page_count"
             app:layout_constraintTop_toBottomOf="@id/ll_maincard_edit_layout"
             tools:layout_editor_absoluteX="0dp" />
 
-        <TextView
-            android:id="@+id/tv_maincard_page_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="46dp"
-            android:fontFamily="@font/pretendard_regular"
-            android:text="@{String.valueOf(mainCardViewModel.mainOrder)}"
-            android:textColor="@{mainCardViewModel.isMe ? @color/main_green : @color/main_purple}"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="1" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_maincard_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="56dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_white_4_stroke_1_raduis_10"
+            android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/cl_maincard_page_count"
+            app:layout_constraintTop_toBottomOf="@id/ll_maincard_edit_layout">
 
-        <TextView
-            android:id="@+id/tv_maincard_dot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendard_regular"
-            android:text=" / "
-            android:textColor="@color/white_3"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_maincard_page_count"
-            app:layout_constraintStart_toEndOf="@+id/tv_maincard_page_count"
-            app:layout_constraintTop_toTopOf="@+id/tv_maincard_page_count" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/maincard_tv_empty_card_about"
+                android:textColor="@color/white_3"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_maincard_all"
-            android:layout_width="wrap_content"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_maincard_page_count"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendard_regular"
-            android:text="@{String.valueOf(mainCardViewModel.cardAllCount)}"
-            android:textColor="@color/white_3"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_maincard_dot"
-            app:layout_constraintStart_toEndOf="@+id/tv_maincard_dot"
-            app:layout_constraintTop_toTopOf="@+id/tv_maincard_dot"
-            tools:text="7" />
+            android:layout_marginBottom="48dp"
+            android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tv_maincard_page_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@{String.valueOf(mainCardViewModel.mainOrder)}"
+                android:textColor="@{mainCardViewModel.isMe ? @color/main_green : @color/main_purple}"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="1" />
+
+            <TextView
+                android:id="@+id/tv_maincard_dot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_regular"
+                android:text=" / "
+                android:textColor="@color/white_3"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_maincard_page_count"
+                app:layout_constraintStart_toEndOf="@+id/tv_maincard_page_count"
+                app:layout_constraintTop_toTopOf="@+id/tv_maincard_page_count" />
+
+            <TextView
+                android:id="@+id/tv_maincard_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@{String.valueOf(mainCardViewModel.cardAllCount)}"
+                android:textColor="@color/white_3"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_maincard_dot"
+                app:layout_constraintStart_toEndOf="@+id/tv_maincard_dot"
+                app:layout_constraintTop_toTopOf="@+id/tv_maincard_dot"
+                tools:text="7" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/iv_maincard_goto_cardpack_background"
@@ -194,7 +205,7 @@
             android:src="@drawable/bg_maincard_gradient_radius_45"
             android:visibility="@{mainCardViewModel.isMyCard ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_maincard_page_count" />
+            app:layout_constraintTop_toBottomOf="@id/cl_maincard_page_count" />
 
         <TextView
             android:id="@+id/tv_maincard_goto_cardpack"
