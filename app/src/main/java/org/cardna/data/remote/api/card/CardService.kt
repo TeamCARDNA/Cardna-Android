@@ -50,6 +50,6 @@ interface CardService {
         userId: Int?
     ): ResponseCardYouData
 
-    @GET("card/main/{userId}")
+    @GET("card/main")
     suspend fun getMainCard(): ResponseMainCardData
 }
