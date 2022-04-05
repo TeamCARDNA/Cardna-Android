@@ -10,9 +10,10 @@ data class ResponseDetailCardData(
         val id: String,
         val type: String,
         val cardImg: String,
-        val title: String,
+        val title: String ,
         val content: String,
         val name: String?,
+        val writerId: Int,
         val createdAt: String,
         val isLiked: Boolean?,
         val likeCount: Int?

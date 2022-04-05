@@ -1,6 +1,5 @@
 package org.cardna.presentation.ui.setting.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,6 +33,9 @@ class SettingViewModel @Inject constructor(
 
     private val _secessionReasonSixCheck = MutableLiveData(false)
     val secessionReasonSixCheck: LiveData<Boolean> = _secessionReasonSixCheck
+
+    private val _isEtcContentValid = MutableLiveData(false)
+    val isEtcContentValid: LiveData<Boolean> = _isEtcContentValid
 
     private val _isSecessionReasonValid = MutableLiveData(false)
     val isSecessionReasonValid: LiveData<Boolean> = _isSecessionReasonValid
@@ -74,34 +76,43 @@ class SettingViewModel @Inject constructor(
         setSecessionReasonValid()
     }
 
+    fun setEtcContentStatus(status: Boolean) {
+        _isEtcContentValid.value = status
+        setSecessionReasonValid()
+    }
+
     private fun setSecessionReasonValid() {
         _isSecessionReasonValid.value =
             _secessionReasonOneCheck.value == true || _secessionReasonTwoCheck.value == true || _secessionReasonThreeCheck.value == true ||
-                    _secessionReasonFourCheck.value == true || _secessionReasonFiveCheck.value == true || _secessionReasonSixCheck.value == true
+                    _secessionReasonFourCheck.value == true || _secessionReasonFiveCheck.value == true || (_secessionReasonSixCheck.value == true && _isEtcContentValid.value == true)
+
+        if (_secessionReasonSixCheck.value == true && _isEtcContentValid.value == false)
+            _isSecessionReasonValid.value = false
     }
 
-    fun setEtcContent(etcContent: String) {
+    fun setEtcContent(etcContent: String, status: Boolean) {
+        setEtcContentStatus(!status)
         _etcContent.value = etcContent
     }
 
     fun deleteUser() {
         if (_secessionReasonOneCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.ONE)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_ONE)
         }
         if (_secessionReasonTwoCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.TWO)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_TWO)
         }
         if (_secessionReasonThreeCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.THREE)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_THREE)
         }
         if (_secessionReasonFourCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.FOUR)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_FOUR)
         }
         if (_secessionReasonFiveCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.FIVE)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_FIVE)
         }
         if (_secessionReasonSixCheck.value == true) {
-            _secessionReasonList.value?.add(SecessionActivity.SIX)
+            _secessionReasonList.value?.add(SecessionActivity.SECESSION_REASON_SIX)
         }
 
         viewModelScope.launch {

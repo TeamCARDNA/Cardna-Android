@@ -29,7 +29,7 @@ class MainCardViewModel @Inject constructor(
     private val _title = MutableLiveData<String>()
     val title: LiveData<String> = _title
 
-    fun getMainCardList() {
+/*    fun getMainCardList() {
         viewModelScope.launch {
             kotlin.runCatching {
                 cardRepository.getMainCard().data.mainCardList
@@ -45,5 +45,5 @@ class MainCardViewModel @Inject constructor(
 
             }
         }
-    }
+    }*/
 }

@@ -1,8 +1,14 @@
 package org.cardna.presentation.util
 
+import android.app.Activity
 import android.widget.CheckedTextView
+import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModel
+import com.bumptech.glide.Glide
+import org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity
+import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 
 
@@ -20,3 +26,23 @@ fun setOnCheckedChanged(view: CheckedTextView, viewModel: ViewModel, reasonNumbe
         }
     }
 }
+
+@BindingAdapter("viewModel", "activity", "relationNumber")
+fun setOnCheckedChanged(view: AppCompatButton, viewModel: ViewModel, activity: Activity, relationNumber: Int) {
+    view.setOnClickListener {
+        when (relationNumber) {
+            1 -> (viewModel as? MyPageViewModel)?.applyFriend()
+            2 -> (activity as? SearchFriendCodeActivity)?.showBreakUpFriendDialog()
+            3 -> (activity as? SearchFriendCodeActivity)?.showCancelFriendRequestDialog()
+        }
+    }
+}
+
+@BindingAdapter("imgResId")
+fun setImageResource(view: ImageView, resId: String) {
+    if(resId.isNotEmpty())
+    Glide.with(view.context)
+        .load(resId)
+        .into(view)
+}
+

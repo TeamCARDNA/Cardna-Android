@@ -1,5 +1,7 @@
 package org.cardna.presentation.ui.alarm.view
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -9,9 +11,11 @@ import com.example.cardna.databinding.ActivityAlarmBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.adapter.FriendRequestAdapter
-import org.cardna.presentation.ui.alarm.adapter.FriendRequestData
+import org.cardna.presentation.ui.alarm.adapter.FriendResponseData
 import org.cardna.presentation.ui.alarm.adapter.WriteCardYouAdapter
 import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
+import org.cardna.presentation.util.StatusBarUtil
 
 @AndroidEntryPoint
 class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R.layout.activity_alarm) {
@@ -26,11 +30,10 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     override fun initView() {
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
         initData()
         setFriendRequestAdapter()
         setWriteCardYouAdapter()
-        setFriendRequestEmptyObserve()
-        setWriteCardYouEmptyObserve()
         setObserve()
     }
 
@@ -42,36 +45,6 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     private fun initData() {
         alarmViewModel.getFriendRequest()
         alarmViewModel.getWriteCardYou()
-    }
-
-    //TODO 친구수락 버튼 클릭 api
-    private fun friendRequestAccept(FriendRequestData: FriendRequestData) {
-        //    alarmViewModel.updateComment(comment)
-    }
-
-    //TODO 친구거절 버튼 클릭 api
-    private fun friendRequestRefuse(FriendRequestData: FriendRequestData) {
-        //   alarmViewModel.updateComment(comment)
-    }
-
-    private fun setFriendRequestEmptyObserve() {
-        alarmViewModel.isFriendRequestEmpty.observe(this) { isFriendRequestEmpty ->
-            if (isFriendRequestEmpty) {
-                binding.ctlAlarmBg.visibility = View.GONE
-            } else {
-                binding.ctlAlarmBg.visibility = View.VISIBLE
-            }
-        }
-    }
-
-    private fun setWriteCardYouEmptyObserve() {
-        alarmViewModel.isWriteCardYouEmpty.observe(this) { isWriteCardYouEmpty ->
-            if (isWriteCardYouEmpty) {
-                binding.rcvAlarmWriteCardyou.visibility = View.GONE
-            } else {
-                binding.rcvAlarmWriteCardyou.visibility = View.VISIBLE
-            }
-        }
     }
 
     private fun setObserve() {
@@ -97,15 +70,15 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     private fun setFriendRequestAdapter() {
         //TODO 서버연결 후 삭제
         val dataList = mutableListOf(
-            FriendRequestData("김다빈", "2022/24/42"),
-            FriendRequestData("박민우", "2022/24/42"),
-            FriendRequestData("이종찬", "2022/24/42"),
-            FriendRequestData("김다빈", "2022/24/42"),
+            FriendResponseData("김다빈", "2022/24/42", 1),
+            FriendResponseData("박민우", "2022/24/42", 2),
+            FriendResponseData("이종찬", "2022/24/42", 3),
+            FriendResponseData("김다빈", "2022/24/42", 4),
         )
 
         //TODO 친구 대표카드 뷰로 이동
-        friendRequestAdapter = FriendRequestAdapter(::friendRequestAccept, ::friendRequestRefuse) { item ->
-            //  startActivity(Intent(this, DetailInfoActivity::class.java))
+        friendRequestAdapter = FriendRequestAdapter(alarmViewModel, this) { item ->
+            //    startActivity(Intent(this, DetailInfoActivity::class.java))
         }
         with(binding.rcvAlarmFriendRequest) {
             adapter = friendRequestAdapter
@@ -117,14 +90,18 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
 
     private fun setWriteCardYouAdapter() {
         val dataList = mutableListOf(
-            FriendRequestData("김다빈", "2022/24/42"),
-            FriendRequestData("박민우", "2022/24/42"),
-            FriendRequestData("이종찬", "2022/24/42"),
+            FriendResponseData("김다빈", "2022/24/42", 1),
+            FriendResponseData("박민우", "2022/24/42", 2),
+            FriendResponseData("이종찬", "2022/24/42", 3),
         )
 
-        //TODO 카드상세 페이지로 이동
+
+        //TODO 카드상세 페이지로 이동->카드 아이디 보내서 이동 friendId cardId로 변경
         writeCardYouAdapter = WriteCardYouAdapter { item ->
-            //  startActivity(Intent(this, DetailInfoActivity::class.java))
+            val intent = Intent(this, DetailCardActivity::class.java).let {
+                it.putExtra(BaseViewUtil.CARD_ID, item.friendId)
+            }
+            startActivity(intent)
         }
         with(binding.rcvAlarmWriteCardyou) {
             adapter = writeCardYouAdapter

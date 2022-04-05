@@ -2,7 +2,9 @@ package org.cardna.data.repository
 
 import org.cardna.data.remote.datasource.UserDataSource
 import org.cardna.data.remote.model.user.RequestDeleteUserData
+import org.cardna.data.remote.model.user.RequestPostReportUserData
 import org.cardna.data.remote.model.user.ResponseDeleteUserData
+import org.cardna.data.remote.model.user.ResponsePostReportUserData
 import org.cardna.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -12,5 +14,9 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun deleteUser(body: RequestDeleteUserData): ResponseDeleteUserData {
         return userDataSource.deleteUser(body)
+    }
+
+    override suspend fun postReportUser(body: RequestPostReportUserData): ResponsePostReportUserData {
+        return userDataSource.postReportUser(body)
     }
 }

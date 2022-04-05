@@ -19,33 +19,22 @@ class BlindAreaFragment : BaseViewUtil.BaseFragment<FragmentBlindAreaBinding>(R.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.insightViewModel = insightViewModel
+        binding.blindAreaFragment = this
         initView()
     }
 
     override fun initView() {
-        setImageObserve()
-        setArrowClickListener()
-        setCardClickListener()
+
     }
 
-    private fun setArrowClickListener() {
-        binding.ivInsightBlindAreaAllow.setOnClickListener {
-            insightViewModel.setCurrentPosition(InsightFragment.BLIND_AREA)
-        }
+    fun setArrowClickListener() {
+        insightViewModel.setCurrentPosition(InsightFragment.BLIND_AREA)
     }
 
-    private fun setCardClickListener() {
-        binding.ivInsightBlindAreaImage.setOnClickListener {
-            val intent = Intent(requireContext(), DetailCardActivity::class.java).let {
-                it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.blindAreaCardId.value.toString())
-            }
-            startActivity(intent)
+    fun setCardClickListener() {
+        val intent = Intent(requireContext(), DetailCardActivity::class.java).let {
+            it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.blindAreaCardId.value)
         }
-    }
-
-    private fun setImageObserve() {
-        insightViewModel.blindAreaInsight.observe(viewLifecycleOwner) { blindAreaInsight ->
-            requireActivity().setSrcWithGlide(blindAreaInsight.imageUrl, binding.ivInsightBlindAreaImage)
-        }
+        startActivity(intent)
     }
 }

@@ -5,8 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.card.ResponseDetailCardData
 import org.cardna.data.remote.model.like.RequestLikeData
+import org.cardna.data.remote.model.user.RequestPostReportUserData
 import org.cardna.domain.repository.CardRepository
 import org.cardna.domain.repository.LikeRepository
+import org.cardna.domain.repository.UserRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import timber.log.Timber
@@ -17,23 +19,35 @@ class DetailCardViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val cardRepository: CardRepository,
     private val likeRepository: LikeRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
-    private var id = savedStateHandle.get<Int>(BaseViewUtil.CARD_ID)
+    private var cardId = savedStateHandle.get<Int>(BaseViewUtil.CARD_ID)
 
     private val _detailCard = MutableLiveData<ResponseDetailCardData.Data>()
     val detailCard: LiveData<ResponseDetailCardData.Data> = _detailCard
 
-    private val _type = MutableLiveData<String>("me")
+    private val _writerId = MutableLiveData<Int>()
+    val writerId: LiveData<Int> = _writerId
+
+    private val _type = MutableLiveData<String>()
     val type: LiveData<String> = _type
 
-    private val _isMineCard = MutableLiveData(true)
+    private val _isLiked = MutableLiveData<Boolean>()
+    val isLiked: LiveData<Boolean> = _isLiked
+
+    private val _isMineCard = MutableLiveData<Boolean>()
     val isMineCard: LiveData<Boolean> = _isMineCard
 
-    private val _isStorage = MutableLiveData(false)
+    private val _isStorage = MutableLiveData<Boolean>()
     val isStorage: LiveData<Boolean> = _isStorage
 
-    var currentLikeCount = 4  //TODO 서버완성 후 다시 test
+    private val _initLikeCount = MutableLiveData<Int?>(0)
+    val initLikeCount: MutableLiveData<Int?> = _initLikeCount
+
+    var currentLikeCount: Int = 0
+
+    val myDefault = MutableLiveData("")
 
     /* 저장소 : storage true true
     * 내가 카드나 : me true false
@@ -41,27 +55,29 @@ class DetailCardViewModel @Inject constructor(
     * 너가 카드나 : me false false
     * 너가 카드너 : you false false*/
 
-    private fun setCardId(cardId: Int) {
-        id = cardId
+    fun setCardId(cardId: Int) {
+        this.cardId = cardId
+        getDetailCard()
     }
 
-    fun getDetailCard(id: Int) {
-        setCardId(id)
-
+    private fun getDetailCard() {
+        val cardId = cardId ?: return
         viewModelScope.launch {
             runCatching {
-                cardRepository.getDetailCard(id).data
+                cardRepository.getDetailCard(cardId).data
             }.onSuccess {
                 it.apply {
                     _detailCard.value = it
                     _type.value = type
+                    _writerId.value = writerId
+                    _initLikeCount.value = likeCount
+                    currentLikeCount = likeCount ?: 0
+                    _isMineCard.value = isLiked == null
 
-                    if (type == DetailCardActivity.STORAGE)
-                        _isStorage.value = true
-                    if (likeCount != null) {
-                        _isMineCard.value = true
-                        currentLikeCount = likeCount
-                    }
+                    if (type == DetailCardActivity.STORAGE) _isStorage.value = true
+
+                    if (isLiked != null) _isLiked.value = isLiked!!
+
                 }
             }.onFailure {
                 Timber.e(it.toString())
@@ -72,7 +88,7 @@ class DetailCardViewModel @Inject constructor(
     fun postLike() {
         viewModelScope.launch {
             runCatching {
-                likeRepository.postLike(RequestLikeData(id ?: return@launch))
+                likeRepository.postLike(RequestLikeData(cardId ?: return@launch))
             }.onSuccess {
                 Timber.d(it.message)
             }.onFailure {
@@ -82,37 +98,41 @@ class DetailCardViewModel @Inject constructor(
     }
 
     fun deleteCard() {
-        Timber.d("카드삭제")
+        val cardId = cardId ?: return
         viewModelScope.launch {
             runCatching {
-                //      cardRepository.deleteCard(id ?: return@launch)
+                cardRepository.deleteCard(cardId)
             }.onSuccess {
-                //       Timber.d(it.message)
+                Timber.d(it.message)
             }.onFailure {
-                //     Timber.e(it.toString())
+                Timber.e(it.toString())
             }
         }
     }
 
     fun keepOrAddCard() {
-        Timber.d("카드보관")
+        val cardId = cardId ?: return
         viewModelScope.launch {
             runCatching {
-                //        cardRepository.putKeepOrAddCard(id ?: return@launch)
+                cardRepository.putKeepOrAddCard(cardId)
             }.onSuccess {
-                //        Timber.d(it.message)
+                Timber.d(it.message)
             }.onFailure {
-                //        Timber.e(it.toString())
+                Timber.e(it.toString())
             }
         }
     }
 
-    fun reportUser() {
-        Timber.d("유저신고")
+    fun reportUser(reportReason: String) {
+        val cardId = cardId ?: return
+        val writerId = _writerId.value ?: return
         viewModelScope.launch {
             runCatching {
+                userRepository.postReportUser(RequestPostReportUserData(writerId, cardId, reportReason))
             }.onSuccess {
+                Timber.d(it.message)
             }.onFailure {
+                Timber.e(it.toString())
             }
         }
     }
