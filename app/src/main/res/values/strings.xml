@@ -153,4 +153,8 @@
     <string name="dialog_break_up_friend_confirm">확인</string>
     <string name="dialog_break_up_friend_cancle">취소</string>
 
+<!--    Dialog Main Card Block-->
+    <string name="dialog_main_card_block_title">신고가 3번 접수되어 계정이 정지됐어요</string>
+    <string name="dialog_main_card_block_about">자세한 사항은\nCARDNAteam@gmail.com로\n문의해주세요</string>
+
 </resources>
