@@ -1,6 +1,5 @@
 package org.cardna.presentation.ui.maincard.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemMainCardViewBinding
 import org.cardna.data.remote.model.card.ResponseMainCardData
-import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 
 class MainCardAdapter(private val clickListener: () -> Unit) :
     ListAdapter<ResponseMainCardData.Data.MainCard, MainCardAdapter.ViewHolder>(MainCardComparator()) {
@@ -51,7 +49,7 @@ class MainCardAdapter(private val clickListener: () -> Unit) :
         holder.onBind(data)
     }
 
-    private class MainCardComparator : DiffUtil.ItemCallback<ResponseMainCardData.Data.MainCard>() {
+    class MainCardComparator : DiffUtil.ItemCallback<ResponseMainCardData.Data.MainCard>() {
         override fun areItemsTheSame(
             oldItem: ResponseMainCardData.Data.MainCard,
             newItem: ResponseMainCardData.Data.MainCard
