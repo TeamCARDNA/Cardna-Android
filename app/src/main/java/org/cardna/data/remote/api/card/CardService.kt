@@ -39,17 +39,24 @@ interface CardService {
         userId: Int?
     ): ResponseCardMeData
 
-    // 나의 카드너 전체 조회
+    // 친구의 카드나 조회
     @GET("card/you")
     suspend fun getCardYou(): ResponseCardYouData
 
-    // 카드너 전체 조회
+    // 타인의 카드나 조회
     @GET("card/you/{userId}")
     suspend fun getOtherCardYou(
         @Path("userId")
         userId: Int?
     ): ResponseCardYouData
 
+    // 카드너 전체 조회 => 유저 본인, 친구 둘다 이 API 하나로
+    @GET("card/you/{userId}")
+    suspend fun getCardYou(
+        @Path("userId")
+        userId: Int?
+    ): ResponseCardYouData
+    
     @GET("card/main")
     suspend fun getMainCard(): ResponseMainCardData
 }
