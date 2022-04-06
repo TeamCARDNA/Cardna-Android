@@ -1,25 +1,16 @@
 package org.cardna.presentation.ui.cardpack.view
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.cardna.R
 import com.example.cardna.databinding.CardpackCustomTablayoutBinding
 import com.example.cardna.databinding.FragmentCardPackBinding
-import com.example.cardna.databinding.FragmentInsightBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardPackTabLayoutAdapter
@@ -45,12 +36,9 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
     private fun initViewModel() {
         binding.cardPackViewModel = cardPackViewModel
 
-        if (getArguments() != null) {
-            // 이전 Fragment 로부터 id, name 받아옴
-            cardPackViewModel.setUserId(getArguments()?.getInt("id", 0))
-            cardPackViewModel.setUserName(getArguments()?.getString("name", null))
-        }
-        // null 이면 본인의 카드팩 접근이므로 id, name 다 초기값인 null 로 있을 것
+        // MainActivity 에서 카드팩 접근 시, bundle로 넘어오는 값이 없을 것이고, id는 기본값인 null로 되어있을 것임
+        // FriendCardPackActivity에서 접근 시, FriendCardPackActivity 에서 이미 intent로 받은 id와 name을
+        // viewModel에 이미 setting 해줬을 것
     }
 
     override fun initView() {

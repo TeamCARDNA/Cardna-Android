@@ -27,8 +27,13 @@ class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriend
 
     override fun initView() {
         // 메인 Activity의 타인의 대표카드 Fragment에서 id, name을 intent로 넘겨주면
-        id = intent.getIntExtra("id", 0)
-        name = intent.getStringExtra("name")!!
+        // 이를 viewModel 안의 id와 name 프로퍼티에 넣어준다.
+        cardPackViewModel.setUserId(intent.getIntExtra("id", 0))
+        cardPackViewModel.setUserName(intent.getStringExtra("name")!!)
+
+        // 그 친구의 id와 name을 바탕으로 cardMeList, cardYouList 업데이트
+        cardPackViewModel.updateCardMeList()
+        cardPackViewModel.updateCardYouList()
 
         // 이를 현재 FriendCardPackActivity에서 받아서 xx님의 카드팩으로 수정
         binding.tvFriendCardpackTitle.text = "$name" + "님의 카드팩"
