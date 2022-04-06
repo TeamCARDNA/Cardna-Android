@@ -159,4 +159,11 @@
     <string name="dialog_main_card_block_title">신고가 3번 접수되어 계정이 정지됐어요</string>
     <string name="dialog_main_card_block_about">자세한 사항은\nCARDNAteam@gmail.com로\n문의해주세요</string>
 
+<!--    Edit Card Activity-->
+    <string name="edit_card_title">대표카드 수정</string>
+    <string name="edit_card_finish">완료</string>
+    <string name="edit_card_represent_before">나를 가장 잘 표현하는 카드를</string>
+    <string name="edit_card_represent_gradient">대표카드</string>
+    <string name="edit_card_represent_after">로 지정해보세요!</string>
+
 </resources>
