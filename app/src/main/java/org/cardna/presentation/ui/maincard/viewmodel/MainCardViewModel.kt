@@ -46,6 +46,10 @@ class MainCardViewModel @Inject constructor(
     private val _isBlocked = MutableLiveData<Boolean>()
     val isBlocked: LiveData<Boolean> = _isBlocked
 
+    private val _cardPosition = MutableLiveData(0)
+    val cardPosition: LiveData<Int> = _cardPosition
+
+
     fun getMainCardList() {
         viewModelScope.launch {
             runCatching {
@@ -78,5 +82,9 @@ class MainCardViewModel @Inject constructor(
                 Timber.e("viewModel connect fail")
             }
         }
+    }
+
+    fun saveInitCardPosition(cardPosition: Int) {
+        _cardPosition.value = cardPosition
     }
 }

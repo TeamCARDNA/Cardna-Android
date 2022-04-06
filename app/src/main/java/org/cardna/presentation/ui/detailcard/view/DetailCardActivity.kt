@@ -17,7 +17,7 @@ import org.cardna.presentation.util.*
 @AndroidEntryPoint
 class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCardBinding>(R.layout.activity_detail_card) {
     private val detailCardViewModel: DetailCardViewModel by viewModels()
-    private var cardType = ""
+    var cardType = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,18 +47,17 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                 when (cardType) {
                     CARD_ME -> {
                         ctlDetailcardFriend.visibility = View.GONE
-                        tvDetailcardTitle.setBackgroundResource(R.drawable.bg_maingreen_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setImageResource(R.drawable.ic_detail_card_me_trash)
-                        showEditDialog()
+                        ibtnDetailcardEdit.setOnClickListener {
+                            showEditDialog()
+                        }
                     }
                     CARD_YOU -> {
-                        tvDetailcardTitle.setBackgroundResource(R.drawable.bg_mainpurple_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setOnClickListener {
                             showEditPopUp()
                         }
                     }
                     STORAGE -> {
-                        tvDetailcardTitle.setBackgroundResource(R.drawable.bg_white_1_5_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setOnClickListener {
                             showEditPopUp()
                         }
@@ -112,18 +111,16 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
 
     @SuppressLint("ResourceType")
     private fun showEditDialog() {
-        binding.ibtnDetailcardEdit.setOnClickListener {
-            val dialog = showCustomDialog(R.layout.dialog_detail_cardme)
-            val deleteBtn = dialog.findViewById<Button>(R.id.tv_dialog_delete)
-            val noBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardme_no)
-            noBtn.setOnClickListener {
-                setHandler(dialog)
-            }
-            deleteBtn.setOnClickListener {
-                detailCardViewModel.deleteCard()
-                dialog.dismiss()
-                finish()
-            }
+        val dialog = showCustomDialog(R.layout.dialog_detail_cardme)
+        val deleteBtn = dialog.findViewById<Button>(R.id.tv_dialog_delete)
+        val noBtn = dialog.findViewById<Button>(R.id.tv_dialog_cardme_no)
+        noBtn.setOnClickListener {
+            setHandler(dialog)
+        }
+        deleteBtn.setOnClickListener {
+            detailCardViewModel.deleteCard()
+            dialog.dismiss()
+            finish()
         }
     }
 
@@ -167,7 +164,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     fun setLikeClickListener() {
         with(binding) {
             ctvDetailcardLike.toggle()
-            detailCardViewModel?.postLike() ?: return   //TODO API완성 후 다시 test
+            detailCardViewModel?.postLike() ?: return
 
             if (ctvDetailcardLike.isChecked) {
                 showLikeLottie()

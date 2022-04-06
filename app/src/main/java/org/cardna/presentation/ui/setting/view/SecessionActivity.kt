@@ -27,19 +27,10 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
 
     override fun initView() {
         StatusBarUtil.setStatusBar(this, Color.BLACK)
-        setObserve()
         setEtcContentListener()
         setHideKeyboard()
     }
 
-    private fun setObserve() {
-        settingViewModel.isSecessionReasonValid.observe(this) { isSecessionReasonValid ->
-            with(binding.buttonSecession) {
-                if (isSecessionReasonValid) setBackgroundResource(R.drawable.bg_mainpurple_maingreen_gradient_10dp)
-                else setBackgroundResource(R.drawable.bg_white_3_10dp)
-            }
-        }
-    }
 
     private fun setEtcContentListener() {
         with(binding.etSecessionReason) {

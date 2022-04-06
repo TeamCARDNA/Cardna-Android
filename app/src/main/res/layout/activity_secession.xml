@@ -299,7 +299,7 @@
             android:layout_height="64dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_white_3_10dp"
+            android:background="@{settingViewModel.isSecessionReasonValid ? @drawable/bg_mainpurple_maingreen_gradient_10dp : @drawable/bg_white_3_10dp}"
             android:enabled="@{settingViewModel.isSecessionReasonValid}"
             android:fontFamily="@font/pretendard_semibold"
             android:onClick="@{() -> settingViewModel.deleteUser()}"
