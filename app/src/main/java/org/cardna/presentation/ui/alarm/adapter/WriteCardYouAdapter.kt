@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cardna.databinding.ItemAlarmWriteCardyouBinding
 
 class WriteCardYouAdapter(
-    private val clickListener: (FriendRequestData) -> Unit
-) : androidx.recyclerview.widget.ListAdapter<FriendRequestData, WriteCardYouAdapter.WriteCardYouViewHolder>(diffUtil) {
+    private val clickListener: (FriendResponseData) -> Unit
+) : androidx.recyclerview.widget.ListAdapter<FriendResponseData, WriteCardYouAdapter.WriteCardYouViewHolder>(diffUtil) {
 
     inner class WriteCardYouViewHolder(private val binding: ItemAlarmWriteCardyouBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: FriendRequestData) {
+        fun onBind(data: FriendResponseData) {
             binding.apply {
 
                 //TODO  서버연결 후 data 연결
@@ -36,11 +36,11 @@ class WriteCardYouAdapter(
     override fun getItemCount() = currentList.size
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<FriendRequestData>() {
-            override fun areContentsTheSame(oldItem: FriendRequestData, newItem: FriendRequestData) =
+        val diffUtil = object : DiffUtil.ItemCallback<FriendResponseData>() {
+            override fun areContentsTheSame(oldItem: FriendResponseData, newItem: FriendResponseData) =
                 oldItem == newItem
 
-            override fun areItemsTheSame(oldItem: FriendRequestData, newItem: FriendRequestData) =
+            override fun areItemsTheSame(oldItem: FriendResponseData, newItem: FriendResponseData) =
                 oldItem.friendName == newItem.friendName  //TODO 친구 id로 비교
         }
     }

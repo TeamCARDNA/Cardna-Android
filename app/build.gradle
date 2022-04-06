@@ -37,6 +37,9 @@ android {
 }
 
 dependencies {
+    //Timber
+    implementation "com.jakewharton.timber:timber:5.0.1"
+
     // Lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
@@ -72,8 +75,8 @@ dependencies {
     //Timber
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
-    def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    implementation "de.hdodenhof:circleimageview:$circleimageview_version" //Circle ImageView
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

@@ -7,9 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.cardna.data.remote.model.insight.BlindAreaCard
-import org.cardna.data.remote.model.insight.OpenAreaCard
-import org.cardna.data.remote.model.insight.ResponseInsightData
+import org.cardna.data.remote.model.insight.*
 import org.cardna.domain.repository.InsightRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,17 +20,17 @@ class InsightViewModel @Inject constructor(
     private val _insight = MutableLiveData<ResponseInsightData.Data>()
     val insight: LiveData<ResponseInsightData.Data> = _insight
 
-    private val _openAreaInsight = MutableLiveData<OpenAreaCard>()
-    val openAreaInsight: LiveData<OpenAreaCard> = _openAreaInsight
+    private val _openAreaInsight = MutableLiveData<OpenArea>()
+    val openAreaInsight: LiveData<OpenArea> = _openAreaInsight
 
-    private val _blindAreaInsight = MutableLiveData<BlindAreaCard>()
-    val blindAreaInsight: LiveData<BlindAreaCard> = _blindAreaInsight
+    private val _blindAreaInsight = MutableLiveData<BlindArea>()
+    val blindAreaInsight: LiveData<BlindArea> = _blindAreaInsight
 
-    private val _isOpenAreaInsightEmpty = MutableLiveData<Boolean>()
-    val isOpenAreaInsightEmpty: LiveData<Boolean> = _isOpenAreaInsightEmpty
+    private val _blindAreaImage = MutableLiveData<String>()
+    val blindAreaImage: LiveData<String> = _blindAreaImage
 
-    private val _isBlindAreaInsightEmpty = MutableLiveData<Boolean>()
-    val isBlindAreaInsightEmpty: LiveData<Boolean> = _isBlindAreaInsightEmpty
+    private val _openAreaImage = MutableLiveData<String>()
+    val openAreaImage: LiveData<String> = _openAreaImage
 
     private val _blindAreaCardId = MutableLiveData<Int>()
     val blindAreaCardId: LiveData<Int> = _blindAreaCardId
@@ -43,19 +41,21 @@ class InsightViewModel @Inject constructor(
     private val _currentPosition = MutableLiveData<String>()
     val currentPosition: LiveData<String> = _currentPosition
 
+    val myDefault = MutableLiveData("")
+
     fun getInsight() {
         viewModelScope.launch {
             runCatching {
                 insightRepository.getInsight().data
             }.onSuccess {
-                it.blindAreaCard.also { _blindAreaInsight.value = it }
-                it.openAreaCard.also { _openAreaInsight.value = it }
-
-                _isBlindAreaInsightEmpty.value = _blindAreaInsight.value == null
-                _isOpenAreaInsightEmpty.value = _openAreaInsight.value == null
-
-                _blindAreaCardId.value = _blindAreaInsight.value?.id ?: 0
-                _openAreaCardId.value = _openAreaInsight.value?.id ?: 0
+                it.apply {
+                    _blindAreaInsight.value = blindArea
+                    _openAreaInsight.value = openArea
+                    _blindAreaImage.value = blindArea.image ?: ""
+                    _openAreaImage.value = openArea.image ?: ""
+                    _blindAreaCardId.value = blindArea.id ?: -1
+                    _openAreaCardId.value = openArea.id ?: -1
+                }
             }.onFailure {
                 Timber.e(it.toString())
             }

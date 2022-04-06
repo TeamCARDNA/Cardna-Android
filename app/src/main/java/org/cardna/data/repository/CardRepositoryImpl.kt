@@ -11,6 +11,7 @@ import javax.inject.Inject
 
 class CardRepositoryImpl @Inject constructor(private val cardDataSource: CardDataSource) :
     CardRepository {
+
     override suspend fun getDetailCard(cardId: Int): ResponseDetailCardData {
         return cardDataSource.getDetailCard(cardId)
     }
