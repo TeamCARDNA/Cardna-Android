@@ -5,10 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -17,7 +15,6 @@ import com.example.cardna.R
 import com.example.cardna.databinding.DialogMainCardBlockBinding
 import com.example.cardna.databinding.FragmentMainCardBinding
 import dagger.hilt.android.AndroidEntryPoint
-import org.cardna.data.remote.model.card.ResponseMainCardData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.editcard.EditCardActivity
@@ -60,7 +57,8 @@ class MainCardFragment :
     //adapter 관련 모음
     private fun initAdapter() {
         Timber.d("init adapter")
-        mainCardAdapter = MainCardAdapter()
+        val cardId = mainCardViewModel.cardId.value
+        mainCardAdapter = MainCardAdapter(cardId)
         mainCardViewModel.cardList.observe(viewLifecycleOwner) {
             mainCardAdapter.submitList(it)
         }

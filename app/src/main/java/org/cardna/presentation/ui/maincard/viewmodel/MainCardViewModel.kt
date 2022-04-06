@@ -28,6 +28,9 @@ class MainCardViewModel @Inject constructor(
     private val _cardList = MutableLiveData<List<ResponseMainCardData.Data.MainCard>>()
     val cardList: LiveData<List<ResponseMainCardData.Data.MainCard>> = _cardList
 
+    private val _cardId = MutableLiveData<Int>()
+    val cardId: LiveData<Int> = _cardId
+
     private val _isBlocked = MutableLiveData<Boolean>()
     val isBlocked: LiveData<Boolean> = _isBlocked
 
@@ -42,6 +45,9 @@ class MainCardViewModel @Inject constructor(
                 _isMyCard.value = it.isMyCard
                 _cardList.value = it.mainCardList
                 _isBlocked.value = it.isBlocked
+                it.mainCardList.map {
+                    _cardId.value = it.id
+                }
             }.onFailure {
                 Timber.e("ViewModel connect fail")
             }

@@ -1,8 +1,8 @@
 package org.cardna.presentation.ui.maincard.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,10 +10,9 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemMainCardViewBinding
 import org.cardna.data.remote.model.card.ResponseMainCardData
-import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
-import timber.log.Timber
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 
-class MainCardAdapter :
+class MainCardAdapter(private val cardId: Int?) :
     ListAdapter<ResponseMainCardData.Data.MainCard, MainCardAdapter.ViewHolder>(MainCardComparator()) {
 
     inner class ViewHolder(private val binding: ItemMainCardViewBinding) :
@@ -30,11 +29,15 @@ class MainCardAdapter :
                 clMaincardContainer.setBackgroundResource(
                     if (data.isMe) {
                         R.drawable.bg_green_null_black_radius_2
-
                     } else {
                         R.drawable.bg_right_null_black_radius_2
                     }
                 )
+                itemView.setOnClickListener {
+                    val intent = Intent(itemView.context, DetailCardActivity::class.java)
+                    intent.putExtra("CARD_ID", cardId)
+                    itemView.context.startActivity(intent)
+                }
             }
         }
     }
