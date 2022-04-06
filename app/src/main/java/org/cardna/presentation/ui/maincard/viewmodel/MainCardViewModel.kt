@@ -19,18 +19,6 @@ class MainCardViewModel @Inject constructor(
     private val myPageRepository: MyPageRepository
 ) : ViewModel() {
 
-    private val _cardImg = MutableLiveData<String>()
-    val cardImg: LiveData<String> = _cardImg
-
-    private val _isMe = MutableLiveData<Boolean>()
-    val isMe: LiveData<Boolean> = _isMe
-
-    private val _mainOrder = MutableLiveData<Int>()
-    val mainOrder: LiveData<Int> = _mainOrder
-
-    private val _title = MutableLiveData<String>()
-    val title: LiveData<String> = _title
-
     private val _isMyCard = MutableLiveData<Boolean>()
     val isMyCard: LiveData<Boolean> = _isMyCard
 
@@ -40,31 +28,20 @@ class MainCardViewModel @Inject constructor(
     private val _cardList = MutableLiveData<List<ResponseMainCardData.Data.MainCard>>()
     val cardList: LiveData<List<ResponseMainCardData.Data.MainCard>> = _cardList
 
-    private val _cardAllCount = MutableLiveData<Int>()
-    val cardAllCount: LiveData<Int> = _cardAllCount
-
     private val _isBlocked = MutableLiveData<Boolean>()
     val isBlocked: LiveData<Boolean> = _isBlocked
 
     private val _cardPosition = MutableLiveData(0)
     val cardPosition: LiveData<Int> = _cardPosition
 
-
     fun getMainCardList() {
         viewModelScope.launch {
             runCatching {
                 cardRepository.getMainCard().data
-            }.onSuccess { it ->
+            }.onSuccess {
                 _isMyCard.value = it.isMyCard
                 _cardList.value = it.mainCardList
-                _cardAllCount.value = it.mainCardList.size
                 _isBlocked.value = it.isBlocked
-                it.mainCardList.map {
-                    _cardImg.value = it.cardImg
-                    _isMe.value = it.isMe
-                    _mainOrder.value = it.mainOrder
-                    _title.value = it.title
-                }
             }.onFailure {
                 Timber.e("ViewModel connect fail")
             }
