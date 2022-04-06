@@ -18,7 +18,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctl_cardpack_top"
-            android:visibility="@{cardPackViewModel.id? View.GONE : View.VISIBLE}"
+            android:visibility="@{(cardPackViewModel.id == null)? View.VISIBLE : View.GONE}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
