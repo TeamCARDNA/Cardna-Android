@@ -15,7 +15,7 @@ import androidx.core.text.toSpannable
 import androidx.core.widget.addTextChangedListener
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySetNameBinding
-import com.example.cardna.databinding.AlertSetNameBinding
+import com.example.cardna.databinding.DialogSetNameBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan
@@ -65,7 +65,7 @@ class SetNameActivity :
     private fun initAlertDialog() {
         binding.btnSignUpNameAccess.setOnClickListener {
             val dialog = Dialog(this)
-            val dialogBinding = AlertSetNameBinding.inflate(dialog.layoutInflater)
+            val dialogBinding = DialogSetNameBinding.inflate(dialog.layoutInflater)
             dialog.setContentView(dialogBinding.root)
 
             val name = with(binding) { "${etSignupLastname.text}${etSignupFirstname.text}" }
