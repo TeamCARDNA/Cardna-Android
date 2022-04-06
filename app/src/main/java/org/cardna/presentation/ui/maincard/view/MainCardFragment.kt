@@ -17,6 +17,7 @@ import com.example.cardna.databinding.FragmentMainCardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.editcard.EditCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
@@ -57,8 +58,9 @@ class MainCardFragment :
     //adapter 관련 모음
     private fun initAdapter() {
         Timber.d("init adapter")
-        val cardId = mainCardViewModel.cardId.value
-        mainCardAdapter = MainCardAdapter(cardId)
+        mainCardAdapter = MainCardAdapter() {
+            setDetailActivity()
+        }
         mainCardViewModel.cardList.observe(viewLifecycleOwner) {
             mainCardAdapter.submitList(it)
         }
@@ -96,6 +98,17 @@ class MainCardFragment :
     private fun setClickListener() {
         setEditCardActivity()
         setAlarmActivity()
+    }
+
+    private fun setDetailActivity() {
+        val intent = Intent(requireActivity(), DetailCardActivity::class.java).apply {
+            mainCardViewModel.cardPosition.value?.let {
+                mainCardViewModel.cardList.value?.get(it)?.let {
+                    putExtra(BaseViewUtil.CARD_ID, it.id)
+                }
+            }
+            startActivity(this)
+        }
     }
 
     private fun setEditCardActivity() {

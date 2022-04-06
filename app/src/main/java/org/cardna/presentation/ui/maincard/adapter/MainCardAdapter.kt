@@ -12,7 +12,7 @@ import com.example.cardna.databinding.ItemMainCardViewBinding
 import org.cardna.data.remote.model.card.ResponseMainCardData
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 
-class MainCardAdapter(private val cardId: Int?) :
+class MainCardAdapter(private val clickListener: () -> Unit) :
     ListAdapter<ResponseMainCardData.Data.MainCard, MainCardAdapter.ViewHolder>(MainCardComparator()) {
 
     inner class ViewHolder(private val binding: ItemMainCardViewBinding) :
@@ -34,9 +34,7 @@ class MainCardAdapter(private val cardId: Int?) :
                     }
                 )
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailCardActivity::class.java)
-                    intent.putExtra("CARD_ID", cardId)
-                    itemView.context.startActivity(intent)
+                    clickListener()
                 }
             }
         }
