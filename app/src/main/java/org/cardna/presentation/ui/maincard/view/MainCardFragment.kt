@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
@@ -52,6 +53,8 @@ class MainCardFragment :
         binding.mainCardViewModel = mainCardViewModel
         mainCardViewModel.getMainCardList()
         mainCardViewModel.getMyPageUser()
+        setInitPagePosition()
+        binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
     }
 
     //adapter 관련 모음
@@ -121,5 +124,15 @@ class MainCardFragment :
             dialog.setCancelable(false)
             dialog.show()
         }
+    }
+
+    private fun setInitPagePosition() {
+        binding.vpMaincardList.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                mainCardViewModel.saveInitCardPosition(position)
+            }
+        })
     }
 }

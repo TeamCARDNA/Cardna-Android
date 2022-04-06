@@ -164,7 +164,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     fun setLikeClickListener() {
         with(binding) {
             ctvDetailcardLike.toggle()
-            detailCardViewModel?.postLike() ?: return   //TODO API완성 후 다시 test
+            detailCardViewModel?.postLike() ?: return
 
             if (ctvDetailcardLike.isChecked) {
                 showLikeLottie()
