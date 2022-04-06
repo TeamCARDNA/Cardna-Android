@@ -15,14 +15,16 @@ interface CardDataSource {
 
     suspend fun putKeepOrAddCard(cardId: Int): ResponseKeepOrAddCardData
 
-    suspend fun getCardMe() : ResponseCardMeData
+    suspend fun getCardMe(): ResponseCardMeData
 
-    suspend fun getOtherCardMe(cardId: Int) : ResponseCardMeData
+    suspend fun getOtherCardMe(cardId: Int): ResponseCardMeData
 
-    suspend fun getCardYou() : ResponseCardYouData
+    suspend fun getCardYou(): ResponseCardYouData
 
-    suspend fun getOtherCardYou(cardId: Int) : ResponseCardYouData
+    suspend fun getOtherCardYou(cardId: Int): ResponseCardYouData
 
-    suspend fun getMainCard() : ResponseMainCardData
+    suspend fun getMainCard(): ResponseMainCardData
+
+    suspend fun putEditCard(cardList: RequestEditCardData): ResponseEditCardData
 
 }
