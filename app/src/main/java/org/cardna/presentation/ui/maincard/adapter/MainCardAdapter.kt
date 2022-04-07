@@ -10,10 +10,11 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemMainCardViewBinding
 import org.cardna.data.remote.model.card.ResponseMainCardData
+import org.cardna.data.remote.model.mypage.ResponseMyPageData
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 import timber.log.Timber
 
-class MainCardAdapter :
+class MainCardAdapter() :
     ListAdapter<ResponseMainCardData.Data.MainCard, MainCardAdapter.ViewHolder>(MainCardComparator()) {
 
     inner class ViewHolder(private val binding: ItemMainCardViewBinding) :
