@@ -83,7 +83,6 @@
                 android:id="@+id/tv_detailcard_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@{detailCardViewModel.type==detailCardActivity.STORAGE ? @drawable/bg_white_1_5_stroke_real_black_2dp : detailCardViewModel.type==detailCardActivity.CARD_YOU ? @drawable/bg_mainpurple_stroke_real_black_2dp : @drawable/bg_maingreen_stroke_real_black_2dp}"
                 android:fontFamily="@font/pretendard_semibold"
                 android:paddingVertical="12dp"
                 android:paddingStart="18dp"

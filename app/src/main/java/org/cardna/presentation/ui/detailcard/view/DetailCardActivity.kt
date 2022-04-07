@@ -47,17 +47,20 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                 when (cardType) {
                     CARD_ME -> {
                         ctlDetailcardFriend.visibility = View.GONE
+                        tvDetailcardTitle.setBackgroundResource(R.drawable.bg_maingreen_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setImageResource(R.drawable.ic_detail_card_me_trash)
                         ibtnDetailcardEdit.setOnClickListener {
                             showEditDialog()
                         }
                     }
                     CARD_YOU -> {
+                        tvDetailcardTitle.setBackgroundResource(R.drawable.bg_mainpurple_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setOnClickListener {
                             showEditPopUp()
                         }
                     }
                     STORAGE -> {
+                        tvDetailcardTitle.setBackgroundResource(R.drawable.bg_white_1_5_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setOnClickListener {
                             showEditPopUp()
                         }

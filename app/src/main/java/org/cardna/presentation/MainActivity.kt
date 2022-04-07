@@ -80,13 +80,18 @@ class MainActivity :
         val bottomDialogCardFragment = BottomDialogCardFragment {
             when (it) {
                 CARD_ME -> {
-                    val intent = Intent(this, CardCreateActivity::class.java)
+                    // 카드나 작성 액티비티로 이동 => 카드나임을 알 수 있도록 intent로 정보전달
+                    val intent = Intent(this, CardCreateActivity::class.java).apply {
+//                        putExtra("id", id)
+//                        putExtra("name", name)
+                        putExtra("isCardMe", true) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할 듯
+                    }
                     startActivity(intent)
                 }
                 CARD_YOU -> {
-                    // 카드너임을 알 수 있도록 intent에 추가정보 넣어줘야함
-                    val intent = Intent(this, CardCreateActivity::class.java)
-                    startActivity(intent)
+                    // 내 카드너 보관함으로 이동
+//                    val intent = Intent(this, CardCreateActivity::class.java)
+//                    startActivity(intent)
                 }
             }
         }

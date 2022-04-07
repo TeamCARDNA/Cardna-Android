@@ -42,6 +42,5 @@ class CardDataSourceImpl @Inject constructor(
 
     override suspend fun getMainCard(): ResponseMainCardData {
         return cardService.getMainCard()
-
     }
 }

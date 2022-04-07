@@ -5,10 +5,8 @@ import org.cardna.data.remote.model.card.ResponseDeleteCardData
 import org.cardna.data.remote.model.card.ResponseDetailCardData
 import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
 import org.cardna.data.remote.model.card.ResponseMainCardData
-import retrofit2.http.GET
 
 interface CardDataSource {
-
     suspend fun getDetailCard(cardId: Int): ResponseDetailCardData
 
     suspend fun deleteCard(cardId: Int): ResponseDeleteCardData
@@ -24,5 +22,4 @@ interface CardDataSource {
     suspend fun getOtherCardYou(cardId: Int) : ResponseCardYouData
 
     suspend fun getMainCard() : ResponseMainCardData
-
 }
