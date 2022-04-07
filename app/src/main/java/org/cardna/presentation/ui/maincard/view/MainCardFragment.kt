@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.remote.model.card.ResponseMainCardData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.editcard.EditCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
@@ -60,7 +61,7 @@ class MainCardFragment :
     //adapter 관련 모음
     private fun initAdapter() {
         Timber.d("init adapter")
-        mainCardAdapter = MainCardAdapter()
+        mainCardAdapter = MainCardAdapter ()
         mainCardViewModel.cardList.observe(viewLifecycleOwner) {
             mainCardAdapter.submitList(it)
         }
