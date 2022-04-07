@@ -7,6 +7,9 @@
         <variable
             name="friendCardPackActivity"
             type="org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity" />
+        <variable
+            name="cardPackViewModel"
+            type="org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +33,6 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:text="카드팩"
                 android:theme="@style/cardpack_bottomsheet_title"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +55,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fcv_friend"
+            android:id="@+id/fcv_friend_card_me_you"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

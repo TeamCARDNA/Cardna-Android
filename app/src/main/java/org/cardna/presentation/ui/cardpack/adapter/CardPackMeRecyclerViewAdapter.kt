@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.cardna.databinding.ItemCardpackCardmeBinding
 import org.cardna.data.remote.model.card.ResponseCardMeData
 
-class CardPackMeRecyclerViewAdapter(
+class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
     private val clickListener: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null,
 ) : ListAdapter<ResponseCardMeData.CardList.CardMe, CardPackMeRecyclerViewAdapter.CardPackMeViewHolder>(CardMeComparator()) {
 

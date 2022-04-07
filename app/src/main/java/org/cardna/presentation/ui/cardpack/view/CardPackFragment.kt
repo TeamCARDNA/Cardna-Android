@@ -1,25 +1,16 @@
 package org.cardna.presentation.ui.cardpack.view
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.cardna.R
 import com.example.cardna.databinding.CardpackCustomTablayoutBinding
 import com.example.cardna.databinding.FragmentCardPackBinding
-import com.example.cardna.databinding.FragmentInsightBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardPackTabLayoutAdapter
@@ -27,8 +18,7 @@ import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 
 @AndroidEntryPoint
 class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.layout.fragment_card_pack) {
-
-    private val cardPackViewModel: CardPackViewModel by activityViewModels() // MainActivity의 생명주기와 같이함 ?
+    private val cardPackViewModel: CardPackViewModel by activityViewModels()
     private lateinit var cardPackTabLayoutAdapter: CardPackTabLayoutAdapter // tabLayout 에 data 띄워주는 adapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,46 +30,38 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
     override fun onResume() { // 카드팩프래그먼트에서 카드를 눌러 카드 상세페이지로 가서 삭제한다음 왔을 때, 카드팩의 카드들이 업데이트 되어야 하므로 onResume이 필요하다
         super.onResume()
         cardPackViewModel.setTotalCardCnt()
-        if (cardPackViewModel.id == null) // id가 null일 때, 즉 유저 본인의 카드팩 접근할 때,
-           initCardPackAdapter()
     }
 
 
     private fun initViewModel() {
         binding.cardPackViewModel = cardPackViewModel
-        // binding.lifecycleOwner = this@CardPackFragment
 
-        if (getArguments() != null) { // 로직 변경 필요
-            // 이전 Fragment 로부터 id, name 받아옴
-            cardPackViewModel.setUserId(getArguments()?.getInt("id", 0))
-            cardPackViewModel.setUserName(getArguments()?.getString("name", null))
-            // 이렇게 안하고 그냥 viewModel의 생성자에 id, name을 넣어주면, 그 값으로 초기화되도록 ?
-            //  binding.cardPackViewModel = cardPackViewModel(userId, userName) 이렇게 ?
-        }
-        // null 이면 본인의 카드팩 접근이므로 id, name 다 초기값인 null로 있을 것것
+        // MainActivity 에서 카드팩 접근 시, bundle로 넘어오는 값이 없을 것이고, id는 기본값인 null로 되어있을 것임
+        // FriendCardPackActivity에서 접근 시, FriendCardPackActivity 에서 이미 intent로 받은 id와 name을
+        // viewModel에 이미 setting 해줬을 것
     }
 
     override fun initView() {
         initCardPackAdapter()
-        initMeOrFriendCardLayout()
         initCardPackTabLayout()
+        initMeOrFriendCardLayout()
     }
 
 
-    // 카드나, 카드너 프래그먼트 인스턴스를 생성해주고 tabLayout Adapter 객체 생성해서 거기에 fragment 들 연결하고 그 Adapter 를 ViewPager2의 Adapter 로 설정
-    private fun initCardPackAdapter() { // onResume()에 이거 넣어줘도 될듯 ? 애초에 onResume이 필요 ?
+    // 카드나, 카드너 프래그먼트 인스턴스를 생성, tabLayout Adapter 객체 생성 후 fragment 연결, Adapter 를 ViewPager2의 Adapter 로 설정
+    private fun initCardPackAdapter() {
         val fragmentList: List<Fragment>
         fragmentList = listOf(
             CardMeFragment(),
             CardYouFragment()
         ) // 그냥 이렇게 인자없이 생성만 해주고, 각 카드나, 카드너 프래그먼트에서는 뷰 모델의 id 값에따라 생성해주면 됨.
-//        initMeOrFriendCardLayout() // 이걸 따로 빼서 그냥 initView() 에다 넣으면 안되나
         cardPackTabLayoutAdapter = CardPackTabLayoutAdapter(this)
         cardPackTabLayoutAdapter.fragments.addAll(fragmentList)
         binding.vpCardpack.adapter = cardPackTabLayoutAdapter
     }
 
-    private fun initCardPackTabLayout() { // tabLayout 과 viewPager 연결하는 메서드
+    // tabLayout 과 viewPager 연결하는 메서드
+    private fun initCardPackTabLayout() {
         val tabLabel = listOf("카드나", "카드너")
 
         TabLayoutMediator(binding.tlCardpack, binding.vpCardpack) { tab, position ->
@@ -124,39 +106,16 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
         return tabBinding.root
     }
 
-
+    // 유저 본인의 카드팩 프래그먼트인지, 친구의 카드팩 프래그먼트인지에 따라 작업 해주기
+    // 리스너 달기, 텍스트뷰, 버튼 등 레이아웃 변화
     private fun initMeOrFriendCardLayout() {
-        // 유저 본인의 카드팩 프래그먼트인지, 친구의 카드팩 프래그먼트인지에 따라서
-        // 카드팩 프래그먼트 버튼 등 레이아웃 변화
         // 카드팩 총 개수 세팅
-        if (cardPackViewModel.id == null) { // 유저 본인의 카드팩 접근
-            lifecycleScope.launch {
+        cardPackViewModel.setTotalCardCnt()
 
-                // totalCardCnt ViewModel 의 프로퍼티로 두고, 이 메서드도 ViewModel 안에 정의하고, 레이아웃의 tvCardpackCnt 에
-                // 이 프로퍼티 결합하면 자동 업데이트 되지 않나 ?
-
-//                val totalCardCnt = ApiService.cardService.getCardMe().data.totalCardCnt
-//                withContext(Dispatchers.Main) {
-//                    binding.tvCardpackCnt.text = totalCardCnt.toString()
-//                }
-            }
-            setMakeCardIvListener()
-        } else { // 친구의 카드팩 접근
-            with(binding) {
-                // 친구의 카드팩이면 그냥 카드팩 텍스트뷰,
-                // "카드팩" 텍스트뷰, 카드 총 개수, 카드 작성 버튼이 담겨있는 ctl_cardpack_top  => invisible
-                // FriendCardPackActivity에서 xx님의 카드팩, 카드너작성버튼 추가 시키면 될듯
-                ctlCardpackTop.visibility = View.GONE // 이러면 자식뷰 다 GONE 되나 ?
+        if (cardPackViewModel.id == null) { // 유저 본인의 카드팩 접근 시, 카드추가버튼에 카드나 카드너 추가 바텀씻 올라오는 리스너 달기
+            binding.ivAddCard.setOnClickListener {
+                (activity as MainActivity).showBottomDialogCardFragment()
             }
         }
     }
-
-    // 오른쪽 상단 카드나, 카드너 추가 버튼에 리스너 다는 함수 => 이 함수는 xml 상에서 onClick으로 넣어줘도 될 듯 ?
-    // 이를 클릭하면 MainActivity의 함수를 실행시켜 줘야함
-    private fun setMakeCardIvListener() {
-        binding.ivAddCard.setOnClickListener {
-            (activity as MainActivity).showBottomDialogCardFragment()
-        }
-    }
-
 }
