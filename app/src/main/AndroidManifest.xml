@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Cardna"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="org.cardna.presentation.ui.editcard.EditCardActivity"
+            android:name="org.cardna.presentation.ui.editcard.view.EditCardActivity"
             android:exported="false" />
         <activity
             android:name="org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity"

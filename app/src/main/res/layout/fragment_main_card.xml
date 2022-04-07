@@ -49,19 +49,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/mypage_name" />
 
-        <TextView
-            android:id="@+id/tv_maincard_title"
-            style="@style/fragment_title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendard_bold"
-            android:text="@{mainCardViewModel.cardList.size()==0 ? @string/maincard_tv_empty_title : mainCardViewModel.cardList[mainCardViewModel.cardPosition].title}"
-            android:textColor="@color/white_1"
-            android:textSize="28sp"
-            app:layout_constraintStart_toStartOf="@id/tv_maincard_user_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_maincard_user_name"
-            tools:text="@string/maincard_tv_title" />
-
         <View
             android:id="@+id/view_maincard_under_line"
             android:layout_width="0dp"
@@ -74,6 +61,19 @@
             app:layout_constraintTop_toTopOf="@+id/tv_maincard_title"
             tools:background="@color/main_purple_60"
             tools:layout_width="360dp" />
+
+        <TextView
+            android:id="@+id/tv_maincard_title"
+            style="@style/fragment_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@{mainCardViewModel.cardList.size()==0 ? @string/maincard_tv_empty_title : mainCardViewModel.cardList[mainCardViewModel.cardPosition].title}"
+            android:textColor="@color/white_1"
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="@id/tv_maincard_user_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_maincard_user_name"
+            tools:text="@string/maincard_tv_title" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
