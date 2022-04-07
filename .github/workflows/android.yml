@@ -1,0 +1,15 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+    uses: ./.github/workflows/launch_gradle_commands.yml
+    secrets:
+      BASE_URL: ${{ secrets.BASE_URL }}
+    with:
+      commands: build
