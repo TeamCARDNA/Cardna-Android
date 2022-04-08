@@ -21,7 +21,7 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideAlarmService(@RetrofitModule.GsonConverter retrofit: Retrofit): AlarmService {
+    fun provideAlarmService(@RetrofitModule.MoshiConverter retrofit: Retrofit): AlarmService {
         return retrofit.create(AlarmService::class.java)
     }
 
@@ -39,19 +39,19 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideFriendService(@RetrofitModule.GsonConverter retrofit: Retrofit): FriendService {
+    fun provideFriendService(@RetrofitModule.MoshiConverter retrofit: Retrofit): FriendService {
         return retrofit.create(FriendService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideInsightService(@RetrofitModule.GsonConverter retrofit: Retrofit): InsightService {
+    fun provideInsightService(@RetrofitModule.MoshiConverter retrofit: Retrofit): InsightService {
         return retrofit.create(InsightService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideLikeService(@RetrofitModule.GsonConverter retrofit: Retrofit): LikeService {
+    fun provideLikeService(@RetrofitModule.MoshiConverter retrofit: Retrofit): LikeService {
         return retrofit.create(LikeService::class.java)
     }
 

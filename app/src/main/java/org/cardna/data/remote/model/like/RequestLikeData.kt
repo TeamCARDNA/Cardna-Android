@@ -1,7 +1,7 @@
 package org.cardna.data.remote.model.like
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class RequestLikeData(
-    @SerializedName("cardId")  val cardId: Int
+    @Json(name = "cardId") val cardId: Int
 )
