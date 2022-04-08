@@ -5,6 +5,7 @@ import org.cardna.data.remote.model.like.RequestLikeData
 import org.cardna.data.remote.model.like.ResponseLikeData
 import org.cardna.data.remote.model.user.RequestDeleteUserData
 import org.cardna.data.remote.model.user.ResponseDeleteUserData
+import org.cardna.presentation.di.RetrofitModule
 import retrofit2.http.*
 
 interface FriendService {

@@ -1,6 +1,7 @@
 package org.cardna.presentation.di
 
 import com.example.cardna.BuildConfig
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,7 +11,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.cardna.presentation.util.AuthInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 
@@ -33,10 +36,29 @@ object RetrofitModule {
         .addInterceptor(AuthInterceptor())
         .build()
 
+    @GsonConverter
     @Provides
     @Singleton
-    fun provideRetrofitObject(): Retrofit {
+    fun provideRetrofitObjectGson(): Retrofit {
         return Retrofit.Builder().baseUrl(BASE_URL).client(getOkHttpClient())
             .addConverterFactory(GsonConverterFactory.create()).build()
     }
+
+    @MoshiConverter
+    @Provides
+    @Singleton
+    fun provideRetrofitObjectMoshi(
+        moshi: com.squareup.moshi.Moshi
+    ): Retrofit {
+        return Retrofit.Builder().baseUrl(BASE_URL).client(getOkHttpClient())
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
+    }
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class GsonConverter
+
+    @Retention(AnnotationRetention.BINARY)
+    @Qualifier
+    annotation class MoshiConverter
 }
