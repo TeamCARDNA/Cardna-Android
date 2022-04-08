@@ -25,6 +25,6 @@ interface CardDataSource {
 
     suspend fun getMainCard(): ResponseMainCardData
 
-    suspend fun putEditCard(cardList: RequestEditCardData): ResponseEditCardData
+    suspend fun putEditCard(cardList: List<Int>): ResponseEditCardData
 
 }

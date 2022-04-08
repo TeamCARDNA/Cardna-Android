@@ -44,7 +44,7 @@ class CardRepositoryImpl @Inject constructor(private val cardDataSource: CardDat
         return cardDataSource.getMainCard()
     }
 
-    override suspend fun putEditCard(cardList: RequestEditCardData): ResponseEditCardData {
+    override suspend fun putEditCard(cardList: List<Int>): ResponseEditCardData {
         return cardDataSource.putEditCard(cardList)
     }
 }

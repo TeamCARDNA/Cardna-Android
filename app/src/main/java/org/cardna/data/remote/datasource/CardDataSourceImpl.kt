@@ -44,7 +44,7 @@ class CardDataSourceImpl @Inject constructor(
         return cardService.getMainCard()
     }
 
-    override suspend fun putEditCard(cardList: RequestEditCardData): ResponseEditCardData {
+    override suspend fun putEditCard(cardList: List<Int>): ResponseEditCardData {
         return cardService.putEditCard(cardList)
     }
 
