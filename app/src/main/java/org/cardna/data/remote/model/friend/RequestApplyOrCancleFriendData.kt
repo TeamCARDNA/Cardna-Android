@@ -1,7 +1,7 @@
 package org.cardna.data.remote.model.friend
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class RequestApplyOrCancleFriendData(
-    @SerializedName("friendId")  val friendId: Int
+    @Json(name = "friend") val friendId: Int
 )
