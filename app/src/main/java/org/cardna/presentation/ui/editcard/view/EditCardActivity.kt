@@ -1,18 +1,21 @@
 package org.cardna.presentation.ui.editcard.view
 
 import android.os.Bundle
-import android.text.Spannable
 import androidx.activity.viewModels
 import androidx.core.text.set
 import androidx.core.text.toSpannable
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityEditCardBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 import org.cardna.presentation.util.LinearGradientSpan
+import timber.log.Timber
 
 @AndroidEntryPoint
 class EditCardActivity :
@@ -52,7 +55,26 @@ class EditCardActivity :
     }
 
     private fun setClickListener() {
+        putEditCard()
+        startBottomSheetDialog(3)
+    }
 
+    private fun startBottomSheetDialog(userId: Int) {
+        val bottomSheetView = layoutInflater.inflate(R.layout.fragment_edit_card_dialog, null)
+        val bottomSheetDialog = BottomSheetDialog(this)
+        bottomSheetDialog.setContentView(bottomSheetView)
+        binding.fabRepresentcardedit.setOnClickListener {
+            bottomSheetDialog.show()
+        }
+    }
+
+    //이 부분이 문제야
+    private fun putEditCard() {
+        binding.tvTvRepresentcardeditFinish.setOnClickListener {
+            val cardsList = editCardAdapter.currentList
+            editCardViewModel.putEditCard(cardsList)
+//            finish()
+        }
     }
 
     private fun setTextGradient() {
@@ -64,6 +86,4 @@ class EditCardActivity :
             LinearGradientSpan(text, text, green, purple)
         binding.tvRepresentcardeditColorTitle.text = spannable
     }
-
-
 }

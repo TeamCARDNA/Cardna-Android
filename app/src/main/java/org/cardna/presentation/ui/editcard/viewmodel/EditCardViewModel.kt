@@ -20,6 +20,9 @@ class EditCardViewModel @Inject constructor(
     private val _mainCardList = MutableLiveData<List<ResponseMainCardData.Data.MainCard>>()
     val mainCardList: LiveData<List<ResponseMainCardData.Data.MainCard>> = _mainCardList
 
+    private val _newCardList = MutableLiveData<List<Int>>()
+    val newCardList: LiveData<List<Int>> = _newCardList
+
     fun getMainCard() {
         viewModelScope.launch {
             kotlin.runCatching {
@@ -32,15 +35,15 @@ class EditCardViewModel @Inject constructor(
         }
     }
 
-//    fun putEditCard(cardList: RequestEditCardData) {
-//        viewModelScope.launch {
-//            kotlin.runCatching {
-//                cardRepository.putEditCard(cardList)
-//            }.onSuccess {
-//                Timber.d("put_edit_card success")
-//            }.onFailure {
-//                Timber.e("put_edit_card_error")
-//            }
-//        }
-//    }
+    fun putEditCard(cards: RequestEditCardData) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                cardRepository.putEditCard(cards).data.mainCardList
+            }.onSuccess {
+                Timber.e("put_edit_card_success $cards")
+            }.onFailure {
+                Timber.e("put_edit_card_error")
+            }
+        }
+    }
 }

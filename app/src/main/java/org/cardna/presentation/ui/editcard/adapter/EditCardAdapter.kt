@@ -29,13 +29,16 @@ class EditCardAdapter :
                 }
 
                 ivRepresentcardeditlistDelete.setOnClickListener {
-                    val newList = currentList.toMutableList()
-                    newList.removeAt(adapterPosition)
-                    submitList(newList)
-                    notifyItemRemoved(adapterPosition)
+                    setNewList(adapterPosition)
                 }
             }
         }
+    }
+
+    private fun setNewList(adapterPosition: Int) {
+        val newList = currentList.toMutableList()
+        newList.removeAt(adapterPosition)
+        submitList(newList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -59,6 +59,6 @@ interface CardService {
 
     @PUT("card/main")
     suspend fun putEditCard(
-        @Body body: List<Int>
+        @Body body: RequestEditCardData
     ): ResponseEditCardData
 }
