@@ -113,7 +113,7 @@
         <entry key="app/src/main/res/drawable/bg_white_2_radius_6.xml" value="0.272" />
         <entry key="app/src/main/res/drawable/bg_white_4_10dp.xml" value="0.2335" />
         <entry key="app/src/main/res/drawable/bg_white_4_radius_8.xml" value="0.272" />
-        <entry key="app/src/main/res/layout/activity_detail_card.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/activity_detail_card.xml" value="0.6115906288532675" />
         <entry key="app/src/main/res/layout/activity_edit_card.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2671875" />
         <entry key="app/src/main/res/layout/activity_set_name_finished.xml" value="0.29615384615384616" />

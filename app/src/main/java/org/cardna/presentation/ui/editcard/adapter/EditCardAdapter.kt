@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardBinding
+import org.cardna.data.remote.model.card.MainCard
 import org.cardna.data.remote.model.card.ResponseMainCardData
 
 class EditCardAdapter :
-    ListAdapter<ResponseMainCardData.Data.MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()) {
+    ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()) {
     inner class ViewHolder(private val binding: ItemEditCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: ResponseMainCardData.Data.MainCard) {
+        fun onBind(data: MainCard) {
             with(binding) {
                 Glide
                     .with(itemView.context)
@@ -52,17 +53,17 @@ class EditCardAdapter :
         holder.onBind(data)
     }
 
-    class EditCardComparator : DiffUtil.ItemCallback<ResponseMainCardData.Data.MainCard>() {
+    class EditCardComparator : DiffUtil.ItemCallback<MainCard>() {
         override fun areItemsTheSame(
-            oldItem: ResponseMainCardData.Data.MainCard,
-            newItem: ResponseMainCardData.Data.MainCard
+            oldItem: MainCard,
+            newItem: MainCard
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: ResponseMainCardData.Data.MainCard,
-            newItem: ResponseMainCardData.Data.MainCard
+            oldItem: MainCard,
+            newItem: MainCard
         ): Boolean {
             return oldItem == newItem
         }

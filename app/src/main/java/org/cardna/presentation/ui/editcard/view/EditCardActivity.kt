@@ -7,15 +7,13 @@ import androidx.core.text.toSpannable
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityEditCardBinding
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 import org.cardna.presentation.util.LinearGradientSpan
-import timber.log.Timber
 
 @AndroidEntryPoint
 class EditCardActivity :
@@ -71,9 +69,9 @@ class EditCardActivity :
     //이 부분이 문제야
     private fun putEditCard() {
         binding.tvTvRepresentcardeditFinish.setOnClickListener {
-            val cardsList = editCardAdapter.currentList
+            val cardsList = RequestEditCardData(editCardAdapter.currentList.map { it.id })
             editCardViewModel.putEditCard(cardsList)
-//            finish()
+            finish()
         }
     }
 

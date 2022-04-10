@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.cardna.data.remote.model.card.MainCard
 import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.data.remote.model.card.ResponseMainCardData
 import org.cardna.domain.repository.CardRepository
@@ -17,8 +18,8 @@ class EditCardViewModel @Inject constructor(
     private val cardRepository: CardRepository
 ) : ViewModel() {
 
-    private val _mainCardList = MutableLiveData<List<ResponseMainCardData.Data.MainCard>>()
-    val mainCardList: LiveData<List<ResponseMainCardData.Data.MainCard>> = _mainCardList
+    private val _mainCardList = MutableLiveData<List<MainCard>>()
+    val mainCardList: LiveData<List<MainCard>> = _mainCardList
 
     private val _newCardList = MutableLiveData<List<Int>>()
     val newCardList: LiveData<List<Int>> = _newCardList
