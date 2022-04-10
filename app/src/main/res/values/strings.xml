@@ -98,7 +98,7 @@
     <string name="insight_data_null_one">아직 인사이트를 얻기에</string>
     <string name="insight_data_null_two">데이터가 부족해요!</string>
 
-<!--    CardPackFragment-->
+    <!--    CardPackFragment-->
     <string name="cardpack_make_new_cardme">나에 대한 카드를 새로\n작성해보세요</string>
     <string name="cardpack_make_new_cardyou">타인이 말하는 나를 카드로\n만들어보세요</string>
     <string name="cardpack_add_cardme">카드나 작성</string>
@@ -108,8 +108,7 @@
     <string name="cardpack_friend_make_cardyou">카드너 작성</string>
 
 
-
-<!--    LoginActivity-->
+    <!--    LoginActivity-->
     <string name="login_policy">가입 시,\nCARDNA의 다음 사항에 동의하는 것으로 간주합니다.</string>
     <string name="login_gwa">과</string>
     <string name="login_policy_term_of_use">이용약관</string>
@@ -170,7 +169,7 @@
     <string name="dialog_main_card_block_title">신고가 3번 접수되어 계정이 정지됐어요</string>
     <string name="dialog_main_card_block_about">자세한 사항은\nCARDNAteam@gmail.com로\n문의해주세요</string>
 
-<!--    Edit Card Activity-->
+    <!--    Edit Card Activity-->
     <string name="edit_card_title">대표카드 수정</string>
     <string name="edit_card_finish">완료</string>
     <string name="edit_card_represent_before">나를 가장 잘 표현하는 카드를</string>

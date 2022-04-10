@@ -53,12 +53,12 @@ interface CardService {
         @Path("userId")
         userId: Int?
     ): ResponseCardYouData
-    
+
     @GET("card/main")
     suspend fun getMainCard(): ResponseMainCardData
 
     @PUT("card/main")
     suspend fun putEditCard(
-        @Body body : RequestEditCardData
+        @Body body: RequestEditCardData
     ): ResponseEditCardData
 }
