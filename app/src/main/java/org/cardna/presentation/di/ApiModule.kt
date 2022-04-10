@@ -21,49 +21,49 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideAlarmService(retrofit: Retrofit): AlarmService {
+    fun provideAlarmService(@RetrofitModule.MoshiConverter retrofit: Retrofit): AlarmService {
         return retrofit.create(AlarmService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideAuthService(retrofit: Retrofit): AuthService {
+    fun provideAuthService(@RetrofitModule.GsonConverter retrofit: Retrofit): AuthService {
         return retrofit.create(AuthService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideCardService(retrofit: Retrofit): CardService {
+    fun provideCardService(@RetrofitModule.GsonConverter retrofit: Retrofit): CardService {
         return retrofit.create(CardService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideFriendService(retrofit: Retrofit): FriendService {
+    fun provideFriendService(@RetrofitModule.MoshiConverter retrofit: Retrofit): FriendService {
         return retrofit.create(FriendService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideInsightService(retrofit: Retrofit): InsightService {
+    fun provideInsightService(@RetrofitModule.MoshiConverter retrofit: Retrofit): InsightService {
         return retrofit.create(InsightService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideLikeService(retrofit: Retrofit): LikeService {
+    fun provideLikeService(@RetrofitModule.MoshiConverter retrofit: Retrofit): LikeService {
         return retrofit.create(LikeService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideMyPageService(retrofit: Retrofit): MyPageService {
+    fun provideMyPageService(@RetrofitModule.MoshiConverter retrofit: Retrofit): MyPageService {
         return retrofit.create(MyPageService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideUserService(retrofit: Retrofit): UserService {
+    fun provideUserService(@RetrofitModule.GsonConverter retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
     }
 }

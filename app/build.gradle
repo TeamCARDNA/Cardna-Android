@@ -5,6 +5,9 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdk 31
 
@@ -14,8 +17,10 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //base_url
+        buildConfigField "String", "BASE_URL", properties["base_url"]
     }
 
     buildTypes {
@@ -37,9 +42,6 @@ android {
 }
 
 dependencies {
-    //Timber
-    implementation "com.jakewharton.timber:timber:5.0.1"
-
     // Lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
@@ -72,11 +74,19 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
 
-    //Timber
+    // Timber
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
-    implementation "de.hdodenhof:circleimageview:$circleimageview_version" //Circle ImageView
+    // SavedState
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion"
+
+    // Circleimageview
+    implementation "de.hdodenhof:circleimageview:$circleimageviewVersion" //Circle ImageView
+
+    //Moshi
+    implementation "com.squareup.retrofit2:converter-moshi:$converterMoshiVersion"
+    implementation "com.squareup.moshi:moshi:$moshiVersion"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
