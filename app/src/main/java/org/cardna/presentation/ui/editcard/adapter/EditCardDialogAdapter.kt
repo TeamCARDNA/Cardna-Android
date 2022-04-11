@@ -1,7 +1,9 @@
 package org.cardna.presentation.ui.editcard.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -27,6 +29,9 @@ class EditCardDialogAdapter :
 
                 tvEditcarddialogTitle.text = data.title
                 clRvItem.setBackgroundResource(setBackground(data.isMe))
+                itemView.setOnClickListener {
+                    tvRepresentcardCount.isVisible = !tvRepresentcardCount.isVisible
+                }
             }
         }
     }
