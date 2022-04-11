@@ -175,5 +175,7 @@
     <string name="edit_card_represent_before">나를 가장 잘 표현하는 카드를</string>
     <string name="edit_card_represent_gradient">대표카드</string>
     <string name="edit_card_represent_after">로 지정해보세요!</string>
+    <string name="edit_card_seven">7</string>
+    <string name="edit_card_slash">/</string>
 
 </resources>

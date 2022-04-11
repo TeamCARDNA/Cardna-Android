@@ -39,16 +39,40 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_representcardedit_card_list_count"
-            style="@style/detail_card_text_hint"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_editcard_card_list_count"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_representcardedit_title"
-            tools:text="4/7" />
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tv_representcardedit_title">
+
+            <TextView
+                android:id="@+id/tv_editcard_count"
+                style="@style/detail_card_text_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{String.valueOf(editCardViewModel.mainCardList.size())}" />
+
+            <TextView
+                style="@style/detail_card_text_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/edit_card_slash"
+                tools:text="/" />
+
+            <TextView
+                style="@style/detail_card_text_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/edit_card_seven"
+                tools:text="@string/edit_card_seven" />
+
+        </LinearLayout>
+
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -56,7 +80,7 @@
             android:layout_marginTop="32dp"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_representcardedit_card_list_count">
+            app:layout_constraintTop_toBottomOf="@+id/ll_editcard_card_list_count">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

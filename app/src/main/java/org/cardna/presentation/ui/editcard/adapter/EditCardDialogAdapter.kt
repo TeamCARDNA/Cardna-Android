@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardDialogBinding
 import org.cardna.data.remote.model.card.CardData
+import org.cardna.presentation.util.ItemTouchHelperListener
 import timber.log.Timber
 
 class EditCardDialogAdapter :
@@ -60,4 +61,5 @@ class EditCardDialogAdapter :
             R.drawable.bg_main_purple_radius_8
         }
     }
+
 }

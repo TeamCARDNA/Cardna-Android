@@ -9,10 +9,11 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardBinding
 import org.cardna.data.remote.model.card.MainCard
-import org.cardna.data.remote.model.card.ResponseMainCardData
+import org.cardna.presentation.util.ItemTouchHelperListener
 
 class EditCardAdapter :
-    ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()) {
+    ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()),
+    ItemTouchHelperListener {
     inner class ViewHolder(private val binding: ItemEditCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(data: MainCard) {
@@ -53,6 +54,18 @@ class EditCardAdapter :
         holder.onBind(data)
     }
 
+    override fun onItemMove(from_position: Int, to_position: Int): Boolean {
+        val item = currentList[from_position]
+        currentList.removeAt(from_position)
+        currentList.add(to_position, item)
+        notifyItemMoved(from_position, to_position)
+        return true
+    }
+
+    override fun onItemSwipe(position: Int) {
+
+    }
+
     class EditCardComparator : DiffUtil.ItemCallback<MainCard>() {
         override fun areItemsTheSame(
             oldItem: MainCard,
@@ -68,4 +81,5 @@ class EditCardAdapter :
             return oldItem == newItem
         }
     }
+
 }
