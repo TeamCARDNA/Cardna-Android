@@ -147,7 +147,6 @@
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="24dp"
             android:backgroundTint="@color/white_1"
-            android:contentDescription="이게 먼데요"
             android:padding="20dp"
             android:src="@drawable/ic_tray_fill"
             app:borderWidth="0dp"
@@ -170,10 +169,9 @@
             android:layout_marginStart="20dp"
             android:fontFamily="@font/pretendard_semibold"
             android:includeFontPadding="false"
-            android:text="카드팩에서 대표카드를 선택해보세요!"
-            android:textSize="14sp"
-
+            android:text="@string/edit_card_float_button_message"
             android:textColor="@color/black"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_editcard_bubble"
             app:layout_constraintStart_toStartOf="@id/iv_editcard_bubble"
             app:layout_constraintTop_toTopOf="@id/iv_editcard_bubble" />

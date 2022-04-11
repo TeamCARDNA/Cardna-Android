@@ -177,5 +177,6 @@
     <string name="edit_card_represent_after">로 지정해보세요!</string>
     <string name="edit_card_seven">7</string>
     <string name="edit_card_slash">/</string>
+    <string name="edit_card_float_button_message">카드팩에서 대표카드를 선택해보세요!</string>
 
 </resources>
