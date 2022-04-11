@@ -1,6 +1,7 @@
 package org.cardna.presentation.ui.editcard.view
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.text.set
 import androidx.core.text.toSpannable
@@ -61,12 +62,12 @@ class EditCardActivity :
 
     private fun setClickListener() {
         putEditCard()
-        startBottomSheetDialog(3)
+        startBottomSheetDialog()
     }
 
-    private fun startBottomSheetDialog(userId: Int) {
+    private fun startBottomSheetDialog() {
         binding.fabRepresentcardedit.setOnClickListener {
-            val bottomSheetDialog = EditCardDialogFragment()
+            val bottomSheetDialog = EditCardDialogFragment(editCardAdapter.itemCount)
             bottomSheetDialog.show(supportFragmentManager, "init bottom_sheet")
         }
     }

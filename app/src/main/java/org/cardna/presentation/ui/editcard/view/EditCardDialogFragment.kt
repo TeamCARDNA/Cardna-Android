@@ -7,20 +7,19 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cardna.R
 import com.example.cardna.databinding.FragmentEditCardDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayout
-import okhttp3.internal.notify
 import org.cardna.presentation.ui.editcard.adapter.EditCardDialogAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
 import org.cardna.presentation.util.SpacesItemDecoration
-import timber.log.Timber
 import kotlin.math.roundToInt
 
-class EditCardDialogFragment : BottomSheetDialogFragment() {
+class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialogFragment() {
     private var _binding: FragmentEditCardDialogBinding? = null
     private val binding get() = _binding ?: error("View를 참조하기 위해 binding이 초기화되지 않았습니다.")
 
@@ -49,6 +48,7 @@ class EditCardDialogFragment : BottomSheetDialogFragment() {
         initData()
         initAdapter()
         initTabLayout()
+        mainCardCount()
     }
 
     private fun initTabLayout() {
@@ -88,12 +88,12 @@ class EditCardDialogFragment : BottomSheetDialogFragment() {
 
     private fun initData() {
         binding.editCardDialogViewModel = editCardDialogViewModel
+        binding.tvRepresentcardeditCardListCount.text = mainCardCount.toString()
         editCardDialogViewModel.getCardAll()
     }
 
     private fun initAdapter() {
         editCardDialogAdapter = EditCardDialogAdapter()
-
         editCardDialogViewModel.cardMeList.observe(viewLifecycleOwner) {
             it.map { it.isMe = true }
             editCardDialogAdapter.submitList(it)
@@ -103,6 +103,18 @@ class EditCardDialogFragment : BottomSheetDialogFragment() {
             this.adapter = editCardDialogAdapter
             layoutManager = GridLayoutManager(requireActivity(), 2)
             addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt()))
+        }
+    }
+
+    private fun mainCardCount() {
+        editCardDialogAdapter.apply {
+            registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                    super.onItemRangeRemoved(positionStart, itemCount)
+                    binding.tvRepresentcardeditCardListCount.text =
+                        editCardDialogAdapter.itemCount.toString()
+                }
+            })
         }
     }
 
