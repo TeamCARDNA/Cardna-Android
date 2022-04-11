@@ -20,5 +20,6 @@ data class CardData(
     val id: Int,
     val isLiked: Any,
     val mainOrder: Any,
-    val title: String
+    val title: String,
+    var isMe: Boolean,
 )

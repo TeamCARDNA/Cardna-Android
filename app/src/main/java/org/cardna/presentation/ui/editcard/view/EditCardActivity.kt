@@ -58,11 +58,15 @@ class EditCardActivity :
     }
 
     private fun startBottomSheetDialog(userId: Int) {
-        val bottomSheetView = layoutInflater.inflate(R.layout.fragment_edit_card_dialog, null)
+        /*val bottomSheetView = layoutInflater.inflate(R.layout.fragment_edit_card_dialog, null)
         val bottomSheetDialog = BottomSheetDialog(this)
         bottomSheetDialog.setContentView(bottomSheetView)
         binding.fabRepresentcardedit.setOnClickListener {
             bottomSheetDialog.show()
+        }*/
+        binding.fabRepresentcardedit.setOnClickListener {
+            val bottomSheetDialog = EditCardDialogFragment()
+            bottomSheetDialog.show(supportFragmentManager, "init bottom_sheet")
         }
     }
 

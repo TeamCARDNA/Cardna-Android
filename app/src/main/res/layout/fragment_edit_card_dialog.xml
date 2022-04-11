@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="editCardDialogViewModel"
+            type="org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel" />
     </data>
 
     <LinearLayout
@@ -96,7 +98,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/rv_representcardedit_cardme"
+                android:id="@+id/rv_editcarddialog_container"
                 android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@id/tv_representcardedit_card_list_count"
                 android:layout_marginTop="8dp"
@@ -104,18 +106,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="0dp"
                 app:layout_constraintVertical_bias="0.0" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:id="@+id/rv_representcardedit_cardyou"
-                app:layout_constraintTop_toBottomOf="@id/tv_representcardedit_card_list_count"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:visibility="gone"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="12dp" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
