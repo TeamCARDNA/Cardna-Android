@@ -15,6 +15,8 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 import org.cardna.presentation.util.LinearGradientSpan
+import org.cardna.presentation.util.SpacesItemDecoration2
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class EditCardActivity :

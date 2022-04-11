@@ -59,20 +59,15 @@ class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialog
                     0 -> {
                         editCardDialogViewModel.cardMeList.observe(viewLifecycleOwner) { it ->
                             it.map { it.isMe = true }
-                            editCardDialogAdapter.apply {
-                                submitList(it)
-                            }
+                            editCardDialogAdapter.apply { submitList(it) }
                         }
                     }
                     1 -> {
                         editCardDialogViewModel.cardYouList.observe(viewLifecycleOwner) { it ->
                             it.map { it.isMe = false }
-                            editCardDialogAdapter.apply {
-                                submitList(it)
-                            }
+                            editCardDialogAdapter.apply { submitList(it) }
                         }
                     }
-
                 }
             }
 
