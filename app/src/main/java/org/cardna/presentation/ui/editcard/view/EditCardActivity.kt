@@ -1,13 +1,14 @@
 package org.cardna.presentation.ui.editcard.view
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.text.set
 import androidx.core.text.toSpannable
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityEditCardBinding
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.presentation.base.BaseViewUtil
@@ -30,6 +31,7 @@ class EditCardActivity :
         initAdapter()
         setClickListener()
         setTextGradient()
+        mainCardCount()
     }
 
     private fun initData() {
@@ -44,29 +46,32 @@ class EditCardActivity :
 
     private fun initAdapter() {
         editCardAdapter = EditCardAdapter()
+        with(binding.rvRepresentcardeditContainer) {
+            layoutManager = GridLayoutManager(this@EditCardActivity, 2)
+            adapter = editCardAdapter
+
+//            val itemTouchHelperCallback = ItemTouchHelperCallback(editCardAdapter)
+//            val helper = ItemTouchHelper(itemTouchHelperCallback)
+//            helper.attachToRecyclerView(this)
+        }
 
         editCardViewModel.mainCardList.observe(this) {
             editCardAdapter.submitList(it)
         }
-        binding.rvRepresentcardeditContainer.layoutManager = GridLayoutManager(this, 2)
-        binding.rvRepresentcardeditContainer.adapter = editCardAdapter
     }
 
     private fun setClickListener() {
         putEditCard()
-        startBottomSheetDialog(3)
+        startBottomSheetDialog()
     }
 
-    private fun startBottomSheetDialog(userId: Int) {
-        val bottomSheetView = layoutInflater.inflate(R.layout.fragment_edit_card_dialog, null)
-        val bottomSheetDialog = BottomSheetDialog(this)
-        bottomSheetDialog.setContentView(bottomSheetView)
+    private fun startBottomSheetDialog() {
         binding.fabRepresentcardedit.setOnClickListener {
-            bottomSheetDialog.show()
+            val bottomSheetDialog = EditCardDialogFragment(editCardAdapter.itemCount)
+            bottomSheetDialog.show(supportFragmentManager, "init bottom_sheet")
         }
     }
 
-    //이 부분이 문제야
     private fun putEditCard() {
         binding.tvTvRepresentcardeditFinish.setOnClickListener {
             val cardsList = RequestEditCardData(editCardAdapter.currentList.map { it.id })
@@ -83,5 +88,16 @@ class EditCardActivity :
         spannable[0..text.length] =
             LinearGradientSpan(text, text, green, purple)
         binding.tvRepresentcardeditColorTitle.text = spannable
+    }
+
+    private fun mainCardCount() {
+        editCardAdapter.apply {
+            registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                    super.onItemRangeRemoved(positionStart, itemCount)
+                    binding.tvEditcardCount.text = editCardAdapter.itemCount.toString()
+                }
+            })
+        }
     }
 }

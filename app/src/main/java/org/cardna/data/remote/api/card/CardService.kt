@@ -61,4 +61,7 @@ interface CardService {
     suspend fun putEditCard(
         @Body body: RequestEditCardData
     ): ResponseEditCardData
+
+    @GET("card")
+    suspend fun getCardAll(): ResponseCardAllData
 }
