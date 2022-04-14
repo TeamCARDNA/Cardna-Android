@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CardPackViewModel @Inject constructor(
     private val cardRepository: CardRepository, // 이렇게 쓰는 거 맞나
-) : ViewModel() { // CardPack, CardYou, CardMeFragment 가 CardPackViewModel 공유
+) : ViewModel() { // FriendCardPackActivity 와 CardPack, CardYou, CardMeFragment 가 CardPackViewModel 공유
 
     // 어떤 id 의 사람의 카드팩 프래그먼트에 접근하는지
     private var _id: Int? = null

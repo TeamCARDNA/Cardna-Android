@@ -10,7 +10,6 @@ import com.example.cardna.R
 import com.example.cardna.databinding.FragmentCardYouBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.cardpack.adapter.CardPackMeRecyclerViewAdapter
 import org.cardna.presentation.ui.cardpack.adapter.CardPackYouRecyclerViewAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity

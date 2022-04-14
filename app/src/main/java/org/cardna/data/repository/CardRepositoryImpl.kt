@@ -1,5 +1,7 @@
 package org.cardna.data.repository
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.cardna.data.remote.datasource.CardDataSource
 import org.cardna.data.remote.model.card.*
 import org.cardna.data.remote.model.card.ResponseDeleteCardData
@@ -28,16 +30,23 @@ class CardRepositoryImpl @Inject constructor(private val cardDataSource: CardDat
         return cardDataSource.getCardMe()
     }
 
-    override suspend fun getOtherCardMe(cardId: Int): ResponseCardMeData {
-        return cardDataSource.getOtherCardMe(cardId)
+    override suspend fun getOtherCardMe(userId: Int): ResponseCardMeData {
+        return cardDataSource.getOtherCardMe(userId)
     }
 
     override suspend fun getCardYou(): ResponseCardYouData {
         return cardDataSource.getCardYou()
     }
 
-    override suspend fun getOtherCardYou(cardId: Int): ResponseCardYouData {
-        return cardDataSource.getOtherCardYou(cardId)
+    override suspend fun getOtherCardYou(userId: Int): ResponseCardYouData {
+        return cardDataSource.getOtherCardYou(userId)
+    }
+
+    override suspend fun postCreateCardMe(
+        body: HashMap<String, RequestBody>,
+        image: MultipartBody.Part?
+    ) : ResponseCreateCardData {
+        return cardDataSource.postCreateCardMe(body, image)
     }
 
     override suspend fun getMainCard(): ResponseMainCardData {

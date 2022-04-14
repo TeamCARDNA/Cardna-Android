@@ -3,11 +3,11 @@ package org.cardna.presentation.ui.cardpack.view
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityFriendCardPackBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
+
 
 class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriendCardPackBinding>(R.layout.activity_friend_card_pack) {
 
@@ -29,7 +29,7 @@ class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriend
         // 메인 Activity의 타인의 대표카드 Fragment에서 id, name을 intent로 넘겨주면
         // 이를 viewModel 안의 id와 name 프로퍼티에 넣어준다.
         cardPackViewModel.setUserId(intent.getIntExtra("id", 0))
-        cardPackViewModel.setUserName(intent.getStringExtra("name")!!)
+        cardPackViewModel.setUserName(intent.getStringExtra("name"))
 
         // 그 친구의 id와 name을 바탕으로 cardMeList, cardYouList 업데이트
         cardPackViewModel.updateCardMeList()

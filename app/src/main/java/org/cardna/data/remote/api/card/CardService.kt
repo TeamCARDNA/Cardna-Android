@@ -1,14 +1,13 @@
 package org.cardna.data.remote.api.card
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.cardna.data.remote.model.card.*
 import org.cardna.data.remote.model.card.ResponseDeleteCardData
 import org.cardna.data.remote.model.card.ResponseDetailCardData
 import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
 import org.cardna.data.remote.model.card.ResponseMainCardData
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface CardService {
 
@@ -50,13 +49,18 @@ interface CardService {
         userId: Int?
     ): ResponseCardYouData
 
-    // 카드너 전체 조회 => 유저 본인, 친구 둘다 이 API 하나로
-    @GET("card/you/{userId}")
-    suspend fun getCardYou(
-        @Path("userId")
-        userId: Int?
-    ): ResponseCardYouData
-    
+    // 카드나 작성, 카드너 작성 => 둘이 통합되면 CardMe 말고 Card로 통합
+    @Multipart
+    @POST("card")
+    suspend fun postCreateCardMe(
+        @PartMap body: HashMap<String, RequestBody>,
+        @Part image: MultipartBody.Part?
+    ): ResponseCreateCardData
+
+
+
+
+
     @GET("card/main")
     suspend fun getMainCard(): ResponseMainCardData
 }

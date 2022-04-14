@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="완료"
+            android:text="@string/cardcreate_complete"
             android:textAppearance="@style/cardpack_complete_textView"
             app:titleCentered="true"
             app:layout_constraintTop_toTopOf="@id/tv_cardcreate_card"
@@ -97,7 +97,7 @@
                             android:layout_marginBottom="88dp"
                             android:fontFamily="@font/pretendard_regular"
                             android:gravity="center"
-                            android:text="카드에 들어갈\n이미지를 넣어 보세요!"
+                            android:text="@string/cardcreate_bring_image"
                             android:textColor="@color/white_3"
                             android:textSize="16sp"
                             app:layout_constraintEnd_toEndOf="@+id/iv_cardcreate_img"
@@ -130,12 +130,8 @@
                     android:layout_marginTop="20dp"
                     android:includeFontPadding="false"
                     android:textAppearance="@style/cardpack_bottomsheet_title"
-
-                    android:text="@{cardCreateViewModel.isCardMeOrYou ?
-                    `@string/cardcreate_make_cardme_title` :
-                    `{@String/cardcreate_make_cardyou_title(cardCreateViewModel.name)}`}"
-
-                    tools:text="나는"
+                    android:text="@{cardCreateViewModel.isCardMeOrYou ? @string/cardcreate_make_cardme_title : @string/cardcreate_make_cardme_title}"
+                    tools:text="@string/cardcreate_make_cardme_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ctl_cardcreate_img"/>
 
@@ -158,9 +154,10 @@
                         android:layout_marginEnd="24dp"
                         android:layout_marginBottom="4dp"
                         android:background="@null"
+                        android:text="@={cardCreateViewModel._etKeywordText}"
                         android:fontFamily="@font/pretendard_regular"
                         android:lineSpacingExtra="-0.22sp"
-                        android:hint="키워드 중심으로 표현해보세요"
+                        android:hint="@string/cardcreate_keyword_hint"
                         android:includeFontPadding="false"
                         android:maxLength="14"
                         android:maxLines="1"
@@ -182,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginBottom="4dp"
-                    android:text="!"
+                    android:text="@string/cardcreate_bang"
                     android:textColor="@color/white_1"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="@id/cl_cardcreate_line"
@@ -193,25 +190,40 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="0/14"
+                    android:text="@{@string/cardcreate_tv_keyword_length(cardCreateViewModel.etKeywordLength)}"
                     android:textColor="@color/white_3"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@id/cl_cardcreate_line"
                     app:layout_constraintTop_toBottomOf="@id/cl_cardcreate_line"
                     tools:text="0/14" />
 
+
+                <TextView
+                    android:id="@+id/tv_cardcreate_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:includeFontPadding="false"
+                    android:textAppearance="@style/cardpack_bottomsheet_title"
+                    android:text="@string/cardcreate_tv_detail"
+                    app:layout_constraintStart_toStartOf="@+id/cl_cardcreate_line"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_cardcreate_cnt_keyword"
+                    />
+
+
                 <EditText
                     android:id="@+id/et_cardcreate_detail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="80dp"
                     android:lineSpacingExtra="-0.22sp"
                     android:background="@null"
                     android:fontFamily="@font/pretendard_regular"
+                    android:text="@={cardCreateViewModel._etDetailText}"
                     android:gravity="top"
-                    android:hint="더 자세하게 적어볼까요? \n설명, 자랑, 경험 등 어떤 내용도 좋아요 :)"
+                    android:hint="@string/cardcreate_detail_hint"
                     android:includeFontPadding="false"
                     android:maxLength="200"
                     android:minHeight="168dp"
@@ -221,19 +233,21 @@
                     android:textCursorDrawable="@drawable/bg_cursor_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/cl_cardcreate_line"
-                    app:layout_constraintTop_toBottomOf="@id/tv_cardcreate_cnt_keyword" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_cardcreate_detail" />
 
                 <TextView
                     android:id="@+id/tv_cardcreate_cnt_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:layout_marginBottom="32dp"
                     android:includeFontPadding="false"
-                    android:text="0/200"
+                    android:text="@{@string/cardcreate_tv_detail_length(cardCreateViewModel.etDetailLength)}"
                     android:textColor="@color/white_3"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@id/et_cardcreate_detail"
                     app:layout_constraintTop_toBottomOf="@+id/et_cardcreate_detail"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     tools:text="0/200" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

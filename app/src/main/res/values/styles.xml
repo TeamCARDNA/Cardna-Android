@@ -46,6 +46,13 @@
         <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
+    <!--  CardCreate complete textView -->
+    <style name="cardpack_complete_textView">
+        <item name="android:textColor">@color/white_4</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
+
     <!--  Detail Card Text Hint  -->
     <style name="detail_card_text_hint">
         <item name="android:textColor">@color/white_3</item>

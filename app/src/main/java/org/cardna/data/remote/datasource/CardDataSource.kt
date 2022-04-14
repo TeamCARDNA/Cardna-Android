@@ -1,5 +1,7 @@
 package org.cardna.data.remote.datasource
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.cardna.data.remote.model.card.*
 import org.cardna.data.remote.model.card.ResponseDeleteCardData
 import org.cardna.data.remote.model.card.ResponseDetailCardData
@@ -15,11 +17,13 @@ interface CardDataSource {
 
     suspend fun getCardMe() : ResponseCardMeData
 
-    suspend fun getOtherCardMe(cardId: Int) : ResponseCardMeData
+    suspend fun getOtherCardMe(userId: Int) : ResponseCardMeData
 
     suspend fun getCardYou() : ResponseCardYouData
 
-    suspend fun getOtherCardYou(cardId: Int) : ResponseCardYouData
+    suspend fun getOtherCardYou(userId: Int) : ResponseCardYouData
+
+    suspend fun postCreateCardMe(body: HashMap<String, RequestBody>, image: MultipartBody.Part?) : ResponseCreateCardData
 
     suspend fun getMainCard() : ResponseMainCardData
 }
