@@ -49,8 +49,7 @@ class CardCreateViewModel @Inject constructor(
     val imgIndex: Int?
         get() = _imgIndex
 
-    private var _ifChooseImg =
-        MutableLiveData<Boolean>(false)// 갤러리 이미지나 심볼을 선택했는지 확인해주는 Bool 변수 => 나중에 버튼 enable 할때 사용
+    private var _ifChooseImg = MutableLiveData<Boolean>(false)// 갤러리 이미지나 심볼을 선택했는지 확인해주는 Bool 변수 => 나중에 버튼 enable 할때 사용
     val ifChooseImg: LiveData<Boolean>
         get() = _ifChooseImg
 
@@ -156,15 +155,15 @@ class CardCreateViewModel @Inject constructor(
             if (uri == null) { // 심볼 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, null) }
-                        .onSuccess { Log.d("카드나 작성 성공", it.message) }
-                        .onFailure { Log.d("카드나 작성 실패", it.message!!) }
+                        .onSuccess { Log.d("카드너 작성 성공", it.message) }
+                        .onFailure { Log.d("카드너 작성 실패", it.message!!) }
                 }
             } else { // 이미지 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, makeUriToFile) }
-                        .onSuccess { Log.d("카드나 작성 성공", it.message) }
+                        .onSuccess { Log.d("카드너 작성 성공", it.message) }
                         .onFailure {
-                            Log.d("카드나 작성 실패", it.message!!)
+                            Log.d("카드너 작성 실패", it.message!!)
                             it.printStackTrace()
                         }
                 }

@@ -22,7 +22,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.cardpack.view.CardCreateCompleteActivity
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
 import org.cardna.presentation.util.initRootClickEvent
 import org.cardna.presentation.util.shortToast
@@ -286,14 +285,11 @@ class CardCreateActivity :
         }
 
     companion object {
-        const val SYMBOL_0 = 0
-        const val SYMBOL_1 = 1
-        const val SYMBOL_2 = 2
-        const val SYMBOL_3 = 3
-        const val SYMBOL_4 = 4
-        const val GALLERY = 5
-
-        const val CARD_ME = 6
-        const val CARD_YOU = 7
+        const val SYMBOL_0 = 1
+        const val SYMBOL_1 = 2
+        const val SYMBOL_2 = 3
+        const val SYMBOL_3 = 4
+        const val SYMBOL_4 = 5
+        const val GALLERY = 6
     }
 }

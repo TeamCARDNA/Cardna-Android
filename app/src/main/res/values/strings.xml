@@ -121,6 +121,13 @@
     <string name="cardcreate_detail_hint">이 카드의 본문을 적어주세요\n설명, 자랑, 경험 등 어떤 내용도 좋아요 :)</string>
     <string name="cardcreate_bang">!</string>
 
+    <!-- BottomDialogImageFragment -->
+    <string name="bottom_image_complete">완료</string>
+    <string name="bottom_image_gallery">사진</string>
+    <string name="bottom_image_symbol">심볼</string>
+    <string name="bottom_image_from_gallery">갤러리에서 가져오기</string>
+
+
     <!--    LoginActivity-->
     <string name="login_policy">가입 시,\nCARDNA의 다음 사항에 동의하는 것으로 간주합니다.</string>
     <string name="login_gwa">과</string>

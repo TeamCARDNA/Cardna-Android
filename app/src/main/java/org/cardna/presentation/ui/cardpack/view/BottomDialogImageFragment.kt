@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.FragmentBottomDialogImageBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
 
@@ -16,32 +17,24 @@ import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
 // 둘의 차이 ? 는 아직 잘 모르겠고
 // 둘 분기처리는 삼항 연산자 이용해서 xml 상에서 처리해주기
 
-class BottomDialogImageFragment(val itemClick: () -> Unit) : BottomSheetDialogFragment() {
-    private var _binding: FragmentBottomDialogImageBinding? = null
-    private val binding get() = _binding ?: error("Binding이 초기화되지 않았습니다")
-
+class BottomDialogImageFragment(val itemClick: () -> Unit)
+    : BaseViewUtil.BaseBottomDialogFragment<FragmentBottomDialogImageBinding>(R.layout.fragment_bottom_dialog_image) {
     private val cardCreateViewModel: CardCreateViewModel by activityViewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentBottomDialogImageBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
         setListener() // for symbol
         accessGallery() // for gallery
     }
 
+    override fun initView() {
+        binding.cardCreateViewModel = cardCreateViewModel
+    }
+
+
     // 이미지 선택하는 dialog 에서 갤러리 접근 버튼 눌렀을 때를 위해 리스너 달기
+    // 버튼을 눌렀을 때, CardCreateActivity 의 checkPermission 메서드 실행
     private fun accessGallery() { // 갤러리에 접근하고 dialog 는 사라짐 => dialog 에서 완료 버튼 누를 일이 없음.
         binding.btnCardcreateGallery.setOnClickListener {
             (activity as CardCreateActivity).checkPermission()
@@ -188,8 +181,9 @@ class BottomDialogImageFragment(val itemClick: () -> Unit) : BottomSheetDialogFr
         const val SYMBOL_2 = 3
         const val SYMBOL_3 = 4
         const val SYMBOL_4 = 5
-        const val GALLERY = 5
+        const val GALLERY = 6
     }
+
 
 
 }
