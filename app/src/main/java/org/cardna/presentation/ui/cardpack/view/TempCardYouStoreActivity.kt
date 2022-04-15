@@ -22,7 +22,7 @@ class TempCardYouStoreActivity : BaseViewUtil.BaseAppCompatActivity<ActivityTemp
     private val cardPackViewModel: CardPackViewModel by viewModels()
 
     private val cardYouStoreAdapter: CardYouStoreRecyclerViewAdapter by lifeCycled {
-        CardYouStoreRecyclerViewAdapter { gotoCardYouActivity(it) }
+        CardYouStoreRecyclerViewAdapter { gotoDetailCardActivity(it) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +57,7 @@ class TempCardYouStoreActivity : BaseViewUtil.BaseAppCompatActivity<ActivityTemp
         }
     }
 
-    private fun gotoCardYouActivity(data: ResponseCardYouStoreData.Data) {
+    private fun gotoDetailCardActivity(data: ResponseCardYouStoreData.Data) {
         val intent = Intent(this, DetailCardActivity::class.java).let {
             it.putExtra(BaseViewUtil.CARD_ID, data.id)
         }
