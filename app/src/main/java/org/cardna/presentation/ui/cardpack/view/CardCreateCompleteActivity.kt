@@ -86,9 +86,9 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
             handler.postDelayed({
                     // 카드너추가 액티비티에서 왔다면 OtherWriteActivity 로 돌아가야 한다. 근데 이때 OtherWriteActivity 로 전달해줄 정보는 없고
                     // OtherWriteActivity 에서 서버 통신 다시 하도록 => onResume 메서드 작성해주기
-//                    var intent = Intent(this, OtherWriteActivity::class.java)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                    startActivity(intent)
+                    var intent = Intent(this, CardYouStoreActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
                     // 카드너보관함 액티비티인 OtherWriteActivity로 갈 때, CardCreateActivity pop하고 가기
                     // 현재 A -> B -> C인데, C -> A로 가도록 intent 써서
                 }, LOTTIE_VIEW_TIME
