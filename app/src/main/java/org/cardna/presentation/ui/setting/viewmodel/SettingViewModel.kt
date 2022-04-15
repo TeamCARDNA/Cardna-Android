@@ -1,11 +1,14 @@
 package org.cardna.presentation.ui.setting.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.data.remote.model.user.RequestDeleteUserData
 import org.cardna.domain.repository.UserRepository
 import org.cardna.presentation.ui.setting.view.SecessionActivity
 import timber.log.Timber
@@ -39,6 +42,9 @@ class SettingViewModel @Inject constructor(
 
     private val _isSecessionReasonValid = MutableLiveData(false)
     val isSecessionReasonValid: LiveData<Boolean> = _isSecessionReasonValid
+
+    private val _isDeleteUserSuccess = MutableLiveData<Boolean>()
+    val isDeleteUserSuccess: LiveData<Boolean> = _isDeleteUserSuccess
 
     private val _secessionReasonList = MutableLiveData(mutableListOf<Int>())
     val secessionReasonList: LiveData<MutableList<Int>> = _secessionReasonList
@@ -117,12 +123,14 @@ class SettingViewModel @Inject constructor(
 
         viewModelScope.launch {
             runCatching {
-                //TODO 소셜로그인 연동시 처리
-                // userRepository.deleteUser( RequestDeleteUserData(_secessionReasonList.value!!, _etcContent?.value ?: ""))
+                userRepository.deleteUser(RequestDeleteUserData(_secessionReasonList.value!!, _etcContent.value ?: ""))
             }.onSuccess {
-
+                //    if (CardNaRepository.userSocial == "kakao") CardNaRepository.kakaoUserfirstName = ""  //회원탈퇴시 이름 없게해서 다시 로그인하게
+                //    else CardNaRepository.naverUserfirstName = ""
+                _isDeleteUserSuccess.value = true
             }.onFailure {
-                Timber.e(it.toString())
+                _isDeleteUserSuccess.value = false
+                Timber.e(it.message)
             }
         }
     }
