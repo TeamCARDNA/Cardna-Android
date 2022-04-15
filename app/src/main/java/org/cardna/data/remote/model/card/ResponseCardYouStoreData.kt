@@ -4,7 +4,7 @@ data class ResponseCardYouStoreData(
     val message: String,
     val status: Int,
     val success: Boolean,
-    val data: Data,
+    val data: MutableList<Data>,
 ) {
     data class Data(
         val id: Int,

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_otherwrite_item"
+            android:id="@+id/ctl_cardyoustore_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tv_otherwrite_title"
+                android:id="@+id/tv_cardyoustore_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -35,18 +35,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_otherwrite_gallery"
+                android:id="@+id/iv_cardyoustore_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/ic_gallery"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_otherwrite_title"
+                app:layout_constraintTop_toTopOf="@id/tv_cardyoustore_title"
                 tools:layout_editor_absoluteX="379dp" />
 
 
             <TextView
-                android:id="@+id/tv_otherwrite_name"
+                android:id="@+id/tv_cardyoustore_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -55,8 +55,8 @@
                 android:textColor="@color/white_2"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_otherwrite_title"
-                app:layout_constraintTop_toBottomOf="@+id/tv_otherwrite_title" />
+                app:layout_constraintStart_toStartOf="@+id/tv_cardyoustore_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cardyoustore_title" />
 
 
             <TextView
@@ -67,9 +67,9 @@
                 android:text="@string/cardyoustore_card_createdAt"
                 android:textColor="@color/white_2"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_otherwrite_name"
-                app:layout_constraintEnd_toEndOf="@+id/iv_otherwrite_gallery"
-                app:layout_constraintTop_toTopOf="@+id/tv_otherwrite_name" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_cardyoustore_name"
+                app:layout_constraintEnd_toEndOf="@+id/iv_cardyoustore_image"
+                app:layout_constraintTop_toTopOf="@+id/tv_cardyoustore_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

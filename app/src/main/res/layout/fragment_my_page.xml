@@ -21,7 +21,7 @@
         android:id="@+id/sc_mypage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/real_black"
+        android:background="@color/main_black"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -110,7 +110,7 @@
                 android:id="@+id/ctl_mypage_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/real_black"
+                android:background="@color/main_black"
                 android:paddingTop="36dp"
                 android:paddingBottom="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/ctl_mypage_top">

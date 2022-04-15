@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.card.ResponseCardMeData
 import org.cardna.data.remote.model.card.ResponseCardYouData
+import org.cardna.data.remote.model.card.ResponseCardYouStoreData
 import org.cardna.domain.repository.CardRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -50,6 +51,9 @@ class CardPackViewModel @Inject constructor(
     private val _isCardYouEmpty = MutableLiveData<Boolean>()
     val isCardYouEmpty: LiveData<Boolean> = _isCardYouEmpty
 
+    private val _cardYouStoreList = MutableLiveData<MutableList<ResponseCardYouStoreData.Data>>()
+    val cardYouStoreList: LiveData<MutableList<ResponseCardYouStoreData.Data>>
+        get() = _cardYouStoreList
 
     fun setUserId(id: Int?) {
         _id = id
@@ -90,7 +94,7 @@ class CardPackViewModel @Inject constructor(
                     cardRepository.getOtherCardMe(_id!!).data
                 }.onSuccess {
                     it.apply {
-                        _cardMeList.value= it.cardMeList
+                        _cardMeList.value = it.cardMeList
                         _isCardMeEmpty.value = it.totalCardCnt == 0
                     }
                 }.onFailure {
@@ -121,7 +125,7 @@ class CardPackViewModel @Inject constructor(
                     cardRepository.getOtherCardYou(_id!!).data
                 }.onSuccess {
                     it.apply {
-                        _cardYouList.value= it.cardYouList
+                        _cardYouList.value = it.cardYouList
                         _isCardYouEmpty.value = it.totalCardCnt == 0
                     }
                 }.onFailure {
@@ -131,4 +135,15 @@ class CardPackViewModel @Inject constructor(
         }
     }
 
+    fun getCardYouStore() {
+        viewModelScope.launch {
+            runCatching {
+                cardRepository.getCardYouStore().data
+            }.onSuccess {
+                _cardYouStoreList.value = it
+            }.onFailure {
+                Timber.e(it.toString())
+            }
+        }
+    }
 }
