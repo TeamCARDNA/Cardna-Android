@@ -2,10 +2,6 @@ package org.cardna.data.remote.datasource
 
 import org.cardna.data.remote.api.card.CardService
 import org.cardna.data.remote.model.card.*
-import org.cardna.data.remote.model.card.ResponseDeleteCardData
-import org.cardna.data.remote.model.card.ResponseDetailCardData
-import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
-import org.cardna.data.remote.model.card.ResponseMainCardData
 import javax.inject.Inject
 
 class CardDataSourceImpl @Inject constructor(
@@ -48,4 +44,7 @@ class CardDataSourceImpl @Inject constructor(
         return cardService.putEditCard(cardList)
     }
 
+    override suspend fun getCardYouStore(): ResponseCardYouStoreData {
+        return cardService.getCardYouStore()
+    }
 }

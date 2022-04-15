@@ -21,7 +21,7 @@
 
             <TextView
                 android:id="@+id/tv_version_info_title"
-                style="@style/mypage_title_style"
+                style="@style/mt_title_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
