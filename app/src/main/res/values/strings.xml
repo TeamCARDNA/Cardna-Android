@@ -121,6 +121,10 @@
     <string name="cardcreate_detail_hint">이 카드의 본문을 적어주세요\n설명, 자랑, 경험 등 어떤 내용도 좋아요 :)</string>
     <string name="cardcreate_bang">!</string>
 
+    <!-- CardCreateCompleteActivity -->
+    <string name="cardcreate_complete_cardme">카드나를 만들었어요!</string>
+    <string name="cardcreate_complete_cardyou">카드너를 만들었어요!</string>
+
     <!-- BottomDialogImageFragment -->
     <string name="bottom_image_complete">완료</string>
     <string name="bottom_image_gallery">사진</string>

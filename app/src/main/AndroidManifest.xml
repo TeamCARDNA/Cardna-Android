@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Cardna"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="org.cardna.presentation.ui.cardpack.view.OtherCardCreateCompleteActivity"
+            android:exported="false" />
+        <activity
             android:name="org.cardna.presentation.ui.cardpack.view.CardCreateCompleteActivity"
             android:exported="false" />
         <activity

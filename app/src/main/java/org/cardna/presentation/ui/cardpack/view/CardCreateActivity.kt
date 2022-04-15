@@ -52,7 +52,7 @@ class CardCreateActivity :
         cardCreateViewModel.setIsCardMeOrYou(
             intent.getBooleanExtra(
                 "isCardMeOrYou",
-                true
+                CARD_ME
             )
         ) // 안넘겨주면 cardMe
         cardCreateViewModel.setUserId(intent.getIntExtra("id", -1)) // 내 카드나일 경우 null로 setting 되도록
@@ -194,6 +194,13 @@ class CardCreateActivity :
             // 2. cardCreateCompleteActivity로 인텐트로 이동
 
 
+
+
+
+            // 밑의 코드 분기처리 해줘야 함.
+            // 1. 내 카드나 작성, 내 카드너 추가 => 밑에 처럼 CardCreateComplete로
+            // 2. 친구 카드너 작성 => 새로 만들 다른 Activity로 보내줘야 함
+
             // 이 데이터들을 뷰 모델에 넣어서 뷰모델에 공유하고 싶지만, 액티비티끼리는 공유x => 인텐트로 그냥 해야될듯
             val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
             intent.putExtra(
@@ -285,6 +292,9 @@ class CardCreateActivity :
         }
 
     companion object {
+        const val CARD_ME = true
+        const val CARD_YOU = false
+
         const val SYMBOL_0 = 1
         const val SYMBOL_1 = 2
         const val SYMBOL_2 = 3
