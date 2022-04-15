@@ -29,8 +29,13 @@ class EditCardDialogAdapter :
 
                 tvEditcarddialogTitle.text = data.title
                 clRvItem.setBackgroundResource(setBackground(data.isMe))
+
                 itemView.setOnClickListener {
-                    tvRepresentcardCount.isVisible = !tvRepresentcardCount.isVisible
+                    tvRepresentcardCount.apply {
+                        visibility =
+                            if (visibility == View.GONE) View.VISIBLE
+                            else View.GONE
+                    }
                 }
             }
         }

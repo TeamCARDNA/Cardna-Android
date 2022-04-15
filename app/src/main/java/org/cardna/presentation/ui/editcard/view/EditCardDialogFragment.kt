@@ -14,9 +14,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import org.cardna.presentation.ui.editcard.adapter.EditCardDialogAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
 import org.cardna.presentation.util.SpacesItemDecoration
+import timber.log.Timber
 import kotlin.math.roundToInt
 
 class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialogFragment() {
@@ -45,10 +47,18 @@ class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialog
         (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
         binding.clBottomSheet.layoutParams.height =
             (resources.displayMetrics.heightPixels * 0.94).roundToInt()
+
         initData()
         initAdapter()
         initTabLayout()
         mainCardCount()
+        setClickListener()
+    }
+
+    private fun setClickListener() {
+        binding.tvRepresentcardeditFinish.setOnClickListener {
+            requireActivity().finish()
+        }
     }
 
     private fun initTabLayout() {
@@ -57,12 +67,14 @@ class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialog
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
                     0 -> {
+                        Timber.d("position : ${binding.tlRepresentcardedit.selectedTabPosition}")
                         editCardDialogViewModel.cardMeList.observe(viewLifecycleOwner) { it ->
                             it.map { it.isMe = true }
                             editCardDialogAdapter.apply { submitList(it) }
                         }
                     }
                     1 -> {
+                        Timber.d("position : ${binding.tlRepresentcardedit.selectedTabPosition}")
                         editCardDialogViewModel.cardYouList.observe(viewLifecycleOwner) { it ->
                             it.map { it.isMe = false }
                             editCardDialogAdapter.apply { submitList(it) }
@@ -89,16 +101,12 @@ class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialog
 
     private fun initAdapter() {
         editCardDialogAdapter = EditCardDialogAdapter()
-        editCardDialogViewModel.cardMeList.observe(viewLifecycleOwner) {
-            it.map { it.isMe = true }
-            editCardDialogAdapter.submitList(it)
-        }
-
         with(binding.rvEditcarddialogContainer) {
             this.adapter = editCardDialogAdapter
             layoutManager = GridLayoutManager(requireActivity(), 2)
             addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt()))
         }
+
     }
 
     private fun mainCardCount() {
