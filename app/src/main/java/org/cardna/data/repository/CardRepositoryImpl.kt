@@ -2,10 +2,6 @@ package org.cardna.data.repository
 
 import org.cardna.data.remote.datasource.CardDataSource
 import org.cardna.data.remote.model.card.*
-import org.cardna.data.remote.model.card.ResponseDeleteCardData
-import org.cardna.data.remote.model.card.ResponseDetailCardData
-import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
-import org.cardna.data.remote.model.card.ResponseMainCardData
 import org.cardna.domain.repository.CardRepository
 import javax.inject.Inject
 
@@ -46,5 +42,9 @@ class CardRepositoryImpl @Inject constructor(private val cardDataSource: CardDat
 
     override suspend fun putEditCard(cardList: RequestEditCardData): ResponseEditCardData {
         return cardDataSource.putEditCard(cardList)
+    }
+
+    override suspend fun getCardYouStore(): ResponseCardYouStoreData {
+        return cardDataSource.getCardYouStore()
     }
 }
