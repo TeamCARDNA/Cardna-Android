@@ -8,8 +8,10 @@ import android.widget.Button
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
+import org.cardna.presentation.ui.login.LoginActivity
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.showCustomDialog
 
@@ -59,14 +61,23 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
         val confirmBtn = dialog.findViewById<Button>(R.id.tv_lougout_dialog_confirm)
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_logout_dialog_cancel)
 
-        //TODO 로그아웃 확인 누르면 서버 통신
         confirmBtn.setOnClickListener {
+            //     if (CardNaRepository.userSocial == "kakao") CardNaRepository.kakaoUserlogOut = true
+            //     else if (CardNaRepository.userSocial == "naver") CardNaRepository.naverUserlogOut = true
             dialog.dismiss()
+            moveToLoginActivity()
         }
 
         cancelBtn.setOnClickListener {
             dialog.dismiss()
         }
+    }
+
+    private fun moveToLoginActivity() {
+        startActivity(Intent(this, LoginActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
     }
 }
 
