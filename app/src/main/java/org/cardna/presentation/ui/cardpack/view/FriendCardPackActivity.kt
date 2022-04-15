@@ -51,7 +51,8 @@ class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriend
         val intent = Intent(this, CardCreateActivity::class.java).apply {
             putExtra("id", id)
             putExtra("name", name)
-            putExtra("isCardMe", false) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할 듯
+            putExtra("isCardMeOrYou", false) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할
+            putExtra("isCardPackOrMainCard" ,true) // 친구 카드팩에서부터 시작됐다는 것을 알려줌
         }
         startActivity(intent)
     }

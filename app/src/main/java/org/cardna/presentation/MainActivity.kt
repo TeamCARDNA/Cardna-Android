@@ -47,7 +47,7 @@ class MainActivity :
                 R.id.menu_bottom_cardpack -> {
                     supportFragmentManager.popBackStack()
                     StatusBarUtil.setStatusBar(this, Color.BLACK)
-                    replace(R.id.fcv_main,CardPackFragment())
+                    replace(R.id.fcv_main, CardPackFragment())
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_bottom_insight -> {
@@ -84,13 +84,15 @@ class MainActivity :
                     val intent = Intent(this, CardCreateActivity::class.java).apply {
 //                        putExtra("id", id)
 //                        putExtra("name", name)
-                        putExtra("isCardMe", true) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할 듯
+                        putExtra("isCardMeOrYou", true) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할 듯
                     }
                     startActivity(intent)
                 }
                 CARD_YOU -> {
                     // 내 카드너 보관함으로 이동
-//                    val intent = Intent(this, CardCreateActivity::class.java)
+//                    val intent = Intent(this, OtherWriteActivity::class.java).apply {
+//                        putExtra("isCardMeOrYou", false) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할 듯
+//                    }
 //                    startActivity(intent)
                 }
             }

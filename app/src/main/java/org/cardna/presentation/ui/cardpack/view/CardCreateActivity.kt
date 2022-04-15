@@ -31,7 +31,7 @@ import java.io.File
 import java.io.InputStream
 
 // 1. 내 카드팩에서 카드나 작성
-// 2. 친구 카드팩에서 카드너 작성
+// 2. 친구 대표카드 or 친구 카드팩에서 카드너 작성
 
 @AndroidEntryPoint
 class CardCreateActivity :
@@ -47,14 +47,17 @@ class CardCreateActivity :
         initView()
     }
 
-    private fun initViewModel() {  // viewModel 초기화, Intent로 전달받은 data들 viewModel 프로퍼티에 대입
+    private fun initViewModel() {  // viewModel 초기화, Intent 로 전달받은 data 들 viewModel 프로퍼티에 대입
         binding.cardCreateViewModel = cardCreateViewModel
         cardCreateViewModel.setIsCardMeOrYou(
+            // 1. MainActivity 의 내 카드팩 프래그먼트에서 넘어왔다면 => CARD_ME로 넘겨줬을 것임
+            // 2-1. MainActivity 의 친구 mainCardFragment 에서 넘어왔다면 아무것도 안넘겨줬을 것 => default 값 CARD_YOU 로 처리
+            // 2-2. FriendCardPackActivity 에서 넘어왔다면 => CARD_YOU 로 넘겨줬을 것
             intent.getBooleanExtra(
                 "isCardMeOrYou",
-                CARD_ME
+                CARD_YOU
             )
-        ) // 안넘겨주면 cardMe
+        )
         cardCreateViewModel.setUserId(intent.getIntExtra("id", -1)) // 내 카드나일 경우 null로 setting 되도록
         cardCreateViewModel.setUserName(intent.getStringExtra("name")) // 안넘겨주면 null ?
     }
@@ -62,7 +65,7 @@ class CardCreateActivity :
     override fun initView() {
         setObserver()
         setView() // editText 글자 수에 따라 글자 수 업데이트, 버튼 선택가능하도록
-        setChooseCardListener() // 이미지 ctl 눌렀을 때 bottomdialog 띄우도록
+        setChooseCardListener() // 이미지 ctl 눌렀을 때 bottomDialog 띄우도록
         makeCardListener()
     }
 
@@ -191,26 +194,27 @@ class CardCreateActivity :
             // 1. 서버로 title, content, symbolId, uri 전송
             // symbolId - 카드 이미지 심볼 id, 이미지가 있는 경우 null을 보내주면 됨
             cardCreateViewModel.makeCard(makeUriToFile())
-            // 2. cardCreateCompleteActivity로 인텐트로 이동
 
+            // 2. cardCreateCompleteActivity 로 이동
+            if(cardCreateViewModel.isCardMeOrYou!!){ // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
+                val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
+                intent.putExtra(
+                    "isCardMeOrYou",
+                    cardCreateViewModel.isCardMeOrYou
+                ) // 현재는 카드나 작성이므로 CARD_ME를 보내줌
+                intent.putExtra("symbolId", cardCreateViewModel.symbolId) // 심볼 - symbolId값, 갤러리 - null
+                intent.putExtra("cardImg", cardCreateViewModel.uri.toString()) // 심볼 - null, 갤러리 - uri 값
+                intent.putExtra("cardTitle", cardCreateViewModel.etKeywordText.value)
+                startActivity(intent)
+            }
+            else{ // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
+                val intent = Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
+                intent.putExtra("isCardPackOrMainCard" ,
+                    intent.getBooleanExtra("isCardPackOrMainCard", false))
+                // 현재는 카드너 작성이므로 무슨 액티비티 통해서 왔는지만 전달해주면 됨
+                startActivity(intent)
+            }
 
-
-
-
-            // 밑의 코드 분기처리 해줘야 함.
-            // 1. 내 카드나 작성, 내 카드너 추가 => 밑에 처럼 CardCreateComplete로
-            // 2. 친구 카드너 작성 => 새로 만들 다른 Activity로 보내줘야 함
-
-            // 이 데이터들을 뷰 모델에 넣어서 뷰모델에 공유하고 싶지만, 액티비티끼리는 공유x => 인텐트로 그냥 해야될듯
-            val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
-            intent.putExtra(
-                "isCardMeOrYou",
-                cardCreateViewModel.isCardMeOrYou
-            ) // 현재는 카드나 작성이므로 CARD_ME를 보내줌
-            intent.putExtra("symbolId", cardCreateViewModel.symbolId) // 심볼 - symbolId값, 갤러리 - null
-            intent.putExtra("cardImg", cardCreateViewModel.uri.toString()) // 심볼 - null, 갤러리 - uri 값
-            intent.putExtra("cardTitle", cardCreateViewModel.etKeywordText.value)
-            startActivity(intent)
         }
     }
 

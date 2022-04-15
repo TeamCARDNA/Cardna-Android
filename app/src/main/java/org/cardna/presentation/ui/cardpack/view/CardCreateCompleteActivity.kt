@@ -72,23 +72,24 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
         // 로티 띄워주고 인텐트 이용해서 이전 액티비티로 가기
         // onActivityResult? 비스무리한 그 메서드 쓰면 더 좋게 구현할 수 있지 않을까
         val handler = Handler(Looper.getMainLooper())
-        if (isCardMeOrYou == CARD_ME) { // 카드나일 경우,
+        if (isCardMeOrYou == CARD_ME) { // 카드나일 경우, MainActivity 로 돌아가줘야 함
             handler.postDelayed({
-                // 카드나 작성에서 왔다면 MainActivity로 돌아가도록 intent를 연결시켜줘야 하고,
+                // 카드나 작성에서 왔다면 MainActivity 로 돌아가도록 intent 를 연결시켜줘야 하고,
                 var intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
-                // MainActivity로 갈 때, CardCreateActivity pop하고 가기
+                // MainActivity 로 갈 때, CardCreateActivity pop 하고 가기
                 // 현재 A -> B -> C인데, C -> A로 가도록 intent 써서
-            }, LOTTIE_VIEW_TIME) // 이는 CardCreateActivity가 얼마나 띄워주고 다시 main으로 갈 건지에 대한 시간, 로티가 뜨는 시간은 아님
-        } else if(isCardMeOrYou == CARD_YOU) {
+            }, LOTTIE_VIEW_TIME) // 이는 CardCreateActivity 가 얼마나 띄워주고 다시 main 으로 갈 건지에 대한 시간, 로티가 뜨는 시간은 아님
+        }
+        else if(isCardMeOrYou == CARD_YOU) { // 카드너일 경우, 카드너보관함으로 돌아가줘아 함.
             handler.postDelayed({
                     // 카드너추가 액티비티에서 왔다면 OtherWriteActivity 로 돌아가야 한다. 근데 이때 OtherWriteActivity 로 전달해줄 정보는 없고
-                    // OtherWriteActivity 에서 서버 통신 다시 하도록 => onRee
-                    var intent = Intent(this, OtherWriteActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)
-                    // MainActivity로 갈 때, CardCreateActivity pop하고 가기
+                    // OtherWriteActivity 에서 서버 통신 다시 하도록 => onResume 메서드 작성해주기
+//                    var intent = Intent(this, OtherWriteActivity::class.java)
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                    startActivity(intent)
+                    // 카드너보관함 액티비티인 OtherWriteActivity로 갈 때, CardCreateActivity pop하고 가기
                     // 현재 A -> B -> C인데, C -> A로 가도록 intent 써서
                 }, LOTTIE_VIEW_TIME
             )
