@@ -49,10 +49,19 @@ class MainCardFragment :
     //뿌려질 데이터
     private fun initData() {
         binding.mainCardViewModel = mainCardViewModel
-        mainCardViewModel.getMainCardList()
+        val userId = checkUserId()
+        mainCardViewModel.getMainCardList(userId)
         mainCardViewModel.getMyPageUser()
         setInitPagePosition()
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
+    }
+
+    private fun checkUserId(): Int {
+        var id = -1
+        if (arguments != null) {
+            id = arguments?.getInt("id", 0) ?: -1
+        }
+        return id
     }
 
     //adapter 관련 모음

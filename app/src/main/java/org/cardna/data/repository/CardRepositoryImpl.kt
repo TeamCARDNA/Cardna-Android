@@ -40,6 +40,10 @@ class CardRepositoryImpl @Inject constructor(private val cardDataSource: CardDat
         return cardDataSource.getMainCard()
     }
 
+    override suspend fun getOtherMainCard(userId: Int): ResponseMainCardData {
+        return cardDataSource.getOtherMainCard(userId)
+    }
+
     override suspend fun getCardAll(): ResponseCardAllData {
         return cardDataSource.getCardAll()
     }
