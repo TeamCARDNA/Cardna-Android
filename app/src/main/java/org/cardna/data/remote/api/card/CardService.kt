@@ -57,7 +57,7 @@ interface CardService {
     @GET("card/main")
     suspend fun getMainCard(): ResponseMainCardData
 
-    @GET("card/main{userId}")
+    @GET("card/main/{userId}")
     suspend fun getOtherMainCard(
         @Path("userId")
         userId: Int

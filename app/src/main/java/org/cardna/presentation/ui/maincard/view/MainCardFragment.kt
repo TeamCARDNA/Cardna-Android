@@ -50,6 +50,7 @@ class MainCardFragment :
     private fun initData() {
         binding.mainCardViewModel = mainCardViewModel
         val userId = checkUserId()
+        Timber.d("init data userId : $userId")
         mainCardViewModel.getMainCardList(userId)
         mainCardViewModel.getMyPageUser()
         setInitPagePosition()
