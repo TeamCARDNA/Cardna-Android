@@ -25,7 +25,10 @@ interface CardDataSource {
 
     suspend fun getMainCard(): ResponseMainCardData
 
+    suspend fun getOtherMainCard(userId: Int): ResponseMainCardData
+
     suspend fun putEditCard(cards: RequestEditCardData): ResponseEditCardData
 
     suspend fun getCardAll(): ResponseCardAllData
+
 }

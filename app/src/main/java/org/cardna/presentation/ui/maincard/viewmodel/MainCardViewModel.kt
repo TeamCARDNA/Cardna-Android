@@ -38,16 +38,21 @@ class MainCardViewModel @Inject constructor(
     private val _cardPosition = MutableLiveData(0)
     val cardPosition: LiveData<Int> = _cardPosition
 
-    fun getMainCardList() {
+    fun getMainCardList(id: Int? = -1) {
         viewModelScope.launch {
             runCatching {
-                cardRepository.getMainCard().data
+                if (id == -1)
+                    cardRepository.getMainCard().data
+                else
+                    id?.let { cardRepository.getOtherMainCard(it).data }
             }.onSuccess {
-                _isMyCard.value = it.isMyCard
-                _cardList.value = it.mainCardList
-                _isBlocked.value = it.isBlocked
-                it.mainCardList.map {
-                    _cardId.value = it.id
+                if (it != null) {
+                    _isMyCard.value = it.isMyCard
+                    _cardList.value = it.mainCardList
+                    _isBlocked.value = it.isBlocked
+                    it.mainCardList.map {
+                        _cardId.value = it.id
+                    }
                 }
             }.onFailure {
                 Timber.e("ViewModel connect fail")
