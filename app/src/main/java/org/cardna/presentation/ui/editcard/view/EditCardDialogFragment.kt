@@ -53,13 +53,13 @@ class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialog
         initData()
         initAdapter()
         initTabLayout()
-//        mainCardCount()
-//        setClickListener()
+        mainCardCount()
+        setClickListener()
     }
 
     private fun setClickListener() {
         binding.tvRepresentcardeditFinish.setOnClickListener {
-            requireActivity().finish()
+            dismiss()
         }
     }
 
@@ -72,41 +72,13 @@ class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialog
             tab.text = tabLabel[position]
         }.attach()
 
-//        binding.tlRepresentcardedit.addOnTabSelectedListener(object :
-//            TabLayout.OnTabSelectedListener {
-//            override fun onTabSelected(tab: TabLayout.Tab?) {
-//                when (tab?.position) {
-//                    0 -> {
-//                        Timber.d("position : ${binding.tlRepresentcardedit.selectedTabPosition}")
-//                        editCardDialogViewModel.cardMeList.observe(viewLifecycleOwner) { it ->
-//                            it.map { it.isMe = true }
-//                            editCardDialogAdapter.apply { submitList(it) }
-//                        }
-//                    }
-//                    1 -> {
-//                        Timber.d("position : ${binding.tlRepresentcardedit.selectedTabPosition}")
-//                        editCardDialogViewModel.cardYouList.observe(viewLifecycleOwner) { it ->
-//                            it.map { it.isMe = false }
-//                            editCardDialogAdapter.apply { submitList(it) }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            override fun onTabUnselected(tab: TabLayout.Tab?) {
-//
-//            }
-//
-//            override fun onTabReselected(tab: TabLayout.Tab?) {
-//
-//            }
-//        })
     }
 
     private fun initData() {
         binding.editCardDialogViewModel = editCardDialogViewModel
         binding.tvRepresentcardeditCardListCount.text = mainCardCount.toString()
         editCardDialogViewModel.getCardAll()
+        editCardDialogViewModel.representCardCheck()
     }
 
     private fun initAdapter() {
@@ -114,23 +86,12 @@ class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialog
         editCardTabAdapter = EditCardTabAdapter(this)
         editCardTabAdapter.fragments.addAll(fragmentList)
         binding.rvEditcarddialogContainer.adapter = editCardTabAdapter
-//        editCardDialogAdapter = EditCardDialogAdapter()
-//        with(binding.rvEditcarddialogContainer) {
-//            this.adapter = editCardDialogAdapter
-////            layoutManager = GridLayoutManager(requireActivity(), 2)
-//            addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt()))
-//        }
+
     }
 
     private fun mainCardCount() {
-        editCardDialogAdapter.apply {
-            registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-                    super.onItemRangeRemoved(positionStart, itemCount)
-                    binding.tvRepresentcardeditCardListCount.text =
-                        editCardDialogAdapter.itemCount.toString()
-                }
-            })
+        editCardDialogViewModel.selectedCardList.observe(viewLifecycleOwner) {
+            binding.tvRepresentcardeditCardListCount.text = it.size.toString()
         }
     }
 

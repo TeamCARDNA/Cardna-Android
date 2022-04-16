@@ -12,11 +12,13 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardDialogBinding
 import org.cardna.data.remote.model.card.CardData
+import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
 import org.cardna.presentation.util.ItemTouchHelperListener
 import timber.log.Timber
 
 class EditCardDialogAdapter :
     ListAdapter<CardData, EditCardDialogAdapter.ViewHolder>(EditCardDialogComparator()) {
+    private val selectedItem = mutableListOf<Int>()
 
     inner class ViewHolder(private val binding: ItemEditCardDialogBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -31,10 +33,16 @@ class EditCardDialogAdapter :
                 clRvItem.setBackgroundResource(setBackground(data.isMe))
 
                 itemView.setOnClickListener {
-                    tvRepresentcardCount.apply {
+                    binding.tvRepresentcardCount.apply {
                         visibility =
-                            if (visibility == View.GONE) View.VISIBLE
-                            else View.GONE
+                            if (visibility == View.GONE) {
+                                selectedItem.add(data.id)
+                                text = selectedItem.size.toString()
+                                View.VISIBLE
+                            } else {
+                                selectedItem.removeAt(selectedItem.indexOf(data.id))
+                                View.GONE
+                            }
                     }
                 }
             }
