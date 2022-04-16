@@ -34,22 +34,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabBackground="@drawable/bg_tablayout"
-                app:tabIndicatorColor="@color/white_2"
+                app:tabIndicatorHeight="0dp"
                 app:tabSelectedTextColor="@color/white_1"
-                app:tabTextColor="@color/white_2">
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tli_cardme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="카드나" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tli_cardyou"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="카드너" />
-            </com.google.android.material.tabs.TabLayout>
+                app:tabTextColor="@color/white_2" />
 
             <TextView
                 android:id="@+id/tv_representcardedit_finish"
@@ -69,7 +56,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
-
                 android:textColor="@color/white_3"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@id/tl_representcardedit"
@@ -98,7 +84,7 @@
                 app:layout_constraintStart_toEndOf="@id/tv_representcardedit_card_list_count_dot"
                 app:layout_constraintTop_toTopOf="@id/tv_representcardedit_card_list_count_dot" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/rv_editcarddialog_container"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

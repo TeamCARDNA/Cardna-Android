@@ -21,6 +21,9 @@ class EditCardDialogViewModel @Inject constructor(
     private val _cardYouList = MutableLiveData<List<CardData>>()
     val cardYouList: LiveData<List<CardData>> = _cardYouList
 
+    private val _selectedCardList = MutableLiveData<List<Int>>()
+    val selectedCardList: LiveData<List<Int>> = _selectedCardList
+
     fun getCardAll() {
         viewModelScope.launch {
             kotlin.runCatching {
@@ -31,6 +34,19 @@ class EditCardDialogViewModel @Inject constructor(
                 Timber.d("get cardAll success")
             }.onFailure {
                 Timber.e("get cardAll error")
+            }
+        }
+    }
+
+    fun representCardCheck() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                cardRepository.getMainCard().data
+            }.onSuccess {
+                _selectedCardList.value = it.mainCardList.map { it.id }
+                Timber.d("selected list : ${_selectedCardList.value}")
+            }.onFailure {
+                Timber.e("get main card error")
             }
         }
     }
