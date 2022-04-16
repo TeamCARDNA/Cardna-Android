@@ -60,13 +60,16 @@ class MainCardViewModel @Inject constructor(
         }
     }
 
-    fun getMyPageUser() {
+    fun getMyPageUser(otherUserName: String = "none") {
         viewModelScope.launch {
             kotlin.runCatching {
                 myPageRepository.getMyPageUser().data
             }.onSuccess {
                 //갑자기 strings 추가가 안되는데?
-                _name.value = "${it.name}님은"
+                if (otherUserName == "none")
+                    _name.value = it.name
+                else
+                    _name.value = otherUserName
             }.onFailure {
                 Timber.e("viewModel connect fail")
             }

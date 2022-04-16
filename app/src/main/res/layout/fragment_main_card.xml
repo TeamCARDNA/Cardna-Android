@@ -44,7 +44,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/pretendard_extralight"
-            android:text="@{mainCardViewModel.name}"
+            android:text="@{mainCardViewModel.name+@string/maincard_tv_username_tag}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/mypage_name" />
@@ -91,6 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:orientation="horizontal"
+            android:visibility="@{mainCardViewModel.isMyCard ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/view_maincard_under_line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/view_maincard_under_line">
@@ -134,10 +135,11 @@
             app:layout_constraintTop_toBottomOf="@id/ll_maincard_edit_layout">
 
             <TextView
+                android:id="@+id/tv_maincard_empty_card_about"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/maincard_tv_empty_card_about"
+                android:text="@{mainCardViewModel.name+@string/maincard_tv_empty_card_about}"
                 android:textColor="@color/white_3"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"

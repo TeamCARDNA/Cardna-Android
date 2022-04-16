@@ -49,20 +49,21 @@ class MainCardFragment :
     //뿌려질 데이터
     private fun initData() {
         binding.mainCardViewModel = mainCardViewModel
-        val userId = checkUserId()
-        Timber.d("init data userId : $userId")
-        mainCardViewModel.getMainCardList(userId)
-        mainCardViewModel.getMyPageUser()
+        checkUserId()
         setInitPagePosition()
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
     }
 
-    private fun checkUserId(): Int {
+    private fun checkUserId() {
         var id = -1
         if (arguments != null) {
+            val name = arguments?.getString("name")
             id = arguments?.getInt("id", 0) ?: -1
+            mainCardViewModel.getMyPageUser(name!!)
+        } else {
+            mainCardViewModel.getMyPageUser()
         }
-        return id
+        mainCardViewModel.getMainCardList(id)
     }
 
     //adapter 관련 모음
