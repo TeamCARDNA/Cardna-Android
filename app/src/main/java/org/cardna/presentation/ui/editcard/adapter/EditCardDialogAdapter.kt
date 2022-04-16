@@ -3,8 +3,6 @@ package org.cardna.presentation.ui.editcard.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,9 +10,6 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardDialogBinding
 import org.cardna.data.remote.model.card.CardData
-import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
-import org.cardna.presentation.util.ItemTouchHelperListener
-import timber.log.Timber
 
 class EditCardDialogAdapter :
     ListAdapter<CardData, EditCardDialogAdapter.ViewHolder>(EditCardDialogComparator()) {
