@@ -141,6 +141,7 @@
     <string name="maincard_tv_edit">edit</string>
     <string name="maincard_tv_empty_title">아직 대표카드가 없어요!</string>
     <string name="maincard_tv_empty_card_about">님을 잘 표현하는\n대표카드를 넣어볼까요?</string>
+    <string name="maincard_tv_cardpack_text">카드팩 보기 -></string>
 
     <!--    My Page  -->
     <string name="mypage_name">김다빈</string>

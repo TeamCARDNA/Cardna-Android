@@ -44,6 +44,8 @@ class MainCardFragment :
     override fun onResume() {
         super.onResume()
         initData()
+
+        Timber.d("relation : ${mainCardViewModel.relation.value}")
     }
 
     //뿌려질 데이터
@@ -58,7 +60,7 @@ class MainCardFragment :
         var id = -1
         if (arguments != null) {
             val name = arguments?.getString("name")
-            id = arguments?.getInt("id", 0) ?: -1
+            id = arguments?.getInt("id", -1) ?: -1
             mainCardViewModel.getMyPageUser(name!!)
         } else {
             mainCardViewModel.getMyPageUser()

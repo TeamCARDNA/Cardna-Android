@@ -38,6 +38,9 @@ class MainCardViewModel @Inject constructor(
     private val _cardPosition = MutableLiveData(0)
     val cardPosition: LiveData<Int> = _cardPosition
 
+    private val _relation = MutableLiveData<Any>()
+    val relation: LiveData<Any> = _relation
+
     fun getMainCardList(id: Int? = -1) {
         viewModelScope.launch {
             runCatching {
@@ -50,6 +53,7 @@ class MainCardViewModel @Inject constructor(
                     _isMyCard.value = it.isMyCard
                     _cardList.value = it.mainCardList
                     _isBlocked.value = it.isBlocked
+                    _relation.value = "${it.relation}"
                     it.mainCardList.map {
                         _cardId.value = it.id
                     }
