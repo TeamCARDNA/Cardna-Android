@@ -7,12 +7,15 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.text.Spannable
 import android.view.*
 import android.widget.*
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.text.set
+import androidx.core.text.toSpannable
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -115,4 +118,13 @@ fun Context.showCustomPopUp(view: ImageButton, arrayInt: Int, baseContext: Conte
         setBackgroundDrawable(ContextCompat.getDrawable(baseContext, R.drawable.img_popup))
     }
     return popup
+}
+
+fun Context.setGradientText(inputText: String): Spannable {
+    val green = getColor(R.color.main_green)
+    val purple = getColor(R.color.main_purple)
+    val spannable = inputText.toSpannable()
+    spannable[0..inputText.length] =
+        LinearGradientSpan(inputText, inputText, green, purple)
+    return spannable
 }

@@ -3,9 +3,12 @@ package org.cardna.presentation.ui.maincard.view
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.LinearGradient
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -21,6 +24,7 @@ import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.editcard.view.EditCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
+import org.cardna.presentation.util.setGradientText
 import timber.log.Timber
 import kotlin.math.roundToInt
 
@@ -29,6 +33,7 @@ class MainCardFragment :
     BaseViewUtil.BaseFragment<FragmentMainCardBinding>(R.layout.fragment_main_card) {
     private lateinit var mainCardAdapter: MainCardAdapter
     private val mainCardViewModel: MainCardViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -39,19 +44,18 @@ class MainCardFragment :
         initAdapter()
         setClickListener()
         userBlockCheck()
+        checkUserId()
     }
 
     override fun onResume() {
         super.onResume()
         initData()
-
-        Timber.d("relation : ${mainCardViewModel.relation.value}")
+        checkUserId()
     }
 
     //뿌려질 데이터
     private fun initData() {
         binding.mainCardViewModel = mainCardViewModel
-        checkUserId()
         setInitPagePosition()
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
     }
@@ -62,10 +66,29 @@ class MainCardFragment :
             val name = arguments?.getString("name")
             id = arguments?.getInt("id", -1) ?: -1
             mainCardViewModel.getMyPageUser(name!!)
+            setFriendIcon()
         } else {
             mainCardViewModel.getMyPageUser()
         }
         mainCardViewModel.getMainCardList(id)
+    }
+
+    private fun setFriendIcon() {
+        mainCardViewModel.relation.observe(viewLifecycleOwner) {
+            with(binding.ivMaincardFriend) {
+                when (it.toString()) {
+                    "1.0" -> setBackgroundResource(R.drawable.ic_mypage_friend_unchecked)
+                    "2.0" -> {
+                        setBackgroundResource(R.drawable.ic_mypage_friend_checked)
+                        binding.tvMaincardGotoCardpack.apply {
+                            this.text = requireActivity().setGradientText(this.text.toString())
+                        }
+                    }
+                    "3.0" -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
+                    else -> setBackgroundResource(R.drawable.ic_alarm)
+                }
+            }
+        }
     }
 
     //adapter 관련 모음

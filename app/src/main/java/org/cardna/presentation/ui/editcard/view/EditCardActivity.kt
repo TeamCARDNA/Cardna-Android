@@ -16,6 +16,7 @@ import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 import org.cardna.presentation.util.LinearGradientSpan
 import org.cardna.presentation.util.SpacesItemDecoration2
+import org.cardna.presentation.util.setGradientText
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
@@ -84,12 +85,7 @@ class EditCardActivity :
 
     private fun setTextGradient() {
         val text = binding.tvRepresentcardeditColorTitle.text.toString()
-        val green = getColor(R.color.main_green)
-        val purple = getColor(R.color.main_purple)
-        val spannable = text.toSpannable()
-        spannable[0..text.length] =
-            LinearGradientSpan(text, text, green, purple)
-        binding.tvRepresentcardeditColorTitle.text = spannable
+        binding.tvRepresentcardeditColorTitle.text = setGradientText(text)
     }
 
     private fun mainCardCount() {
