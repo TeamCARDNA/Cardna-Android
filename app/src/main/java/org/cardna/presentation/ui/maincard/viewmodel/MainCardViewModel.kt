@@ -8,7 +8,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.card.MainCard
 import org.cardna.data.remote.model.card.ResponseMainCardData
+import org.cardna.data.remote.model.friend.RequestApplyOrCancleFriendData
+import org.cardna.data.remote.model.friend.ResponseApplyOrCancleFriendData
 import org.cardna.domain.repository.CardRepository
+import org.cardna.domain.repository.FriendRepository
 import org.cardna.domain.repository.MyPageRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -17,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainCardViewModel @Inject constructor(
     private val cardRepository: CardRepository,
-    private val myPageRepository: MyPageRepository
+    private val myPageRepository: MyPageRepository,
+    private val friendRepository: FriendRepository,
 ) : ViewModel() {
 
     private val _isMyCard = MutableLiveData<Boolean>()
@@ -40,6 +44,10 @@ class MainCardViewModel @Inject constructor(
 
     private val _relation = MutableLiveData<Any>()
     val relation: LiveData<Any> = _relation
+
+    fun setRelation(friendRelation: String) {
+        _relation.value = friendRelation
+    }
 
     fun getMainCardList(id: Int? = -1) {
         viewModelScope.launch {
@@ -76,6 +84,19 @@ class MainCardViewModel @Inject constructor(
                     _name.value = otherUserName
             }.onFailure {
                 Timber.e("viewModel connect fail")
+            }
+        }
+    }
+
+    fun postFriendRequest(friendId: Int) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                friendRepository.postApplyOrCancleFriend(RequestApplyOrCancleFriendData(friendId))
+            }.onSuccess {
+                Timber.d("friendId : $friendId")
+                Timber.d("message : ${it.message}")
+            }.onFailure {
+                Timber.e("message : ${it.message}")
             }
         }
     }

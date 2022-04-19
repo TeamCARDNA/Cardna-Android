@@ -181,4 +181,11 @@
     <string name="edit_card_slash">/</string>
     <string name="edit_card_float_button_message">카드팩에서 대표카드를 선택해보세요!</string>
 
+<!--    Dialog_relation-->
+    <string name="dialog_relation_confirm">확인</string>
+    <string name="dialog_relation_cancel">취소</string>
+    <string name="dialog_relation_progressing_cancel">친구요청을 취소하시겠어요?</string>
+    <string name="dialog_relation_disconnect_title">친구를 끊으시겠어요?</string>
+    <string name="dialog_relation_disconnect_about">상대방에게도 친구가 취소되요</string>
+
 </resources>
