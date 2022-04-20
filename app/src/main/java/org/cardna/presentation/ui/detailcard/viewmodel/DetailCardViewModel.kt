@@ -33,6 +33,18 @@ class DetailCardViewModel @Inject constructor(
     private val _type = MutableLiveData<String>()
     val type: LiveData<String> = _type
 
+    private val _title = MutableLiveData<String>()
+    val title: LiveData<String> = _title
+
+    private val _name = MutableLiveData<String>()
+    val name: LiveData<String> = _name
+
+    private val _createAt = MutableLiveData<String>()
+    val createAt: LiveData<String> = _createAt
+
+    private val _content = MutableLiveData<String>()
+    val content: LiveData<String> = _content
+
     private val _isLiked = MutableLiveData<Boolean>()
     val isLiked: LiveData<Boolean> = _isLiked
 
@@ -69,6 +81,10 @@ class DetailCardViewModel @Inject constructor(
                 it.apply {
                     _detailCard.value = it
                     _type.value = type
+                    _title.value = title
+                    _name.value = name ?: ""
+                    _createAt.value = createdAt
+                    _content.value = content
                     _writerId.value = writerId
                     _initLikeCount.value = likeCount
                     currentLikeCount = likeCount ?: 0
