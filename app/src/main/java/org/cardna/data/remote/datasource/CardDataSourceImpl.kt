@@ -26,6 +26,10 @@ class CardDataSourceImpl @Inject constructor(
         return cardService.putKeepOrAddCard(cardId)
     }
 
+    override  suspend fun getCardAll(): ResponseCardAllData{
+        return cardService.getCardAll()
+    }
+
     override suspend fun getCardMe(): ResponseCardMeData {
         return cardService.getCardMe()
     }

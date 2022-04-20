@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CardPackViewModel @Inject constructor(
     private val cardRepository: CardRepository, // 이렇게 쓰는 거 맞나
-) : ViewModel() { // FriendCardPackActivity 와 CardPack, CardYou, CardMeFragment 가 CardPackViewModel 공유
+) : ViewModel() { // FriendCardPackActivity 와 CardPack, CardYou, CardMeFragment 가 CardPackViewModel 사용
 
     // 어떤 id 의 사람의 카드팩 프래그먼트에 접근하는지
     private var _id: Int? = null
@@ -42,7 +42,7 @@ class CardPackViewModel @Inject constructor(
     val isCardMeEmpty: LiveData<Boolean> = _isCardMeEmpty
 
 
-    // 카드나 List => CardMeFragement 에서 사용
+    // 카드나 List => CardMeFragment 에서 사용
     private val _cardYouList = MutableLiveData<MutableList<ResponseCardYouData.CardList.CardYou>>()
     val cardYouList: LiveData<MutableList<ResponseCardYouData.CardList.CardYou>>
         get() = _cardYouList
@@ -53,7 +53,7 @@ class CardPackViewModel @Inject constructor(
 
     fun setUserId(id: Int?) {
         _id = id
-    } // 타인의 프래그먼트 생성시, 그 프래그먼트 코드 단에서 getArguments로 받아온 newId를 setUserId(newId) 이런형식으로 설정 ?
+    } // 타인의 프래그먼트 생성시, 그 프래그먼트 코드 단에서 getArguments 로 받아온 newId를 setUserId(newId) 이런형식으로 설정 ?
 
     fun setUserName(name: String?) {
         _name = name
@@ -61,12 +61,13 @@ class CardPackViewModel @Inject constructor(
 
     fun setTotalCardCnt() { // 본인 카드팩 접근시에만 필요
         viewModelScope.launch {
-            // 수정 필요
-//            try {
-//                _totalCardCnt = ApiService.cardService.getCardAll().data.totalCardCnt
-//            } catch (e: Exception) {
-//                Log.d("2LogIn test Log",e.toString())
-//            }
+            runCatching{
+                cardRepository.getCardAll().data
+            }.onSuccess {
+                _totalCardCnt.value = it.totalCardCnt
+            }.onFailure {
+                Timber.e(it.toString())
+            }
         }
     }
 

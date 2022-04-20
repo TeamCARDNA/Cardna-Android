@@ -111,13 +111,15 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
     // 유저 본인의 카드팩 프래그먼트인지, 친구의 카드팩 프래그먼트인지에 따라 작업 해주기
     // 리스너 달기, 텍스트뷰, 버튼 등 레이아웃 변화
     private fun initMeOrFriendCardLayout() {
-        // 카드팩 총 개수 세팅
-        cardPackViewModel.setTotalCardCnt()
+        if (cardPackViewModel.id == null) {  // 유저 본인의 카드팩 접근 시
+            cardPackViewModel.setTotalCardCnt() // 카드팩 총 개수 세팅
 
-        if (cardPackViewModel.id == null) { // 유저 본인의 카드팩 접근 시, 카드추가버튼에 카드나 카드너 추가 바텀씻 올라오는 리스너 달기
+            // 카드추가버튼에 카드나 카드너 추가 바텀씻 올라오는 리스너 달기
             binding.ivAddCard.setOnClickListener {
                 (activity as MainActivity).showBottomDialogCardFragment()
             }
+
+            // 나머지 분기처리는 xml 상에서 삼항연산자 이용
         }
     }
 }

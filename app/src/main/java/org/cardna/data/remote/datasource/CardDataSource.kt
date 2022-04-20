@@ -15,6 +15,9 @@ interface CardDataSource {
 
     suspend fun putKeepOrAddCard(cardId: Int): ResponseKeepOrAddCardData
 
+
+    suspend fun getCardAll(): ResponseCardAllData
+
     suspend fun getCardMe() : ResponseCardMeData
 
     suspend fun getOtherCardMe(userId: Int) : ResponseCardMeData

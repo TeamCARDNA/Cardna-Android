@@ -26,6 +26,10 @@ interface CardService {
         @Path("cardId") cardId: Int
     ): ResponseKeepOrAddCardData
 
+    // 카드 총 개수 조회
+    // 카드 전체 조회
+    @GET("card/{userId}")
+    suspend fun getCardAll(): ResponseCardAllData
 
     // 나의 카드나 조회
     @GET("card/me")
@@ -38,11 +42,11 @@ interface CardService {
         userId: Int?
     ): ResponseCardMeData
 
-    // 친구의 카드나 조회
+    // 나의 카드너 조회
     @GET("card/you")
     suspend fun getCardYou(): ResponseCardYouData
 
-    // 타인의 카드나 조회
+    // 타인의 카드너 조회
     @GET("card/you/{userId}")
     suspend fun getOtherCardYou(
         @Path("userId")
@@ -56,10 +60,6 @@ interface CardService {
         @PartMap body: HashMap<String, RequestBody>,
         @Part image: MultipartBody.Part?
     ): ResponseCreateCardData
-
-
-
-
 
     @GET("card/main")
     suspend fun getMainCard(): ResponseMainCardData
