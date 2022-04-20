@@ -131,6 +131,12 @@
     <string name="bottom_image_symbol">심볼</string>
     <string name="bottom_image_from_gallery">갤러리에서 가져오기</string>
 
+    <!-- BottomDialogCardFragment -->
+    <string name="bottom_card_cardme">카드나 작성</string>
+    <string name="bottom_card_cardme_detail">나에 대한 카드를 새로 작성해보세요</string>
+    <string name="bottom_card_cardyou">카드너 추가</string>
+    <string name="bottom_card_cardyou_detail">카드너 보관함에서 카드를 추가해보세요</string>
+
 
     <!--    LoginActivity-->
     <string name="login_policy">가입 시,\nCARDNA의 다음 사항에 동의하는 것으로 간주합니다.</string>

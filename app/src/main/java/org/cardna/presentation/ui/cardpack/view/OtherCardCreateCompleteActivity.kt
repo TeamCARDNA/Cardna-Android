@@ -14,9 +14,9 @@ import org.cardna.presentation.util.LinearGradientSpan
 
 class OtherCardCreateCompleteActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityOtherCardCreateCompleteBinding>(R.layout.activity_other_card_create_complete) {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         initView()
     }
 
@@ -35,26 +35,20 @@ class OtherCardCreateCompleteActivity :
     }
 
 
-
-    // 로티 띄워주기
-    // 1.
-    // 2.
-
-
+    // 로티 띄워주고 이전 액티비티로 돌아가기
     private fun setLottie(isCardPackOrMainCard: Boolean){
         val handler = Handler(Looper.getMainLooper())
-        if(isCardPackOrMainCard){  // cardPack에서 왔으면
+        if(isCardPackOrMainCard){  // 친구의 cardPack 에서 왔으면 FriendCardPackActivity 로 돌아가도록
             handler.postDelayed({
                 var intent = Intent(this, FriendCardPackActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
-                // 진입점이 두개인데 어차피 둘다 MainActivity이므로
-                // MainActivity로 갈 때, CardCreateActivity pop하고 가기
-                // 현재 A -> B -> C인데, C -> A로 가도록 intent 써서
+                // FriendCardPackActivity 로 갈 때, CardCreateActivity pop하고 가기
+                // 현재 FriendCardPackActivity -> CardCreateActivity -> 인데, C -> A로 가도록 intent 써서
             }, LOTTIE_VIEW_TIME) // 이는 CardCreateActivity가 얼마나 띄워주고 다시 main으로 갈 건지에 대한 시간, 로티가 뜨느 시간은 아님
         }
         else{
-            handler.postDelayed({
+            handler.postDelayed({ // 친구의 mainCard 에서 왔으면 MainActivity 로 돌아가도록
                 var intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)

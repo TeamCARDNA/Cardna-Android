@@ -29,7 +29,6 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
         setCardMeOrYou()
     }
 
-
     private fun setCardMeOrYou() {
         val isCardMeOrYou = intent.getBooleanExtra("isCardMeOrYou", CARD_ME) // 안넘겨줄 경우, CARDME
         val symbolId = intent.getIntExtra("symbolId", -1) // symbolId가 null일 때 -1로
@@ -89,7 +88,7 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
                     var intent = Intent(this, CardYouStoreActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
-                    // 카드너보관함 액티비티인 OtherWriteActivity로 갈 때, CardCreateActivity pop하고 가기
+                    // 카드너보관함 액티비티인 CardYouStoreActivity 로 갈 때, CardCreateActivity pop 하고 가기
                     // 현재 A -> B -> C인데, C -> A로 가도록 intent 써서
                 }, LOTTIE_VIEW_TIME
             )

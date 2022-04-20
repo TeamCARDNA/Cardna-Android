@@ -9,6 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.ui.cardpack.view.CardPackFragment
+import org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity
 import org.cardna.presentation.ui.insight.view.InsightFragment
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.view.MyPageFragment
@@ -71,10 +72,8 @@ class MainActivity :
         binding.bnvMain.selectedItemId = R.id.menu_bottom_maincard
     }
 
-    // cardpackFragment의 버튼을 눌렀을 때, 이 MainActivity의 함수를 실행
-    // 즉, MainActivity에서 BottomsheetDialog를 띄워주는 함수
-
-    // 그럼 이 함수 FriendCardPackActivity에서도 리스너 달아줘야 할 듯듯
+    // cardPackFragment 의 + 버튼을 눌렀을 때, 이 메서드 실행
+    // 즉, MainActivity 에서 BottomSheetDialog 를 띄워주는 메서드
     fun showBottomDialogCardFragment() {
         // 바텀싯 다이얼로그가 뜬 후, 카드나 or 카드너를 선택했을 때, 그거에 따라 어떤 액티비티를 띄워줘야 하는지를 명세한 Fragment 정의하고
         val bottomDialogCardFragment = BottomDialogCardFragment {
@@ -82,18 +81,17 @@ class MainActivity :
                 CARD_ME -> {
                     // 카드나 작성 액티비티로 이동 => 카드나임을 알 수 있도록 intent로 정보전달
                     val intent = Intent(this, CardCreateActivity::class.java).apply {
-//                        putExtra("id", id)
-//                        putExtra("name", name)
-                        putExtra("isCardMeOrYou", true) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할 듯
+                        putExtra("isCardMeOrYou", true) // 내 카드나 작성 or 친구 카드너 작성
+                        // id, name 안넘겨주면, 알아서 null 로 setting
                     }
                     startActivity(intent)
                 }
                 CARD_YOU -> {
                     // 내 카드너 보관함으로 이동
-//                    val intent = Intent(this, OtherWriteActivity::class.java).apply {
-//                        putExtra("isCardMeOrYou", false) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할 듯
-//                    }
-//                    startActivity(intent)
+                    val intent = Intent(this, CardYouStoreActivity::class.java).apply {
+                        putExtra("isCardMeOrYou", false) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할 듯
+                    }
+                    startActivity(intent)
                 }
             }
         }
