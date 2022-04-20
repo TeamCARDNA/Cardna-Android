@@ -1,11 +1,13 @@
 package org.cardna.presentation.di
 
+import com.example.cardna.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.cardna.presentation.di.RetrofitModule.BASE_URL
 import org.cardna.presentation.util.AuthInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,7 +18,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
-    private val BASE_URL = "https://asia-northeast3-cardna-29f5b.cloudfunctions.net/api/"
+    private val BASE_URL = BuildConfig.BASE_URL
 
     private fun httpLoggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
