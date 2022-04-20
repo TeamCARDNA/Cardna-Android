@@ -79,7 +79,7 @@ class MainCardActivity :
         dialog.setContentView(dialogBinding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
-        val friendId = intent?.getIntExtra("id", 0) ?: -1
+        val friendId = intent.getIntExtra("friendId", 0)
         val relation = mainCardViewModel.relation.value.toString()
         with(dialogBinding) {
             when (relation) {
@@ -91,9 +91,8 @@ class MainCardActivity :
                 }
             }
             setCancelDialog(dialog, this)
-            setConfirmDialog(this, friendId)
+            setConfirmDialog(dialog, this, friendId)
         }
-
     }
 
     private fun setCancelDialog(dialog: Dialog, dialogBinding: DialogRelationBinding) {
@@ -103,12 +102,13 @@ class MainCardActivity :
     }
 
     private fun setConfirmDialog(
+        dialog: Dialog,
         dialogBinding: DialogRelationBinding,
         friendId: Int
     ) {
         dialogBinding.btnRelationConfirm.setOnClickListener {
-            shortToast("친구 손절")
             mainCardViewModel.postFriendRequest(friendId)
+            dialog.dismiss()
         }
     }
 

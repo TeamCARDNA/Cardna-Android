@@ -96,6 +96,7 @@ class MainCardViewModel @Inject constructor(
                 Timber.d("friendId : $friendId")
                 Timber.d("message : ${it.message}")
             }.onFailure {
+                Timber.e("friendId : $friendId")
                 Timber.e("message : ${it.message}")
             }
         }
