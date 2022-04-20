@@ -12,12 +12,15 @@ import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySearchFriendCodeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.maincard.view.MainCardActivity
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.ui.setting.view.VersionInfoActivity
 import org.cardna.presentation.util.*
+import timber.log.Timber
 
 @AndroidEntryPoint
-class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySearchFriendCodeBinding>(R.layout.activity_search_friend_code) {
+class SearchFriendCodeActivity :
+    BaseViewUtil.BaseAppCompatActivity<ActivitySearchFriendCodeBinding>(R.layout.activity_search_friend_code) {
     private val myPageViewModel: MyPageViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +40,11 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
     private fun setInputField() {
         with(binding.etMypageCodeSearchBackground) {
             setTextSize(16f)
-            setTextColor(this@SearchFriendCodeActivity, com.example.cardna.R.color.white_2, com.example.cardna.R.color.white_1)
+            setTextColor(
+                this@SearchFriendCodeActivity,
+                com.example.cardna.R.color.white_2,
+                com.example.cardna.R.color.white_1
+            )
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(newText: String?): Boolean {
@@ -67,6 +74,10 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
                 this.setSrcWithGlide(
                     it.userImg, binding.ivMypageCodeSearch
                 )
+        }
+
+        myPageViewModel.searchFriendNameResult.observe(this) {
+            myPageViewModel.searchNamePost()
         }
     }
 
@@ -107,6 +118,13 @@ class SearchFriendCodeActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySear
     //TODO 메인카드 액티비티 생성시 다시 테스트
     fun setGoToFriendMainCardClickListener() {
         shortToast("가즈아")
+        //여기에서 넘거야겠네 putExtra
+        val intent = Intent(this, MainCardActivity::class.java)
+        val friendId = myPageViewModel.friendId.value ?: -1
+        val name = myPageViewModel.searchFriendCodeResult.value?.name
+        intent.putExtra("friendId", friendId)
+        intent.putExtra("name", name)
+        startActivity(intent)
         //   startActivity(Intent(this@SearchFriendCodeActivity, MainCardActivity::class.java))
     }
 
