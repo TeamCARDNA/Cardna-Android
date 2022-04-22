@@ -10,12 +10,15 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardDialogBinding
 import org.cardna.data.remote.model.card.CardData
+import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
+import timber.log.Timber
 
-class EditCardDialogAdapter :
+class EditCardDialogAdapter(val editCardDialogViewModel: EditCardDialogViewModel) :
     ListAdapter<CardData, EditCardDialogAdapter.ViewHolder>(EditCardDialogComparator()) {
-    private val selectedList = mutableListOf<Int>()
     private var lastRemovedIndex = 8
     private var itemClickListener: ((Int, CardData, Boolean) -> Int)? = null
+    private val selectedList: MutableList<Int> =
+        editCardDialogViewModel.selectedCardList.value as MutableList<Int>
 
     fun setItemClickListener(listener: ((Int, CardData, Boolean) -> Int)) {
         itemClickListener = listener
@@ -27,15 +30,26 @@ class EditCardDialogAdapter :
 
     inner class ViewHolder(private val binding: ItemEditCardDialogBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun onBind(data: CardData) {
             with(binding) {
                 Glide
                     .with(itemView.context)
                     .load(data.cardImg)
                     .into(ivCardpackRecyclerview)
-
                 tvEditcarddialogTitle.text = data.title
                 clRvItem.setBackgroundResource(setBackground(data.isMe))
+
+                val mainOrder = "${data.mainOrder}"
+                if (mainOrder != "null") {
+                    Timber.d("mainOrder : $mainOrder")
+                    binding.tvRepresentcardCount.apply {
+                        text = mainOrder.substring(0, 1)
+                        selectedList.add(data.id)
+                        editCardDialogViewModel.setChangeSelectedList(selectedList)
+                        visibility = View.VISIBLE
+                    }
+                }
 
                 itemView.setOnClickListener {
                     binding.tvRepresentcardCount.apply {
@@ -49,6 +63,7 @@ class EditCardDialogAdapter :
                                 View.GONE
                             }
                     }
+                    editCardDialogViewModel.setChangeSelectedList(selectedList)
                 }
             }
         }
@@ -64,6 +79,7 @@ class EditCardDialogAdapter :
     ): EditCardDialogAdapter.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemEditCardDialogBinding.inflate(layoutInflater, parent, false)
+
         return ViewHolder(binding)
     }
 

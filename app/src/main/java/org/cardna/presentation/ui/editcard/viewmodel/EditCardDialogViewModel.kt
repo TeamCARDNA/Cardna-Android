@@ -50,4 +50,13 @@ class EditCardDialogViewModel @Inject constructor(
             }
         }
     }
+
+    fun setChangeSelectedList(selectedList: MutableList<Int>) {
+        _selectedCardList.value = selectedList
+        Timber.d("selectedCardList : ${_selectedCardList.value}")
+    }
+
+    fun addSelectedList(itemList: MutableList<Int>) {
+        _selectedCardList.value?.plus(itemList)
+    }
 }

@@ -36,10 +36,11 @@ class CardMeTabFragment :
     }
 
     private fun initAdapter() {
-        editCardDialogAdapter = EditCardDialogAdapter()
+        editCardDialogAdapter = EditCardDialogAdapter(editCardDialogViewModel)
 
         editCardDialogViewModel.cardMeList.observe(viewLifecycleOwner) { it ->
             it.map { it.isMe = true }
+//            editCardDialogViewModel.addSelectedList(it.map { it.id } as MutableList<Int>)
             editCardDialogAdapter.apply { submitList(it) }
         }
 
