@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.editcard.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -9,13 +10,21 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardBinding
 import org.cardna.data.remote.model.card.MainCard
+import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
 import org.cardna.presentation.util.ItemTouchHelperListener
+import timber.log.Timber
 
-class EditCardAdapter :
+class EditCardAdapter(
+    val editCardDialogViewModel: EditCardDialogViewModel
+) :
     ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()),
     ItemTouchHelperListener {
     inner class ViewHolder(private val binding: ItemEditCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            editCardDialogViewModel.setChangeSelectedList(currentList.map { it.id } as MutableList<Int>)
+        }
+
         fun onBind(data: MainCard) {
             with(binding) {
                 Glide
@@ -29,7 +38,6 @@ class EditCardAdapter :
                 } else {
                     clRvItem.setBackgroundResource(R.drawable.bg_main_purple_radius_8)
                 }
-
                 ivRepresentcardeditlistDelete.setOnClickListener {
                     setNewList(adapterPosition)
                 }
@@ -40,12 +48,14 @@ class EditCardAdapter :
     private fun setNewList(adapterPosition: Int) {
         val newList = currentList.toMutableList()
         newList.removeAt(adapterPosition)
+        editCardDialogViewModel.setChangeSelectedList(newList.map { it.id } as MutableList<Int>)
         submitList(newList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemEditCardBinding.inflate(layoutInflater, parent, false)
+
         return ViewHolder(binding)
     }
 
