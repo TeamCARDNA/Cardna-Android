@@ -57,6 +57,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:textColor="@color/white_3"
+                android:text="@{}"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@id/tl_representcardedit"
                 app:layout_constraintStart_toStartOf="@id/tl_representcardedit"

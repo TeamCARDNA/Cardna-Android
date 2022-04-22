@@ -73,7 +73,6 @@ class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialog
         editCardTabAdapter = EditCardTabAdapter(this)
         editCardTabAdapter.fragments.addAll(fragmentList)
         binding.rvEditcarddialogContainer.adapter = editCardTabAdapter
-
     }
 
     private fun mainCardCount() {

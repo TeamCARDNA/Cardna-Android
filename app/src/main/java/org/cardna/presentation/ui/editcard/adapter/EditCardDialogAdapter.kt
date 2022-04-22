@@ -13,7 +13,17 @@ import org.cardna.data.remote.model.card.CardData
 
 class EditCardDialogAdapter :
     ListAdapter<CardData, EditCardDialogAdapter.ViewHolder>(EditCardDialogComparator()) {
-    private val selectedItem = mutableListOf<Int>()
+    private val selectedList = mutableListOf<Int>()
+    private var lastRemovedIndex = 8
+    private var itemClickListener: ((Int, CardData, Boolean) -> Int)? = null
+
+    fun setItemClickListener(listener: ((Int, CardData, Boolean) -> Int)) {
+        itemClickListener = listener
+    }
+
+    fun setLastRemovedIndex(index: Int) {
+        lastRemovedIndex = index
+    }
 
     inner class ViewHolder(private val binding: ItemEditCardDialogBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -31,11 +41,11 @@ class EditCardDialogAdapter :
                     binding.tvRepresentcardCount.apply {
                         visibility =
                             if (visibility == View.GONE) {
-                                selectedItem.add(data.id)
-                                text = selectedItem.size.toString()
+                                selectedList.add(data.id)
+                                text = selectedList.size.toString()
                                 View.VISIBLE
                             } else {
-                                selectedItem.removeAt(selectedItem.indexOf(data.id))
+                                selectedList.removeAt(selectedList.indexOf(data.id))
                                 View.GONE
                             }
                     }

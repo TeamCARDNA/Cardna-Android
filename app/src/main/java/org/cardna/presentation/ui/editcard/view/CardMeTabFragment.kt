@@ -49,5 +49,9 @@ class CardMeTabFragment :
             addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt()))
         }
     }
+
+    private fun selectedCardMeItem() {
+
+    }
 }
 
