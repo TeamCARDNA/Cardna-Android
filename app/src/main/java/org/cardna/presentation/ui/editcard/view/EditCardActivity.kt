@@ -68,6 +68,7 @@ class EditCardActivity :
         startBottomSheetDialog()
     }
 
+    // 플로팅 버튼 listener -> bottomSheetDialog 띄워줌
     private fun startBottomSheetDialog() {
         binding.fabRepresentcardedit.setOnClickListener {
             val bottomSheetDialog = EditCardDialogFragment(editCardAdapter.itemCount)
@@ -75,6 +76,7 @@ class EditCardActivity :
         }
     }
 
+    //대표카드 수정 완료처리
     private fun putEditCard() {
         binding.tvTvRepresentcardeditFinish.setOnClickListener {
             val cardsList = RequestEditCardData(editCardAdapter.currentList.map { it.id })
@@ -83,11 +85,13 @@ class EditCardActivity :
         }
     }
 
+    // text Gradient
     private fun setTextGradient() {
         val text = binding.tvRepresentcardeditColorTitle.text.toString()
         binding.tvRepresentcardeditColorTitle.text = setGradientText(text)
     }
 
+    //대표카드 수정 activity 에 있는 item 개수
     private fun mainCardCount() {
         editCardAdapter.apply {
             registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {

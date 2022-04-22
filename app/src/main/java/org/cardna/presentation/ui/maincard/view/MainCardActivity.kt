@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -38,6 +39,11 @@ class MainCardActivity :
         initAdapter()
         initData()
         initDialog()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initData()
     }
 
     private fun initData() {
@@ -83,11 +89,14 @@ class MainCardActivity :
         val relation = mainCardViewModel.relation.value.toString()
         with(dialogBinding) {
             when (relation) {
+                UNKNOWN -> {
+                    clRelationAddFriend.apply { this.isVisible = !this.isVisible }
+                }
                 FRIEND -> {
-                    clRelationDisconnect.visibility = View.VISIBLE
+                    clRelationDisconnect.apply { this.isVisible = !this.isVisible }
                 }
                 PROGRESSING -> {
-                    clRelationProgressingCancel.visibility = View.VISIBLE
+                    clRelationProgressingCancel.apply { this.isVisible = !this.isVisible }
                 }
             }
             setCancelDialog(dialog, this)
@@ -108,6 +117,7 @@ class MainCardActivity :
     ) {
         dialogBinding.btnRelationConfirm.setOnClickListener {
             mainCardViewModel.postFriendRequest(friendId)
+            mainCardViewModel.getMainCardList(friendId)
             dialog.dismiss()
         }
     }

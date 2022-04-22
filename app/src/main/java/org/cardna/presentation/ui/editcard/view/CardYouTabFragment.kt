@@ -37,10 +37,11 @@ class CardYouTabFragment :
     }
 
     private fun initAdapter() {
-        editCardDialogAdapter = EditCardDialogAdapter()
+        editCardDialogAdapter = EditCardDialogAdapter(editCardDialogViewModel)
 
         editCardDialogViewModel.cardYouList.observe(viewLifecycleOwner) { it ->
             it.map { it.isMe = false }
+
             editCardDialogAdapter.apply { submitList(it) }
         }
 

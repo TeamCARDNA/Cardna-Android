@@ -22,4 +22,5 @@ data class CardData(
     val mainOrder: Any,
     val title: String,
     var isMe: Boolean,
+    var isClicked: Boolean = false,
 )
