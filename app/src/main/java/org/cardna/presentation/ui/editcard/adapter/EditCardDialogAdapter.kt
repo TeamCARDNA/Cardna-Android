@@ -53,7 +53,6 @@ class EditCardDialogAdapter(val editCardDialogViewModel: EditCardDialogViewModel
                     binding.tvRepresentcardCount.apply {
                         visibility =
                             if (visibility == View.GONE && selectedList.size < 7) {
-                                data.isClicked = true
                                 selectedList.add(data.id)
                                 text = selectedList.size.toString()
                                 View.VISIBLE

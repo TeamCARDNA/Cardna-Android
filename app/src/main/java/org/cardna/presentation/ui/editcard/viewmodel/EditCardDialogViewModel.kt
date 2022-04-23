@@ -43,7 +43,7 @@ class EditCardDialogViewModel @Inject constructor(
     fun getCardAll() {
         viewModelScope.launch {
             kotlin.runCatching {
-                cardRepository.getCardAll().data
+                cardRepository.getCardAllList().data
             }.onSuccess {
                 _cardMeList.value = it.cardMeList
                 _cardYouList.value = it.cardYouList
