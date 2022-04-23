@@ -1,5 +1,7 @@
 package org.cardna.data.remote.datasource
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.cardna.data.remote.api.card.CardService
 import org.cardna.data.remote.model.card.*
 import javax.inject.Inject
@@ -20,20 +22,31 @@ class CardDataSourceImpl @Inject constructor(
         return cardService.putKeepOrAddCard(cardId)
     }
 
+    override suspend fun getCardAll(): ResponseCardAllData{
+        return cardService.getCardAll()
+    }
+
     override suspend fun getCardMe(): ResponseCardMeData {
         return cardService.getCardMe()
     }
 
-    override suspend fun getOtherCardMe(cardId: Int): ResponseCardMeData {
-        return cardService.getOtherCardMe(cardId)
+    override suspend fun getOtherCardMe(userId: Int): ResponseCardMeData {
+        return cardService.getOtherCardMe(userId)
     }
 
     override suspend fun getCardYou(): ResponseCardYouData {
         return cardService.getCardYou()
     }
 
-    override suspend fun getOtherCardYou(cardId: Int): ResponseCardYouData {
-        return cardService.getOtherCardYou(cardId)
+    override suspend fun getOtherCardYou(userId: Int): ResponseCardYouData {
+        return cardService.getOtherCardYou(userId)
+    }
+
+    override suspend fun postCreateCardMe(
+        body: HashMap<String, RequestBody>,
+        image: MultipartBody.Part?
+    ) : ResponseCreateCardData {
+        return cardService.postCreateCardMe(body, image)
     }
 
     override suspend fun getMainCard(): ResponseMainCardData {

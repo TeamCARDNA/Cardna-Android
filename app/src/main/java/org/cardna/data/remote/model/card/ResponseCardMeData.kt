@@ -15,8 +15,8 @@ data class ResponseCardMeData(
             val id: Int,
             val cardImg: String,
             val title: String,
-            val mainOrder: Int,
-            val isLiked: Boolean
+            val mainOrder: Int?,
+            val isLiked: Boolean?
         )
     }
 }

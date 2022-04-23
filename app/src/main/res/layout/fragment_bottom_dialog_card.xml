@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="32dp"
-                android:text="카드나 작성"
+                android:text="@string/bottom_card_cardme"
                 android:textAppearance="@style/cardpack_bottomsheet_title"
                 app:layout_constraintStart_toEndOf="@+id/iv_cardpack_bottom_cardme"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="24dp"
-                android:text="나에 대한 카드를 새로 작성해보세요"
+                android:text="@string/bottom_card_cardme_detail"
                 android:textAppearance="@style/cardpack_bottomsheet_detail"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_bottomsheet_cardme_title"
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="카드너 추가"
+                android:text="@string/bottom_card_cardyou"
                 android:textAppearance="@style/cardpack_bottomsheet_title"
                 app:layout_constraintStart_toEndOf="@+id/iv_cardpack_bottom_cardyou"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -90,14 +90,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="48dp"
-                android:text="카드너 보관함에서 카드를 추가해보세요"
+                android:text="@string/bottom_card_cardyou_detail"
                 android:textAppearance="@style/cardpack_bottomsheet_detail"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_bottomsheet_cardyou_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_bottomsheet_cardyou_title" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

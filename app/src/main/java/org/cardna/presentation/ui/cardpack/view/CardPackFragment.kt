@@ -15,6 +15,7 @@ import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardPackTabLayoutAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
+import timber.log.Timber
 
 @AndroidEntryPoint
 class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.layout.fragment_card_pack) {
@@ -25,20 +26,25 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         initView()
+        Timber.e("CardPack id: ${cardPackViewModel.id}")
+        Timber.e("CardPack name : ${cardPackViewModel.name}")
+        Timber.e("CardPack totalCardCnt: ${cardPackViewModel.totalCardCnt.value}")
+
     }
 
-    override fun onResume() { // 카드팩프래그먼트에서 카드를 눌러 카드 상세페이지로 가서 삭제한다음 왔을 때, 카드팩의 카드들이 업데이트 되어야 하므로 onResume이 필요하다
+    override fun onResume() {
+        // 카드팩프래그먼트에서 카드를 눌러 카드 상세페이지로 가서 삭제한다음 왔을 때, 카드팩의 카드들이 업데이트 되어야 하므로 onResume 이 필요
         super.onResume()
-        cardPackViewModel.setTotalCardCnt()
+        if(cardPackViewModel.id == null) // 내 카드팩일때만 onResume 해주면 됨.
+            cardPackViewModel.setTotalCardCnt()
     }
-
 
     private fun initViewModel() {
         binding.cardPackViewModel = cardPackViewModel
-
-        // MainActivity 에서 카드팩 접근 시, bundle로 넘어오는 값이 없을 것이고, id는 기본값인 null로 되어있을 것임
-        // FriendCardPackActivity에서 접근 시, FriendCardPackActivity 에서 이미 intent로 받은 id와 name을
-        // viewModel에 이미 setting 해줬을 것
+        // 1. MainActivity 에서 cardPackFragment 접근 시, bundle 로 넘어오는 값이 없을 것이고, id, name 은 는 기본값인 null 로 되어있을 것임
+        // 2. FriendCardPackActivity 에서 cardPackFragment 접근 시, FriendCardPackActivity 에서 이미 intent 로 받은 id와 name 을
+        // viewModel 에 이미 setting 해줬을 것
+        // => 따라서, 이 cardPackFragment 자체에서는 뷰모델의 프로퍼티에 대한 초기화는 따로 안해줘도 됨.
     }
 
     override fun initView() {
@@ -109,13 +115,15 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
     // 유저 본인의 카드팩 프래그먼트인지, 친구의 카드팩 프래그먼트인지에 따라 작업 해주기
     // 리스너 달기, 텍스트뷰, 버튼 등 레이아웃 변화
     private fun initMeOrFriendCardLayout() {
-        // 카드팩 총 개수 세팅
-        cardPackViewModel.setTotalCardCnt()
+        if (cardPackViewModel.id == null) {  // 유저 본인의 카드팩 접근 시
+            cardPackViewModel.setTotalCardCnt() // 카드팩 총 개수 세팅
 
-        if (cardPackViewModel.id == null) { // 유저 본인의 카드팩 접근 시, 카드추가버튼에 카드나 카드너 추가 바텀씻 올라오는 리스너 달기
+            // 카드추가버튼에 카드나 카드너 추가 바텀씻 올라오는 리스너 달기
             binding.ivAddCard.setOnClickListener {
                 (activity as MainActivity).showBottomDialogCardFragment()
             }
+
+            // 나머지 분기처리는 xml 상에서 삼항연산자 이용
         }
     }
 }
