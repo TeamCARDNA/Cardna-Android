@@ -65,14 +65,13 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             rvCardme.layoutManager = gridLayoutManager
             rvCardme.addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt())) // 화면 비율 조정
-
+            Timber.e("CardMe : Adapter 생성 끝")
             // onResume 될 때, cardMeList 를 업데이트 시키고 cardMeList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
             cardPackViewModel?.cardMeList?.observe(viewLifecycleOwner) { it ->
                 it?.let { cardMeAdapter.submitList(it)}
-                Timber.e("CardMe : submitList")
+                Timber.e("CardMe : submffffffffffffffffitList")
                 // 이게 실행이 안됨.
             }
-            Timber.e("CardMe : Adapter 생성 끝")
         }
     }
 

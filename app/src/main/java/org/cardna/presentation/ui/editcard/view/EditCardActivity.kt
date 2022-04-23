@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.editcard.view
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,6 +13,7 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
+import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.setGradientText
 
 @AndroidEntryPoint
@@ -27,6 +29,7 @@ class EditCardActivity :
     }
 
     override fun initView() {
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
         initData()
         initAdapter()
         setClickListener()
