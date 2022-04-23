@@ -41,7 +41,7 @@
             android:gravity="center"
             android:textColor="@color/white_1"
             android:textSize="14sp"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/iv_cardpack_recyclerview"
             app:layout_constraintEnd_toEndOf="@id/iv_cardpack_recyclerview"
             tools:text="1" />

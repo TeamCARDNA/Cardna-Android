@@ -12,13 +12,18 @@ import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
 import org.cardna.presentation.util.SpacesItemDecoration
 import kotlin.math.roundToInt
 
-class CardMeTabFragment :
-    BaseViewUtil.BaseFragment<FragmentCardMeTabBinding>(R.layout.fragment_card_me_tab) {
+class CardMeTabFragment : BaseViewUtil.BaseFragment<FragmentCardMeTabBinding>(R.layout.fragment_card_me_tab) {
     private lateinit var editCardDialogAdapter: EditCardDialogAdapter
     private val editCardDialogViewModel: EditCardDialogViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        initData()
     }
 
     override fun initView() {
@@ -30,16 +35,10 @@ class CardMeTabFragment :
         editCardDialogViewModel.getCardAll()
     }
 
-    override fun onResume() {
-        super.onResume()
-        initData()
-    }
-
     private fun initAdapter() {
-        editCardDialogAdapter = EditCardDialogAdapter(editCardDialogViewModel)
+        editCardDialogAdapter = EditCardDialogAdapter(lifecycleOwer = viewLifecycleOwner, editCardDialogViewModel)
         editCardDialogViewModel.cardMeList.observe(viewLifecycleOwner) { it ->
             it.map { it.isMe = true }
-//            editCardDialogViewModel.addSelectedList(it.map { it.id } as MutableList<Int>)
             editCardDialogAdapter.apply { submitList(it) }
         }
 

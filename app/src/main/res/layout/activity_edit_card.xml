@@ -132,6 +132,8 @@
                     android:layout_marginTop="20dp"
                     android:nestedScrollingEnabled="true"
                     android:overScrollMode="never"
+                    app:spanCount="2"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_representcardedit_title_group"
                     app:layout_editor_absoluteX="16dp"

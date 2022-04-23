@@ -25,6 +25,7 @@ class EditCardActivity :
     private lateinit var editCardAdapter: EditCardAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.editCardViewModel = editCardViewModel
         initView()
     }
 
@@ -38,7 +39,6 @@ class EditCardActivity :
     }
 
     private fun initData() {
-        binding.editCardViewModel = editCardViewModel
         editCardViewModel.getMainCard()
     }
 
@@ -47,6 +47,7 @@ class EditCardActivity :
         initData()
     }
 
+    //대표카드 리사이클러뷰 어댑터
     private fun initAdapter() {
         editCardAdapter = EditCardAdapter(editCardDialogViewModel)
         with(binding.rvRepresentcardeditContainer) {
@@ -64,11 +65,11 @@ class EditCardActivity :
     }
 
     private fun setClickListener() {
+
         putEditCard()
         startBottomSheetDialog()
     }
 
-    // 플로팅 버튼 listener -> bottomSheetDialog 띄워줌
     private fun startBottomSheetDialog() {
         binding.fabRepresentcardedit.setOnClickListener {
             val bottomSheetDialog = EditCardDialogFragment()
@@ -76,7 +77,6 @@ class EditCardActivity :
         }
     }
 
-    //대표카드 수정 완료처리
     private fun putEditCard() {
         binding.tvTvRepresentcardeditFinish.setOnClickListener {
             val cardsList = RequestEditCardData(editCardAdapter.currentList.map { it.id })
@@ -91,7 +91,6 @@ class EditCardActivity :
         binding.tvRepresentcardeditColorTitle.text = setGradientText(text)
     }
 
-    //대표카드 수정 activity 에 있는 item 개수
     private fun mainCardCount() {
         editCardAdapter.apply {
             registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
