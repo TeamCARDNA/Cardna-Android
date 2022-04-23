@@ -5,12 +5,128 @@
 
     <data>
 
+        <variable
+            name="editCardViewModel"
+            type="org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="org.cardna.presentation.ui.editcard.EditCardActivity">
+        android:background="@color/black"
+        tools:context=".presentation.ui.editcard.view.EditCardActivity">
+
+        <TextView
+            android:id="@+id/tv_representcardedit_title"
+            style="@style/cardpack_bottomsheet_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/edit_card_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_tv_representcardedit_finish"
+            style="@style/cardpack_bottomsheet_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/edit_card_finish"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_representcardedit_card_list_count"
+            style="@style/detail_card_text_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_representcardedit_title"
+            tools:text="4/7" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="32dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_representcardedit_card_list_count">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_representcardedit_title_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_representcardedit_text"
+                        style="@style/represent_card_edit_title_white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/edit_card_represent_before"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_representcardedit_color_title"
+                        style="@style/represent_card_edit_title_white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_card_represent_gradient"
+                        app:layout_constraintStart_toStartOf="@id/tv_representcardedit_text"
+                        app:layout_constraintTop_toBottomOf="@id/tv_representcardedit_text" />
+
+                    <TextView
+                        android:id="@+id/tv_representcardedit_text_end"
+                        style="@style/represent_card_edit_title_white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_card_represent_after"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_representcardedit_color_title"
+                        app:layout_constraintStart_toEndOf="@id/tv_representcardedit_color_title"
+                        app:layout_constraintTop_toTopOf="@id/tv_representcardedit_color_title" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_representcardedit_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:nestedScrollingEnabled="true"
+                    android:overScrollMode="never"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cl_representcardedit_title_group"
+                    app:layout_editor_absoluteX="16dp"
+                    tools:itemCount="4"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:listitem="@layout/item_edit_card" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_representcardedit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/white_1"
+            android:padding="20dp"
+            android:src="@drawable/ic_tray_fill"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

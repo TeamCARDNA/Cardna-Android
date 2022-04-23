@@ -4,10 +4,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.cardna.data.remote.api.card.CardService
 import org.cardna.data.remote.model.card.*
-import org.cardna.data.remote.model.card.ResponseDeleteCardData
-import org.cardna.data.remote.model.card.ResponseDetailCardData
-import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
-import org.cardna.data.remote.model.card.ResponseMainCardData
 import javax.inject.Inject
 
 class CardDataSourceImpl @Inject constructor(
@@ -55,5 +51,13 @@ class CardDataSourceImpl @Inject constructor(
 
     override suspend fun getMainCard(): ResponseMainCardData {
         return cardService.getMainCard()
+    }
+
+    override suspend fun putEditCard(cardList: RequestEditCardData): ResponseEditCardData {
+        return cardService.putEditCard(cardList)
+    }
+
+    override suspend fun getCardYouStore(): ResponseCardYouStoreData {
+        return cardService.getCardYouStore()
     }
 }

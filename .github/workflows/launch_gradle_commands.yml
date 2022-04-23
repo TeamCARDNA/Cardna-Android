@@ -1,0 +1,38 @@
+name: Gradle Executable Environment
+
+on:
+  workflow_call:
+    inputs:
+      commands:
+        required: true
+        type: string
+      uploadArtifacts:
+        required: false
+        type: boolean
+    secrets:
+      BASE_URL:
+        description: 'base url for network'
+        required: true
+
+jobs:
+  launch_gradle_commands:
+    name: Gradle
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11
+          cache: gradle
+
+      - name: Write base_url
+        env:
+          API_KEY: ${{ secrets.BASE_URL }}
+        run: echo base_url=\"$BASE_URL\" >> ./local.properties
+
+      - uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: current
+          arguments: ${{ inputs.commands }}

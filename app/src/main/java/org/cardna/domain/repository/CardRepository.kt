@@ -29,4 +29,8 @@ interface CardRepository {
     suspend fun postCreateCardMe(body: HashMap<String, RequestBody>, image: MultipartBody.Part?) : ResponseCreateCardData
 
     suspend fun getMainCard() : ResponseMainCardData
+
+    suspend fun putEditCard(cardList: RequestEditCardData): ResponseEditCardData
+
+    suspend fun getCardYouStore(): ResponseCardYouStoreData
 }

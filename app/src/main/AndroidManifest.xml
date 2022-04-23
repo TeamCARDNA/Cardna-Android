@@ -23,11 +23,23 @@
             android:name="org.cardna.presentation.ui.cardpack.view.CardCreateCompleteActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.editcard.EditCardActivity"
+            android:name="org.cardna.presentation.ui.login.SplashActivity"
             android:exported="false" />
+
+        <activity
+            android:name="org.cardna.presentation.ui.cardpack.view.TempCardYouStoreActivity"
+            android:exported="false" />
+        <activity
+            android:name="org.cardna.presentation.ui.login.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name="org.cardna.presentation.ui.editcard.view.EditCardActivity"
+            android:exported="false" />
+
         <activity
             android:name="org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity"
             android:exported="false" />
+
         <activity
             android:name="org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity"
             android:exported="false" />

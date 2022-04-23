@@ -129,8 +129,8 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <!--  Mypage Title  -->
-    <style name="mypage_title_style">
+    <!--  Mt Title  -->
+    <style name="mt_title_style">
         <item name="android:textColor">@color/white_1</item>
         <item name="android:textSize">18sp</item>
         <item name="fontFamily">@font/pretendard_semibold</item>

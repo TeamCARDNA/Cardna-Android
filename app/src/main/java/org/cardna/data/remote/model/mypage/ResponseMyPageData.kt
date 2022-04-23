@@ -17,7 +17,7 @@ data class ResponseMyPageData(
             val id: Int,
             val name: String,
             val userImg: String,
-            val sentence: String,
+            val sentence: String?,
         )
     }
 }
