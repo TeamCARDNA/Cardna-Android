@@ -16,7 +16,7 @@ import org.cardna.presentation.ui.editcard.adapter.EditCardTabAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
 import kotlin.math.roundToInt
 
-class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialogFragment() {
+class EditCardDialogFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentEditCardDialogBinding? = null
     private val binding get() = _binding ?: error("View를 참조하기 위해 binding이 초기화되지 않았습니다.")
 
@@ -58,12 +58,11 @@ class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialog
         ) { tab, position ->
             tab.text = tabLabel[position]
         }.attach()
-
     }
 
     private fun initData() {
         binding.editCardDialogViewModel = editCardDialogViewModel
-//        binding.tvRepresentcardeditCardListCount.text = mainCardCount.toString()
+
         editCardDialogViewModel.getCardAll()
         editCardDialogViewModel.representCardCheck()
     }
@@ -72,6 +71,7 @@ class EditCardDialogFragment(private val mainCardCount: Int) : BottomSheetDialog
         val fragmentList = listOf(CardMeTabFragment(), CardYouTabFragment())
         editCardTabAdapter = EditCardTabAdapter(this)
         editCardTabAdapter.fragments.addAll(fragmentList)
+
         binding.rvEditcarddialogContainer.adapter = editCardTabAdapter
 
     }

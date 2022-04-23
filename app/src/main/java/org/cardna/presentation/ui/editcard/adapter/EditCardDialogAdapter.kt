@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardDialogBinding
+import kotlinx.coroutines.selects.select
 import org.cardna.data.remote.model.card.CardData
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
 import timber.log.Timber
@@ -17,8 +18,6 @@ class EditCardDialogAdapter(val editCardDialogViewModel: EditCardDialogViewModel
     ListAdapter<CardData, EditCardDialogAdapter.ViewHolder>(EditCardDialogComparator()) {
     private var lastRemovedIndex = 8
     private var itemClickListener: ((Int, CardData, Boolean) -> Int)? = null
-    private val selectedList: MutableList<Int> =
-        editCardDialogViewModel.selectedCardList.value as MutableList<Int>
 
     fun setItemClickListener(listener: ((Int, CardData, Boolean) -> Int)) {
         itemClickListener = listener
@@ -30,6 +29,8 @@ class EditCardDialogAdapter(val editCardDialogViewModel: EditCardDialogViewModel
 
     inner class ViewHolder(private val binding: ItemEditCardDialogBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        private val selectedList =
+            editCardDialogViewModel.selectedCardList.value?.map { it } as MutableList<Int>
 
         fun onBind(data: CardData) {
             with(binding) {
@@ -41,12 +42,9 @@ class EditCardDialogAdapter(val editCardDialogViewModel: EditCardDialogViewModel
                 clRvItem.setBackgroundResource(setBackground(data.isMe))
 
                 val mainOrder = "${data.mainOrder}"
-                if (mainOrder != "null") {
-                    Timber.d("mainOrder : $mainOrder")
+                if (selectedList.contains(data.id) && mainOrder != "null") {
                     binding.tvRepresentcardCount.apply {
-                        text = mainOrder.substring(0, 1)
-                        selectedList.add(data.id)
-                        editCardDialogViewModel.setChangeSelectedList(selectedList)
+                        text = "${data.mainOrder}".substring(0, 1)
                         visibility = View.VISIBLE
                     }
                 }
@@ -54,12 +52,15 @@ class EditCardDialogAdapter(val editCardDialogViewModel: EditCardDialogViewModel
                 itemView.setOnClickListener {
                     binding.tvRepresentcardCount.apply {
                         visibility =
-                            if (visibility == View.GONE) {
+                            if (visibility == View.GONE && selectedList.size < 7) {
+                                data.isClicked = true
                                 selectedList.add(data.id)
                                 text = selectedList.size.toString()
                                 View.VISIBLE
                             } else {
-                                selectedList.removeAt(selectedList.indexOf(data.id))
+                                if (visibility == View.VISIBLE) {
+                                    selectedList.removeAt(selectedList.indexOf(data.id))
+                                }
                                 View.GONE
                             }
                     }
