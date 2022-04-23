@@ -19,6 +19,7 @@ import com.example.cardna.databinding.DialogSetNameBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan
+import org.cardna.presentation.util.setGradientText
 
 @AndroidEntryPoint
 class SetNameActivity :
@@ -120,22 +121,13 @@ class SetNameActivity :
 
     private fun initAnimation(name: String) {
         val welcomeText = "${name}님 반가워요!"
-        val gradientText = setTextGradient(welcomeText)
+        val gradientText = setGradientText(welcomeText)
         binding.tvSetnameUsername.text = gradientText
         binding.tvSetnameUsername.visibility = View.VISIBLE
         binding.clSetnameContainer.visibility = View.GONE
 
         startSetNameFinishedActivity(welcomeText)
 
-    }
-
-    private fun setTextGradient(welcomeText: String): Spannable {
-        val green = getColor(R.color.main_green)
-        val purple = getColor(R.color.main_purple)
-        val spannable = welcomeText.toSpannable()
-        spannable[0..welcomeText.length] =
-            LinearGradientSpan(welcomeText, welcomeText, green, purple)
-        return spannable
     }
 
     private fun startSetNameFinishedActivity(welcomeText: String) {
