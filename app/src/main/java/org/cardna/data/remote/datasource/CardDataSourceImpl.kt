@@ -52,6 +52,9 @@ class CardDataSourceImpl @Inject constructor(
         return cardService.getCardAll()
     }
 
+    override suspend fun getCardYouStore(): ResponseCardYouStoreData {
+        return cardService.getCardYouStore()
+    }
     override suspend fun getOtherMainCard(userId: Int): ResponseMainCardData {
         return cardService.getOtherMainCard(userId)
     }

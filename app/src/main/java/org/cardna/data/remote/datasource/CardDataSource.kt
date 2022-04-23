@@ -1,11 +1,6 @@
 package org.cardna.data.remote.datasource
 
 import org.cardna.data.remote.model.card.*
-import org.cardna.data.remote.model.card.ResponseDeleteCardData
-import org.cardna.data.remote.model.card.ResponseDetailCardData
-import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
-import org.cardna.data.remote.model.card.ResponseMainCardData
-import retrofit2.http.GET
 
 interface CardDataSource {
 
@@ -31,4 +26,5 @@ interface CardDataSource {
 
     suspend fun getCardAll(): ResponseCardAllData
 
+    suspend fun getCardYouStore(): ResponseCardYouStoreData
 }

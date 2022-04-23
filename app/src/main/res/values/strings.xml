@@ -189,4 +189,10 @@
     <string name="dialog_relation_add_friend_title">친구를 추가하시겠어요?</string>
     <string name="dialog_relation_disconnect_about">상대방에게도 친구가 취소되요</string>
 
+    <!--   CardYouStore Activity-->
+    <string name="cardyoustore_mt_title">카드너 보관함</string>
+    <string name="cardyoustore_card_title">이것은 카드너 보관함의 카드 타이틀</string>
+    <string name="cardyoustore_card_name">다빈</string>
+    <string name="cardyoustore_card_createdAt">2022/02/22</string>
+
 </resources>

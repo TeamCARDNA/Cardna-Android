@@ -70,4 +70,7 @@ interface CardService {
 
     @GET("card")
     suspend fun getCardAll(): ResponseCardAllData
+
+    @GET("card/box")
+    suspend fun getCardYouStore(): ResponseCardYouStoreData
 }

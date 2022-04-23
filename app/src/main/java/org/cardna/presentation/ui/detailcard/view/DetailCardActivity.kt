@@ -3,6 +3,8 @@ package org.cardna.presentation.ui.detailcard.view
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -86,8 +88,10 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                     val popup = showCustomPopUp(this, R.array.detail_cardyou_popup, baseContext)
                     popup.setOnItemClickListener { _, view, _, _ ->
                         if ((view as TextView).text == "보관") {
+                            shortToast("보관함에 보관되었어요!ㅎ")
                             detailCardViewModel.keepOrAddCard()
                             popup.dismiss()
+                            goPreviousActivityWithHandling()
                         } else {
                             detailCardViewModel.deleteCard()
                             popup.dismiss()
@@ -179,9 +183,9 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     }
 
     fun setCardAddClickListener() {
-        detailCardViewModel.keepOrAddCard()
         shortToast("카드너에 추가되었어요!ㅎ")
-        finish()
+        detailCardViewModel.keepOrAddCard()
+        goPreviousActivityWithHandling()
     }
 
     private fun showLikeLottie() {
@@ -191,6 +195,13 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                 CARD_YOU -> showLottie(laDetailcardLottie, CARD_YOU, "lottie_cardyou.json")
             }
         }
+    }
+
+    private fun goPreviousActivityWithHandling() {
+        Handler(Looper.getMainLooper())
+            .postDelayed({
+                finish()
+            }, 2000)
     }
 
     companion object {
