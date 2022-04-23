@@ -120,7 +120,7 @@ class CardCreateViewModel @Inject constructor(
     // 서버 통신 메서드
 
     // 카드 작성 method
-    fun makeCard(makeUriToFile: MultipartBody.Part) { // Activity 에서 선택된 이미지 uri 만 multipart data 로 바꿔서 인자로 넣어줌
+    fun makeCard(makeUriToFile: MultipartBody.Part?) { // Activity 에서 선택된 이미지 uri 만 multipart data 로 바꿔서 인자로 넣어줌
         if (id == null) {  // 카드나 작성 => friendId값 x
             val body = RequestCreateCardMeData(
                 etKeywordText.value!!,
@@ -128,7 +128,7 @@ class CardCreateViewModel @Inject constructor(
                 symbolId // 갤러리 이미지를 선택했다면 dialog 완료 버튼을 누르지 않았을 테니까 null 값일 것임
             ).toRequestBody()
 
-            if (uri == null) { // 심볼 선택
+            if (makeUriToFile == null) { // 심볼 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, null) }
                         .onSuccess { Log.d("카드나 작성 성공", it.message) }
@@ -152,7 +152,7 @@ class CardCreateViewModel @Inject constructor(
                 id
             ).toRequestBody()
 
-            if (uri == null) { // 심볼 선택
+            if (makeUriToFile== null) { // 심볼 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, null) }
                         .onSuccess { Log.d("카드너 작성 성공", it.message) }

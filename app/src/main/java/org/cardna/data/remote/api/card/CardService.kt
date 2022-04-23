@@ -26,9 +26,8 @@ interface CardService {
         @Path("cardId") cardId: Int
     ): ResponseKeepOrAddCardData
 
-    // 카드 총 개수 조회
     // 카드 전체 조회
-    @GET("card/{userId}")
+    @GET("card")
     suspend fun getCardAll(): ResponseCardAllData
 
     // 나의 카드나 조회

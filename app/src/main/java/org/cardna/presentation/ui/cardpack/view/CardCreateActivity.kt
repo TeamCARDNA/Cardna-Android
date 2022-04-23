@@ -38,8 +38,6 @@ class CardCreateActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityCardCreateBinding>(R.layout.activity_card_create) {
 
     private val cardCreateViewModel: CardCreateViewModel by viewModels()
-    // 서버 통신시 쓰이는 이 프로퍼티들과, 이를 조작하고, 서버통신 하는 메서드들 viewModel 로 이동해야 할 듯
-    // responseData 형식과 같다면, model 에 data class 를 정의하고 viewModel에서 이 type의 객체 하나를 선언해주고, 그 안으로 접근 ?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -193,10 +191,17 @@ class CardCreateActivity :
             // 카드나 만들기 버튼을 눌렀을 때
             // 1. 서버로 title, content, symbolId, uri 전송
             // symbolId - 카드 이미지 심볼 id, 이미지가 있는 경우 null을 보내주면 됨
-            cardCreateViewModel.makeCard(makeUriToFile())
+
+            // nullPointException 을 방지하기위한 분기처리
+            if(cardCreateViewModel.uri == null){
+                cardCreateViewModel.makeCard(null)
+            }
+            else
+                cardCreateViewModel.makeCard(makeUriToFile())
 
             // 2. cardCreateCompleteActivity 로 이동
-            if(cardCreateViewModel.isCardMeOrYou!!){ // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
+            if(cardCreateViewModel.isCardMeOrYou!!){
+                // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
                 val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
                 intent.putExtra(
                     "isCardMeOrYou",
@@ -207,7 +212,8 @@ class CardCreateActivity :
                 intent.putExtra("cardTitle", cardCreateViewModel.etKeywordText.value)
                 startActivity(intent)
             }
-            else{ // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
+            else{
+                // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
                 val intent = Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
                 intent.putExtra("isCardPackOrMainCard" ,
                     intent.getBooleanExtra("isCardPackOrMainCard", false))
