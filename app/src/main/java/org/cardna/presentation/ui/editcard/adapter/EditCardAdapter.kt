@@ -16,8 +16,7 @@ import timber.log.Timber
 
 class EditCardAdapter(
     val editCardDialogViewModel: EditCardDialogViewModel
-) :
-    ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()),
+) : ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()),
     ItemTouchHelperListener {
     inner class ViewHolder(private val binding: ItemEditCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -38,6 +37,7 @@ class EditCardAdapter(
                 } else {
                     clRvItem.setBackgroundResource(R.drawable.bg_main_purple_radius_8)
                 }
+                //대표카드 삭제->아이템 포지션 전달
                 ivRepresentcardeditlistDelete.setOnClickListener {
                     setNewList(adapterPosition)
                 }
@@ -46,10 +46,11 @@ class EditCardAdapter(
     }
 
     private fun setNewList(adapterPosition: Int) {
-        val newList = currentList.toMutableList()
-        newList.removeAt(adapterPosition)
+        val newList = currentList.toMutableList()  //현재 리스트 복사한다음에
+        newList.removeAt(adapterPosition) //지우려고 선택한 아이템을 현재 리스트에서 지우고
+        //삭제할거하고 남은 대표카드 수정에 있는 카드의 id만 남겨서 뷰모델한테 전달
         editCardDialogViewModel.setChangeSelectedList(newList.map { it.id } as MutableList<Int>)
-        submitList(newList)
+        submitList(newList) //삭제한거 제거한 newlist를 리사이클러뷰에 다시 뿌림
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

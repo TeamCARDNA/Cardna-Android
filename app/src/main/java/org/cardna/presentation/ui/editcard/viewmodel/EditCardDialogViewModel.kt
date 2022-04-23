@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.editcard.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,11 +23,14 @@ class EditCardDialogViewModel @Inject constructor(
     private val _cardYouList = MutableLiveData<List<CardData>>()
     val cardYouList: LiveData<List<CardData>> = _cardYouList
 
-    private val _selectedCardList = MutableLiveData<List<Int>>()
-    val selectedCardList: LiveData<List<Int>> = _selectedCardList
+    private val _selectedCardList = MutableLiveData<MutableList<Int>>()
+    val selectedCardList: LiveData<MutableList<Int>> = _selectedCardList
 
     private val _mainCardList = MutableLiveData<List<MainCard>>()
     val mainCardList: LiveData<List<MainCard>> = _mainCardList
+/*
+    private val _isSelectedCardListChange = MutableLiveData<Boolean>()
+    val isSelectedCardListChange: LiveData<Boolean> = _isSelectedCardListChange*/
 
     fun getMainCard() {
         viewModelScope.launch {
@@ -54,7 +58,7 @@ class EditCardDialogViewModel @Inject constructor(
         }
     }
 
-    fun representCardCheck() {
+/*    fun representCardCheck() {
         viewModelScope.launch {
             kotlin.runCatching {
                 cardRepository.getMainCard().data
@@ -65,10 +69,22 @@ class EditCardDialogViewModel @Inject constructor(
                 Timber.e("get main card error")
             }
         }
-    }
+    }*/
 
     fun setChangeSelectedList(selectedList: MutableList<Int>) {
-        _selectedCardList.value = selectedList
+        _selectedCardList.value = selectedList //수정에서 삭제한 애들 남긴 선택된카드리스트갱신
         Timber.d("selectedCardList : ${_selectedCardList.value}")
+    }
+
+    fun setDeleteCard(id: Int) {
+        _selectedCardList.value?.remove(id)
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","삭제")
+        _selectedCardList.value = _selectedCardList.value
+    }
+
+    fun setAddCard(id: Int) {
+        _selectedCardList.value?.add(id) //id추가
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","추가")
+        _selectedCardList.value = _selectedCardList.value
     }
 }

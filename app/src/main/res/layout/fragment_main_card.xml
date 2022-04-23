@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black">
+        android:background="@color/main_black">
 
         <LinearLayout
             android:id="@+id/cl_maincard_alarm"
@@ -146,7 +146,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:background="@color/black"
+            android:background="@color/main_black"
             android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@id/cl_maincard_page_count"
             app:layout_constraintTop_toBottomOf="@id/ll_maincard_edit_layout"

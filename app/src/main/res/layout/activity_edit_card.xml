@@ -15,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="@color/main_black"
         tools:context=".presentation.ui.editcard.view.EditCardActivity">
 
         <TextView
@@ -132,6 +132,8 @@
                     android:layout_marginTop="20dp"
                     android:nestedScrollingEnabled="true"
                     android:overScrollMode="never"
+                    app:spanCount="2"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_representcardedit_title_group"
                     app:layout_editor_absoluteX="16dp"

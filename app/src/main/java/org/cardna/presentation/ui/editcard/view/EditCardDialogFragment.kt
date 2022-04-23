@@ -12,38 +12,33 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardTabAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
 import kotlin.math.roundToInt
 
-class EditCardDialogFragment : BottomSheetDialogFragment() {
-    private var _binding: FragmentEditCardDialogBinding? = null
-    private val binding get() = _binding ?: error("View를 참조하기 위해 binding이 초기화되지 않았습니다.")
+class EditCardDialogFragment : BaseViewUtil.BaseBottomDialogFragment<FragmentEditCardDialogBinding>(R.layout.fragment_edit_card_dialog) {
 
     private lateinit var editCardTabAdapter: EditCardTabAdapter
     private val editCardDialogViewModel: EditCardDialogViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.editCardDialogViewModel = editCardDialogViewModel
         initView()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_edit_card_dialog, container, false)
-        return binding.root
+    override fun onResume() {
+        super.onResume()
+        initData()
     }
 
-    private fun initView() {
+    override fun initView() {
         (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
         binding.clBottomSheet.layoutParams.height =
             (resources.displayMetrics.heightPixels * 0.94).roundToInt()
 
-        initData()
+      //  initData()  TODO 왜필요?
         initAdapter()
         initTabLayout()
         mainCardCount()
@@ -61,10 +56,8 @@ class EditCardDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun initData() {
-        binding.editCardDialogViewModel = editCardDialogViewModel
-
-        editCardDialogViewModel.getCardAll()
-        editCardDialogViewModel.representCardCheck()
+       // editCardDialogViewModel.getCardAll()  todo 여기서 데이터 가져올 필요없지 않나,,?
+     //   editCardDialogViewModel.representCardCheck() todo 이건 왜 필요?
     }
 
     private fun initAdapter() {
@@ -80,11 +73,6 @@ class EditCardDialogFragment : BottomSheetDialogFragment() {
         editCardDialogViewModel.selectedCardList.observe(viewLifecycleOwner) {
             binding.tvRepresentcardeditCardListCount.text = it.size.toString()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        initData()
     }
 
     private fun setClickListener() {
