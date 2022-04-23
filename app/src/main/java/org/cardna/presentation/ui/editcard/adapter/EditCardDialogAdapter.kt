@@ -45,7 +45,6 @@ class EditCardDialogAdapter(val editCardDialogViewModel: EditCardDialogViewModel
                 if (selectedList.contains(data.id) && mainOrder != "null") {
                     binding.tvRepresentcardCount.apply {
                         text = "${data.mainOrder}".substring(0, 1)
-                        data.isClicked = true
                         visibility = View.VISIBLE
                     }
                 }
@@ -53,13 +52,13 @@ class EditCardDialogAdapter(val editCardDialogViewModel: EditCardDialogViewModel
                 itemView.setOnClickListener {
                     binding.tvRepresentcardCount.apply {
                         visibility =
-                            if (!data.isClicked && selectedList.size < 7) {
+                            if (visibility == View.GONE && selectedList.size < 7) {
                                 data.isClicked = true
                                 selectedList.add(data.id)
                                 text = selectedList.size.toString()
                                 View.VISIBLE
                             } else {
-                                if (data.isClicked) {
+                                if (visibility == View.VISIBLE) {
                                     selectedList.removeAt(selectedList.indexOf(data.id))
                                 }
                                 View.GONE
