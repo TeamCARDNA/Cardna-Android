@@ -8,15 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cardna.databinding.ItemCardpackCardmeBinding
 import org.cardna.data.remote.model.card.ResponseCardMeData
+import timber.log.Timber
 
 class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
     private val clickListener: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null,
 ) : ListAdapter<ResponseCardMeData.CardList.CardMe, CardPackMeRecyclerViewAdapter.CardPackMeViewHolder>(CardMeComparator()) {
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): CardPackMeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardPackMeViewHolder {
         val binding = ItemCardpackCardmeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CardPackMeViewHolder(binding)
     }
@@ -38,7 +36,7 @@ class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
                 root.setOnClickListener{
                     onCardMeClick?.invoke(cardMe)
                 }
-
+                Timber.e("CardMe onBind")
                 // 타인의 카드나이면, 공감버튼 선택하는 리스너도 달아줘야함
                 // 애초에 item_cardpack_cardme xml 파일에 공감버튼을 추가하고, id가 null이면 이를 gone 시키고,
                 // 이에 대해 리스너도 달아줘야함

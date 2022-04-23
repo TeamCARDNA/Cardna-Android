@@ -1,5 +1,7 @@
 package org.cardna.data.remote.api.card
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.cardna.data.remote.model.card.*
 import org.cardna.data.remote.model.card.ResponseDeleteCardData
 import org.cardna.data.remote.model.card.ResponseDetailCardData
@@ -24,6 +26,9 @@ interface CardService {
         @Path("cardId") cardId: Int
     ): ResponseKeepOrAddCardData
 
+    // 카드 전체 조회
+    @GET("card")
+    suspend fun getCardAll(): ResponseCardAllData
 
     // 나의 카드나 조회
     @GET("card/me")
@@ -36,23 +41,24 @@ interface CardService {
         userId: Int?
     ): ResponseCardMeData
 
-    // 친구의 카드나 조회
+    // 나의 카드너 조회
     @GET("card/you")
     suspend fun getCardYou(): ResponseCardYouData
 
-    // 타인의 카드나 조회
+    // 타인의 카드너 조회
     @GET("card/you/{userId}")
     suspend fun getOtherCardYou(
         @Path("userId")
         userId: Int?
     ): ResponseCardYouData
 
-    // 카드너 전체 조회 => 유저 본인, 친구 둘다 이 API 하나로
-    @GET("card/you/{userId}")
-    suspend fun getCardYou(
-        @Path("userId")
-        userId: Int?
-    ): ResponseCardYouData
+    // 카드나 작성, 카드너 작성 => 둘이 통합되면 CardMe 말고 Card로 통합
+    @Multipart
+    @POST("card")
+    suspend fun postCreateCardMe(
+        @PartMap body: HashMap<String, RequestBody>,
+        @Part image: MultipartBody.Part?
+    ): ResponseCreateCardData
 
     @GET("card/main")
     suspend fun getMainCard(): ResponseMainCardData
@@ -69,7 +75,7 @@ interface CardService {
     ): ResponseEditCardData
 
     @GET("card")
-    suspend fun getCardAll(): ResponseCardAllData
+    suspend fun getCardAllList(): ResponseCardAllListData
 
     @GET("card/box")
     suspend fun getCardYouStore(): ResponseCardYouStoreData

@@ -102,10 +102,40 @@
     <string name="cardpack_make_new_cardme">나에 대한 카드를 새로\n작성해보세요</string>
     <string name="cardpack_make_new_cardyou">타인이 말하는 나를 카드로\n만들어보세요</string>
     <string name="cardpack_add_cardme">카드나 작성</string>
-    <string name="cardpack_add_cardyou">카드너 작성</string>
+    <string name="cardpack_add_cardyou">카드너 추가</string>
     <string name="cardpack_friend_empty_cardme">아직 카드가 없어요</string>
     <string name="cardpack_friend_empty_cardyou">친구 소개글을 작성해보세요!</string>
     <string name="cardpack_friend_make_cardyou">카드너 작성</string>
+
+    <!-- CardCreateActivity -->
+    <string name="cardcreate_make_cardme">카드나 작성</string>
+    <string name="cardcreate_make_cardyou">카드너 작성</string>
+    <string name="cardcreate_make_cardme_title">나는</string>
+    <string name="cardcreate_make_cardyou_title">%1$s는</string>
+    <string name="cardcreate_tv_keyword_length">%1$d/14</string>
+    <string name="cardcreate_tv_detail_length">%1$d/200</string>
+    <string name="cardcreate_complete">완료</string>
+    <string name="cardcreate_bring_image">카드에 들어갈\n이미지를 넣어 보세요!</string>
+    <string name="cardcreate_keyword_hint">키워드 중심으로 표현해보세요</string>
+    <string name="cardcreate_tv_detail">더 자세하게 적어볼까요?</string>
+    <string name="cardcreate_detail_hint">이 카드의 본문을 적어주세요\n설명, 자랑, 경험 등 어떤 내용도 좋아요 :)</string>
+    <string name="cardcreate_bang">!</string>
+
+    <!-- CardCreateCompleteActivity -->
+    <string name="cardcreate_complete_cardme">카드나를 만들었어요!</string>
+    <string name="cardcreate_complete_cardyou">카드너를 만들었어요!</string>
+
+    <!-- BottomDialogImageFragment -->
+    <string name="bottom_image_complete">완료</string>
+    <string name="bottom_image_gallery">사진</string>
+    <string name="bottom_image_symbol">심볼</string>
+    <string name="bottom_image_from_gallery">갤러리에서 가져오기</string>
+
+    <!-- BottomDialogCardFragment -->
+    <string name="bottom_card_cardme">카드나 작성</string>
+    <string name="bottom_card_cardme_detail">나에 대한 카드를 새로 작성해보세요</string>
+    <string name="bottom_card_cardyou">카드너 추가</string>
+    <string name="bottom_card_cardyou_detail">카드너 보관함에서 카드를 추가해보세요</string>
 
 
     <!--    LoginActivity-->

@@ -5,7 +5,6 @@
     tools:context="org.cardna.presentation.ui.cardpack.view.CardMeFragment">
 
     <data>
-
         <import type="android.view.View" />
 
         <variable
@@ -23,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/main_black"
-            android:visibility="@{cardPackViewModel.isCardMeEmpty ? View.VISIBLE :  View.GONE}">
+            android:visibility="@{cardPackViewModel.isCardMeEmpty ? View.VISIBLE : View.GONE}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctl_bg_empty"
@@ -59,7 +58,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
 
                     <!-- 카드나 작성 리스너 달기 -->
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -137,19 +135,16 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:visibility="invisible" />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctl_cardme_not_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{cardPackViewModel.isCardMeEmpty ? View.GONE : View.VISIBLE}">
+            android:visibility="@{cardPackViewModel.isCardMeEmpty ? View.GONE : View.VISIBLE}"
+            tools:visibility="invisible">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cardme"
