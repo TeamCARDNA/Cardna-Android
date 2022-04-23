@@ -97,7 +97,7 @@
                 android:background="@drawable/bg_signup_white3_radius_10"
                 android:clickable="false"
                 android:fontFamily="@font/pretendard_semibold"
-                android:onClick="@{()->setNameActivity.setClickListener()}"
+
                 android:paddingVertical="16dp"
                 android:text="@string/signup_btn_access"
                 android:textColor="@color/white_2"

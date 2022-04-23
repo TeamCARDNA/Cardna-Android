@@ -167,9 +167,11 @@
 
     <!--        MainCardFragment-->
     <string name="maincard_tv_title">힘이들땐 하늘을 봐!</string>
+    <string name="maincard_tv_username_tag">님은</string>
     <string name="maincard_tv_edit">edit</string>
     <string name="maincard_tv_empty_title">아직 대표카드가 없어요!</string>
-    <string name="maincard_tv_empty_card_about">지우님을 잘 표현하는\n대표카드를 넣어볼까요?</string>
+    <string name="maincard_tv_empty_card_about">님을 잘 표현하는\n대표카드를 넣어볼까요?</string>
+    <string name="maincard_tv_cardpack_text">카드팩 보기 -></string>
 
     <!--    My Page  -->
     <string name="mypage_name">김다빈</string>
@@ -205,6 +207,17 @@
     <string name="edit_card_represent_before">나를 가장 잘 표현하는 카드를</string>
     <string name="edit_card_represent_gradient">대표카드</string>
     <string name="edit_card_represent_after">로 지정해보세요!</string>
+    <string name="edit_card_seven">7</string>
+    <string name="edit_card_slash">/</string>
+    <string name="edit_card_float_button_message">카드팩에서 대표카드를 선택해보세요!</string>
+
+<!--    Dialog_relation-->
+    <string name="dialog_relation_confirm">확인</string>
+    <string name="dialog_relation_cancel">취소</string>
+    <string name="dialog_relation_progressing_cancel">친구요청을 취소하시겠어요?</string>
+    <string name="dialog_relation_disconnect_title">친구를 끊으시겠어요?</string>
+    <string name="dialog_relation_add_friend_title">친구를 추가하시겠어요?</string>
+    <string name="dialog_relation_disconnect_about">상대방에게도 친구가 취소되요</string>
 
     <!--   CardYouStore Activity-->
     <string name="cardyoustore_mt_title">카드너 보관함</string>

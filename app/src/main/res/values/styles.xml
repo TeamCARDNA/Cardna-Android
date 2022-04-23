@@ -205,4 +205,25 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="relation_dialog_title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="relation_dialog_btn_text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="relation_dialog_about">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textColor">@color/white_2</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
 </resources>

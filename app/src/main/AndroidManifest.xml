@@ -33,6 +33,9 @@
             android:name="org.cardna.presentation.ui.login.LoginActivity"
             android:exported="true" />
         <activity
+            android:name="org.cardna.presentation.ui.maincard.view.MainCardActivity"
+            android:exported="false" />
+        <activity
             android:name="org.cardna.presentation.ui.editcard.view.EditCardActivity"
             android:exported="false" />
 
@@ -86,6 +89,9 @@
         <activity
             android:name="org.cardna.presentation.ui.login.SetNameFinishedActivity"
             android:exported="true" />
+        <activity
+            android:name="org.cardna.presentation.ui.login.SetNameActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

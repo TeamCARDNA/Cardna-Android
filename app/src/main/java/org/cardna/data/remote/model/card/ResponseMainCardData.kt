@@ -13,15 +13,15 @@ data class ResponseMainCardData(
         val isMyCard: Boolean,
         val relation: Any,
         val mainCardList: List<MainCard>,
-    ) {
-        data class MainCard(
-            val cardImg: String,
-            val id: Int,
-            val isMe: Boolean,
-            val mainOrder: Int,
-            val title: String
-        )
-    }
-
+    )
 }
+
+data class MainCard(
+    val cardImg: String,
+    val id: Int,
+    val isMe: Boolean,
+    val mainOrder: Int,
+    val title: String
+)
+
 

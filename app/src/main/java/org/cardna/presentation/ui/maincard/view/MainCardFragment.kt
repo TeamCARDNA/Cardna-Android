@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cardna.R
 import com.example.cardna.databinding.DialogMainCardBlockBinding
+import com.example.cardna.databinding.DialogRelationBinding
 import com.example.cardna.databinding.FragmentMainCardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
@@ -21,6 +22,8 @@ import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.editcard.view.EditCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
+import org.cardna.presentation.util.setGradientText
+import org.cardna.presentation.util.shortToast
 import timber.log.Timber
 import kotlin.math.roundToInt
 
@@ -29,30 +32,63 @@ class MainCardFragment :
     BaseViewUtil.BaseFragment<FragmentMainCardBinding>(R.layout.fragment_main_card) {
     private lateinit var mainCardAdapter: MainCardAdapter
     private val mainCardViewModel: MainCardViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+
     }
 
     override fun initView() {
         initData()
         initAdapter()
+        initDialog()
         setClickListener()
-        userBlockCheck()
+        checkUserId()
     }
 
     override fun onResume() {
         super.onResume()
         initData()
+//        checkUserId()
     }
 
     //뿌려질 데이터
     private fun initData() {
         binding.mainCardViewModel = mainCardViewModel
-        mainCardViewModel.getMainCardList()
-        mainCardViewModel.getMyPageUser()
         setInitPagePosition()
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
+    }
+
+    private fun checkUserId() {
+        var id = -1
+        if (arguments != null) {
+            val name = arguments?.getString("name")
+            id = arguments?.getInt("id", -1) ?: -1
+            mainCardViewModel.getMyPageUser(name!!)
+            setFriendIcon()
+        } else {
+            mainCardViewModel.getMyPageUser()
+        }
+        mainCardViewModel.getMainCardList(id)
+    }
+
+    private fun setFriendIcon() {
+        mainCardViewModel.relation.observe(viewLifecycleOwner) {
+            with(binding.ivMaincardFriend) {
+                when (it.toString()) {
+                    UNKNOWN -> setBackgroundResource(R.drawable.ic_mypage_friend_unchecked)
+                    FRIEND -> {
+                        setBackgroundResource(R.drawable.ic_mypage_friend_checked)
+                        binding.tvMaincardGotoCardpack.apply {
+                            this.text = requireActivity().setGradientText(this.text.toString())
+                        }
+                    }
+                    PROGRESSING -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
+                    else -> setBackgroundResource(R.drawable.ic_alarm)
+                }
+            }
+        }
     }
 
     //adapter 관련 모음
@@ -98,7 +134,15 @@ class MainCardFragment :
     private fun setClickListener() {
         setEditCardActivity()
         setAlarmActivity()
+        setCardYouWrite()
     }
+
+    private fun setCardYouWrite() {
+        binding.ivMaincardWrite.setOnClickListener {
+            requireActivity().shortToast("카드너 작성 뷰 이동")
+        }
+    }
+
 
     private fun setDetailActivity() {
         val intent = Intent(requireActivity(), DetailCardActivity::class.java).apply {
@@ -125,11 +169,66 @@ class MainCardFragment :
         }
     }
 
-    private fun userBlockCheck() {
+    private fun initDialog() {
+        val dialog = Dialog(requireActivity())
+        val relationDialog = DialogRelationBinding.inflate(dialog.layoutInflater)
+        val blockDialog = DialogMainCardBlockBinding.inflate(dialog.layoutInflater)
+
         val isBlock = mainCardViewModel.isBlocked.value
+
+        userBlockCheck(isBlock, dialog, blockDialog)
+        binding.ivMaincardFriend.setOnClickListener {
+            initRelationDialog(dialog, relationDialog)
+        }
+    }
+
+
+    private fun initRelationDialog(
+        dialog: Dialog,
+        dialogBinding: DialogRelationBinding
+    ) {
+        dialog.setContentView(dialogBinding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+        val relation = mainCardViewModel.relation.value.toString()
+        val friendId = arguments?.getInt("id", 0) ?: -1
+        with(dialogBinding) {
+            when (relation) {
+                FRIEND -> {
+                    clRelationDisconnect.visibility = View.VISIBLE
+                }
+                PROGRESSING -> {
+                    clRelationProgressingCancel.visibility = View.VISIBLE
+                }
+            }
+            setCancelDialog(dialog, this)
+            setConfirmDialog(this, friendId)
+        }
+
+    }
+
+    private fun setCancelDialog(dialog: Dialog, dialogBinding: DialogRelationBinding) {
+        dialogBinding.btnRelationCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    private fun setConfirmDialog(
+        dialogBinding: DialogRelationBinding,
+        friendId: Int
+    ) {
+        dialogBinding.btnRelationConfirm.setOnClickListener {
+            requireActivity().shortToast("친구 손절")
+            mainCardViewModel.postFriendRequest(friendId)
+        }
+    }
+
+    private fun userBlockCheck(
+        isBlock: Boolean?,
+        dialog: Dialog,
+        dialogBinding: DialogMainCardBlockBinding
+    ) {
         if (isBlock == true) {
-            val dialog = Dialog(requireActivity())
-            val dialogBinding = DialogMainCardBlockBinding.inflate(dialog.layoutInflater)
             dialog.setContentView(dialogBinding.root)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.setCancelable(false)
@@ -145,5 +244,11 @@ class MainCardFragment :
                 mainCardViewModel.saveInitCardPosition(position)
             }
         })
+    }
+
+    companion object {
+        const val UNKNOWN = "1.0"
+        const val FRIEND = "2.0"
+        const val PROGRESSING = "3.0"
     }
 }

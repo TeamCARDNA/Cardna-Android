@@ -22,7 +22,7 @@ class CardRepositoryImpl @Inject constructor(private val cardDataSource: CardDat
         return cardDataSource.putKeepOrAddCard(cardId)
     }
 
-    override suspend fun getCardAll() : ResponseCardAllData{
+    override suspend fun getCardAll(): ResponseCardAllData {
         return cardDataSource.getCardAll()
     }
 
@@ -45,7 +45,7 @@ class CardRepositoryImpl @Inject constructor(private val cardDataSource: CardDat
     override suspend fun postCreateCardMe(
         body: HashMap<String, RequestBody>,
         image: MultipartBody.Part?
-    ) : ResponseCreateCardData {
+    ): ResponseCreateCardData {
         return cardDataSource.postCreateCardMe(body, image)
     }
 
@@ -53,8 +53,16 @@ class CardRepositoryImpl @Inject constructor(private val cardDataSource: CardDat
         return cardDataSource.getMainCard()
     }
 
-    override suspend fun putEditCard(cardList: RequestEditCardData): ResponseEditCardData {
-        return cardDataSource.putEditCard(cardList)
+    override suspend fun getOtherMainCard(userId: Int): ResponseMainCardData {
+        return cardDataSource.getOtherMainCard(userId)
+    }
+
+    override suspend fun getCardAllList(): ResponseCardAllListData {
+        return cardDataSource.getCardAllList()
+    }
+
+    override suspend fun putEditCard(cards: RequestEditCardData): ResponseEditCardData {
+        return cardDataSource.putEditCard(cards)
     }
 
     override suspend fun getCardYouStore(): ResponseCardYouStoreData {

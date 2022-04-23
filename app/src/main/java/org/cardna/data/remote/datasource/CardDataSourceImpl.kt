@@ -4,6 +4,10 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.cardna.data.remote.api.card.CardService
 import org.cardna.data.remote.model.card.*
+import org.cardna.data.remote.model.card.ResponseDeleteCardData
+import org.cardna.data.remote.model.card.ResponseDetailCardData
+import org.cardna.data.remote.model.card.ResponseKeepOrAddCardData
+import org.cardna.data.remote.model.card.ResponseMainCardData
 import javax.inject.Inject
 
 class CardDataSourceImpl @Inject constructor(
@@ -22,9 +26,6 @@ class CardDataSourceImpl @Inject constructor(
         return cardService.putKeepOrAddCard(cardId)
     }
 
-    override suspend fun getCardAll(): ResponseCardAllData{
-        return cardService.getCardAll()
-    }
 
     override suspend fun getCardMe(): ResponseCardMeData {
         return cardService.getCardMe()
@@ -32,6 +33,10 @@ class CardDataSourceImpl @Inject constructor(
 
     override suspend fun getOtherCardMe(userId: Int): ResponseCardMeData {
         return cardService.getOtherCardMe(userId)
+    }
+
+    override suspend fun getCardAllList(): ResponseCardAllListData {
+        return cardService.getCardAllList()
     }
 
     override suspend fun getCardYou(): ResponseCardYouData {
@@ -45,7 +50,7 @@ class CardDataSourceImpl @Inject constructor(
     override suspend fun postCreateCardMe(
         body: HashMap<String, RequestBody>,
         image: MultipartBody.Part?
-    ) : ResponseCreateCardData {
+    ): ResponseCreateCardData {
         return cardService.postCreateCardMe(body, image)
     }
 
@@ -53,11 +58,19 @@ class CardDataSourceImpl @Inject constructor(
         return cardService.getMainCard()
     }
 
-    override suspend fun putEditCard(cardList: RequestEditCardData): ResponseEditCardData {
-        return cardService.putEditCard(cardList)
+    override suspend fun putEditCard(cards: RequestEditCardData): ResponseEditCardData {
+        return cardService.putEditCard(cards)
+    }
+
+    override suspend fun getCardAll(): ResponseCardAllData {
+        return cardService.getCardAll()
     }
 
     override suspend fun getCardYouStore(): ResponseCardYouStoreData {
         return cardService.getCardYouStore()
+    }
+
+    override suspend fun getOtherMainCard(userId: Int): ResponseMainCardData {
+        return cardService.getOtherMainCard(userId)
     }
 }

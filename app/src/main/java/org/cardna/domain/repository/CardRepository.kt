@@ -16,7 +16,7 @@ interface CardRepository {
 
     suspend fun putKeepOrAddCard(cardId: Int): ResponseKeepOrAddCardData
 
-    suspend fun getCardAll() : ResponseCardAllData
+    suspend fun getCardAll(): ResponseCardAllData
 
     suspend fun getCardMe(): ResponseCardMeData
 
@@ -26,11 +26,18 @@ interface CardRepository {
 
     suspend fun getOtherCardYou(cardId: Int): ResponseCardYouData
 
-    suspend fun postCreateCardMe(body: HashMap<String, RequestBody>, image: MultipartBody.Part?) : ResponseCreateCardData
+    suspend fun postCreateCardMe(
+        body: HashMap<String, RequestBody>,
+        image: MultipartBody.Part?
+    ): ResponseCreateCardData
 
-    suspend fun getMainCard() : ResponseMainCardData
+    suspend fun getMainCard(): ResponseMainCardData
 
-    suspend fun putEditCard(cardList: RequestEditCardData): ResponseEditCardData
+    suspend fun getCardAllList(): ResponseCardAllListData
+
+    suspend fun getOtherMainCard(userId: Int): ResponseMainCardData
+
+    suspend fun putEditCard(cards: RequestEditCardData): ResponseEditCardData
 
     suspend fun getCardYouStore(): ResponseCardYouStoreData
 }

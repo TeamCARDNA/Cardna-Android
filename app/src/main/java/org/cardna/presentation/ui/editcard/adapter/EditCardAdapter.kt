@@ -2,19 +2,30 @@ package org.cardna.presentation.ui.editcard.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardBinding
-import org.cardna.data.remote.model.card.ResponseMainCardData
+import org.cardna.data.remote.model.card.MainCard
+import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
+import org.cardna.presentation.util.ItemTouchHelperListener
+import timber.log.Timber
 
-class EditCardAdapter :
-    ListAdapter<ResponseMainCardData.Data.MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()) {
+class EditCardAdapter(
+    val editCardDialogViewModel: EditCardDialogViewModel
+) :
+    ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()),
+    ItemTouchHelperListener {
     inner class ViewHolder(private val binding: ItemEditCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: ResponseMainCardData.Data.MainCard) {
+        init {
+            editCardDialogViewModel.setChangeSelectedList(currentList.map { it.id } as MutableList<Int>)
+        }
+
+        fun onBind(data: MainCard) {
             with(binding) {
                 Glide
                     .with(itemView.context)
@@ -27,20 +38,24 @@ class EditCardAdapter :
                 } else {
                     clRvItem.setBackgroundResource(R.drawable.bg_main_purple_radius_8)
                 }
-
                 ivRepresentcardeditlistDelete.setOnClickListener {
-                    val newList = currentList.toMutableList()
-                    newList.removeAt(adapterPosition)
-                    submitList(newList)
-                    notifyItemRemoved(adapterPosition)
+                    setNewList(adapterPosition)
                 }
             }
         }
     }
 
+    private fun setNewList(adapterPosition: Int) {
+        val newList = currentList.toMutableList()
+        newList.removeAt(adapterPosition)
+        editCardDialogViewModel.setChangeSelectedList(newList.map { it.id } as MutableList<Int>)
+        submitList(newList)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemEditCardBinding.inflate(layoutInflater, parent, false)
+
         return ViewHolder(binding)
     }
 
@@ -49,19 +64,32 @@ class EditCardAdapter :
         holder.onBind(data)
     }
 
-    class EditCardComparator : DiffUtil.ItemCallback<ResponseMainCardData.Data.MainCard>() {
+    override fun onItemMove(from_position: Int, to_position: Int): Boolean {
+        val item = currentList[from_position]
+        currentList.removeAt(from_position)
+        currentList.add(to_position, item)
+        notifyItemMoved(from_position, to_position)
+        return true
+    }
+
+    override fun onItemSwipe(position: Int) {
+
+    }
+
+    class EditCardComparator : DiffUtil.ItemCallback<MainCard>() {
         override fun areItemsTheSame(
-            oldItem: ResponseMainCardData.Data.MainCard,
-            newItem: ResponseMainCardData.Data.MainCard
+            oldItem: MainCard,
+            newItem: MainCard
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: ResponseMainCardData.Data.MainCard,
-            newItem: ResponseMainCardData.Data.MainCard
+            oldItem: MainCard,
+            newItem: MainCard
         ): Boolean {
             return oldItem == newItem
         }
     }
+
 }
