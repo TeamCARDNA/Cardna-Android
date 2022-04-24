@@ -11,21 +11,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
-import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.setGradientText
+import timber.log.Timber
 
 @AndroidEntryPoint
 class EditCardActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityEditCardBinding>(R.layout.activity_edit_card) {
     private val editCardViewModel: EditCardViewModel by viewModels()
-    private val editCardDialogViewModel: EditCardDialogViewModel by viewModels()
 
     private lateinit var editCardAdapter: EditCardAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.editCardViewModel = editCardViewModel
         initView()
     }
 
@@ -39,17 +37,17 @@ class EditCardActivity :
     }
 
     private fun initData() {
+        binding.editCardViewModel = editCardViewModel
         editCardViewModel.getMainCard()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        initData()
+        editCardViewModel.mainCardList.observe(this) {
+            val list = it.map { it.id }
+            Timber.d("init submit edit card : $list")
+        }
     }
 
     //대표카드 리사이클러뷰 어댑터
     private fun initAdapter() {
-        editCardAdapter = EditCardAdapter(editCardDialogViewModel)
+        editCardAdapter = EditCardAdapter(editCardViewModel)
         with(binding.rvRepresentcardeditContainer) {
             layoutManager = GridLayoutManager(this@EditCardActivity, 2)
             adapter = editCardAdapter
@@ -65,7 +63,6 @@ class EditCardActivity :
     }
 
     private fun setClickListener() {
-
         putEditCard()
         startBottomSheetDialog()
     }
@@ -74,7 +71,7 @@ class EditCardActivity :
         binding.fabRepresentcardedit.setOnClickListener {
             val mainCardList = editCardAdapter.currentList.map { it.id }
             val bottomSheetDialog =
-                EditCardDialogFragment(mainCardList)
+                EditCardDialogFragment()
             bottomSheetDialog.show(supportFragmentManager, "init bottom_sheet")
         }
     }

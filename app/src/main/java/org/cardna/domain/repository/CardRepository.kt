@@ -37,7 +37,7 @@ interface CardRepository {
 
     suspend fun getOtherMainCard(userId: Int): ResponseMainCardData
 
-    suspend fun putEditCard(cards: RequestEditCardData): ResponseEditCardData
+    suspend fun putEditCard(cards: RequestEditCardData): ResponseMainCardData
 
     suspend fun getCardYouStore(): ResponseCardYouStoreData
 }

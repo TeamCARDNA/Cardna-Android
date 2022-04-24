@@ -2,7 +2,6 @@ package org.cardna.presentation.ui.editcard.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,18 +9,17 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardBinding
 import org.cardna.data.remote.model.card.MainCard
-import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
+import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 import org.cardna.presentation.util.ItemTouchHelperListener
-import timber.log.Timber
 
 class EditCardAdapter(
-    val editCardDialogViewModel: EditCardDialogViewModel
+    val editCardViewModel: EditCardViewModel
 ) : ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()),
     ItemTouchHelperListener {
     inner class ViewHolder(private val binding: ItemEditCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            editCardDialogViewModel.setChangeSelectedList(currentList.map { it.id } as MutableList<Int>)
+            editCardViewModel.setChangeSelectedList(currentList.map { it.id } as MutableList<Int>)
         }
 
         fun onBind(data: MainCard) {
@@ -49,7 +47,7 @@ class EditCardAdapter(
         val newList = currentList.toMutableList()  //현재 리스트 복사한다음에
         newList.removeAt(adapterPosition) //지우려고 선택한 아이템을 현재 리스트에서 지우고
         //삭제할거하고 남은 대표카드 수정에 있는 카드의 id만 남겨서 뷰모델한테 전달
-        editCardDialogViewModel.setChangeSelectedList(newList.map { it.id } as MutableList<Int>)
+        editCardViewModel.setChangeSelectedList(newList.map { it.id } as MutableList<Int>)
         submitList(newList) //삭제한거 제거한 newlist를 리사이클러뷰에 다시 뿌림
     }
 

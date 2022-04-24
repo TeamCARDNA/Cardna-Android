@@ -1,7 +1,6 @@
 package org.cardna.presentation.ui.editcard.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +12,11 @@ import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardDialogBinding
 import org.cardna.data.remote.model.card.CardData
-import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
+import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 
 class EditCardDialogAdapter(
     val lifecycleOwner: LifecycleOwner,
-    val editCardDialogViewModel: EditCardDialogViewModel
+    val editCardViewModel: EditCardViewModel
 ) :
     ListAdapter<CardData, EditCardDialogAdapter.ViewHolder>(EditCardDialogComparator()) {
 
@@ -34,7 +33,7 @@ class EditCardDialogAdapter(
                 clRvItem.setBackgroundResource(setBackground(data.isMe))
             }
 
-            editCardDialogViewModel.selectedCardList.observe(lifecycleOwner) { selectedCardList ->
+            editCardViewModel.selectedCardList.observe(lifecycleOwner) { selectedCardList ->
                 for (list in selectedCardList) {
                     if (list == data.id) {
                         binding.tvRepresentcardCount.text =
@@ -45,19 +44,19 @@ class EditCardDialogAdapter(
             }
 
             binding.tvRepresentcardCount.apply {
-                editCardDialogViewModel.selectedCardList.observe(lifecycleOwner) { selectedCardList ->
+                editCardViewModel.selectedCardList.observe(lifecycleOwner) { selectedCardList ->
                     itemView.setOnClickListener {
                         visibility =
                                 //선택안된애면 선택&&7개미만일때만
                             if (visibility == View.INVISIBLE && selectedCardList.size < 7) {
                                 //선택안된애면 선택해서 추가
-                                editCardDialogViewModel.setAddCard(data.id)
+                                editCardViewModel.setAddCard(data.id)
                                 //가장 마지막에 추가되는거니까 리스트의 마지막 사이즈
                                 text = selectedCardList.size.toString()
                                 View.VISIBLE
                             } else {
                                 if (visibility == View.VISIBLE) { //이미 선택된 애면 선택해제
-                                    editCardDialogViewModel.setDeleteCard(data.id)
+                                    editCardViewModel.setDeleteCard(data.id)
                                 }
                                 View.INVISIBLE
                             }
