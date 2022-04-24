@@ -1,6 +1,8 @@
 package org.cardna.presentation.ui.editcard.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,18 +10,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardBinding
+import okhttp3.internal.format
 import org.cardna.data.remote.model.card.MainCard
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
+import org.cardna.presentation.util.ItemTouchHelperCallback
 import org.cardna.presentation.util.ItemTouchHelperListener
+import timber.log.Timber
+import java.util.*
 
 class EditCardAdapter(
     val editCardViewModel: EditCardViewModel
 ) : ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()),
     ItemTouchHelperListener {
+    lateinit var changedList: MutableList<MainCard>
+
     inner class ViewHolder(private val binding: ItemEditCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             editCardViewModel.setChangeSelectedList(currentList.map { it.id } as MutableList<Int>)
+            changedList = currentList.toMutableList()
         }
 
         fun onBind(data: MainCard) {
@@ -64,10 +73,13 @@ class EditCardAdapter(
     }
 
     override fun onItemMove(from_position: Int, to_position: Int): Boolean {
-        val item = currentList[from_position]
-        currentList.removeAt(from_position)
-        currentList.add(to_position, item)
+        val list = currentList.toMutableList()
+        val item = list[from_position]
+        list.removeAt(from_position)
+        list.add(to_position, item)
         notifyItemMoved(from_position, to_position)
+        changedList = list
+        Timber.d("list- adapter : ${list.map { it.id }}")
         return true
     }
 
