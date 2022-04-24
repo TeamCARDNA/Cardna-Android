@@ -18,6 +18,10 @@ import androidx.core.text.set
 import androidx.core.text.toSpannable
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.cardna.R
 import org.cardna.CardNaApplication
@@ -127,4 +131,28 @@ fun Context.setGradientText(inputText: String): Spannable {
     spannable[0..inputText.length] =
         LinearGradientSpan(inputText, inputText, green, purple)
     return spannable
+}
+
+ fun Context.getPageTransformer(): ViewPager2.PageTransformer {
+    val compositePageTransformer = CompositePageTransformer()
+    compositePageTransformer.addTransformer(MarginPageTransformer((20 * resources.displayMetrics.density).roundToInt()))
+
+    return compositePageTransformer
+}
+
+fun Context.viewPagerAnimation(viewpager : ViewPager2) {
+    val compositePageTransformer = getPageTransformer()
+    with(viewpager) {
+        clipToPadding = false
+        clipChildren = false
+        offscreenPageLimit = 1
+        setPageTransformer(compositePageTransformer)
+        setPadding(
+            (56 * resources.displayMetrics.density).roundToInt(),
+            0,
+            (56 * resources.displayMetrics.density).roundToInt(),
+            0
+        )
+        getChildAt(0).overScrollMode = androidx.recyclerview.widget.RecyclerView.OVER_SCROLL_NEVER
+    }
 }

@@ -28,7 +28,7 @@ interface CardDataSource {
 
     suspend fun getOtherMainCard(userId: Int): ResponseMainCardData
 
-    suspend fun putEditCard(cards: RequestEditCardData): ResponseEditCardData
+    suspend fun putEditCard(cards: RequestEditCardData): ResponseMainCardData
 
     suspend fun postCreateCardMe(body: HashMap<String, RequestBody>, image: MultipartBody.Part?) : ResponseCreateCardData
 
