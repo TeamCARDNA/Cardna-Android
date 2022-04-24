@@ -15,12 +15,14 @@ import com.example.cardna.databinding.ItemEditCardDialogBinding
 import org.cardna.data.remote.model.card.CardData
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
 
-class EditCardDialogAdapter(val lifecycleOwer: LifecycleOwner, val editCardDialogViewModel: EditCardDialogViewModel) :
+class EditCardDialogAdapter(
+    val lifecycleOwner: LifecycleOwner,
+    val editCardDialogViewModel: EditCardDialogViewModel
+) :
     ListAdapter<CardData, EditCardDialogAdapter.ViewHolder>(EditCardDialogComparator()) {
 
-
-    inner class ViewHolder(private val binding: ItemEditCardDialogBinding) : RecyclerView.ViewHolder(binding.root) {
-
+    inner class ViewHolder(private val binding: ItemEditCardDialogBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun onBind(data: CardData) {
             with(binding) {
@@ -32,30 +34,33 @@ class EditCardDialogAdapter(val lifecycleOwer: LifecycleOwner, val editCardDialo
                 clRvItem.setBackgroundResource(setBackground(data.isMe))
             }
 
-            editCardDialogViewModel.selectedCardList.observe(lifecycleOwer) { selectedCardList ->
+            editCardDialogViewModel.selectedCardList.observe(lifecycleOwner) { selectedCardList ->
                 for (list in selectedCardList) {
                     if (list == data.id) {
-                        binding.tvRepresentcardCount.text = (selectedCardList.indexOf(data.id) + 1).toString()
+                        binding.tvRepresentcardCount.text =
+                            (selectedCardList.indexOf(data.id) + 1).toString()
                         binding.tvRepresentcardCount.visibility = View.VISIBLE
                     }
                 }
             }
 
             binding.tvRepresentcardCount.apply {
-                editCardDialogViewModel.selectedCardList.observe(lifecycleOwer) { selectedCardList ->
+                editCardDialogViewModel.selectedCardList.observe(lifecycleOwner) { selectedCardList ->
                     itemView.setOnClickListener {
-                        visibility = if (visibility == View.INVISIBLE && selectedCardList.size < 7) { //선택안된애면 선택&&7개미만일때만
-                            editCardDialogViewModel.setAddCard(data.id)  //선택안된애면 선택해서 추가
-                            text = selectedCardList.size.toString() //가장 마지막에 추가되는거니까 리스트의 마지막 사이즈
-
-                            View.VISIBLE
-                        } else {
-                            if (visibility == View.VISIBLE) { //이미 선택된 애면 선택해제
-                                editCardDialogViewModel.setDeleteCard(data.id)
+                        visibility =
+                                //선택안된애면 선택&&7개미만일때만
+                            if (visibility == View.INVISIBLE && selectedCardList.size < 7) {
+                                //선택안된애면 선택해서 추가
+                                editCardDialogViewModel.setAddCard(data.id)
+                                //가장 마지막에 추가되는거니까 리스트의 마지막 사이즈
+                                text = selectedCardList.size.toString()
+                                View.VISIBLE
+                            } else {
+                                if (visibility == View.VISIBLE) { //이미 선택된 애면 선택해제
+                                    editCardDialogViewModel.setDeleteCard(data.id)
+                                }
+                                View.INVISIBLE
                             }
-
-                            View.INVISIBLE
-                        }
                     }
                 }
             }

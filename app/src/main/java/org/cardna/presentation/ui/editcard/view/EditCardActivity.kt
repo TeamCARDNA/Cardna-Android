@@ -72,7 +72,12 @@ class EditCardActivity :
 
     private fun startBottomSheetDialog() {
         binding.fabRepresentcardedit.setOnClickListener {
-            val bottomSheetDialog = EditCardDialogFragment()
+            var mainCardList: List<Int> = emptyList()
+            editCardViewModel.mainCardList.observe(this) { list ->
+                mainCardList = list.map { it.id }
+            }
+            val bottomSheetDialog =
+                EditCardDialogFragment(mainCardList)
             bottomSheetDialog.show(supportFragmentManager, "init bottom_sheet")
         }
     }

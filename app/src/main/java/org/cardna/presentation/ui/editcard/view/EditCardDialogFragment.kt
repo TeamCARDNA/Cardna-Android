@@ -12,12 +12,15 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import org.cardna.data.remote.model.card.MainCard
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardTabAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
+import timber.log.Timber
 import kotlin.math.roundToInt
 
-class EditCardDialogFragment : BaseViewUtil.BaseBottomDialogFragment<FragmentEditCardDialogBinding>(R.layout.fragment_edit_card_dialog) {
+class EditCardDialogFragment(val mainCardList: List<Int>) :
+    BaseViewUtil.BaseBottomDialogFragment<FragmentEditCardDialogBinding>(R.layout.fragment_edit_card_dialog) {
 
     private lateinit var editCardTabAdapter: EditCardTabAdapter
     private val editCardDialogViewModel: EditCardDialogViewModel by activityViewModels()
@@ -28,9 +31,9 @@ class EditCardDialogFragment : BaseViewUtil.BaseBottomDialogFragment<FragmentEdi
         initView()
     }
 
-    override fun onResume() {
-        super.onResume()
-        initData()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        editCardDialogViewModel.setChangeSelectedList(mainCardList as MutableList<Int>)
     }
 
     override fun initView() {
@@ -38,7 +41,6 @@ class EditCardDialogFragment : BaseViewUtil.BaseBottomDialogFragment<FragmentEdi
         binding.clBottomSheet.layoutParams.height =
             (resources.displayMetrics.heightPixels * 0.94).roundToInt()
 
-      //  initData()  TODO 왜필요?
         initAdapter()
         initTabLayout()
         mainCardCount()
@@ -53,11 +55,6 @@ class EditCardDialogFragment : BaseViewUtil.BaseBottomDialogFragment<FragmentEdi
         ) { tab, position ->
             tab.text = tabLabel[position]
         }.attach()
-    }
-
-    private fun initData() {
-       // editCardDialogViewModel.getCardAll()  todo 여기서 데이터 가져올 필요없지 않나,,?
-     //   editCardDialogViewModel.representCardCheck() todo 이건 왜 필요?
     }
 
     private fun initAdapter() {

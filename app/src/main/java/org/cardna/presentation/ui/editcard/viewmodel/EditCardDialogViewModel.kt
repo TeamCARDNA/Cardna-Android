@@ -78,13 +78,13 @@ class EditCardDialogViewModel @Inject constructor(
 
     fun setDeleteCard(id: Int) {
         _selectedCardList.value?.remove(id)
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","삭제")
+        Timber.d("삭제")
         _selectedCardList.value = _selectedCardList.value
     }
 
     fun setAddCard(id: Int) {
         _selectedCardList.value?.add(id) //id추가
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","추가")
+        Timber.d("추가")
         _selectedCardList.value = _selectedCardList.value
     }
 }

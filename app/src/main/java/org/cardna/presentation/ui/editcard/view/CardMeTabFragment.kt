@@ -36,7 +36,7 @@ class CardMeTabFragment : BaseViewUtil.BaseFragment<FragmentCardMeTabBinding>(R.
     }
 
     private fun initAdapter() {
-        editCardDialogAdapter = EditCardDialogAdapter(lifecycleOwer = viewLifecycleOwner, editCardDialogViewModel)
+        editCardDialogAdapter = EditCardDialogAdapter(lifecycleOwner = viewLifecycleOwner, editCardDialogViewModel)
         editCardDialogViewModel.cardMeList.observe(viewLifecycleOwner) { it ->
             it.map { it.isMe = true }
             editCardDialogAdapter.apply { submitList(it) }

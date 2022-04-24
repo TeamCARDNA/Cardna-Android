@@ -37,7 +37,7 @@ class CardYouTabFragment :
     }
 
     private fun initAdapter() {
-        editCardDialogAdapter = EditCardDialogAdapter(lifecycleOwer = viewLifecycleOwner,editCardDialogViewModel)
+        editCardDialogAdapter = EditCardDialogAdapter(lifecycleOwner = viewLifecycleOwner,editCardDialogViewModel)
 
         editCardDialogViewModel.cardYouList.observe(viewLifecycleOwner) { it ->
             it.map { it.isMe = false }
