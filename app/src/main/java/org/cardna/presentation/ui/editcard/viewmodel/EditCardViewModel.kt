@@ -88,7 +88,7 @@ class EditCardViewModel @Inject constructor(
         _selectedCardList.value = _selectedCardList.value
     }
 
-    fun setChangeMainCardList(mainCardList: MutableList<Int>) {
-
+    fun setChangeMainCardList(mainCardList: MutableList<MainCard>) {
+        _mainCardList.value = mainCardList
     }
 }
