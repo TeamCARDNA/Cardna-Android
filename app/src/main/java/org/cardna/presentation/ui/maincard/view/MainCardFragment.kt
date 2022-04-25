@@ -18,12 +18,14 @@ import com.example.cardna.databinding.FragmentMainCardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
+import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.editcard.view.EditCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 import org.cardna.presentation.util.setGradientText
 import org.cardna.presentation.util.shortToast
+import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
 import kotlin.math.roundToInt
 
@@ -50,7 +52,7 @@ class MainCardFragment :
     override fun onResume() {
         super.onResume()
         initData()
-//        checkUserId()
+        checkUserId()
     }
 
     //뿌려질 데이터
@@ -85,7 +87,6 @@ class MainCardFragment :
                         }
                     }
                     PROGRESSING -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
-                    else -> setBackgroundResource(R.drawable.ic_alarm)
                 }
             }
         }
@@ -102,32 +103,8 @@ class MainCardFragment :
         }
         with(binding.vpMaincardList) {
             adapter = mainCardAdapter
-            viewPagerAnimation()
+            requireActivity().viewPagerAnimation(binding.vpMaincardList)
         }
-    }
-
-    private fun viewPagerAnimation() {
-        val compositePageTransformer = getPageTransformer()
-        with(binding.vpMaincardList) {
-            clipToPadding = false
-            clipChildren = false
-            offscreenPageLimit = 1
-            setPageTransformer(compositePageTransformer)
-            setPadding(
-                (56 * resources.displayMetrics.density).roundToInt(),
-                0,
-                (56 * resources.displayMetrics.density).roundToInt(),
-                0
-            )
-            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-        }
-    }
-
-    private fun getPageTransformer(): ViewPager2.PageTransformer {
-        val compositePageTransformer = CompositePageTransformer()
-        compositePageTransformer.addTransformer(MarginPageTransformer((20 * resources.displayMetrics.density).roundToInt()))
-
-        return compositePageTransformer
     }
 
     //click listener
@@ -139,10 +116,17 @@ class MainCardFragment :
 
     private fun setCardYouWrite() {
         binding.ivMaincardWrite.setOnClickListener {
-            requireActivity().shortToast("카드너 작성 뷰 이동")
+            val friendId = arguments?.getInt("friendId", -1)
+            val name = arguments?.getString("name")
+            val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
+                putExtra("isCardMeOrYou", CardCreateActivity.CARD_YOU)
+                putExtra("id", friendId)
+                putExtra("name", name)
+                putExtra("isCardPackOrMainCard", CardCreateActivity.CARD_YOU)
+                startActivity(this)
+            }
         }
     }
-
 
     private fun setDetailActivity() {
         val intent = Intent(requireActivity(), DetailCardActivity::class.java).apply {
@@ -178,49 +162,98 @@ class MainCardFragment :
 
         userBlockCheck(isBlock, dialog, blockDialog)
         binding.ivMaincardFriend.setOnClickListener {
-            initRelationDialog(dialog, relationDialog)
+            initRelationDialogTest(dialog, relationDialog)
         }
     }
 
+//    private fun initRelationDialog(
+//        dialog: Dialog,
+//        dialogBinding: DialogRelationBinding
+//    ) {
+//        dialog.setContentView(dialogBinding.root)
+//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        dialog.show()
+//        val relation = mainCardViewModel.relation.value.toString()
+//        val friendId = arguments?.getInt("id", 0) ?: -1
+//        with(dialogBinding) {
+//            when (relation) {
+//                FRIEND -> {
+//                    clRelationDisconnect.visibility = View.VISIBLE
+//                }
+//                PROGRESSING -> {
+//                    clRelationProgressingCancel.visibility = View.VISIBLE
+//                }
+//            }
+//            setCancelDialog(dialog, this)
+////            setConfirmDialog(this, friendId)
+//        }
+//
+//    }
 
-    private fun initRelationDialog(
+    private fun initRelationDialogTest(
         dialog: Dialog,
-        dialogBinding: DialogRelationBinding
+        dialogBinding: DialogRelationBinding,
     ) {
         dialog.setContentView(dialogBinding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
-        val relation = mainCardViewModel.relation.value.toString()
         val friendId = arguments?.getInt("id", 0) ?: -1
+
+        //relation 이거를 observe해야함
+        val relation = mainCardViewModel.relation.value.toString()
         with(dialogBinding) {
             when (relation) {
-                FRIEND -> {
+                MainCardActivity.UNKNOWN -> {
+                    clRelationAddFriend.visibility = View.VISIBLE
+                }
+                MainCardActivity.FRIEND -> {
                     clRelationDisconnect.visibility = View.VISIBLE
                 }
-                PROGRESSING -> {
+                MainCardActivity.PROGRESSING -> {
                     clRelationProgressingCancel.visibility = View.VISIBLE
                 }
             }
-            setCancelDialog(dialog, this)
-            setConfirmDialog(this, friendId)
+            setConfirmDialog(dialog, dialogBinding, friendId)
+            setCancelDialog(dialog, dialogBinding)
         }
-
     }
 
     private fun setCancelDialog(dialog: Dialog, dialogBinding: DialogRelationBinding) {
         dialogBinding.btnRelationCancel.setOnClickListener {
-            dialog.dismiss()
+            dialogDismiss(dialog, dialogBinding)
         }
     }
 
+//    private fun setConfirmDialog(
+//        dialogBinding: DialogRelationBinding,
+//        friendId: Int
+//    ) {
+//        dialogBinding.btnRelationConfirm.setOnClickListener {
+//            requireActivity().shortToast("친구 손절")
+//            mainCardViewModel.postFriendRequest(friendId)
+//        }
+//    }
+
     private fun setConfirmDialog(
+        dialog: Dialog,
         dialogBinding: DialogRelationBinding,
         friendId: Int
     ) {
         dialogBinding.btnRelationConfirm.setOnClickListener {
-            requireActivity().shortToast("친구 손절")
             mainCardViewModel.postFriendRequest(friendId)
+            mainCardViewModel.getMainCardList(friendId)
+            dialogDismiss(dialog, dialogBinding)
         }
+    }
+
+
+    private fun dialogDismiss(dialog: Dialog, relationDialog: DialogRelationBinding) {
+        with(relationDialog) {
+            clRelationAddFriend.visibility = View.INVISIBLE
+            clRelationDisconnect.visibility = View.INVISIBLE
+            clRelationProgressingCancel.visibility = View.INVISIBLE
+        }
+        dialog.dismiss()
     }
 
     private fun userBlockCheck(

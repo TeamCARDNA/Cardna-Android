@@ -17,10 +17,14 @@ import com.example.cardna.databinding.ActivityMainCardBinding
 import com.example.cardna.databinding.DialogRelationBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
+import org.cardna.presentation.ui.cardpack.view.CardCreateActivity_GeneratedInjector
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
+import org.cardna.presentation.util.getPageTransformer
 import org.cardna.presentation.util.shortToast
+import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
 import kotlin.math.roundToInt
 
@@ -39,6 +43,11 @@ class MainCardActivity :
         initAdapter()
         initData()
         initDialog()
+        setClickListener()
+    }
+
+    private fun setClickListener() {
+        setCardYouWrite()
     }
 
     override fun onResume() {
@@ -50,11 +59,19 @@ class MainCardActivity :
         val friendId = intent.getIntExtra("friendId", -1)
         val name = intent.getStringExtra("name").plus(getString(R.string.maincard_tv_username_tag))
         binding.mainCardViewModel = mainCardViewModel
+        mainCardViewModel.getMainCardList(friendId)
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
         binding.tvMaincardUserName.text = name
-
-        mainCardViewModel.getMainCardList(friendId)
         setInitPagePosition()
+    }
+
+    private fun dialogDismiss(dialog: Dialog, relationDialog: DialogRelationBinding) {
+        with(relationDialog) {
+            clRelationAddFriend.visibility = View.INVISIBLE
+            clRelationDisconnect.visibility = View.INVISIBLE
+            clRelationProgressingCancel.visibility = View.INVISIBLE
+        }
+        dialog.dismiss()
     }
 
     private fun initDialog() {
@@ -86,17 +103,19 @@ class MainCardActivity :
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
         val friendId = intent.getIntExtra("friendId", 0)
+
+        //relation 이거를 observe해야함
         val relation = mainCardViewModel.relation.value.toString()
         with(dialogBinding) {
             when (relation) {
                 UNKNOWN -> {
-                    clRelationAddFriend.apply { this.isVisible = !this.isVisible }
+                    clRelationAddFriend.visibility = View.VISIBLE
                 }
                 FRIEND -> {
-                    clRelationDisconnect.apply { this.isVisible = !this.isVisible }
+                    clRelationDisconnect.visibility = View.VISIBLE
                 }
                 PROGRESSING -> {
-                    clRelationProgressingCancel.apply { this.isVisible = !this.isVisible }
+                    clRelationProgressingCancel.visibility = View.VISIBLE
                 }
             }
             setCancelDialog(dialog, this)
@@ -106,7 +125,7 @@ class MainCardActivity :
 
     private fun setCancelDialog(dialog: Dialog, dialogBinding: DialogRelationBinding) {
         dialogBinding.btnRelationCancel.setOnClickListener {
-            dialog.dismiss()
+            dialogDismiss(dialog, dialogBinding)
         }
     }
 
@@ -118,7 +137,7 @@ class MainCardActivity :
         dialogBinding.btnRelationConfirm.setOnClickListener {
             mainCardViewModel.postFriendRequest(friendId)
             mainCardViewModel.getMainCardList(friendId)
-            dialog.dismiss()
+            dialogDismiss(dialog, dialogBinding)
         }
     }
 
@@ -142,43 +161,33 @@ class MainCardActivity :
         }
         with(binding.vpMaincardList) {
             adapter = mainCardAdapter
-            viewPagerAnimation()
+            viewPagerAnimation(binding.vpMaincardList)
         }
     }
 
     private fun setDetailActivity() {
         val intent = Intent(this, DetailCardActivity::class.java).apply {
             mainCardViewModel.cardPosition.value?.let {
-                mainCardViewModel.cardList.value?.get(it)?.let {
-                    putExtra(BaseViewUtil.CARD_ID, it.id)
+                mainCardViewModel.cardList.value?.get(it)?.let { card ->
+                    putExtra(BaseViewUtil.CARD_ID, card.id)
                 }
             }
             startActivity(this)
         }
     }
 
-    private fun viewPagerAnimation() {
-        val compositePageTransformer = getPageTransformer()
-        with(binding.vpMaincardList) {
-            clipToPadding = false
-            clipChildren = false
-            offscreenPageLimit = 1
-            setPageTransformer(compositePageTransformer)
-            setPadding(
-                (56 * resources.displayMetrics.density).roundToInt(),
-                0,
-                (56 * resources.displayMetrics.density).roundToInt(),
-                0
-            )
-            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+    private fun setCardYouWrite() {
+        binding.ivMaincardWrite.setOnClickListener {
+            val friendId = intent.getIntExtra("friendId", 0)
+            val name = intent.getStringExtra("name")
+            val intentCardYou = Intent(this, CardCreateActivity::class.java).apply {
+                putExtra("isCardMeOrYou", CardCreateActivity.CARD_YOU)
+                putExtra("id", friendId)
+                putExtra("name", name)
+                putExtra("isCardPackOrMainCard", CardCreateActivity.CARD_YOU)
+                startActivity(this)
+            }
         }
-    }
-
-    private fun getPageTransformer(): ViewPager2.PageTransformer {
-        val compositePageTransformer = CompositePageTransformer()
-        compositePageTransformer.addTransformer(MarginPageTransformer((20 * resources.displayMetrics.density).roundToInt()))
-
-        return compositePageTransformer
     }
 
     companion object {

@@ -72,7 +72,7 @@ interface CardService {
     @PUT("card/main")
     suspend fun putEditCard(
         @Body body: RequestEditCardData
-    ): ResponseEditCardData
+    ): ResponseMainCardData
 
     @GET("card")
     suspend fun getCardAllList(): ResponseCardAllListData

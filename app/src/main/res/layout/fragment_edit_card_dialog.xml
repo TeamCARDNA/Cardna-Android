@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="editCardDialogViewModel"
-            type="org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel" />
+            name="editCardViewModel"
+            type="org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel" />
 
     </data>
 
