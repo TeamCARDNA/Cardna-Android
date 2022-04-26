@@ -1,7 +1,10 @@
 package org.cardna.presentation.ui.editcard.view
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.FragmentEditCardDialogBinding
@@ -37,6 +40,7 @@ class EditCardDialogFragment :
         initTabLayout()
         mainCardCount()
         putMainCardList()
+        changeTabsFont()
     }
 
     private fun initTabLayout() {
@@ -55,7 +59,7 @@ class EditCardDialogFragment :
         editCardTabAdapter.fragments.addAll(fragmentList)
 
         binding.rvEditcarddialogContainer.adapter = editCardTabAdapter
-
+        binding.tlRepresentcardedit.layoutParams.height = resources.getDimension(R.dimen.tablayout_view_h).toInt()
     }
 
     override fun onDestroyView() {
@@ -84,4 +88,59 @@ class EditCardDialogFragment :
             dismiss()
         }
     }
+
+    private fun changeTabsFont() {
+        editCardViewModel.currentPosition.observe(viewLifecycleOwner) { currentPosition ->
+            if (currentPosition == 0) {
+                val vg = binding.tlRepresentcardedit.getChildAt(0) as ViewGroup
+                for (j in 0 until 1) {
+                    val vgTab = vg.getChildAt(j) as ViewGroup
+                    val tabChildsCount = vgTab.childCount
+                    for (i in 0 until tabChildsCount) {
+                        val tabViewChild = vgTab.getChildAt(i)
+                        if (tabViewChild is TextView) {
+                            val tf = Typeface.createFromAsset(requireActivity().assets, "pretendard_semibold.ttf")
+                            tabViewChild.typeface = tf
+                        }
+                    }
+                }
+                for (j in 1 until 2) {
+                    val vgTab = vg.getChildAt(j) as ViewGroup
+                    val tabChildsCount = vgTab.childCount
+                    for (i in 0 until tabChildsCount) {
+                        val tabViewChild = vgTab.getChildAt(i)
+                        if (tabViewChild is TextView) {
+                            val tf = Typeface.createFromAsset(requireActivity().assets, "pretendard_regular.ttf")
+                            tabViewChild.typeface = tf
+                        }
+                    }
+                }
+            } else if (currentPosition == 1) {
+                val vg = binding.tlRepresentcardedit.getChildAt(0) as ViewGroup
+                for (j in 1 until 2) {
+                    val vgTab = vg.getChildAt(j) as ViewGroup
+                    val tabChildsCount = vgTab.childCount
+                    for (i in 0 until tabChildsCount) {
+                        val tabViewChild = vgTab.getChildAt(i)
+                        if (tabViewChild is TextView) {
+                            val tf = Typeface.createFromAsset(requireActivity().assets, "pretendard_semibold.ttf")
+                            tabViewChild.typeface = tf
+                        }
+                    }
+                }
+                for (j in 0 until 1) {
+                    val vgTab = vg.getChildAt(j) as ViewGroup
+                    val tabChildsCount = vgTab.childCount
+                    for (i in 0 until tabChildsCount) {
+                        val tabViewChild = vgTab.getChildAt(i)
+                        if (tabViewChild is TextView) {
+                            val tf = Typeface.createFromAsset(requireActivity().assets, "pretendard_regular.ttf")
+                            tabViewChild.typeface = tf
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

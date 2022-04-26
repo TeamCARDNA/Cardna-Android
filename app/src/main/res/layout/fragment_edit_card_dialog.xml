@@ -37,7 +37,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabBackground="@drawable/bg_tablayout"
                 app:tabIndicatorHeight="0dp"
-                app:tabPadding="4dp"
                 app:tabSelectedTextColor="@color/white_1"
                 app:tabTextColor="@color/white_2" />
 

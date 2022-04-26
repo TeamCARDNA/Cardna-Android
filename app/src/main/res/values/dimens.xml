@@ -7,4 +7,6 @@
 
     <!--  Setting Activity -->
     <dimen name="setting_text_margin_top">16dp</dimen>
+
+    <dimen name="tablayout_view_h">38dp</dimen>
 </resources>

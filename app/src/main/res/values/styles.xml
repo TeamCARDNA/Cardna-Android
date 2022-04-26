@@ -226,4 +226,11 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontStyle">normal</item>
+
+    </style>
+
 </resources>
