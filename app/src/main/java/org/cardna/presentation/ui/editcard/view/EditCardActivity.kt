@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.editcard.view
 
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -13,10 +14,9 @@ import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
-import org.cardna.presentation.util.ItemTouchHelperCallback
-import org.cardna.presentation.util.StatusBarUtil
-import org.cardna.presentation.util.setGradientText
+import org.cardna.presentation.util.*
 import timber.log.Timber
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class EditCardActivity :
@@ -43,6 +43,11 @@ class EditCardActivity :
         editCardViewModel.getMainCard()
     }
 
+    private fun setClickListener() {
+        putEditCard()
+        startBottomSheetDialog()
+    }
+
     //대표카드 리사이클러뷰 어댑터
     private fun initAdapter() {
         editCardAdapter = EditCardAdapter(editCardViewModel)
@@ -50,19 +55,21 @@ class EditCardActivity :
         with(binding.rvRepresentcardeditContainer) {
             layoutManager = GridLayoutManager(this@EditCardActivity, 2)
             adapter = editCardAdapter
-
-            val itemTouchHelperCallback = ItemTouchHelperCallback(editCardAdapter)
-            val helper = ItemTouchHelper(itemTouchHelperCallback)
-            helper.attachToRecyclerView(this)
+            itemTouchHelperListener(editCardAdapter, this)
+            addItemDecoration(SpacesItemDecorationHorizontal())
         }
         editCardViewModel.mainCardList.observe(this) {
             editCardAdapter.submitList(it)
         }
     }
 
-    private fun setClickListener() {
-        putEditCard()
-        startBottomSheetDialog()
+    private fun itemTouchHelperListener(
+        editCardAdapter: EditCardAdapter,
+        recyclerView: RecyclerView
+    ) {
+        val itemTouchHelperCallback = ItemTouchHelperCallback(editCardAdapter)
+        val helper = ItemTouchHelper(itemTouchHelperCallback)
+        helper.attachToRecyclerView(recyclerView)
     }
 
     private fun startBottomSheetDialog() {
