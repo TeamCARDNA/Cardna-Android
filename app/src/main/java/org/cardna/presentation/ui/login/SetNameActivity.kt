@@ -34,7 +34,7 @@ class SetNameActivity :
         setChangedListener()
     }
 
-     fun setClickListener() {
+    private fun setClickListener() {
         initAlertDialog()
     }
 

@@ -1,6 +1,8 @@
 package org.cardna.presentation.ui.editcard.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,13 +10,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardBinding
-import org.cardna.data.remote.model.card.ResponseMainCardData
+import okhttp3.internal.format
+import org.cardna.data.remote.model.card.MainCard
+import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
+import org.cardna.presentation.util.ItemTouchHelperCallback
+import org.cardna.presentation.util.ItemTouchHelperListener
+import timber.log.Timber
+import java.util.*
 
-class EditCardAdapter :
-    ListAdapter<ResponseMainCardData.Data.MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()) {
+class EditCardAdapter(
+    val editCardViewModel: EditCardViewModel
+) : ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()),
+    ItemTouchHelperListener {
+    lateinit var changedList: MutableList<MainCard>
+
     inner class ViewHolder(private val binding: ItemEditCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: ResponseMainCardData.Data.MainCard) {
+        init {
+            editCardViewModel.setChangeSelectedList(currentList.map { it.id } as MutableList<Int>)
+            changedList = currentList.toMutableList()
+        }
+
+        fun onBind(data: MainCard) {
             with(binding) {
                 Glide
                     .with(itemView.context)
@@ -27,20 +44,26 @@ class EditCardAdapter :
                 } else {
                     clRvItem.setBackgroundResource(R.drawable.bg_main_purple_radius_8)
                 }
-
+                //대표카드 삭제->아이템 포지션 전달
                 ivRepresentcardeditlistDelete.setOnClickListener {
-                    val newList = currentList.toMutableList()
-                    newList.removeAt(adapterPosition)
-                    submitList(newList)
-                    notifyItemRemoved(adapterPosition)
+                    setNewList(adapterPosition)
                 }
             }
         }
     }
 
+    private fun setNewList(adapterPosition: Int) {
+        val newList = currentList.toMutableList()  //현재 리스트 복사한다음에
+        newList.removeAt(adapterPosition) //지우려고 선택한 아이템을 현재 리스트에서 지우고
+        //삭제할거하고 남은 대표카드 수정에 있는 카드의 id만 남겨서 뷰모델한테 전달
+        editCardViewModel.setChangeSelectedList(newList.map { it.id } as MutableList<Int>)
+        submitList(newList) //삭제한거 제거한 newlist를 리사이클러뷰에 다시 뿌림
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemEditCardBinding.inflate(layoutInflater, parent, false)
+
         return ViewHolder(binding)
     }
 
@@ -49,19 +72,35 @@ class EditCardAdapter :
         holder.onBind(data)
     }
 
-    class EditCardComparator : DiffUtil.ItemCallback<ResponseMainCardData.Data.MainCard>() {
+    override fun onItemMove(from_position: Int, to_position: Int): Boolean {
+        val list = currentList.toMutableList()
+        val item = list[from_position]
+        list.removeAt(from_position)
+        list.add(to_position, item)
+        notifyItemMoved(from_position, to_position)
+        changedList = list
+        Timber.d("list- adapter : ${list.map { it.id }}")
+        return true
+    }
+
+    override fun onItemSwipe(position: Int) {
+
+    }
+
+    class EditCardComparator : DiffUtil.ItemCallback<MainCard>() {
         override fun areItemsTheSame(
-            oldItem: ResponseMainCardData.Data.MainCard,
-            newItem: ResponseMainCardData.Data.MainCard
+            oldItem: MainCard,
+            newItem: MainCard
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: ResponseMainCardData.Data.MainCard,
-            newItem: ResponseMainCardData.Data.MainCard
+            oldItem: MainCard,
+            newItem: MainCard
         ): Boolean {
             return oldItem == newItem
         }
     }
+
 }

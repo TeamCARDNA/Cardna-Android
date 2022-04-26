@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_black">
+        android:background="@color/black">
 
         <LinearLayout
             android:id="@+id/cl_maincard_alarm"
@@ -26,7 +26,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:orientation="horizontal"
-            android:visibility="@{mainCardViewModel.isMyCard ? View.VISIBLE : View.GONE}"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -44,10 +44,10 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:orientation="horizontal"
-            android:visibility="@{mainCardViewModel.isMyCard ? View.GONE : View.VISIBLE}"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/iv_maincard_friend"
@@ -72,7 +72,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/pretendard_extralight"
-            android:text="@{mainCardViewModel.name+@string/maincard_tv_username_tag}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/mypage_name" />
@@ -119,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:orientation="horizontal"
-            android:visibility="@{mainCardViewModel.isMyCard ? View.VISIBLE : View.GONE}"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/view_maincard_under_line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/view_maincard_under_line">
@@ -146,7 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:background="@color/main_black"
+            android:background="@color/black"
             android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@id/cl_maincard_page_count"
             app:layout_constraintTop_toBottomOf="@id/ll_maincard_edit_layout"
@@ -182,7 +181,7 @@
             android:id="@+id/cl_maincard_page_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
+            android:layout_marginBottom="104dp"
             android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -227,31 +226,32 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/iv_maincard_goto_cardpack_background"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="112dp"
             android:layout_marginVertical="8dp"
             android:background="@{mainCardViewModel.relation.equals(`2.0`) ? @drawable/bg_maincard_gradient_radius_45 : @drawable/bg_maincard_white_4_radius_45}"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingVertical="8dp"
             android:visibility="@{mainCardViewModel.isMyCard ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_maincard_page_count"
-            tools:background="@drawable/bg_maincard_gradient_radius_45" />
+            tools:background="@drawable/bg_maincard_gradient_radius_45">
 
-        <TextView
-            android:id="@+id/tv_maincard_goto_cardpack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendard_semibold"
-            android:text="@string/maincard_tv_cardpack_text"
-            android:textColor="@color/white_4"
-            android:textSize="12sp"
-            android:visibility="@{mainCardViewModel.isMyCard ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@id/iv_maincard_goto_cardpack_background"
-            app:layout_constraintEnd_toEndOf="@id/iv_maincard_goto_cardpack_background"
-            app:layout_constraintStart_toStartOf="@id/iv_maincard_goto_cardpack_background"
-            app:layout_constraintTop_toTopOf="@id/iv_maincard_goto_cardpack_background" />
+            <TextView
+                android:id="@+id/tv_maincard_goto_cardpack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@string/maincard_tv_cardpack_text"
+                android:textColor="@color/white_4"
+                android:textSize="12sp"
+                android:visibility="@{mainCardViewModel.isMyCard ? View.GONE : View.VISIBLE}" />
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

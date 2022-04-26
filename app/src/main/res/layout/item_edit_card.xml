@@ -11,7 +11,7 @@
         android:id="@+id/cl_representeditcard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black">
+        android:background="@color/main_black">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_rv_item"

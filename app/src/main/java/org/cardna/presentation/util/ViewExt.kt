@@ -7,14 +7,21 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.text.Spannable
 import android.view.*
 import android.widget.*
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.text.set
+import androidx.core.text.toSpannable
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.cardna.R
 import org.cardna.CardNaApplication
@@ -115,4 +122,37 @@ fun Context.showCustomPopUp(view: ImageButton, arrayInt: Int, baseContext: Conte
         setBackgroundDrawable(ContextCompat.getDrawable(baseContext, R.drawable.img_popup))
     }
     return popup
+}
+
+fun Context.setGradientText(inputText: String): Spannable {
+    val green = getColor(R.color.main_green)
+    val purple = getColor(R.color.main_purple)
+    val spannable = inputText.toSpannable()
+    spannable[0..inputText.length] =
+        LinearGradientSpan(inputText, inputText, green, purple)
+    return spannable
+}
+
+ fun Context.getPageTransformer(): ViewPager2.PageTransformer {
+    val compositePageTransformer = CompositePageTransformer()
+    compositePageTransformer.addTransformer(MarginPageTransformer((20 * resources.displayMetrics.density).roundToInt()))
+
+    return compositePageTransformer
+}
+
+fun Context.viewPagerAnimation(viewpager : ViewPager2) {
+    val compositePageTransformer = getPageTransformer()
+    with(viewpager) {
+        clipToPadding = false
+        clipChildren = false
+        offscreenPageLimit = 1
+        setPageTransformer(compositePageTransformer)
+        setPadding(
+            (56 * resources.displayMetrics.density).roundToInt(),
+            0,
+            (56 * resources.displayMetrics.density).roundToInt(),
+            0
+        )
+        getChildAt(0).overScrollMode = androidx.recyclerview.widget.RecyclerView.OVER_SCROLL_NEVER
+    }
 }
