@@ -34,6 +34,7 @@ class CardYouTabFragment :
     override fun onResume() {
         super.onResume()
         initData()
+        editCardViewModel.setCurrentPosition(1)
     }
 
     private fun initAdapter() {
