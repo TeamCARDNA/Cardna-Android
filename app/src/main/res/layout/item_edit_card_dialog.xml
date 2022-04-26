@@ -14,7 +14,7 @@
         android:id="@+id/cl_rv_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:background="@drawable/bg_main_purple_radius_8">
+        tools:background="@drawable/bg_main_green_stoke_black_radius_8">
 
         <ImageView
             android:id="@+id/iv_cardpack_recyclerview"
@@ -31,20 +31,44 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@drawable/dummy_img_cardpack_1" />
 
-        <TextView
-            android:id="@+id/tv_representcard_count"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_editcarddialog_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/ic_represent_card_pick_count_cricle"
             android:gravity="center"
-            android:textColor="@color/white_1"
-            android:textSize="14sp"
+            android:orientation="vertical"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/iv_cardpack_recyclerview"
             app:layout_constraintEnd_toEndOf="@id/iv_cardpack_recyclerview"
-            tools:text="1" />
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_editcarddialog_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_represent_card_pick_count_cricle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_representcard_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:textColor="@color/white_1"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_editcarddialog_circle"
+                app:layout_constraintEnd_toEndOf="@id/iv_editcarddialog_circle"
+                app:layout_constraintStart_toStartOf="@id/iv_editcarddialog_circle"
+                app:layout_constraintTop_toTopOf="@id/iv_editcarddialog_circle"
+                tools:text="1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <TextView

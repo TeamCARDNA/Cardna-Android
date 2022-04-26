@@ -56,7 +56,7 @@ class EditCardActivity :
             layoutManager = GridLayoutManager(this@EditCardActivity, 2)
             adapter = editCardAdapter
             itemTouchHelperListener(editCardAdapter, this)
-            addItemDecoration(SpacesItemDecorationHorizontal())
+            addItemDecoration(SpacesItemDecorationHorizontalCustom())
         }
         editCardViewModel.mainCardList.observe(this) {
             editCardAdapter.submitList(it)
