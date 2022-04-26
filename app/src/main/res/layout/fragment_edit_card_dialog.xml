@@ -26,17 +26,21 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tl_representcardedit"
+                style="@style/tab_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
                 android:layout_marginTop="32dp"
-                android:background="@color/dark_gray"
+                android:background="@drawable/bg_tablayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabBackground="@drawable/bg_tablayout"
                 app:tabIndicatorHeight="0dp"
+                app:tabPadding="4dp"
                 app:tabSelectedTextColor="@color/white_1"
                 app:tabTextColor="@color/white_2" />
+
 
             <TextView
                 android:id="@+id/tv_representcardedit_finish"
