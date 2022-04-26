@@ -239,37 +239,11 @@ class CardCreateActivity :
                 // 현재는 카드너 작성이므로 무슨 액티비티 통해서 왔는지만 전달해주면 됨
                 startActivity(intent)
             }
-
         }
     }
 
-
-    // 갤러리에서 가져오기 클릭 시, uri 값을 설정해줬을 것이고,
-    // 이제 완료 버튼 눌렀을 때, 설정된 uri 값을 서버에 보내기 위해 멀티파트로 바꿔주는 함수
-    private fun makeUriToFile(): MultipartBody.Part {
-        val options = BitmapFactory.Options()
-        val inputStream: InputStream =
-            requireNotNull(contentResolver.openInputStream(cardCreateViewModel.uri!!)) // 여기서 문제인가 ?
-        val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap!!.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream)
-        val fileBody = RequestBody.create(
-            "image/png".toMediaTypeOrNull(),
-            byteArrayOutputStream.toByteArray()
-        )
-
-        val part = MultipartBody.Part.createFormData(
-            "image",
-            File("${cardCreateViewModel.uri.toString()}.png").name,
-            fileBody
-        )
-
-        return part
-    }
-
-
     // gallery access
-    // BottomSheet 에서 갤러리에서 가져오기를 눌렀을 때, 그 이후 과정의 코드
+    // BottomSheet 에서 "갤러리에서 가져오기"를 눌렀을 때, 그 이후 과정의 코드
     // 결국 cardPackViewModel 의 uri 값을 세팅해줌
     fun checkPermission() { // BottomSheet 에서 접근해야 하므로 public
         val cameraPermission =
@@ -302,13 +276,14 @@ class CardCreateActivity :
                 cardCreateViewModel.setIfChooseImg(true)
                 Glide.with(this).load(cardCreateViewModel.uri).into(binding.ivCardcreateGalleryImg)
 
+                Timber.e("uri 값은  : $cardCreateViewModel.uri")
+
                 binding.ivCardcreateGalleryImg.visibility = View.VISIBLE // imageView는 보이도록
                 binding.ctlCardcreateImg.visibility = View.INVISIBLE // 이제 ctl은 invisible
                 checkCompleteTvClickable()
             }
             //else if (result.resultCode == Activity.RESULT_CANCELED) {} =>Activity.RESULT_CANCELED일때 처리코드가 필요하다면
         }
-
     private fun requestPermission() {
         permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
@@ -316,10 +291,43 @@ class CardCreateActivity :
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission())
         { isGranted: Boolean ->
+
             when (isGranted) {
                 true -> startProcess() // 권한이 있다면 진행
                 false -> shortToast("갤러리 권한을 허용해주세요.")
             }
         }
 
+
+    // 갤러리에서 가져오기 클릭 시, uri 값을 설정해줬을 것이고,
+    // 이제 완료 버튼 눌렀을 때, 설정된 uri 값을 서버에 보내기 위해 멀티파트로 바꿔주는 함수
+    private fun makeUriToFile(): MultipartBody.Part {
+        val options = BitmapFactory.Options()
+        options.inSampleSize = 8
+        // 1/8 만큼 이미지를 줄여서 decoding
+
+        val inputStream: InputStream =
+            requireNotNull(contentResolver.openInputStream(cardCreateViewModel.uri!!)) // 여기서 문제인가 ?
+
+        val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+        // input stream 으로부터 bitmap을 만들어내는 것.
+
+
+        val byteArrayOutputStream = ByteArrayOutputStream()
+
+        bitmap!!.compress(Bitmap.CompressFormat.PNG, 8, byteArrayOutputStream)
+
+        val fileBody = RequestBody.create(
+            "image/png".toMediaTypeOrNull(),
+            byteArrayOutputStream.toByteArray()
+        )
+
+        val part = MultipartBody.Part.createFormData(
+            "image",
+            File("${cardCreateViewModel.uri.toString()}.png").name,
+            fileBody
+        )
+
+        return part
+    }
 }
