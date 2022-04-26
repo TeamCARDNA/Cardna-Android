@@ -30,29 +30,25 @@ class CardYouFragment :
 
     override fun onResume() {
         super.onResume()
-        cardPackViewModel.updateCardYouList()
+        cardPackViewModel.updateCardYouList()  // 카드너 카드들을 서버로부터 불러오기
     }
 
     override fun initView() {
-        getCardYou()
+        initCardYouRvAdapter() // 리사이클러뷰 및 어댑터 설정
         initEmptyViewListener()
         Timber.e("CardYou : ${cardPackViewModel.id}")
         Timber.e("CardYou isCardYouEmpty : ${cardPackViewModel.isCardYouEmpty.value}")
         Timber.e("CardYou isCardMeEmpty : ${cardPackViewModel.isCardMeEmpty.value}")
     }
 
-    private fun getCardYou() {
-        initCardYouRvAdapter() // 리사이클러뷰 및 어댑터 설정
-        cardPackViewModel.updateCardYouList() // 카드너 카드들을 서버로부터 불러오기
-    }
 
     // Adapter 생성
     private fun initCardYouRvAdapter() { // CardPack
         var cardYouAdapter =
             CardPackYouRecyclerViewAdapter() { // 어댑터 일단 CardPackMeRecyclerViewAdapter로 공유
                 // 1. 각 리사이클러뷰 아이템에 달아줄 람다 전달
-                val intent = Intent(requireContext(), DetailCardActivity::class.java).apply {
-                    putExtra("id", it.id) // 리사이클러뷰의 아이템 중 카드 선택시 그 카드의 id를 전달
+                Intent(requireContext(), DetailCardActivity::class.java).apply {
+                    putExtra(BaseViewUtil.CARD_ID, it.id) // 리사이클러뷰의 아이템 중 카드 선택시 그 카드의 id를 전달
                     startActivity(this)
                 }
 
@@ -64,12 +60,12 @@ class CardYouFragment :
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             rvCardyou.layoutManager = gridLayoutManager
             rvCardyou.addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt())) // 화면 비율 조정
-
-            // onResume 될 때, cardYouList 를 업데이트 시키고 cardYouList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
-            cardPackViewModel?.cardYouList?.observe(viewLifecycleOwner, Observer { it ->
-                it?.let { cardYouAdapter.submitList(it) }
-            })
         }
+
+        // onResume 될 때, cardYouList 를 업데이트 시키고 cardYouList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
+        cardPackViewModel.cardYouList.observe(viewLifecycleOwner, Observer { it ->
+            it?.let { cardYouAdapter.submitList(it) }
+        })
     }
 
     private fun initEmptyViewListener() {
@@ -84,14 +80,12 @@ class CardYouFragment :
         // 2. 친구 카드너 엠티뷰 => 카드너 작성
         binding.ctlFriendEmptyMakeCardyou.setOnClickListener {
             val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
-                putExtra("isCardMeOrYou", false) // 내 카드나 작성이므로
-                putExtra("id", cardPackViewModel.id)
-                putExtra("name", cardPackViewModel.name)
-                putExtra("isCardPackOrMainCard", true) // 카드팩에서 왔음을 알려줌
+                putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_YOU) // 내 카드나 작성이므로
+                putExtra(BaseViewUtil.ID, cardPackViewModel.id)
+                putExtra(BaseViewUtil.NAME, cardPackViewModel.name)
+                putExtra(BaseViewUtil.IS_CARDPACK_OR_MAINCARD, BaseViewUtil.FROM_CARDPACK) // 카드팩에서 왔음을 알려줌
             }
             startActivity(intent)
         }
-
-
     }
 }

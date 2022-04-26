@@ -1,6 +1,7 @@
 package org.cardna.presentation.ui.cardpack.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +14,7 @@ import com.example.cardna.databinding.ActivityCardCreateCompleteBinding
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan
+import org.cardna.presentation.util.StatusBarUtil
 
 class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardCreateCompleteBinding>(R.layout.activity_card_create_complete) {
     // 1. 내 카드나 => 카드나를 만들었어요 !
@@ -26,17 +28,18 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
     }
 
     override fun initView() {
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setCardMeOrYou()
     }
 
     private fun setCardMeOrYou() {
-        val isCardMeOrYou = intent.getBooleanExtra("isCardMeOrYou", CARD_ME) // 안넘겨줄 경우, CARDME
-        val symbolId = intent.getIntExtra("symbolId", -1) // symbolId가 null일 때 -1로
-        val cardImg = Uri.parse(intent.getStringExtra("cardImg")) // uri를 string으로 변환한 값을 받아 다시 uri로
-        val cardTitle = intent.getStringExtra("cardTitle")
+        val isCardMeOrYou = intent.getBooleanExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_ME) // 안넘겨줄 경우, CARDME
+        val symbolId = intent.getIntExtra(BaseViewUtil.SYMBOL_ID, -1) // symbolId가 null일 때 -1로
+        val cardImg = Uri.parse(intent.getStringExtra(BaseViewUtil.CARD_IMG)) // uri를 string으로 변환한 값을 받아 다시 uri로
+        val cardTitle = intent.getStringExtra(BaseViewUtil.CARD_TITLE)
         // 카드나인지, 카드너인지에 따라 뷰 띄워주기
         // textView 바꿔주기
-        if (isCardMeOrYou == CARD_ME) { // 카드나 작성 완료 하면 만들기
+        if (isCardMeOrYou == BaseViewUtil.CARD_ME) { // 카드나 작성 완료 하면 만들기
             binding.tvCardcreateComplete.text = getString(R.string.cardcreate_complete_cardme)
             binding.clCardcreateComplete.setBackgroundResource(R.drawable.bg_cardme)
 
@@ -44,15 +47,15 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
                 Glide.with(this).load(cardImg).into(binding.ivCardcreateComplete)
             } else { // symbolId가 null이 아니라면 이에 해당하는 각 심볼 이미지 띄워주면 됨 이라면,
                 when (symbolId) {
-                    SYMBOL_0 -> binding.ivCardcreateComplete.setImageResource(R.drawable.ic_symbol_cardme_0)
-                    SYMBOL_1 -> binding.ivCardcreateComplete.setImageResource(R.drawable.ic_symbol_cardme_1)
-                    SYMBOL_2 -> binding.ivCardcreateComplete.setImageResource(R.drawable.ic_symbol_cardme_2)
-                    SYMBOL_3 -> binding.ivCardcreateComplete.setImageResource(R.drawable.ic_symbol_cardme_3)
-                    SYMBOL_4 -> binding.ivCardcreateComplete.setImageResource(R.drawable.ic_symbol_cardme_4)
+                    BaseViewUtil.SYMBOL_0 -> binding.ivCardcreateComplete.setImageResource(R.drawable.ic_symbol_cardme_0)
+                    BaseViewUtil.SYMBOL_1 -> binding.ivCardcreateComplete.setImageResource(R.drawable.ic_symbol_cardme_1)
+                    BaseViewUtil.SYMBOL_2 -> binding.ivCardcreateComplete.setImageResource(R.drawable.ic_symbol_cardme_2)
+                    BaseViewUtil.SYMBOL_3 -> binding.ivCardcreateComplete.setImageResource(R.drawable.ic_symbol_cardme_3)
+                    BaseViewUtil. SYMBOL_4 -> binding.ivCardcreateComplete.setImageResource(R.drawable.ic_symbol_cardme_4)
                 }
             }
         }
-        else if (isCardMeOrYou == CARD_YOU) { // 카드너 추가 완료 만들기
+        else if (isCardMeOrYou == BaseViewUtil.CARD_YOU) { // 카드너 추가 완료 만들기
             binding.tvCardcreateComplete.text = getString(R.string.cardcreate_complete_cardyou)
             binding.clCardcreateComplete.setBackgroundResource(R.drawable.bg_cardyou)
 
@@ -71,7 +74,7 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
         // 로티 띄워주고 인텐트 이용해서 이전 액티비티로 가기
         // onActivityResult? 비스무리한 그 메서드 쓰면 더 좋게 구현할 수 있지 않을까
         val handler = Handler(Looper.getMainLooper())
-        if (isCardMeOrYou == CARD_ME) { // 카드나일 경우, MainActivity 로 돌아가줘야 함
+        if (isCardMeOrYou == BaseViewUtil.CARD_ME) { // 카드나일 경우, MainActivity 로 돌아가줘야 함
             handler.postDelayed({
                 // 카드나 작성에서 왔다면 MainActivity 로 돌아가도록 intent 를 연결시켜줘야 하고,
                 var intent = Intent(this, MainActivity::class.java)
@@ -81,7 +84,7 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
                 // 현재 A -> B -> C인데, C -> A로 가도록 intent 써서
             }, LOTTIE_VIEW_TIME) // 이는 CardCreateActivity 가 얼마나 띄워주고 다시 main 으로 갈 건지에 대한 시간, 로티가 뜨는 시간은 아님
         }
-        else if(isCardMeOrYou == CARD_YOU) { // 카드너일 경우, 카드너보관함으로 돌아가줘아 함.
+        else if(isCardMeOrYou == BaseViewUtil.CARD_YOU) { // 카드너일 경우, 카드너보관함으로 돌아가줘아 함.
             handler.postDelayed({
                     // 카드너추가 액티비티에서 왔다면 OtherWriteActivity 로 돌아가야 한다. 근데 이때 OtherWriteActivity 로 전달해줄 정보는 없고
                     // OtherWriteActivity 에서 서버 통신 다시 하도록 => onResume 메서드 작성해주기
@@ -105,15 +108,6 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
     }
 
     companion object {
-        const val CARD_ME = true
-        const val CARD_YOU = false
-
-        const val SYMBOL_0 = 1
-        const val SYMBOL_1 = 2
-        const val SYMBOL_2 = 3
-        const val SYMBOL_3 = 4
-        const val SYMBOL_4 = 5
-
         const val LOTTIE_VIEW_TIME = 1670L
     }
 

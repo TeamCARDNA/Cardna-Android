@@ -20,7 +20,6 @@ class CardPackViewModel @Inject constructor(
 ) : ViewModel() { // FriendCardPackActivity 와 CardPack, CardYou, CardMeFragment 가 CardPackViewModel 사용
 
 
-
     // 어떤 id 의 사람의 카드팩 프래그먼트에 접근하는지
     private var _id: Int? = null
     val id: Int?
@@ -37,10 +36,7 @@ class CardPackViewModel @Inject constructor(
         get() = _totalCardCnt
 
     // 카드나 List => CardMeFragment 에서 사용
-    private val _cardMeList = MutableLiveData<MutableList<ResponseCardMeData.CardList.CardMe>>(
-        mutableListOf(
-            ResponseCardMeData.CardList.CardMe(7, "야구 좋아해요", "https://firebasestorage.googleapis.com/v0/b/cardna-29f5b.appspot.com/o/20220115_204842_6742281400.jpg?alt=media", 6, null)
-        ))
+    private val _cardMeList = MutableLiveData<MutableList<ResponseCardMeData.CardList.CardMe>>()
     val cardMeList: LiveData<MutableList<ResponseCardMeData.CardList.CardMe>>
         get() = _cardMeList
 

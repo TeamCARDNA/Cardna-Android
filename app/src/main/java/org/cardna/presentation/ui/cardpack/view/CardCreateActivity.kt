@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -23,9 +24,11 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
+import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.initRootClickEvent
 import org.cardna.presentation.util.shortToast
 import org.cardna.ui.cardpack.BottomDialogImageFragment
+import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
@@ -52,15 +55,21 @@ class CardCreateActivity :
             // 2-1. MainActivity 의 친구 mainCardFragment 에서 넘어왔다면 아무것도 안넘겨줬을 것 => default 값 CARD_YOU 로 처리
             // 2-2. FriendCardPackActivity 에서 넘어왔다면 => CARD_YOU 로 넘겨줬을 것
             intent.getBooleanExtra(
-                "isCardMeOrYou",
-                CARD_YOU
+                BaseViewUtil.IS_CARD_ME_OR_YOU,
+                BaseViewUtil.CARD_YOU
             )
         )
-        cardCreateViewModel.setUserId(intent.getIntExtra("id", -1)) // 내 카드나일 경우 null로 setting 되도록
-        cardCreateViewModel.setUserName(intent.getStringExtra("name")) // 안넘겨주면 null ?
+        cardCreateViewModel.setUserId(
+            intent.getIntExtra(
+                BaseViewUtil.ID,
+                -1
+            )
+        ) // 내 카드나일 경우 null로 setting 되도록
+        cardCreateViewModel.setUserName(intent.getStringExtra(BaseViewUtil.NAME)) // 안넘겨주면 null ?
     }
 
     override fun initView() {
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setObserver()
         setView() // editText 글자 수에 따라 글자 수 업데이트, 버튼 선택가능하도록
         setChooseCardListener() // 이미지 ctl 눌렀을 때 bottomDialog 띄우도록
@@ -141,7 +150,7 @@ class CardCreateActivity :
 
         // 첫번째 심볼이나 갤러리 이미지 선택 후, 이미지가 보이게 될 것. 그러면 이 이미지뷰를 눌러도 다시 이미지를 선택할 수 있도록
         // 리스너 달아주기
-        binding.ivCardcreateGalleryImg.setOnClickListener{
+        binding.ivCardcreateGalleryImg.setOnClickListener {
             val bottomDialogImageFragment = BottomDialogImageFragment { // 위와 동일
                 with(binding) {
                     ivCardcreateGalleryImg.setImageResource(cardCreateViewModel?.imgIndex!!)
@@ -174,7 +183,7 @@ class CardCreateActivity :
     }
 
 
-    /// **************************** 카메라 접근 코드 ****************************
+    /// **************************** 갤러리 접근 코드 ****************************
     private fun resToUri(resId: Int): Uri =
         Uri.Builder().scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
             .authority(resources.getResourcePackageName(resId))
@@ -193,30 +202,40 @@ class CardCreateActivity :
             // symbolId - 카드 이미지 심볼 id, 이미지가 있는 경우 null을 보내주면 됨
 
             // nullPointException 을 방지하기위한 분기처리
-            if(cardCreateViewModel.uri == null){
+            if (cardCreateViewModel.uri == null) {
                 cardCreateViewModel.makeCard(null)
-            }
-            else
+            } else
                 cardCreateViewModel.makeCard(makeUriToFile())
 
             // 2. cardCreateCompleteActivity 로 이동
-            if(cardCreateViewModel.isCardMeOrYou!!){
+            if (cardCreateViewModel.isCardMeOrYou!!) {
                 // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
                 val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
                 intent.putExtra(
-                    "isCardMeOrYou",
+                    BaseViewUtil.IS_CARD_ME_OR_YOU,
                     cardCreateViewModel.isCardMeOrYou
                 ) // 현재는 카드나 작성이므로 CARD_ME를 보내줌
-                intent.putExtra("symbolId", cardCreateViewModel.symbolId) // 심볼 - symbolId값, 갤러리 - null
-                intent.putExtra("cardImg", cardCreateViewModel.uri.toString()) // 심볼 - null, 갤러리 - uri 값
-                intent.putExtra("cardTitle", cardCreateViewModel.etKeywordText.value)
+                intent.putExtra(
+                    BaseViewUtil.SYMBOL_ID,
+                    cardCreateViewModel.symbolId
+                ) // 심볼 - symbolId값, 갤러리 - null
+                intent.putExtra(
+                    BaseViewUtil.CARD_IMG,
+                    cardCreateViewModel.uri.toString()
+                ) // 심볼 - null, 갤러리 - uri 값
+                intent.putExtra(BaseViewUtil.CARD_TITLE, cardCreateViewModel.etKeywordText.value)
                 startActivity(intent)
-            }
-            else{
+            } else {
                 // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
-                val intent = Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
-                intent.putExtra("isCardPackOrMainCard" ,
-                    intent.getBooleanExtra("isCardPackOrMainCard", false))
+                val intent =
+                    Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
+                intent.putExtra(
+                    BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
+                    intent.getBooleanExtra(
+                        BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
+                        BaseViewUtil.FROM_MAINCARD
+                    )
+                )
                 // 현재는 카드너 작성이므로 무슨 액티비티 통해서 왔는지만 전달해주면 됨
                 startActivity(intent)
             }
@@ -257,9 +276,11 @@ class CardCreateActivity :
             ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
         if (cameraPermission == PackageManager.PERMISSION_GRANTED) {
             //프로그램 진행
+            Timber.e("접근권한 있음")
             startProcess()
         } else {
             //권한요청
+            Timber.e("접근권한 없음")
             requestPermission()
         }
     }
@@ -301,15 +322,4 @@ class CardCreateActivity :
             }
         }
 
-    companion object {
-        const val CARD_ME = true
-        const val CARD_YOU = false
-
-        const val SYMBOL_0 = 1
-        const val SYMBOL_1 = 2
-        const val SYMBOL_2 = 3
-        const val SYMBOL_3 = 4
-        const val SYMBOL_4 = 5
-        const val GALLERY = 6
-    }
 }
