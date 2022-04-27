@@ -10,15 +10,16 @@ import com.example.cardna.R
 import com.example.cardna.databinding.FragmentCardYouBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.cardpack.adapter.CardPackMeRecyclerViewAdapter
 import org.cardna.presentation.ui.cardpack.adapter.CardPackYouRecyclerViewAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.util.SpacesItemDecoration
+import timber.log.Timber
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class CardYouFragment : BaseViewUtil.BaseFragment<FragmentCardYouBinding>(R.layout.fragment_card_you) {
+class CardYouFragment :
+    BaseViewUtil.BaseFragment<FragmentCardYouBinding>(R.layout.fragment_card_you) {
 
     private val cardPackViewModel: CardPackViewModel by activityViewModels() // id, name
 
@@ -35,24 +36,28 @@ class CardYouFragment : BaseViewUtil.BaseFragment<FragmentCardYouBinding>(R.layo
     override fun initView() {
         getCardYou()
         initEmptyViewListener()
+        Timber.e("CardYou : ${cardPackViewModel.id}")
+        Timber.e("CardYou isCardYouEmpty : ${cardPackViewModel.isCardYouEmpty.value}")
+        Timber.e("CardYou isCardMeEmpty : ${cardPackViewModel.isCardMeEmpty.value}")
     }
 
-    private fun getCardYou(){
+    private fun getCardYou() {
         initCardYouRvAdapter() // 리사이클러뷰 및 어댑터 설정
         cardPackViewModel.updateCardYouList() // 카드너 카드들을 서버로부터 불러오기
     }
 
     // Adapter 생성
-    private fun initCardYouRvAdapter(){ // CardPack
-        var cardYouAdapter = CardPackYouRecyclerViewAdapter() { // 어댑터 일단 CardPackMeRecyclerViewAdapter로 공유
-            // 1. 각 리사이클러뷰 아이템에 달아줄 람다 전달
-            val intent = Intent(requireContext(), DetailCardActivity::class.java).apply {
+    private fun initCardYouRvAdapter() { // CardPack
+        var cardYouAdapter =
+            CardPackYouRecyclerViewAdapter() { // 어댑터 일단 CardPackMeRecyclerViewAdapter로 공유
+                // 1. 각 리사이클러뷰 아이템에 달아줄 람다 전달
+                val intent = Intent(requireContext(), DetailCardActivity::class.java).apply {
                     putExtra("id", it.id) // 리사이클러뷰의 아이템 중 카드 선택시 그 카드의 id를 전달
-                startActivity(this)
-            }
+                    startActivity(this)
+                }
 
-            // 2. 타인의 카드나일 때는, 공감버튼에 달아줄 리스너 하나 더 전달해줘야 한다.
-        }
+                // 2. 타인의 카드나일 때는, 공감버튼에 달아줄 리스너 하나 더 전달해줘야 한다.
+            }
 
         with(binding) {
             rvCardyou.adapter = cardYouAdapter
@@ -60,24 +65,33 @@ class CardYouFragment : BaseViewUtil.BaseFragment<FragmentCardYouBinding>(R.layo
             rvCardyou.layoutManager = gridLayoutManager
             rvCardyou.addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt())) // 화면 비율 조정
 
-            // onResume 될 때, cardMeList 를 업데이트 시키고 cardMeList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
+            // onResume 될 때, cardYouList 를 업데이트 시키고 cardYouList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
             cardPackViewModel?.cardYouList?.observe(viewLifecycleOwner, Observer { it ->
-                it?.let { cardYouAdapter.submitList(it)}
+                it?.let { cardYouAdapter.submitList(it) }
             })
-
-            // isCardMeEmpty 에도 옵저버 달아서, true 이면 뷰 바꿔주기
-            // 옵저버 달 필요 없이 그냥
-            // 카드미 empty 아닌 뷰 ctl, empty 인 뷰 ctl 두개 만들어서
-            // 각 2개의 ctl에 setVisibility에 삼항연산자 써서 cardPackViewModel.isCardMeEmpty? View.GONE : View.VISIBLE
-            // 해주면 되지 않을까 =>
         }
     }
 
-    private fun initEmptyViewListener(){
-        binding.ctlBgAddCardyou.setOnClickListener{
+    private fun initEmptyViewListener() {
+        // 1. 내 카드너 엠티뷰 => 카드너 추가
+        binding.ctlBgAddCardyou.setOnClickListener {
             // 카드너 보관함 액티비티로 이동
-            val intent = Intent(requireActivity(), CardCreateActivity::class.java)
+            val intent = Intent(requireActivity(), CardYouStoreActivity::class.java)
+            // 아무것도 안넘겨줘도 됨
             startActivity(intent)
         }
+
+        // 2. 친구 카드너 엠티뷰 => 카드너 작성
+        binding.ctlFriendEmptyMakeCardyou.setOnClickListener {
+            val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
+                putExtra("isCardMeOrYou", false) // 내 카드나 작성이므로
+                putExtra("id", cardPackViewModel.id)
+                putExtra("name", cardPackViewModel.name)
+                putExtra("isCardPackOrMainCard", true) // 카드팩에서 왔음을 알려줌
+            }
+            startActivity(intent)
+        }
+
+
     }
 }

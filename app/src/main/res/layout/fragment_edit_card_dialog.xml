@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="editCardDialogViewModel"
-            type="org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel" />
+            name="editCardViewModel"
+            type="org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel" />
 
     </data>
 
@@ -29,12 +29,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:background="@color/dark_gray"
+                android:background="@drawable/bg_tablayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabBackground="@drawable/bg_tablayout"
                 app:tabIndicatorHeight="0dp"
+                app:tabPadding="0dp"
                 app:tabSelectedTextColor="@color/white_1"
                 app:tabTextColor="@color/white_2" />
 
@@ -50,49 +51,55 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tl_representcardedit" />
 
-            <TextView
-                android:id="@+id/tv_representcardedit_card_list_count"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_editcarddialog_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/white_3"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@id/tl_representcardedit"
-                app:layout_constraintStart_toStartOf="@id/tl_representcardedit"
-                app:layout_constraintTop_toBottomOf="@id/tl_representcardedit"
-                tools:text="0" />
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/tl_representcardedit">
 
+                <TextView
+                    android:id="@+id/tv_representcardedit_card_list_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:textColor="@color/white_3"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@id/tl_representcardedit"
+                    app:layout_constraintStart_toStartOf="@id/tl_representcardedit"
+                    tools:text="0" />
 
-            <TextView
-                android:id="@+id/tv_representcardedit_card_list_count_dot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edit_card_slash"
-                android:textColor="@color/white_3"
-                android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@id/tv_representcardedit_card_list_count"
-                app:layout_constraintTop_toTopOf="@id/tv_representcardedit_card_list_count" />
+                <TextView
+                    android:id="@+id/tv_representcardedit_card_list_count_dot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="2dp"
+                    android:text="@string/edit_card_slash"
+                    android:textColor="@color/white_3"
+                    android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/tv_representcardedit_card_list_count_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edit_card_seven"
-                android:textColor="@color/white_3"
-                android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@id/tv_representcardedit_card_list_count_dot"
-                app:layout_constraintTop_toTopOf="@id/tv_representcardedit_card_list_count_dot" />
+                <TextView
+                    android:id="@+id/tv_representcardedit_card_list_count_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="@string/edit_card_seven"
+                    android:textColor="@color/white_3"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/rv_editcarddialog_container"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="12dp"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="8dp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_representcardedit_card_list_count"
+                app:layout_constraintTop_toBottomOf="@id/ll_editcarddialog_container"
                 app:layout_constraintVertical_bias="0.0"
                 tools:layout_editor_absoluteX="0dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>

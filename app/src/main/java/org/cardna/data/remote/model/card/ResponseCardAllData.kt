@@ -1,26 +1,32 @@
 package org.cardna.data.remote.model.card
 
-
 data class ResponseCardAllData(
-    val message: String,
     val status: Int,
     val success: Boolean,
-    val data: Data,
-) {
+    val message: String,
+    val data: Data
+){
     data class Data(
-        val isMyCard: Boolean,
         val totalCardCnt: Int,
-        val cardMeList: List<CardData>,
-        val cardYouList: List<CardData>,
-    )
-}
+        val isMyCard: Boolean,
+        val cardMeList: List<CardMe>,
+        val cardYouList: List<CardYou>
+    ){
+        data class CardMe(
+            val id: Int,
+            val title: String,
+            val cardImg: String,
+            val mainOrder: Int,
+            val isLiked: Boolean
+        )
 
-data class CardData(
-    val cardImg: String,
-    val id: Int,
-    val isLiked: Any,
-    val mainOrder: Any,
-    val title: String,
-    var isMe: Boolean,
-    var isClicked: Boolean = false,
-)
+        data class CardYou(
+            val id: Int,
+            val title: String,
+            val cardImg: String,
+            val mainOrder: Int,
+            val isLiked: Boolean
+        )
+
+    }
+}

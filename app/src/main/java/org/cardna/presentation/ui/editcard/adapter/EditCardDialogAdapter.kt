@@ -1,37 +1,29 @@
 package org.cardna.presentation.ui.editcard.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardDialogBinding
-import kotlinx.coroutines.selects.select
 import org.cardna.data.remote.model.card.CardData
-import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
+import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 import timber.log.Timber
 
-class EditCardDialogAdapter(val editCardDialogViewModel: EditCardDialogViewModel) :
+class EditCardDialogAdapter(
+    val lifecycleOwner: LifecycleOwner,
+    val editCardViewModel: EditCardViewModel
+) :
     ListAdapter<CardData, EditCardDialogAdapter.ViewHolder>(EditCardDialogComparator()) {
-    private var lastRemovedIndex = 8
-    private var itemClickListener: ((Int, CardData, Boolean) -> Int)? = null
-
-    fun setItemClickListener(listener: ((Int, CardData, Boolean) -> Int)) {
-        itemClickListener = listener
-    }
-
-    fun setLastRemovedIndex(index: Int) {
-        lastRemovedIndex = index
-    }
 
     inner class ViewHolder(private val binding: ItemEditCardDialogBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val selectedList =
-            editCardDialogViewModel.selectedCardList.value?.map { it } as MutableList<Int>
-
+        @SuppressLint("SetTextI18n")
         fun onBind(data: CardData) {
             with(binding) {
                 Glide
@@ -40,31 +32,35 @@ class EditCardDialogAdapter(val editCardDialogViewModel: EditCardDialogViewModel
                     .into(ivCardpackRecyclerview)
                 tvEditcarddialogTitle.text = data.title
                 clRvItem.setBackgroundResource(setBackground(data.isMe))
+            }
 
-                val mainOrder = "${data.mainOrder}"
-                if (selectedList.contains(data.id) && mainOrder != "null") {
-                    binding.tvRepresentcardCount.apply {
-                        text = "${data.mainOrder}".substring(0, 1)
-                        visibility = View.VISIBLE
-                    }
+            editCardViewModel.selectedCardList.observe(lifecycleOwner) { selectedCardList ->
+                if (selectedCardList.contains(data.id)) {
+                    binding.tvRepresentcardCount.text =
+                        (selectedCardList.indexOf(data.id) + 1).toString()
+                    binding.clEditcarddialogCount.visibility = View.VISIBLE
+                } else {
+                    binding.clEditcarddialogCount.visibility = View.GONE
                 }
+            }
 
-                itemView.setOnClickListener {
-                    binding.tvRepresentcardCount.apply {
+            binding.clEditcarddialogCount.apply {
+                editCardViewModel.selectedCardList.observe(lifecycleOwner) { selectedCardList ->
+                    itemView.setOnClickListener {
                         visibility =
-                            if (visibility == View.GONE && selectedList.size < 7) {
-                                data.isClicked = true
-                                selectedList.add(data.id)
-                                text = selectedList.size.toString()
+                            if (visibility == View.GONE && selectedCardList.size < 7) {
+                                //선택안된애면 선택해서 추가
+                                editCardViewModel.setAddCard(data.id)
+                                //가장 마지막에 추가되는거니까 리스트의 마지막 사이즈
+                                binding.tvRepresentcardCount.text = selectedCardList.size.toString()
                                 View.VISIBLE
                             } else {
                                 if (visibility == View.VISIBLE) {
-                                    selectedList.removeAt(selectedList.indexOf(data.id))
+                                    editCardViewModel.setDeleteCard(data.id)
                                 }
                                 View.GONE
                             }
                     }
-                    editCardDialogViewModel.setChangeSelectedList(selectedList)
                 }
             }
         }
@@ -96,9 +92,9 @@ class EditCardDialogAdapter(val editCardDialogViewModel: EditCardDialogViewModel
 
     private fun setBackground(isMe: Boolean): Int {
         return if (isMe) {
-            R.drawable.bg_main_green_radius_8
+            R.drawable.bg_main_green_stoke_black_radius_8
         } else {
-            R.drawable.bg_main_purple_radius_8
+            R.drawable.bg_main_purple_stoke_black_radius_8
         }
     }
 

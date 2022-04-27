@@ -8,17 +8,24 @@ import com.example.cardna.R
 import com.example.cardna.databinding.FragmentCardMeTabBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardDialogAdapter
-import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
+import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 import org.cardna.presentation.util.SpacesItemDecoration
+import org.cardna.presentation.util.SpacesItemDecorationHorizontal
 import kotlin.math.roundToInt
 
 class CardMeTabFragment :
     BaseViewUtil.BaseFragment<FragmentCardMeTabBinding>(R.layout.fragment_card_me_tab) {
     private lateinit var editCardDialogAdapter: EditCardDialogAdapter
-    private val editCardDialogViewModel: EditCardDialogViewModel by activityViewModels()
+    private val editCardViewModel: EditCardViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        initData()
     }
 
     override fun initView() {
@@ -27,26 +34,21 @@ class CardMeTabFragment :
     }
 
     private fun initData() {
-        editCardDialogViewModel.getCardAll()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        initData()
+        editCardViewModel.getCardAll()
     }
 
     private fun initAdapter() {
-        editCardDialogAdapter = EditCardDialogAdapter(editCardDialogViewModel)
-        editCardDialogViewModel.cardMeList.observe(viewLifecycleOwner) { it ->
+        editCardDialogAdapter =
+            EditCardDialogAdapter(lifecycleOwner = viewLifecycleOwner, editCardViewModel)
+        editCardViewModel.cardMeList.observe(viewLifecycleOwner) { it ->
             it.map { it.isMe = true }
-//            editCardDialogViewModel.addSelectedList(it.map { it.id } as MutableList<Int>)
             editCardDialogAdapter.apply { submitList(it) }
         }
 
         with(binding.rvCardmetabContainer) {
             this.adapter = editCardDialogAdapter
             layoutManager = GridLayoutManager(requireActivity(), 2)
-            addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt()))
+            addItemDecoration(SpacesItemDecorationHorizontal())
         }
     }
 

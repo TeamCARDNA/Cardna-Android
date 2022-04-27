@@ -15,7 +15,6 @@
         android:background="@color/main_black"
         tools:context="org.cardna.presentation.ui.cardpack.view.CardPackFragment">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctl_cardpack_top"
             android:visibility="@{(cardPackViewModel.id == null)? View.VISIBLE : View.GONE}"
@@ -41,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@{cardPackViewModel.totalCardCnt.toString()}"
+                android:text="@{String.valueOf(cardPackViewModel.totalCardCnt)}"
                 android:textColor="@color/white_3"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_cardpack_title"
                 app:layout_constraintStart_toEndOf="@+id/tv_cardpack_title"

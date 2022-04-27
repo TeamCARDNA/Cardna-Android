@@ -1,13 +1,176 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="org.cardna.presentation.ui.cardpack.view.BottomDialogImageFragment">
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="cardCreateViewModel"
+            type="org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:background="@color/main_black">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_cardcreate_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dark_gray_radius_8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/btn_cardcreate_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="24dp"
+                android:background="@color/transparent"
+                android:enabled="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                android:text="@string/bottom_image_complete"
+                android:textAppearance="@style/cardpack_empty_textView"
+                android:textColor="@color/white_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_cardpack_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="44dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="@string/bottom_image_symbol"
+                android:textColor="@color/white_3"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/img_btn_cardpack_symbol_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@{cardCreateViewModel.isCardMeOrYou ? @drawable/ic_selector_cardme_symbol_0 : @drawable/ic_selector_cardyou_symbol_0}"
+
+                app:layout_constraintEnd_toStartOf="@+id/img_btn_cardpack_symbol_1"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cardpack_symbol"
+                tools:background="@drawable/ic_selector_cardme_symbol_0" />
+
+            <ImageButton
+                android:id="@+id/img_btn_cardpack_symbol_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@{cardCreateViewModel.isCardMeOrYou ? @drawable/ic_selector_cardme_symbol_1 : @drawable/ic_selector_cardyou_symbol_1}"
+                app:layout_constraintEnd_toStartOf="@+id/img_btn_cardpack_symbol_2"
+
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/img_btn_cardpack_symbol_0"
+                app:layout_constraintTop_toTopOf="@+id/img_btn_cardpack_symbol_0"
+                tools:background="@drawable/ic_selector_cardme_symbol_1" />
+
+            <ImageButton
+                android:id="@+id/img_btn_cardpack_symbol_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@{cardCreateViewModel.isCardMeOrYou ? @drawable/ic_selector_cardme_symbol_2 : @drawable/ic_selector_cardyou_symbol_2}"
+                app:layout_constraintEnd_toStartOf="@+id/img_btn_cardpack_symbol_3"
+
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/img_btn_cardpack_symbol_1"
+                app:layout_constraintTop_toTopOf="@+id/img_btn_cardpack_symbol_1"
+                tools:background="@drawable/ic_selector_cardme_symbol_2" />
+
+            <ImageButton
+                android:id="@+id/img_btn_cardpack_symbol_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@{cardCreateViewModel.isCardMeOrYou ? @drawable/ic_selector_cardme_symbol_3 : @drawable/ic_selector_cardyou_symbol_3}"
+                app:layout_constraintEnd_toStartOf="@+id/img_btn_cardpack_symbol_4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/img_btn_cardpack_symbol_2"
+                app:layout_constraintTop_toTopOf="@+id/img_btn_cardpack_symbol_2"
+                tools:background="@drawable/ic_selector_cardme_symbol_3" />
+
+            <ImageButton
+                android:id="@+id/img_btn_cardpack_symbol_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@{cardCreateViewModel.isCardMeOrYou ? @drawable/ic_selector_cardme_symbol_4 : @drawable/ic_selector_cardyou_symbol_4}"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/img_btn_cardpack_symbol_3"
+                app:layout_constraintTop_toTopOf="@+id/img_btn_cardpack_symbol_3"
+                tools:background="@drawable/ic_selector_cardme_symbol_4" />
+
+            <TextView
+                android:id="@+id/tv_cardpack_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="44dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="@string/bottom_image_gallery"
+                android:textColor="@color/white_3"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_btn_cardpack_symbol_0" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_cardpack_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_cardpack_image">
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="32dp"
+                    android:background="@drawable/ic_cardpack_gallery"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_cardcreate_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:background="@color/transparent"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:includeFontPadding="false"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="0dp"
+                    android:text="@string/bottom_image_from_gallery"
+                    android:textColor="@color/white_1"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+                    app:layout_constraintStart_toEndOf="@+id/imageButton"
+                    app:layout_constraintTop_toTopOf="@+id/imageButton" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

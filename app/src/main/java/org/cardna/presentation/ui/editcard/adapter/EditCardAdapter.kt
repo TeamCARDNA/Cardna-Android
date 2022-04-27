@@ -2,27 +2,38 @@ package org.cardna.presentation.ui.editcard.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cardna.R
 import com.example.cardna.databinding.ItemEditCardBinding
+import okhttp3.internal.format
 import org.cardna.data.remote.model.card.MainCard
-import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
+import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
+import org.cardna.presentation.util.ItemTouchHelperCallback
 import org.cardna.presentation.util.ItemTouchHelperListener
 import timber.log.Timber
+import java.util.*
 
 class EditCardAdapter(
-    val editCardDialogViewModel: EditCardDialogViewModel
-) :
-    ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()),
+    val editCardViewModel: EditCardViewModel
+) : ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()),
     ItemTouchHelperListener {
+    var mutableList = mutableListOf<MainCard>()
+
+    override fun onCurrentListChanged(
+        previousList: MutableList<MainCard>,
+        currentList: MutableList<MainCard>
+    ) {
+        super.onCurrentListChanged(previousList, currentList)
+        mutableList = currentList
+    }
+
     inner class ViewHolder(private val binding: ItemEditCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            editCardDialogViewModel.setChangeSelectedList(currentList.map { it.id } as MutableList<Int>)
+            editCardViewModel.setChangeSelectedList(currentList.map { it.id } as MutableList<Int>)
         }
 
         fun onBind(data: MainCard) {
@@ -38,6 +49,7 @@ class EditCardAdapter(
                 } else {
                     clRvItem.setBackgroundResource(R.drawable.bg_main_purple_radius_8)
                 }
+                //대표카드 삭제->아이템 포지션 전달
                 ivRepresentcardeditlistDelete.setOnClickListener {
                     setNewList(adapterPosition)
                 }
@@ -46,10 +58,11 @@ class EditCardAdapter(
     }
 
     private fun setNewList(adapterPosition: Int) {
-        val newList = currentList.toMutableList()
-        newList.removeAt(adapterPosition)
-        editCardDialogViewModel.setChangeSelectedList(newList.map { it.id } as MutableList<Int>)
-        submitList(newList)
+        val newList = currentList.toMutableList()  //현재 리스트 복사한다음에
+        newList.removeAt(adapterPosition) //지우려고 선택한 아이템을 현재 리스트에서 지우고
+        //삭제할거하고 남은 대표카드 수정에 있는 카드의 id만 남겨서 뷰모델한테 전달
+        editCardViewModel.setChangeSelectedList(newList.map { it.id } as MutableList<Int>)
+        submitList(newList) //삭제한거 제거한 newlist를 리사이클러뷰에 다시 뿌림
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -65,10 +78,11 @@ class EditCardAdapter(
     }
 
     override fun onItemMove(from_position: Int, to_position: Int): Boolean {
-        val item = currentList[from_position]
-        currentList.removeAt(from_position)
-        currentList.add(to_position, item)
+        val mutableList = currentList.toMutableList()
+        mutableList.removeAt(from_position)
+        mutableList.add(to_position, getItem(from_position))
         notifyItemMoved(from_position, to_position)
+        onCurrentListChanged(currentList.toMutableList(), mutableList)
         return true
     }
 
@@ -91,5 +105,4 @@ class EditCardAdapter(
             return oldItem == newItem
         }
     }
-
 }

@@ -1,53 +1,42 @@
 package org.cardna.presentation.ui.editcard.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.FragmentEditCardDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import org.cardna.data.remote.model.card.RequestEditCardData
+import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardTabAdapter
-import org.cardna.presentation.ui.editcard.viewmodel.EditCardDialogViewModel
+import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
+import timber.log.Timber
 import kotlin.math.roundToInt
 
-class EditCardDialogFragment : BottomSheetDialogFragment() {
-    private var _binding: FragmentEditCardDialogBinding? = null
-    private val binding get() = _binding ?: error("View를 참조하기 위해 binding이 초기화되지 않았습니다.")
+class EditCardDialogFragment :
+    BaseViewUtil.BaseBottomDialogFragment<FragmentEditCardDialogBinding>(R.layout.fragment_edit_card_dialog) {
 
     private lateinit var editCardTabAdapter: EditCardTabAdapter
-    private val editCardDialogViewModel: EditCardDialogViewModel by activityViewModels()
+    private val editCardViewModel: EditCardViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.editCardViewModel = editCardViewModel
         initView()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_edit_card_dialog, container, false)
-        return binding.root
-    }
-
-    private fun initView() {
+    override fun initView() {
         (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
         binding.clBottomSheet.layoutParams.height =
             (resources.displayMetrics.heightPixels * 0.94).roundToInt()
 
-        initData()
         initAdapter()
         initTabLayout()
         mainCardCount()
-        setClickListener()
+        putMainCardList()
     }
 
     private fun initTabLayout() {
@@ -58,13 +47,10 @@ class EditCardDialogFragment : BottomSheetDialogFragment() {
         ) { tab, position ->
             tab.text = tabLabel[position]
         }.attach()
-    }
-
-    private fun initData() {
-        binding.editCardDialogViewModel = editCardDialogViewModel
-
-        editCardDialogViewModel.getCardAll()
-        editCardDialogViewModel.representCardCheck()
+        binding.tlRepresentcardedit.apply {
+            tabRippleColor = null
+            layoutParams.height = resources.getDimension(R.dimen.tablayout_view_h).toInt()
+        }
     }
 
     private fun initAdapter() {
@@ -76,19 +62,29 @@ class EditCardDialogFragment : BottomSheetDialogFragment() {
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+    }
+
     private fun mainCardCount() {
-        editCardDialogViewModel.selectedCardList.observe(viewLifecycleOwner) {
+        editCardViewModel.selectedCardList.observe(viewLifecycleOwner) {
             binding.tvRepresentcardeditCardListCount.text = it.size.toString()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        initData()
-    }
-
-    private fun setClickListener() {
+    private fun putMainCardList() {
         binding.tvRepresentcardeditFinish.setOnClickListener {
+            with(editCardViewModel) {
+                selectedCardList.observe(viewLifecycleOwner) { list ->
+                    putEditCard(RequestEditCardData(list))
+                }
+                mainCardList.observe(viewLifecycleOwner) {
+                    val list = it.map { it.id }
+                    Timber.d("init submit fragment $list")
+                }
+
+            }
             dismiss()
         }
     }
