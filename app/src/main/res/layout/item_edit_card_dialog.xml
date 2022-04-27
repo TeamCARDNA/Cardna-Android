@@ -40,7 +40,7 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/iv_cardpack_recyclerview"
             app:layout_constraintEnd_toEndOf="@id/iv_cardpack_recyclerview"
             tools:visibility="visible">
