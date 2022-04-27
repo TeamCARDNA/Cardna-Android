@@ -18,6 +18,7 @@ import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.setGradientText
 
 @AndroidEntryPoint
 class SetNameFinishedActivity :
@@ -89,15 +90,6 @@ class SetNameFinishedActivity :
             tvSetnamefinishedMessage3.text =
                 setGradientText(getString(R.string.setnamefinished_tv_message3))
         }
-    }
-
-    private fun setGradientText(welcomeText: String): Spannable {
-        val green = getColor(R.color.main_green)
-        val purple = getColor(R.color.main_purple)
-        val spannable = welcomeText.toSpannable()
-        spannable[0..welcomeText.length] =
-            LinearGradientSpan(welcomeText, welcomeText, green, purple)
-        return spannable
     }
 
     private fun setSleep() {
