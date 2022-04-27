@@ -48,6 +48,9 @@ dependencies {
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.12.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
 
+    //DotsIndicator
+    implementation 'com.tbuonomo:dotsindicator:4.2'
+
     // Lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
