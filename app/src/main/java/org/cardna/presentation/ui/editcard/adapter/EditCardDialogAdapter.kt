@@ -43,26 +43,26 @@ class EditCardDialogAdapter(
                 }
             }
 
-            binding.clEditcarddialogCount.apply {
-                editCardViewModel.selectedCardList.observe(lifecycleOwner) { selectedCardList ->
-                    itemView.setOnClickListener {
-                        binding.clEditcarddialogCount.visibility =
-                                //선택안된애면 선택&&7개미만일때만
-                            if (visibility == View.INVISIBLE && selectedCardList.size < 7) {
-                                //선택안된애면 선택해서 추가
-                                editCardViewModel.setAddCard(data.id)
-                                //가장 마지막에 추가되는거니까 리스트의 마지막 사이즈
-                                binding.tvRepresentcardCount.text = selectedCardList.size.toString()
-                                View.VISIBLE
-                            } else {
-                                if (visibility == View.VISIBLE) { //이미 선택된 애면 선택해제
-                                    editCardViewModel.setDeleteCard(data.id)
-                                }
-                                View.INVISIBLE
-                            }
-                    }
-                }
-            }
+//            binding.clEditcarddialogCount.apply {
+//                editCardViewModel.selectedCardList.observe(lifecycleOwner) { selectedCardList ->
+//                    itemView.setOnClickListener {
+//                        visibility =
+//                                //선택안된애면 선택&&7개미만일때만
+//                            if (visibility == View.INVISIBLE && selectedCardList.size < 7) {
+//                                //선택안된애면 선택해서 추가
+//                                editCardViewModel.setAddCard(data.id)
+//                                //가장 마지막에 추가되는거니까 리스트의 마지막 사이즈
+//                                binding.tvRepresentcardCount.text = selectedCardList.size.toString()
+//                                View.VISIBLE
+//                            } else {
+//                                if (visibility == View.VISIBLE) { //이미 선택된 애면 선택해제
+//                                    editCardViewModel.setDeleteCard(data.id)
+//                                }
+//                                View.INVISIBLE
+//                            }
+//                    }
+//                }
+//            }
         }
     }
 

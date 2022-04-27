@@ -14,6 +14,7 @@ import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
+import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 import org.cardna.presentation.util.*
 import timber.log.Timber
 import kotlin.math.roundToInt
@@ -82,10 +83,15 @@ class EditCardActivity :
 
     private fun putEditCard() {
         binding.tvTvRepresentcardeditFinish.setOnClickListener {
-            val cardsList = RequestEditCardData(editCardAdapter.changedList.map { it.id })
-            Timber.d("list- put : $cardsList")
+            val cardIdList = editCardAdapter.mutableList.map { it.id }
+            val cardsList = RequestEditCardData(cardIdList)
+            Timber.d("ChangeModelEditActivity : $cardIdList")
             editCardViewModel.putEditCard(cardsList)
-            finish()
+            editCardViewModel.getChangeSuccess.observe(this) { onSuccess ->
+                if (onSuccess) {
+                    finish()
+                }
+            }
         }
     }
 
