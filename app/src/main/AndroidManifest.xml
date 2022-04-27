@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name="org.cardna.presentation.ui.login.OnBoardingActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name="org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity"
             android:exported="false" />

@@ -37,15 +37,20 @@
                 android:text="@string/onboarding_skip"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                android:id="@+id/sdi_onboarding_indicator"
                 android:layout_width="wrap_content"
+                app:dotsWidthFactor="1.0"
                 android:layout_height="match_parent"
                 app:dotsColor="@color/white_4"
+                app:dotsStrokeColor="@color/white_4"
+                app:selectedDotColor="@color/white_1"
+                app:dotsClickable="true"
                 app:dotsSize="8dp"
+                app:dotsSpacing="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:progressMode="true"
-                app:selectedDotColor="@color/white_1" />
+                 />
 
             <TextView
                 android:id="@+id/tv_first_next"
