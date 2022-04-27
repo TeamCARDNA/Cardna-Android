@@ -181,10 +181,10 @@ class MainCardActivity :
             val friendId = intent.getIntExtra("friendId", 0)
             val name = intent.getStringExtra("name")
             val intentCardYou = Intent(this, CardCreateActivity::class.java).apply {
-                putExtra("isCardMeOrYou", CardCreateActivity.CARD_YOU)
+                putExtra("isCardMeOrYou", BaseViewUtil.CARD_YOU)
                 putExtra("id", friendId)
                 putExtra("name", name)
-                putExtra("isCardPackOrMainCard", CardCreateActivity.CARD_YOU)
+                putExtra("isCardPackOrMainCard", BaseViewUtil.CARD_YOU)
                 startActivity(this)
             }
         }

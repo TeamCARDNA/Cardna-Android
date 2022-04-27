@@ -13,6 +13,7 @@ import org.cardna.data.remote.model.card.RequestCreateCardYouData
 import org.cardna.data.remote.model.card.ResponseCardMeData
 import org.cardna.data.remote.model.card.ResponseCardYouData
 import org.cardna.domain.repository.CardRepository
+import org.cardna.presentation.base.BaseViewUtil
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -45,7 +46,7 @@ class CardCreateViewModel @Inject constructor(
     val uri: Uri?
         get() = _uri
 
-    private var _imgIndex: Int? = GALLERY // 띄워줄
+    private var _imgIndex: Int? = BaseViewUtil.GALLERY
     val imgIndex: Int?
         get() = _imgIndex
 
@@ -131,15 +132,15 @@ class CardCreateViewModel @Inject constructor(
             if (makeUriToFile == null) { // 심볼 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, null) }
-                        .onSuccess { Log.d("카드나 작성 성공", it.message) }
-                        .onFailure { Log.d("카드나 작성 실패", it.message!!) }
+                        .onSuccess { Timber.e("카드나 작성 성공 : ${it.message}") }
+                        .onFailure { Timber.e("카드나 작성 실패 : ${it.message}") }
                 }
             } else { // 이미지 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, makeUriToFile) }
-                        .onSuccess { Log.d("카드나 작성 성공", it.message) }
+                        .onSuccess { Timber.e("카드나 작성 성공 : ${it.message}") }
                         .onFailure {
-                            Log.d("카드나 작성 실패", it.message!!)
+                            Timber.e("카드나 작성 실패 : ${it.message}")
                             it.printStackTrace()
                         }
                 }
@@ -149,34 +150,25 @@ class CardCreateViewModel @Inject constructor(
                 etKeywordText.value!!,
                 etDetailText.value!!,
                 symbolId, // 갤러리 이미지를 선택했다면 dialog 완료 버튼을 누르지 않았을 테니까 null 값일 것임
-                id
+                id // friendId로 들어감
             ).toRequestBody()
 
             if (makeUriToFile== null) { // 심볼 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, null) }
-                        .onSuccess { Log.d("카드너 작성 성공", it.message) }
-                        .onFailure { Log.d("카드너 작성 실패", it.message!!) }
+                        .onSuccess { Timber.e("카드나 작성 성공 : ${it.message}") }
+                        .onFailure { Timber.e("카드나 작성 실패 : ${it.message}") }
                 }
             } else { // 이미지 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, makeUriToFile) }
-                        .onSuccess { Log.d("카드너 작성 성공", it.message) }
+                        .onSuccess { Timber.e("카드나 작성 성공 : ${it.message}") }
                         .onFailure {
-                            Log.d("카드너 작성 실패", it.message!!)
+                            Timber.e("카드나 작성 실패 : ${it.message}")
                             it.printStackTrace()
                         }
                 }
             }
         }
-    }
-
-    companion object {
-        const val SYMBOL_0 = 0
-        const val SYMBOL_1 = 1
-        const val SYMBOL_2 = 2
-        const val SYMBOL_3 = 3
-        const val SYMBOL_4 = 4
-        const val GALLERY = 5
     }
 }
