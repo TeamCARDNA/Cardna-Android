@@ -7,6 +7,7 @@ import com.example.cardna.R
 import com.example.cardna.databinding.FragmentEditCardDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.presentation.base.BaseViewUtil
@@ -27,7 +28,6 @@ class EditCardDialogFragment :
         initView()
     }
 
-
     override fun initView() {
         (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
         binding.clBottomSheet.layoutParams.height =
@@ -47,6 +47,10 @@ class EditCardDialogFragment :
         ) { tab, position ->
             tab.text = tabLabel[position]
         }.attach()
+        binding.tlRepresentcardedit.apply {
+            tabRippleColor = null
+            layoutParams.height = resources.getDimension(R.dimen.tablayout_view_h).toInt()
+        }
     }
 
     private fun initAdapter() {
