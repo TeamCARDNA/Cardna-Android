@@ -211,7 +211,7 @@
     <string name="edit_card_slash">/</string>
     <string name="edit_card_float_button_message">카드팩에서 대표카드를 선택해보세요!</string>
 
-<!--    Dialog_relation-->
+    <!--    Dialog_relation-->
     <string name="dialog_relation_confirm">확인</string>
     <string name="dialog_relation_cancel">취소</string>
     <string name="dialog_relation_progressing_cancel">친구요청을 취소하시겠어요?</string>
@@ -225,4 +225,15 @@
     <string name="cardyoustore_card_name">다빈</string>
     <string name="cardyoustore_card_createdAt">2022/02/22</string>
 
+    <!--    OnBoarding Activity-->
+    <string name="onboarding_cardme_title">카드나</string>
+    <string name="onboarding_cardme_about">카드나는 “내가 아는 나의 모습이 담긴 카드”에요\n내가 어떤 사람인지 카드나로 만들어 이해해봐요! </string>
+    <string name="onboarding_cardyou_title">카드너</string>
+    <string name="onboarding_cardyou_about">카드너는 타인이 말해준 다양한 나의 모습이에요\n내가 어떤 사람인지 카드너를 받아 이해해봐요! </string>
+    <string name="onboarding_represent_title">대표 카드</string>
+    <string name="onboarding_represent_about">카드나, 카드너로\n나를 대표하는 카드를 설정해 나를 표현해봐요! </string>
+    <string name="onboarding_insight_title">인사이트</string>
+    <string name="onboarding_insight_about">서로의 카드에 공감 버튼을 누를 수 있어요. 공감수에\n따라 분석된 카드를 보며, 관계 속 나의 모습을 알아가요!</string>
+    <string name="onboarding_skip">건너뛰기</string>
+    <string name="onboarding_next">다음</string>
 </resources>
