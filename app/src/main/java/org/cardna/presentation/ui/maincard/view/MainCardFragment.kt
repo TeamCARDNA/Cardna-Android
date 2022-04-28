@@ -119,10 +119,10 @@ class MainCardFragment :
             val friendId = arguments?.getInt("friendId", -1)
             val name = arguments?.getString("name")
             val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
-                putExtra("isCardMeOrYou", CardCreateActivity.CARD_YOU)
+                putExtra("isCardMeOrYou", BaseViewUtil.CARD_YOU)
                 putExtra("id", friendId)
                 putExtra("name", name)
-                putExtra("isCardPackOrMainCard", CardCreateActivity.CARD_YOU)
+                putExtra("isCardPackOrMainCard", BaseViewUtil.CARD_YOU)
                 startActivity(this)
             }
         }

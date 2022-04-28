@@ -60,14 +60,14 @@ class BottomDialogImageFragment(val itemClick: () -> Unit)
 
                 // 카드나, 카드너 일때 분기처리 필요 => 여기서 분기처리할 필요 없고, Activity 에서 해주면 될 듯
                 if (imgBtnCardpackSymbol0.isSelected) {
-                    cardCreateViewModel?.setSymbolId(SYMBOL_0)
+                    cardCreateViewModel?.setSymbolId(BaseViewUtil.SYMBOL_0)
                     // imgIndex 는 카드나, 카드너 분기처리
                     if (cardCreateViewModel?.isCardMeOrYou!!)
                         cardCreateViewModel?.setImgIndex(R.drawable.ic_symbol_cardme_0)
                     else
                         cardCreateViewModel?.setImgIndex(R.drawable.ic_symbol_cardyou_0)
                 } else
-                    cardCreateViewModel?.setSymbolId(GALLERY)
+                    cardCreateViewModel?.setSymbolId(BaseViewUtil.GALLERY)
 
             }
 
@@ -80,7 +80,7 @@ class BottomDialogImageFragment(val itemClick: () -> Unit)
                 ifEnableCompleteBtn()
 
                 if (imgBtnCardpackSymbol1.isSelected) {
-                    cardCreateViewModel?.setSymbolId(SYMBOL_1)
+                    cardCreateViewModel?.setSymbolId(BaseViewUtil.SYMBOL_1)
 
                     // imgIndex 는 카드나, 카드너 분기처리
                     if (cardCreateViewModel?.isCardMeOrYou!!)
@@ -88,7 +88,7 @@ class BottomDialogImageFragment(val itemClick: () -> Unit)
                     else
                         cardCreateViewModel?.setImgIndex(R.drawable.ic_symbol_cardyou_1)
                 } else
-                    cardCreateViewModel?.setSymbolId(GALLERY)
+                    cardCreateViewModel?.setSymbolId(BaseViewUtil.GALLERY)
             }
 
             imgBtnCardpackSymbol2.setOnClickListener {
@@ -100,7 +100,7 @@ class BottomDialogImageFragment(val itemClick: () -> Unit)
                 ifEnableCompleteBtn()
 
                 if (imgBtnCardpackSymbol2.isSelected) {
-                    cardCreateViewModel?.setSymbolId(SYMBOL_2)
+                    cardCreateViewModel?.setSymbolId(BaseViewUtil.SYMBOL_2)
 
                     // imgIndex 는 카드나, 카드너 분기처리
                     if (cardCreateViewModel?.isCardMeOrYou!!)
@@ -108,7 +108,7 @@ class BottomDialogImageFragment(val itemClick: () -> Unit)
                     else
                         cardCreateViewModel?.setImgIndex(R.drawable.ic_symbol_cardyou_2)
                 } else
-                    cardCreateViewModel?.setSymbolId(GALLERY)
+                    cardCreateViewModel?.setSymbolId(BaseViewUtil.GALLERY)
             }
 
             imgBtnCardpackSymbol3.setOnClickListener {
@@ -120,7 +120,7 @@ class BottomDialogImageFragment(val itemClick: () -> Unit)
                 ifEnableCompleteBtn()
 
                 if (imgBtnCardpackSymbol3.isSelected) {
-                    cardCreateViewModel?.setSymbolId(SYMBOL_3)
+                    cardCreateViewModel?.setSymbolId(BaseViewUtil.SYMBOL_3)
 
                     // imgIndex 는 카드나, 카드너 분기처리
                     if (cardCreateViewModel?.isCardMeOrYou!!)
@@ -128,7 +128,7 @@ class BottomDialogImageFragment(val itemClick: () -> Unit)
                     else
                         cardCreateViewModel?.setImgIndex(R.drawable.ic_symbol_cardyou_3)
                 } else
-                    cardCreateViewModel?.setSymbolId(GALLERY)
+                    cardCreateViewModel?.setSymbolId(BaseViewUtil.GALLERY)
             }
 
             imgBtnCardpackSymbol4.setOnClickListener {
@@ -140,7 +140,7 @@ class BottomDialogImageFragment(val itemClick: () -> Unit)
                 ifEnableCompleteBtn()
 
                 if (imgBtnCardpackSymbol4.isSelected) {
-                    cardCreateViewModel?.setSymbolId(SYMBOL_4)
+                    cardCreateViewModel?.setSymbolId(BaseViewUtil.SYMBOL_4)
 
                     // imgIndex 는 카드나, 카드너 분기처리
                     if (cardCreateViewModel?.isCardMeOrYou!!)
@@ -148,7 +148,7 @@ class BottomDialogImageFragment(val itemClick: () -> Unit)
                     else
                         cardCreateViewModel?.setImgIndex(R.drawable.ic_symbol_cardyou_4)
                 } else
-                    cardCreateViewModel?.setSymbolId(GALLERY)
+                    cardCreateViewModel?.setSymbolId(BaseViewUtil.GALLERY)
             }
 
             // 완료 버튼 누르면 dialog 없어지고, CardCreateActivity 에서 dialog 를 생성할 때 넘겨준 itemClick() 메서드를 실행한다.
@@ -174,16 +174,4 @@ class BottomDialogImageFragment(val itemClick: () -> Unit)
             }
         }
     }
-
-    companion object {
-        const val SYMBOL_0 = 1
-        const val SYMBOL_1 = 2
-        const val SYMBOL_2 = 3
-        const val SYMBOL_3 = 4
-        const val SYMBOL_4 = 5
-        const val GALLERY = 6
-    }
-
-
-
 }

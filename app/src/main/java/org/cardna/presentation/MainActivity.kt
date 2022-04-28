@@ -78,28 +78,23 @@ class MainActivity :
         // 바텀싯 다이얼로그가 뜬 후, 카드나 or 카드너를 선택했을 때, 그거에 따라 어떤 액티비티를 띄워줘야 하는지를 명세한 Fragment 정의하고
         val bottomDialogCardFragment = BottomDialogCardFragment {
             when (it) {
-                CARD_ME -> {
+                BaseViewUtil.CARD_ME -> {
                     // 카드나 작성 액티비티로 이동 => 카드나임을 알 수 있도록 intent로 정보전달
                     val intent = Intent(this, CardCreateActivity::class.java).apply {
-                        putExtra("isCardMeOrYou", true) // 내 카드나 작성 or 친구 카드너 작성
+                        putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, true) // 내 카드나 작성 or 친구 카드너 작성
                         // id, name 안넘겨주면, 알아서 null 로 setting
                     }
                     startActivity(intent)
                 }
-                CARD_YOU -> {
+                BaseViewUtil.CARD_YOU -> {
                     // 내 카드너 보관함으로 이동
                     val intent = Intent(this, CardYouStoreActivity::class.java).apply {
-                        putExtra("isCardMeOrYou", false) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할 듯
+                        putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, false) // 이거 꼭 넘겨줘야 함 ?
                     }
                     startActivity(intent)
                 }
             }
         }
         bottomDialogCardFragment.show(supportFragmentManager, bottomDialogCardFragment.tag)
-    }
-
-    companion object {
-        const val CARD_ME = 0
-        const val CARD_YOU = 1
     }
 }

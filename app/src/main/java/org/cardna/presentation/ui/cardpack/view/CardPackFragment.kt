@@ -26,10 +26,6 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         initView()
-        Timber.e("CardPack id: ${cardPackViewModel.id}")
-        Timber.e("CardPack name : ${cardPackViewModel.name}")
-        Timber.e("CardPack totalCardCnt: ${cardPackViewModel.totalCardCnt.value}")
-
     }
 
     override fun onResume() {

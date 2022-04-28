@@ -35,6 +35,7 @@ class CardMeTabFragment :
 
     private fun initData() {
         editCardViewModel.getCardAll()
+        editCardViewModel.setCurrentPosition(0)
     }
 
     private fun initAdapter() {

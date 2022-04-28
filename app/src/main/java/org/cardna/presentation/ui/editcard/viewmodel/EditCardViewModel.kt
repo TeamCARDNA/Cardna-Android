@@ -31,6 +31,13 @@ class EditCardViewModel @Inject constructor(
     private val _selectedCardList = MutableLiveData<MutableList<Int>>()
     val selectedCardList: LiveData<MutableList<Int>> = _selectedCardList
 
+    private val _currentPosition = MutableLiveData<Int>()
+    val currentPosition: LiveData<Int> = _currentPosition
+
+    fun setCurrentPosition(position:Int){
+        _currentPosition.value=position
+    }
+
     private val _getChangeSuccess = MutableLiveData<Boolean>()
     val getChangeSuccess: LiveData<Boolean> = _getChangeSuccess
 

@@ -10,4 +10,6 @@
 
 <!--    EditCardDialogFragment-->
     <dimen name="tablayout_view_h">28dp</dimen>
+
+    <dimen name="tablayout_view_h">38dp</dimen>
 </resources>

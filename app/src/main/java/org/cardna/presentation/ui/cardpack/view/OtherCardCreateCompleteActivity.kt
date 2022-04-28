@@ -1,6 +1,7 @@
 package org.cardna.presentation.ui.cardpack.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +12,7 @@ import com.example.cardna.databinding.ActivityOtherCardCreateCompleteBinding
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan
+import org.cardna.presentation.util.StatusBarUtil
 
 class OtherCardCreateCompleteActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityOtherCardCreateCompleteBinding>(R.layout.activity_other_card_create_complete) {
@@ -21,8 +23,9 @@ class OtherCardCreateCompleteActivity :
     }
 
     override fun initView() {
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setTextGradient()
-        setLottie(intent.getBooleanExtra("isCardPackOrMainCard", false))
+        setLottie(intent.getBooleanExtra(BaseViewUtil.IS_CARDPACK_OR_MAINCARD, BaseViewUtil.FROM_MAINCARD))
     }
 
     private fun setTextGradient() {
