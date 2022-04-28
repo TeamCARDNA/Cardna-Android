@@ -49,6 +49,8 @@
                 app:dotsSize="8dp"
                 app:dotsSpacing="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_first_skip"
+                app:layout_constraintBottom_toBottomOf="@id/tv_first_skip"
                 app:layout_constraintStart_toStartOf="parent"
                  />
 
