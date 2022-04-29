@@ -6,11 +6,13 @@ import com.example.cardna.R
 import com.example.cardna.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
+import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.shortToast
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginActivity :
@@ -28,7 +30,6 @@ class LoginActivity :
     private fun setClickListener() {
         with(binding) {
             tvLoginPolicyUseOfTerm.setOnClickListener {
-
             }
             tvLoginPolicyPrivate.setOnClickListener {
 
@@ -58,6 +59,7 @@ class LoginActivity :
                 shortToast("토큰 정보 보기 성공")
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+//                startActivity(intent)
                 finish()
             }
         }
