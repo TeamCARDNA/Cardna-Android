@@ -7,12 +7,14 @@ plugins {
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def manifest_kakao_app_key = properties.getProperty('manifest_kakao_app_key')
 
 android {
     compileSdk 31
 
     defaultConfig {
         applicationId "org.cardna"
+        manifestPlaceholders = [kakaoKey: manifest_kakao_app_key]
         minSdk 26
         targetSdk 31
         versionCode 1
@@ -21,6 +23,8 @@ android {
 
         //base_url
         buildConfigField "String", "BASE_URL", properties["base_url"]
+        //kakao_app_key
+        buildConfigField ("String","KAKAO_APP_KEY",properties["kakao_app_key"])
     }
 
     buildTypes {

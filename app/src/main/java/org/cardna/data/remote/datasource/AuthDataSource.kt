@@ -1,12 +1,10 @@
-package org.cardna.data.remote.api.auth
+package org.cardna.data.remote.datasource
 
 import org.cardna.data.remote.model.auth.ResponseSocialLogin
-import retrofit2.http.GET
 
-interface AuthService {
-    @GET("auth/kakao")
+interface AuthDataSource {
+
     suspend fun getKakaoLogin(): ResponseSocialLogin
 
-    @GET("auth/naver")
     suspend fun getNaverLogin(): ResponseSocialLogin
 }
