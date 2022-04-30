@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.login
+package org.cardna.presentation.ui.login.view
 
 import android.app.ActivityOptions
 import android.app.Dialog
@@ -6,19 +6,15 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Spannable
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import androidx.core.text.set
-import androidx.core.text.toSpannable
 import androidx.core.widget.addTextChangedListener
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivitySetNameBinding
 import com.example.cardna.databinding.DialogSetNameBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.util.LinearGradientSpan
 import org.cardna.presentation.util.setGradientText
 
 @AndroidEntryPoint

@@ -237,8 +237,4 @@
     <string name="onboarding_skip">건너뛰기</string>
     <string name="onboarding_next">다음</string>
 
-<!--    kakao_app_key-->
-    <string name="MANIFEST_KAKAO_APP_KEY">kakaobe83382392b3f6ae3475622eedb05725</string>
-    <string name="KAKAO_APP_KEY">be83382392b3f6ae3475622eedb05725</string>
-
 </resources>

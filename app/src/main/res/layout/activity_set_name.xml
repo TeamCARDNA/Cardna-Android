@@ -5,7 +5,7 @@
 
         <variable
             name="setNameActivity"
-            type="org.cardna.presentation.ui.login.SetNameActivity" />
+            type="org.cardna.presentation.ui.login.view.SetNameActivity" />
 
         <variable
             name="firstnameCount"
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_black"
-        tools:context="org.cardna.presentation.ui.login.SetNameActivity">
+        tools:context="org.cardna.presentation.ui.login.view.SetNameActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_setname_container"

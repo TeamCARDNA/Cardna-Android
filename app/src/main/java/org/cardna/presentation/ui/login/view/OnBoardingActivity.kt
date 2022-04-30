@@ -1,8 +1,7 @@
-package org.cardna.presentation.ui.login
+package org.cardna.presentation.ui.login.view
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityOnBoardingBinding
@@ -14,7 +13,6 @@ import org.cardna.presentation.ui.login.onboardingfragment.FirstFragment
 import org.cardna.presentation.ui.login.onboardingfragment.FourthFragment
 import org.cardna.presentation.ui.login.onboardingfragment.SecondFragment
 import org.cardna.presentation.ui.login.onboardingfragment.ThirdFragment
-import org.cardna.presentation.ui.maincard.view.MainCardActivity
 import org.cardna.presentation.util.StatusBarUtil
 
 @AndroidEntryPoint

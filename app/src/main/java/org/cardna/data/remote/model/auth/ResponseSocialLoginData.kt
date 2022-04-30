@@ -1,7 +1,7 @@
 package org.cardna.data.remote.model.auth
 
 
-data class ResponseSocialLogin(
+data class ResponseSocialLoginData(
     val message: String,
     val status: Int,
     val success: Boolean,
