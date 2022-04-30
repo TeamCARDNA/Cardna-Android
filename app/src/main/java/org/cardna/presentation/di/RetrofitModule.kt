@@ -1,14 +1,12 @@
 package org.cardna.presentation.di
 
 import com.example.cardna.BuildConfig
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.cardna.presentation.di.RetrofitModule.BASE_URL
 import org.cardna.presentation.util.AuthInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

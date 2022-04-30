@@ -1,18 +1,19 @@
-package org.cardna.presentation.ui.login
+package org.cardna.presentation.ui.login.view
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
-import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.shortToast
 import timber.log.Timber
+import kotlin.math.log
 
 @AndroidEntryPoint
 class LoginActivity :
@@ -56,9 +57,11 @@ class LoginActivity :
             if (error != null) {
                 shortToast("토근 정보 보기 실패")
             } else if (tokenInfo != null) {
+                Timber.d("tokenInfo : $tokenInfo")
                 shortToast("토큰 정보 보기 성공")
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                logout()
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
 //                startActivity(intent)
                 finish()
             }
@@ -68,8 +71,9 @@ class LoginActivity :
             if (error != null) {
                 getErrorToast(error)
             } else if (token != null) {
+                Timber.d("token : ${token.accessToken}")
                 shortToast("login success")
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, SetNameActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
             }
@@ -86,6 +90,19 @@ class LoginActivity :
                     loginWithKakaoAccount(context, callback = callback)
                 }
             }
+        }
+    }
+
+    private fun logout() {
+        UserApiClient.instance.logout { error ->
+            if (error != null) {
+                shortToast("logout success")
+            } else {
+                shortToast("logout fail")
+            }
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP))
+//            finish()
         }
     }
 

@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.cardna.data.remote.api.auth.AuthService
 import org.cardna.data.remote.api.card.CardService
 import org.cardna.data.remote.api.friend.FriendService
 import org.cardna.data.remote.api.insight.InsightService
@@ -51,5 +52,11 @@ object DataSourceModule {
     @Singleton
     fun provideFriendDataSource(friendService: FriendService): FriendDataSource {
         return FriendDataSourceImpl(friendService)
+    }
+
+    @Provides
+    @Singleton
+    fun providerAuthDataSource(authService: AuthService): AuthDataSource {
+        return AuthDataSourceImpl(authService)
     }
 }
