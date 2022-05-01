@@ -1,24 +1,28 @@
 package org.cardna.presentation.ui.login.view
 
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.example.cardna.R
 import com.example.cardna.databinding.ActivityLoginBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
 import org.cardna.presentation.util.shortToast
 import timber.log.Timber
-import kotlin.math.log
 
 @AndroidEntryPoint
 class LoginActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityLoginBinding>(R.layout.activity_login) {
+    private val loginViewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         initView()
     }
@@ -26,6 +30,18 @@ class LoginActivity :
     override fun initView() {
 //        setClickListener()
         testKakao()
+    }
+
+    private fun getDeviceToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            Timber.d("device token $token")
+        })
     }
 
     private fun setClickListener() {
@@ -59,10 +75,10 @@ class LoginActivity :
             } else if (tokenInfo != null) {
                 Timber.d("tokenInfo : $tokenInfo")
                 shortToast("토큰 정보 보기 성공")
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                startActivity(intent)
                 logout()
-//                val intent = Intent(this, MainActivity::class.java)
-//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-//                startActivity(intent)
                 finish()
             }
         }
@@ -71,9 +87,12 @@ class LoginActivity :
             if (error != null) {
                 getErrorToast(error)
             } else if (token != null) {
+
                 Timber.d("token : ${token.accessToken}")
                 shortToast("login success")
                 val intent = Intent(this, SetNameActivity::class.java)
+                intent.putExtra("social", "kakao")
+                loginViewModel.setToken(token)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
             }
