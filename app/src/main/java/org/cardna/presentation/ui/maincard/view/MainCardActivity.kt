@@ -7,26 +7,18 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.CompositePageTransformer
-import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivityMainCardBinding
-import com.example.cardna.databinding.DialogRelationBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.R
+import org.cardna.databinding.ActivityMainCardBinding
+import org.cardna.databinding.DialogRelationBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
-import org.cardna.presentation.ui.cardpack.view.CardCreateActivity_GeneratedInjector
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
-import org.cardna.presentation.util.getPageTransformer
-import org.cardna.presentation.util.shortToast
 import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
-import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class MainCardActivity :

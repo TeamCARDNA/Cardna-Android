@@ -7,15 +7,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.CompositePageTransformer
-import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.example.cardna.R
-import com.example.cardna.databinding.DialogMainCardBlockBinding
-import com.example.cardna.databinding.DialogRelationBinding
-import com.example.cardna.databinding.FragmentMainCardBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.R
+import org.cardna.databinding.DialogMainCardBlockBinding
+import org.cardna.databinding.DialogRelationBinding
+import org.cardna.databinding.FragmentMainCardBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
@@ -24,10 +21,8 @@ import org.cardna.presentation.ui.editcard.view.EditCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 import org.cardna.presentation.util.setGradientText
-import org.cardna.presentation.util.shortToast
 import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
-import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class MainCardFragment :

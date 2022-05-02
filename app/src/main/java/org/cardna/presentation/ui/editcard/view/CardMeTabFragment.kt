@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.cardna.R
-import com.example.cardna.databinding.FragmentCardMeTabBinding
+import org.cardna.R
+import org.cardna.databinding.FragmentCardMeTabBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardDialogAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel

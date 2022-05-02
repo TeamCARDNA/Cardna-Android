@@ -4,8 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivityFriendCardPackBinding
+import org.cardna.R
+import org.cardna.databinding.ActivityFriendCardPackBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import org.cardna.presentation.util.StatusBarUtil

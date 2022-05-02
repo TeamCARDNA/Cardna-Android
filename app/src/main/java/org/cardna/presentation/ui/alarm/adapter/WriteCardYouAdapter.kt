@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cardna.databinding.ItemAlarmWriteCardyouBinding
+import org.cardna.databinding.ItemAlarmWriteCardyouBinding
 
 class WriteCardYouAdapter(
     private val clickListener: (FriendResponseData) -> Unit

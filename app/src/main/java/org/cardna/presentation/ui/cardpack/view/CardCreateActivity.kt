@@ -14,10 +14,9 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivityCardCreateBinding
+import org.cardna.R
+import org.cardna.databinding.ActivityCardCreateBinding
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -85,7 +84,7 @@ class CardCreateActivity :
         binding.ivCardcreateGalleryImg.clipToOutline = true
         binding.tvCardcreateComplete.isClickable = false;  // 일단 카드 작성 완료 textView 클릭 안되도록
 
-        binding.etCardcreateKeyword.addTextChangedListener { // editText 의 내용이 바뀔때마다
+  /*      binding.etCardcreateKeyword.addTextChangedListener { // editText 의 내용이 바뀔때마다
             cardCreateViewModel.setEtKeywordLength(binding.etCardcreateKeyword.length())
             // 뷰모델 프로퍼티 etKeyWordLength 값 업데이트 해주기만 하면, xml 레이아웃에 결합된 변수가 자동으로 뷰에 업데이트
             checkCompleteTvClickable()
@@ -94,7 +93,7 @@ class CardCreateActivity :
         binding.etCardcreateDetail.addTextChangedListener {
             cardCreateViewModel.setEtDetailLength(binding.etCardcreateDetail.length())
             checkCompleteTvClickable()
-        }
+        }*/
     }
 
     private fun setObserver() { // addTextChangedListener 대신 이거  ?

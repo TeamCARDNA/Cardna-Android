@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import com.example.cardna.R
-import com.example.cardna.databinding.FragmentEditCardDialogBinding
+import org.cardna.R
+import org.cardna.databinding.FragmentEditCardDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator

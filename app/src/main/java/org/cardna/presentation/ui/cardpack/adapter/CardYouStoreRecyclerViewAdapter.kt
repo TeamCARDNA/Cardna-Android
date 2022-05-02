@@ -6,7 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cardna.databinding.ItemCardyoustoreBinding
+import org.cardna.databinding.ItemCardyoustoreBinding
 import org.cardna.data.remote.model.card.ResponseCardYouStoreData
 
 class CardYouStoreRecyclerViewAdapter(

@@ -6,16 +6,15 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.cardna.R
-import com.example.cardna.databinding.CardpackCustomTablayoutBinding
-import com.example.cardna.databinding.FragmentCardPackBinding
+import org.cardna.R
+import org.cardna.databinding.CardpackCustomTablayoutBinding
+import org.cardna.databinding.FragmentCardPackBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardPackTabLayoutAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
-import timber.log.Timber
 
 @AndroidEntryPoint
 class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.layout.fragment_card_pack) {

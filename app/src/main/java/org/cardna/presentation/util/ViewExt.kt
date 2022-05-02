@@ -18,12 +18,11 @@ import androidx.core.text.set
 import androidx.core.text.toSpannable
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.example.cardna.R
+import org.cardna.R
 import org.cardna.CardNaApplication
 import kotlin.math.roundToInt
 

@@ -1,22 +1,17 @@
 package org.cardna.presentation.ui.editcard.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.cardna.R
-import com.example.cardna.databinding.ItemEditCardBinding
-import okhttp3.internal.format
+import org.cardna.R
 import org.cardna.data.remote.model.card.MainCard
+import org.cardna.databinding.ItemEditCardBinding
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
-import org.cardna.presentation.util.ItemTouchHelperCallback
 import org.cardna.presentation.util.ItemTouchHelperListener
 import timber.log.Timber
-import java.util.*
 
 class EditCardAdapter(
     val editCardViewModel: EditCardViewModel

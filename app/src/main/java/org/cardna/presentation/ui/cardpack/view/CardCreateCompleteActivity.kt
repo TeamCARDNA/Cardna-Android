@@ -9,8 +9,8 @@ import android.os.Looper
 import androidx.core.text.set
 import androidx.core.text.toSpannable
 import com.bumptech.glide.Glide
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivityCardCreateCompleteBinding
+import org.cardna.R
+import org.cardna.databinding.ActivityCardCreateCompleteBinding
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan

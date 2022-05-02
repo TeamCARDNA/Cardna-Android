@@ -2,14 +2,12 @@ package org.cardna.presentation.ui.mypage.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.cardna.R
-import com.example.cardna.databinding.FragmentMyPageBinding
+import org.cardna.R
+import org.cardna.databinding.FragmentMyPageBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
