@@ -13,6 +13,7 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.login.LoginActivity
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.shortToast
 import org.cardna.presentation.util.showCustomDialog
 
 @AndroidEntryPoint
@@ -62,9 +63,19 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_logout_dialog_cancel)
 
         confirmBtn.setOnClickListener {
-            //     if (CardNaRepository.userSocial == "kakao") CardNaRepository.kakaoUserlogOut = true
-            //     else if (CardNaRepository.userSocial == "naver") CardNaRepository.naverUserlogOut = true
+            CardNaRepository.apply {
+                if (userSocial == "kakao") {
+                    kakaoUserlogOut = true
+                    kakaoUserToken = ""
+                    kakaoUserRefreshToken = ""
+                } else {
+                    naverUserlogOut = true
+                    naverUserToken = ""
+                    naverUserRefreshToken = ""
+                }
+            }
             dialog.dismiss()
+            shortToast("로그아웃 되었습니다")
             moveToLoginActivity()
         }
 

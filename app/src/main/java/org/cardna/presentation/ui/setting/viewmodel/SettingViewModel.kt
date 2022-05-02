@@ -125,8 +125,17 @@ class SettingViewModel @Inject constructor(
             runCatching {
                 userRepository.deleteUser(RequestDeleteUserData(_secessionReasonList.value!!, _etcContent.value ?: ""))
             }.onSuccess {
-                //    if (CardNaRepository.userSocial == "kakao") CardNaRepository.kakaoUserfirstName = ""  //회원탈퇴시 이름 없게해서 다시 로그인하게
-                //    else CardNaRepository.naverUserfirstName = ""
+                CardNaRepository.apply {
+                    if (userSocial == "kakao") {
+                        kakaoUserfirstName = ""
+                        kakaoUserToken = ""
+                        kakaoUserRefreshToken = ""
+                    } else {
+                        naverUserfirstName = ""
+                        naverUserToken = ""
+                        naverUserRefreshToken = ""
+                    }
+                }
                 _isDeleteUserSuccess.value = true
             }.onFailure {
                 _isDeleteUserSuccess.value = false

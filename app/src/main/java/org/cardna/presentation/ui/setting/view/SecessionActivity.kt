@@ -17,6 +17,7 @@ import org.cardna.presentation.ui.login.LoginActivity
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 import org.cardna.presentation.util.KeyboardVisibilityUtils
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.shortToast
 
 @AndroidEntryPoint
 class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBinding>(R.layout.activity_secession) {
@@ -51,7 +52,10 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
 
     private fun setDeleteUserObserve() {
         settingViewModel.isDeleteUserSuccess.observe(this) {
-            if (it) moveToLoginActivity()
+            if (it) {
+                shortToast("탈퇴가 완료되었습니다")
+                moveToLoginActivity()
+            }
         }
     }
 
