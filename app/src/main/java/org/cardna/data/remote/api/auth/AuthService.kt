@@ -1,6 +1,7 @@
 package org.cardna.data.remote.api.auth
 
 import org.cardna.data.remote.model.auth.RequestSignUpData
+import org.cardna.data.remote.model.auth.ResponseTokenIssuanceData
 import org.cardna.data.remote.model.auth.ResponseSignUpData
 import org.cardna.data.remote.model.auth.ResponseSocialLoginData
 import retrofit2.http.Body
@@ -18,4 +19,8 @@ interface AuthService {
     suspend fun postSignUp(
         @Body body: RequestSignUpData
     ): ResponseSignUpData
+
+    @GET("auth/token")
+    suspend fun getTokenIssuance(): ResponseTokenIssuanceData
+
 }

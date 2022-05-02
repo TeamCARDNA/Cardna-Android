@@ -4,6 +4,7 @@ import org.cardna.data.remote.api.auth.AuthService
 import org.cardna.data.remote.model.auth.RequestSignUpData
 import org.cardna.data.remote.model.auth.ResponseSignUpData
 import org.cardna.data.remote.model.auth.ResponseSocialLoginData
+import org.cardna.data.remote.model.auth.ResponseTokenIssuanceData
 import javax.inject.Inject
 
 class AuthDataSourceImpl @Inject constructor(
@@ -20,5 +21,9 @@ class AuthDataSourceImpl @Inject constructor(
 
     override suspend fun postSignUp(requestSignUpData: RequestSignUpData): ResponseSignUpData {
         return authService.postSignUp(requestSignUpData)
+    }
+
+    override suspend fun getTokenIssuance(): ResponseTokenIssuanceData {
+        return authService.getTokenIssuance()
     }
 }

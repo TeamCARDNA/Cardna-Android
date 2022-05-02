@@ -98,6 +98,7 @@ class SetNameFinishedActivity :
 
     private fun negativeButtonClickListener() {
         //EmptyView -> 메인 페이지 이동
+
     }
 
     private fun positiveButtonClickListener() {

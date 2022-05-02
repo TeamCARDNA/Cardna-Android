@@ -11,6 +11,8 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.data.remote.model.auth.RequestSignUpData
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
@@ -69,16 +71,19 @@ class LoginActivity :
     }
 
     private fun testKakao() {
+
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
+                //자동로그인 안됨 -> 로그아웃 했거나 , 비회원
                 shortToast("토근 정보 보기 실패")
             } else if (tokenInfo != null) {
+                //이미 로그인 되어있는 상태
                 Timber.d("tokenInfo : $tokenInfo")
                 shortToast("토큰 정보 보기 성공")
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 startActivity(intent)
-                logout()
+//                logout()
                 finish()
             }
         }
@@ -87,17 +92,29 @@ class LoginActivity :
             if (error != null) {
                 getErrorToast(error)
             } else if (token != null) {
-
                 Timber.d("token : ${token.accessToken}")
+                with(CardNaRepository) {
+                    //유저 토큰은 post로 받아와야함
+//                    userToken = loginViewModel.postSignUp(RequestSignUpData(
+//                        social = "kakao",
+//                        uuid = kakaoUserToken,
+//                        lastName =
+//
+//                        )).toString()
+                    kakaoUserToken = token.accessToken
+                    kakaoUserRefreshToken = token.refreshToken
+                }
+                //회원 가입뷰
                 shortToast("login success")
                 val intent = Intent(this, SetNameActivity::class.java)
                 intent.putExtra("social", "kakao")
                 loginViewModel.setToken(token)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
+            } else {
+                shortToast("token lost")
             }
         }
-
         binding.btnLoginKakao.setOnClickListener {
             val context = this
             with(UserApiClient.instance) {

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.remote.api.auth.AuthService
@@ -16,8 +17,12 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
-    val _test = MutableLiveData<Boolean>()
+
+    private val _test = MutableLiveData<Boolean>()
     val test: LiveData<Boolean> = _test
+
+    private val _token = MutableLiveData<OAuthToken>()
+    val token: LiveData<OAuthToken> = _token
 
     fun getKakaoLogin() {
         viewModelScope.launch {
@@ -41,5 +46,9 @@ class LoginViewModel @Inject constructor(
 
             }
         }
+    }
+
+    fun setToken(token: OAuthToken) {
+        _token.value = token
     }
 }
