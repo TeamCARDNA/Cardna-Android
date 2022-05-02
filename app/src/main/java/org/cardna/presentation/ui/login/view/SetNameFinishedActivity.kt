@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.login
+package org.cardna.presentation.ui.login.view
 
 import android.content.Intent
 import android.graphics.Color
@@ -98,6 +98,7 @@ class SetNameFinishedActivity :
 
     private fun negativeButtonClickListener() {
         //EmptyView -> 메인 페이지 이동
+
     }
 
     private fun positiveButtonClickListener() {

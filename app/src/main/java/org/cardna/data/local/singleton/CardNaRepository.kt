@@ -56,13 +56,13 @@ object CardNaRepository {
     }
 
     //현재 유저 토큰: 일단 박아둘게
-    var userToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwidXVpZCI6IjExMTExMTExIiwibGFzdE5hbWUiOiLqs70iLCJmaXJzdE5hbWUiOiLrr7zso7wiLCJjb2RlIjoi6rO966-87KO8IzM2ODIiLCJpYXQiOjE2NDg2MzEwNDEsImV4cCI6MTY1MTIyMzA0MSwiaXNzIjoiY2FyZG5hIn0.1FSa5bNolQYC8_pHnA_6dlH_guQEMddPoivLiWD5bYY"
+//    var userToken =
+//        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwidXVpZCI6IjExMTExMTExIiwibGFzdE5hbWUiOiLqs70iLCJmaXJzdE5hbWUiOiLrr7zso7wiLCJjb2RlIjoi6rO966-87KO8IzM2ODIiLCJpYXQiOjE2NDg2MzEwNDEsImV4cCI6MTY1MTIyMzA0MSwiaXNzIjoiY2FyZG5hIn0.1FSa5bNolQYC8_pHnA_6dlH_guQEMddPoivLiWD5bYY"
 
-/*    //현재 유저 토큰
+    //현재 유저 토큰
     var userToken: String
         get() = authPreferences.getString(UT_KEY, "") ?: ""
-        set(value) = authPreferences.edit { it.putString(UT_KEY, value) }*/
+        set(value) = authPreferences.edit { it.putString(UT_KEY, value) }
 
     //현재 유저 소셜
     var userSocial: String
