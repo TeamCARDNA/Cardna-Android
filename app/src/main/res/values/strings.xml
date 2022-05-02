@@ -236,4 +236,5 @@
     <string name="onboarding_insight_about">서로의 카드에 공감 버튼을 누를 수 있어요. 공감수에\n따라 분석된 카드를 보며, 관계 속 나의 모습을 알아가요!</string>
     <string name="onboarding_skip">건너뛰기</string>
     <string name="onboarding_next">다음</string>
+
 </resources>
