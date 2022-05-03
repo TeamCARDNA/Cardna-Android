@@ -21,6 +21,11 @@ android {
 
         //base_url
         buildConfigField "String", "BASE_URL", properties["base_url"]
+
+        //naver_login
+        buildConfigField "String", "NAVER_API_CLIENT_ID", properties["naver_api_client_id"]
+        buildConfigField "String", "NAVER_API_CLIENT_SECRET", properties["naver_api_client_secret"]
+        buildConfigField "String", "NAVER_API_APP_NAME", properties["naver_api_app_name"]
     }
 
     buildTypes {
@@ -63,6 +68,9 @@ dependencies {
 
     //kakaoLogin
     implementation "com.kakao.sdk:v2-user:2.9.0" // 카카오 로그인
+
+    //naverLogin
+    implementation 'com.navercorp.nid:oauth:5.1.0' // jdk 11
 
     // Lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"

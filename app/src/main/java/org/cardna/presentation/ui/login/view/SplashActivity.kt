@@ -7,6 +7,8 @@ import android.os.Looper
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import com.navercorp.nid.NaverIdLoginSDK
+import org.cardna.BuildConfig.*
 import org.cardna.R
 import org.cardna.databinding.ActivitySplashBinding
 import org.cardna.data.local.singleton.CardNaRepository
@@ -22,9 +24,17 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
 
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
+        initNaverLogin()
         setFullScreen()
         setNextActivity()
     }
+
+
+    // naverLogin
+    private fun initNaverLogin(){
+        NaverIdLoginSDK.initialize(this, NAVER_API_CLIENT_ID, NAVER_API_CLIENT_SECRET, NAVER_API_APP_NAME)
+    }
+
 
     private fun setFullScreen() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
@@ -45,7 +55,6 @@ class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>
                     )
         }
     }
-
 
     private fun setNextActivity() {
         //모든 소셜에서 이름이 없으면->회원가입 안함
