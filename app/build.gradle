@@ -22,7 +22,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
+        missingDimensionStrategy 'react-native-camera', 'general' // add this line
         //base_url
         buildConfigField "String", "BASE_URL", properties["base_url"]
         //kakao_app_key
