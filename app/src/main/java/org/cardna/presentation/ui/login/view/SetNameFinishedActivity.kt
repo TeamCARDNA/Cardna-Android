@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.login
+package org.cardna.presentation.ui.login.view
 
 import android.graphics.Color
 import android.os.Bundle

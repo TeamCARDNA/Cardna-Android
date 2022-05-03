@@ -27,14 +27,14 @@
             android:name="org.cardna.presentation.ui.cardpack.view.CardCreateCompleteActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.login.SplashActivity"
+            android:name="org.cardna.presentation.ui.login.view.SplashActivity"
             android:exported="false" />
 
         <activity
             android:name="org.cardna.presentation.ui.cardpack.view.TempCardYouStoreActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.login.LoginActivity"
+            android:name="org.cardna.presentation.ui.login.view.LoginActivity"
             android:exported="true" />
         <activity
             android:name="org.cardna.presentation.ui.maincard.view.MainCardActivity"
@@ -91,10 +91,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.cardna.presentation.ui.login.SetNameFinishedActivity"
+            android:name="org.cardna.presentation.ui.login.view.SetNameFinishedActivity"
             android:exported="true" />
         <activity
-            android:name="org.cardna.presentation.ui.login.SetNameActivity"
+            android:name="org.cardna.presentation.ui.login.view.SetNameActivity"
             android:exported="false" />
     </application>
 

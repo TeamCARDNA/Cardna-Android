@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.login
+package org.cardna.presentation.ui.login.view
 
 import android.app.ActivityOptions
 import android.app.Dialog
