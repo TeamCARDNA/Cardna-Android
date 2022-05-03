@@ -61,8 +61,16 @@ dependencies {
 
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:29.3.1')
+
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+
     // Declare the dependency for the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // Declare the dependencies for any other desired Firebase products
+    // For example, declare the dependencies for Firebase Authentication and Cloud Firestore
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
     //kakaoLogin
     implementation "com.kakao.sdk:v2-user:2.9.0" // 카카오 로그인
