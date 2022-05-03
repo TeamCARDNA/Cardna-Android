@@ -7,12 +7,14 @@ plugins {
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
+def manifest_kakao_app_key = properties.getProperty('manifest_kakao_app_key')
+def kakao_app_key = properties.getProperty('kakao_app_key')
 android {
     compileSdk 31
 
     defaultConfig {
         applicationId "org.cardna"
+        manifestPlaceholders = [kakaoKey: manifest_kakao_app_key]
         minSdk 26
         targetSdk 31
         versionCode 1
@@ -21,6 +23,7 @@ android {
 
         //base_url
         buildConfigField "String", "BASE_URL", properties["base_url"]
+        buildConfigField "String", "KAKAO_APP_KEY", "$kakao_app_key"
     }
 
     buildTypes {
@@ -60,6 +63,7 @@ dependencies {
     // For example, declare the dependencies for Firebase Authentication and Cloud Firestore
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.3'
 
     //kakaoLogin
     implementation "com.kakao.sdk:v2-user:2.9.0" // 카카오 로그인

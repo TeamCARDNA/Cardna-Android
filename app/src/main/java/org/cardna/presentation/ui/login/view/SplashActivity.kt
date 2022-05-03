@@ -14,9 +14,11 @@ import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.StatusBarUtil
 
-class SplashActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>(R.layout.activity_splash) {
+class SplashActivity :
+    BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>(R.layout.activity_splash) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CardNaRepository.init(this)
         initView()
     }
 
