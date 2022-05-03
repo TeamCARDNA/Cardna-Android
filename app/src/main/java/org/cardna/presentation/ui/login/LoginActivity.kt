@@ -44,6 +44,7 @@ class LoginActivity :
     private fun setKakaoLogin() {
         val intent = Intent(this, SetNameActivity::class.java)
         startActivity(intent)
+        //ci 되나여?
 //        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
 //            if (error != null) {
 //                //Login Fail
