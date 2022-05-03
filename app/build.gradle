@@ -45,6 +45,9 @@ android {
     buildFeatures {
         dataBinding = true
     }
+    lintOptions {
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {
