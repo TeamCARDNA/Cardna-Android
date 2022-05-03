@@ -1,9 +1,9 @@
 package org.cardna
 
 import android.app.Application
-import com.example.cardna.BuildConfig
-import com.example.cardna.R
 import com.kakao.sdk.common.KakaoSdk
+import org.cardna.BuildConfig
+import org.cardna.R
 import dagger.hilt.android.HiltAndroidApp
 import org.cardna.presentation.util.PixelRatio
 import timber.log.Timber

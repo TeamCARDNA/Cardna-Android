@@ -3,8 +3,8 @@ package org.cardna.presentation.ui.login.view
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivityOnBoardingBinding
+import org.cardna.R
+import org.cardna.databinding.ActivityOnBoardingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil

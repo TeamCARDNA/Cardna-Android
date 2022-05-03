@@ -3,8 +3,8 @@ package org.cardna.presentation.ui.login.view
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivityLoginBinding
+import org.cardna.R
+import org.cardna.databinding.ActivityLoginBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.auth.model.OAuthToken
