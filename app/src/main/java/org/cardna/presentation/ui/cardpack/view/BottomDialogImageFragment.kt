@@ -1,13 +1,10 @@
 package org.cardna.ui.cardpack
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.example.cardna.R
-import com.example.cardna.databinding.FragmentBottomDialogImageBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import org.cardna.R
+import org.cardna.databinding.FragmentBottomDialogImageBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel

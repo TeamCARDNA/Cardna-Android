@@ -5,8 +5,8 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivityTempCardYouStoreBinding
+import org.cardna.R
+import org.cardna.databinding.ActivityTempCardYouStoreBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.remote.model.card.ResponseCardYouStoreData
 import org.cardna.presentation.base.BaseViewUtil

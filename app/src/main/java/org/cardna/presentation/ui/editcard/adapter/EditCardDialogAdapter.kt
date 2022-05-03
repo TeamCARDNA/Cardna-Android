@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.cardna.R
-import com.example.cardna.databinding.ItemEditCardDialogBinding
+import org.cardna.R
 import org.cardna.data.remote.model.card.CardData
+import org.cardna.databinding.ItemEditCardDialogBinding
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 
 class EditCardDialogAdapter(

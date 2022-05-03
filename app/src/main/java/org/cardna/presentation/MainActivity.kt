@@ -3,8 +3,8 @@ package org.cardna.presentation
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivityMainBinding
+import org.cardna.R
+import org.cardna.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity

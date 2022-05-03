@@ -4,14 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivitySecessionBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.R
+import org.cardna.databinding.ActivitySecessionBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.LoginActivity
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel

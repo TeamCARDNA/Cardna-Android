@@ -2,16 +2,14 @@ package org.cardna.presentation.ui.insight.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import com.example.cardna.R
-import com.example.cardna.databinding.FragmentOpenAreaBinding
+import org.cardna.R
+import org.cardna.databinding.FragmentOpenAreaBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.insight.viewmodel.InsightViewModel
-import org.cardna.presentation.util.setSrcWithGlide
 
 @AndroidEntryPoint
 class OpenAreaFragment : BaseViewUtil.BaseFragment<FragmentOpenAreaBinding>(R.layout.fragment_open_area) {

@@ -1,6 +1,5 @@
 package org.cardna.presentation.ui.login
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -10,11 +9,10 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.text.set
 import androidx.core.text.toSpannable
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivitySetNameFinishedBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.CardNaApplication
-import org.cardna.presentation.MainActivity
+import org.cardna.R
+import org.cardna.databinding.ActivitySetNameFinishedBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan
 import org.cardna.presentation.util.StatusBarUtil

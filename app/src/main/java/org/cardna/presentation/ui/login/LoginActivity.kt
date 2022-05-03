@@ -2,8 +2,8 @@ package org.cardna.presentation.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivityLoginBinding
+import org.cardna.R
+import org.cardna.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 

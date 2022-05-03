@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cardna.databinding.ItemAlarmFriendRequestBinding
+import org.cardna.databinding.ItemAlarmFriendRequestBinding
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
 

@@ -7,8 +7,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.text.set
 import androidx.core.text.toSpannable
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivityOtherCardCreateCompleteBinding
+import org.cardna.R
+import org.cardna.databinding.ActivityOtherCardCreateCompleteBinding
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan

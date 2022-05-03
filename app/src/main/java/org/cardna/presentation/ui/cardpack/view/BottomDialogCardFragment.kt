@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.cardna.databinding.FragmentBottomDialogCardBinding
+import org.cardna.databinding.FragmentBottomDialogCardBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.cardna.presentation.base.BaseViewUtil
 

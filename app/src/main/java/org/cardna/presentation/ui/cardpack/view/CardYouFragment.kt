@@ -6,8 +6,8 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.cardna.R
-import com.example.cardna.databinding.FragmentCardYouBinding
+import org.cardna.R
+import org.cardna.databinding.FragmentCardYouBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardPackYouRecyclerViewAdapter
@@ -59,7 +59,8 @@ class CardYouFragment :
             rvCardyou.adapter = cardYouAdapter
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             rvCardyou.layoutManager = gridLayoutManager
-            rvCardyou.addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt())) // 화면 비율 조정
+            rvCardyou.addItemDecoration(SpacesItemDecoration
+                ((12 * resources.displayMetrics.density).roundToInt())) // 화면 비율 조정
         }
 
         // onResume 될 때, cardYouList 를 업데이트 시키고 cardYouList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록

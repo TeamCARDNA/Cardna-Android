@@ -5,12 +5,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivitySettingBinding
+import org.cardna.R
+import org.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.login.LoginActivity
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.shortToast

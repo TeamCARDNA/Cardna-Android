@@ -7,8 +7,8 @@ import android.os.Looper
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivitySplashBinding
+import org.cardna.R
+import org.cardna.databinding.ActivitySplashBinding
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil

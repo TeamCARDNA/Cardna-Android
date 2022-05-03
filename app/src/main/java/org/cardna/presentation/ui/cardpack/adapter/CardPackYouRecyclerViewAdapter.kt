@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.cardna.databinding.ItemCardpackCardyouBinding
+import org.cardna.databinding.ItemCardpackCardyouBinding
 import org.cardna.data.remote.model.card.ResponseCardYouData
 
 class CardPackYouRecyclerViewAdapter( // CardYou에 대한 Adapter 로 변수명 변경했는데, 안된 것 있을수도 있으니 확인하기

@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.cardna.databinding.ItemMypageFriendBinding
 import org.cardna.data.remote.model.mypage.ResponseMyPageData
-import org.cardna.presentation.util.setSrcWithGlide
+import org.cardna.databinding.ItemMypageFriendBinding
 
 
 class MyPageFriendAdapter(

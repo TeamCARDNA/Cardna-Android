@@ -30,10 +30,10 @@ class OutlineTextView : AppCompatTextView {
     }
 
     private fun initView(context: Context, attrs: AttributeSet?) {
-        val type: TypedArray = context.obtainStyledAttributes(attrs, com.example.cardna.R.styleable.OutlineTextView)
-        stroke = type.getBoolean(com.example.cardna.R.styleable.OutlineTextView_textStroke, false) // 외곽선 유무
-        strokeWidth = type.getFloat(com.example.cardna.R.styleable.OutlineTextView_textStrokeWidth, 0.0f) // 외곽선 두께
-        strokeColor = type.getColor(com.example.cardna.R.styleable.OutlineTextView_textStrokeColor, -0x1) // 외곽선
+        val type: TypedArray = context.obtainStyledAttributes(attrs, org.cardna.R.styleable.OutlineTextView)
+        stroke = type.getBoolean(org.cardna.R.styleable.OutlineTextView_textStroke, false) // 외곽선 유무
+        strokeWidth = type.getFloat(org.cardna.R.styleable.OutlineTextView_textStrokeWidth, 0.0f) // 외곽선 두께
+        strokeColor = type.getColor(org.cardna.R.styleable.OutlineTextView_textStrokeColor, -0x1) // 외곽선
     }
 
     override fun onDraw(canvas: Canvas?) {

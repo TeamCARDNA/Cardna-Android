@@ -8,15 +8,13 @@ import android.view.View
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivitySearchFriendCodeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.R
+import org.cardna.databinding.ActivitySearchFriendCodeBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.maincard.view.MainCardActivity
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
-import org.cardna.presentation.ui.setting.view.VersionInfoActivity
 import org.cardna.presentation.util.*
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SearchFriendCodeActivity :
@@ -42,8 +40,8 @@ class SearchFriendCodeActivity :
             setTextSize(16f)
             setTextColor(
                 this@SearchFriendCodeActivity,
-                com.example.cardna.R.color.white_2,
-                com.example.cardna.R.color.white_1
+                R.color.white_2,
+                R.color.white_1
             )
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {

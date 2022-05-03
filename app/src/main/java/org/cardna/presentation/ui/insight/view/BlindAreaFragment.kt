@@ -4,13 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import com.example.cardna.R
-import com.example.cardna.databinding.FragmentBlindAreaBinding
+import org.cardna.R
+import org.cardna.databinding.FragmentBlindAreaBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.insight.viewmodel.InsightViewModel
-import org.cardna.presentation.util.setSrcWithGlide
 
 @AndroidEntryPoint
 class BlindAreaFragment : BaseViewUtil.BaseFragment<FragmentBlindAreaBinding>(R.layout.fragment_blind_area) {

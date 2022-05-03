@@ -3,12 +3,11 @@ package org.cardna.presentation.ui.alarm.view
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivityAlarmBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.R
+import org.cardna.databinding.ActivityAlarmBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.adapter.FriendRequestAdapter
 import org.cardna.presentation.ui.alarm.adapter.FriendResponseData
@@ -82,7 +81,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         }
         with(binding.rcvAlarmFriendRequest) {
             adapter = friendRequestAdapter
-            layoutManager = LinearLayoutManager(this@AlarmActivity)
+        //    layoutManager = LinearLayoutManager(this@AlarmActivity)
             setUnfoldListener(friendRequestAdapter)
             friendRequestAdapter.submitList(dataList)
         }

@@ -13,9 +13,9 @@ import android.widget.EditText
 import androidx.core.text.set
 import androidx.core.text.toSpannable
 import androidx.core.widget.addTextChangedListener
-import com.example.cardna.R
-import com.example.cardna.databinding.ActivitySetNameBinding
-import com.example.cardna.databinding.DialogSetNameBinding
+import org.cardna.R
+import org.cardna.databinding.ActivitySetNameBinding
+import org.cardna.databinding.DialogSetNameBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan

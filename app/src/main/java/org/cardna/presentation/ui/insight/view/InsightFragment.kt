@@ -3,8 +3,8 @@ package org.cardna.presentation.ui.insight.view
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import com.example.cardna.R
-import com.example.cardna.databinding.FragmentInsightBinding
+import org.cardna.R
+import org.cardna.databinding.FragmentInsightBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.insight.adapter.InsightAdapter
