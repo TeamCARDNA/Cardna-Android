@@ -3,24 +3,30 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def manifest_kakao_app_key = properties.getProperty('manifest_kakao_app_key')
+def kakao_app_key = properties.getProperty('kakao_app_key')
 
 android {
     compileSdk 31
 
     defaultConfig {
         applicationId "org.cardna"
+        manifestPlaceholders = [kakaoKey: manifest_kakao_app_key]
         minSdk 26
         targetSdk 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
+        missingDimensionStrategy 'react-native-camera', 'general' // add this line
         //base_url
         buildConfigField "String", "BASE_URL", properties["base_url"]
+        //kakao_app_key
+        buildConfigField "String", "KAKAO_APP_KEY", "$kakao_app_key"
     }
 
     buildTypes {
@@ -39,14 +45,39 @@ android {
     buildFeatures {
         dataBinding = true
     }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 dependencies {
-    implementation ("com.squareup.moshi:moshi-kotlin:1.12.0")
-    implementation ("com.squareup.moshi:moshi:1.12.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+    implementation("com.squareup.moshi:moshi:1.12.0")
     implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.3'
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.12.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:29.3.1')
+
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+
+    // Declare the dependency for the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics:20.1.2'
+
+    // Declare the dependencies for any other desired Firebase products
+    // For example, declare the dependencies for Firebase Authentication and Cloud Firestore
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+
+    //kakaoLogin
+    implementation "com.kakao.sdk:v2-user:2.9.0" // 카카오 로그인
+
+    //DotsIndicator
+    implementation 'com.tbuonomo:dotsindicator:4.2'
 
     // Lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"

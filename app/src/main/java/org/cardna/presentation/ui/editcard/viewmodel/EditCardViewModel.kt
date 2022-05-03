@@ -38,6 +38,9 @@ class EditCardViewModel @Inject constructor(
         _currentPosition.value=position
     }
 
+    private val _getChangeSuccess = MutableLiveData<Boolean>()
+    val getChangeSuccess: LiveData<Boolean> = _getChangeSuccess
+
     fun getMainCard() {
         viewModelScope.launch {
             kotlin.runCatching {
@@ -57,6 +60,7 @@ class EditCardViewModel @Inject constructor(
                 cardRepository.putEditCard(cards).data.mainCardList
             }.onSuccess {
                 _mainCardList.value = it
+                _getChangeSuccess.value = true
             }.onFailure {
                 Timber.e("put_edit_card_error")
             }
@@ -97,5 +101,6 @@ class EditCardViewModel @Inject constructor(
 
     fun setChangeMainCardList(mainCardList: MutableList<MainCard>) {
         _mainCardList.value = mainCardList
+        Timber.d("ChangeModelEdit : ${mainCardList.map { it.id }}")
     }
 }

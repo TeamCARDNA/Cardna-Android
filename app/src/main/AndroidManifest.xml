@@ -18,6 +18,32 @@
         android:theme="@style/Theme.Cardna"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="org.cardna.presentation.ui.login.view.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+        </activity>
+                <activity
+                    android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+                    android:exported="true">
+                    <intent-filter>
+                        <action android:name="android.intent.action.VIEW" />
+
+                        <category android:name="android.intent.category.DEFAULT" />
+                        <category android:name="android.intent.category.BROWSABLE" />
+
+                        <data
+                            android:host="oauth"
+                            android:scheme="${kakaoKey}" />
+                    </intent-filter>
+                </activity>
+        <activity
+            android:name="org.cardna.presentation.ui.login.view.OnBoardingActivity"
+            android:exported="true" />
+        <activity
             android:name="org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity"
             android:exported="false" />
         <activity
@@ -27,26 +53,20 @@
             android:name="org.cardna.presentation.ui.cardpack.view.CardCreateCompleteActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.login.SplashActivity"
+            android:name="org.cardna.presentation.ui.login.view.SplashActivity"
             android:exported="false" />
-
         <activity
             android:name="org.cardna.presentation.ui.cardpack.view.TempCardYouStoreActivity"
             android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.login.LoginActivity"
-            android:exported="true" />
         <activity
             android:name="org.cardna.presentation.ui.maincard.view.MainCardActivity"
             android:exported="false" />
         <activity
             android:name="org.cardna.presentation.ui.editcard.view.EditCardActivity"
             android:exported="false" />
-
         <activity
             android:name="org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity"
             android:exported="false" />
-
         <activity
             android:name="org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity"
             android:exported="false" />
@@ -83,19 +103,13 @@
         <activity
             android:name="org.cardna.presentation.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name="org.cardna.presentation.ui.login.SetNameFinishedActivity"
+            android:name="org.cardna.presentation.ui.login.view.SetNameFinishedActivity"
             android:exported="true" />
         <activity
-            android:name="org.cardna.presentation.ui.login.SetNameActivity"
+            android:name="org.cardna.presentation.ui.login.view.SetNameActivity"
             android:exported="false" />
-    </application>
 
+    </application>
 </manifest>

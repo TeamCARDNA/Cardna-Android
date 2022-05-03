@@ -6,6 +6,7 @@ import org.cardna.R
 import org.cardna.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.login.view.SetNameActivity
 
 @AndroidEntryPoint
 class LoginActivity :

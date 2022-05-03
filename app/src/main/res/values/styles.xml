@@ -226,11 +226,47 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="editcard_tab_layout_select" parent="Widget.Design.TabLayout">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">22sp</item>
+
+    </style>
+
+    <style name="editcard_tab_layout_unselect">
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="tabSelectedTextColor">@color/white_1</item>
+    </style>
+
     <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:fontFamily">@font/pretendard_regular</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontStyle">normal</item>
 
+    </style>
+
+    <style name="onboarding_title">
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="lineHeight">30dp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="onboarding_about">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="lineHeight">21dp</item>
+        <item name="android:textColor">@color/white_2</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="onboarding_indicator_text">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="lineHeight">24dp</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
 </resources>

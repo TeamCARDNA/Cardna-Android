@@ -17,13 +17,20 @@ class EditCardAdapter(
     val editCardViewModel: EditCardViewModel
 ) : ListAdapter<MainCard, EditCardAdapter.ViewHolder>(EditCardComparator()),
     ItemTouchHelperListener {
-    lateinit var changedList: MutableList<MainCard>
+    var mutableList = mutableListOf<MainCard>()
+
+    override fun onCurrentListChanged(
+        previousList: MutableList<MainCard>,
+        currentList: MutableList<MainCard>
+    ) {
+        super.onCurrentListChanged(previousList, currentList)
+        mutableList = currentList
+    }
 
     inner class ViewHolder(private val binding: ItemEditCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             editCardViewModel.setChangeSelectedList(currentList.map { it.id } as MutableList<Int>)
-            changedList = currentList.toMutableList()
         }
 
         fun onBind(data: MainCard) {
@@ -68,13 +75,11 @@ class EditCardAdapter(
     }
 
     override fun onItemMove(from_position: Int, to_position: Int): Boolean {
-        val list = currentList.toMutableList()
-        val item = list[from_position]
-        list.removeAt(from_position)
-        list.add(to_position, item)
+        val mutableList = currentList.toMutableList()
+        mutableList.removeAt(from_position)
+        mutableList.add(to_position, getItem(from_position))
         notifyItemMoved(from_position, to_position)
-        changedList = list
-        Timber.d("list- adapter : ${list.map { it.id }}")
+        onCurrentListChanged(currentList.toMutableList(), mutableList)
         return true
     }
 
@@ -97,5 +102,4 @@ class EditCardAdapter(
             return oldItem == newItem
         }
     }
-
 }
