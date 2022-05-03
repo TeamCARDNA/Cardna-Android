@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.ActivitySecessionBinding
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.login.LoginActivity
+import org.cardna.presentation.ui.login.view.LoginActivity
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 import org.cardna.presentation.util.KeyboardVisibilityUtils
 import org.cardna.presentation.util.StatusBarUtil
