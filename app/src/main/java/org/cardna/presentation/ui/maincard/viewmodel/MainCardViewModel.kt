@@ -66,6 +66,7 @@ class MainCardViewModel @Inject constructor(
                         _cardId.value = it.id
                     }
                 }
+
             }.onFailure {
                 Timber.e("ViewModel connect fail")
             }

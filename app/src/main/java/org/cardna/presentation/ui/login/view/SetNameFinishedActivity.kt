@@ -1,4 +1,4 @@
-package org.cardna.presentation.ui.login
+package org.cardna.presentation.ui.login.view
 
 import android.graphics.Color
 import android.os.Bundle
@@ -16,6 +16,7 @@ import org.cardna.databinding.ActivitySetNameFinishedBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.setGradientText
 
 @AndroidEntryPoint
 class SetNameFinishedActivity :
@@ -89,21 +90,13 @@ class SetNameFinishedActivity :
         }
     }
 
-    private fun setGradientText(welcomeText: String): Spannable {
-        val green = getColor(R.color.main_green)
-        val purple = getColor(R.color.main_purple)
-        val spannable = welcomeText.toSpannable()
-        spannable[0..welcomeText.length] =
-            LinearGradientSpan(welcomeText, welcomeText, green, purple)
-        return spannable
-    }
-
     private fun setSleep() {
 
     }
 
     private fun negativeButtonClickListener() {
         //EmptyView -> 메인 페이지 이동
+
     }
 
     private fun positiveButtonClickListener() {
