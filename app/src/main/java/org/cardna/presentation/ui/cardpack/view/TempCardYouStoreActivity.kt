@@ -5,15 +5,17 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.cardna.R
-import org.cardna.databinding.ActivityTempCardYouStoreBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.R
 import org.cardna.data.remote.model.card.ResponseCardYouStoreData
+import org.cardna.databinding.ActivityTempCardYouStoreBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardYouStoreRecyclerViewAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
+import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.copyText
 import org.cardna.presentation.util.lifeCycled
 
 @AndroidEntryPoint
@@ -41,11 +43,25 @@ class TempCardYouStoreActivity :
         initData()
         setRvAdapter()
         setCardYouStoreListObserve()
+        setClickListener()
+    }
+
+    private fun setClickListener() {
+        codeCopyBtnListener()
+    }
+
+    private fun codeCopyBtnListener() {
+        binding.llCardyoustoreCopyBtn.setOnClickListener {
+            cardPackViewModel.isMyCode.observe(this) {
+                copyText(this@TempCardYouStoreActivity, it)
+            }
+        }
     }
 
     private fun initData() {
         binding.cardpackViewModel = cardPackViewModel
         cardPackViewModel.getCardYouStore()
+        cardPackViewModel.getIsMyCode()
     }
 
     private fun setRvAdapter() {
