@@ -6,6 +6,7 @@ import org.cardna.data.remote.model.auth.ResponseSocialLoginData
 import org.cardna.data.remote.model.auth.ResponseTokenIssuanceData
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthService {
@@ -21,6 +22,8 @@ interface AuthService {
     ): ResponseSignUpData
 
     @GET("auth/token")
-    suspend fun getTokenIssuance(): ResponseTokenIssuanceData
-
+    suspend fun getTokenIssuance(
+        @Header("accesstoken") accessToken: String,
+        @Header("refreshtoken") refreshToken: String
+    ): ResponseTokenIssuanceData
 }

@@ -23,7 +23,7 @@ class AuthRepositoryImpl @Inject constructor(
         return authRepository.postSignUp(requestSignUpData)
     }
 
-    override suspend fun getTokenIssuance(): ResponseTokenIssuanceData {
-        return authRepository.getTokenIssuance()
+    override suspend fun getTokenIssuance(accessToken: String, refreshToken: String): ResponseTokenIssuanceData {
+        return authRepository.getTokenIssuance(accessToken, refreshToken)
     }
 }

@@ -13,5 +13,5 @@ interface AuthDataSource {
 
     suspend fun postSignUp(requestSignUpData: RequestSignUpData): ResponseSignUpData
 
-    suspend fun getTokenIssuance(): ResponseTokenIssuanceData
+    suspend fun getTokenIssuance(accessToken: String, refreshToken: String): ResponseTokenIssuanceData
 }

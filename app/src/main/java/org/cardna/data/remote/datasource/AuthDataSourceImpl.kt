@@ -23,7 +23,7 @@ class AuthDataSourceImpl @Inject constructor(
         return authService.postSignUp(requestSignUpData)
     }
 
-    override suspend fun getTokenIssuance(): ResponseTokenIssuanceData {
-        return authService.getTokenIssuance()
+    override suspend fun getTokenIssuance(accessToken: String, refreshToken: String): ResponseTokenIssuanceData {
+        return authService.getTokenIssuance(accessToken, refreshToken)
     }
 }
