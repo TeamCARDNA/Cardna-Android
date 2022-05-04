@@ -3,6 +3,8 @@ package org.cardna.presentation.util
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -64,8 +66,16 @@ fun Activity.setSrcWithGlide(imageUrl: String, imageView: ImageView) {
 }
 
 fun SearchView.setTextColor(context: Context, hintColorInt: Int, textColorInt: Int) {
-    findViewById<EditText>(androidx.appcompat.R.id.search_src_text).setHintTextColor(context.getColor(hintColorInt))
-    findViewById<EditText>(androidx.appcompat.R.id.search_src_text).setTextColor(context.getColor(textColorInt))
+    findViewById<EditText>(androidx.appcompat.R.id.search_src_text).setHintTextColor(
+        context.getColor(
+            hintColorInt
+        )
+    )
+    findViewById<EditText>(androidx.appcompat.R.id.search_src_text).setTextColor(
+        context.getColor(
+            textColorInt
+        )
+    )
 }
 
 fun SearchView.setTextSize(size: Float) {
@@ -85,7 +95,11 @@ fun Activity.setStatusBarTransparent() {
 }
 
 
-fun Context.showCustomPopUp(view: ImageButton, arrayInt: Int, baseContext: Context): ListPopupWindow {
+fun Context.showCustomPopUp(
+    view: ImageButton,
+    arrayInt: Int,
+    baseContext: Context
+): ListPopupWindow {
 
     val items = this.resources.getStringArray(arrayInt)
     val popupAdapter =
@@ -132,14 +146,14 @@ fun Context.setGradientText(inputText: String): Spannable {
     return spannable
 }
 
- fun Context.getPageTransformer(): ViewPager2.PageTransformer {
+fun Context.getPageTransformer(): ViewPager2.PageTransformer {
     val compositePageTransformer = CompositePageTransformer()
     compositePageTransformer.addTransformer(MarginPageTransformer((20 * resources.displayMetrics.density).roundToInt()))
 
     return compositePageTransformer
 }
 
-fun Context.viewPagerAnimation(viewpager : ViewPager2) {
+fun Context.viewPagerAnimation(viewpager: ViewPager2) {
     val compositePageTransformer = getPageTransformer()
     with(viewpager) {
         clipToPadding = false
@@ -154,4 +168,10 @@ fun Context.viewPagerAnimation(viewpager : ViewPager2) {
         )
         getChildAt(0).overScrollMode = androidx.recyclerview.widget.RecyclerView.OVER_SCROLL_NEVER
     }
+}
+
+fun Context.copyText(context: Context, text: String) {
+    val myClipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val myClip: ClipData = ClipData.newPlainText("Label", text)
+    myClipboard.setPrimaryClip(myClip)
 }

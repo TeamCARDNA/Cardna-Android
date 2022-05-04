@@ -233,7 +233,7 @@
 
     </style>
 
-    <!--    OnBoarding-->
+<!--    OnBoarding-->
     <style name="onboarding_title">
         <item name="android:textSize">20sp</item>
         <item name="fontFamily">@font/pretendard_semibold</item>
@@ -257,6 +257,26 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <!--    CardYouStoreActivity-->
+    <style name="cardyoustore_text">
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">22dp</item>
+        <item name="android:textColor">@color/white_3</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="cardyoustore_btn_text">
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">24dp</item>
+        <item name="android:textColor">@color/main_purple_darker</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="cardyoustore_code_text">
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">21dp</item>
+        <item name="android:textColor">@color/white_4</item>
+    </style>
     <!--    Privacy_Policy-->
     <style name="privacy_policy_title">
         <item name="android:textSize">18sp</item>
