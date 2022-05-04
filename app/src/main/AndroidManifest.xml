@@ -32,7 +32,7 @@
 
         <activity
             android:name="org.cardna.presentation.ui.cardpack.view.TempCardYouStoreActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name="org.cardna.presentation.ui.login.view.LoginActivity"
             android:exported="true" />
