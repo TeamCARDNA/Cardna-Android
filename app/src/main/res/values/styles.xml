@@ -233,7 +233,7 @@
 
     </style>
 
-<!--    OnBoarding-->
+    <!--    OnBoarding-->
     <style name="onboarding_title">
         <item name="android:textSize">20sp</item>
         <item name="fontFamily">@font/pretendard_semibold</item>
@@ -254,6 +254,22 @@
         <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="lineHeight">24dp</item>
         <item name="android:textColor">@color/white_1</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <!--    Privacy_Policy-->
+    <style name="privacy_policy_title">
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="lineHeight">27dp</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="privacy_policy_about">
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">21dp</item>
+        <item name="android:textColor">@color/white_3</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 

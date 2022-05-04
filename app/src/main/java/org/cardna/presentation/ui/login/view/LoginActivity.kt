@@ -16,6 +16,7 @@ import org.cardna.databinding.ActivityLoginBinding
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
+import org.cardna.presentation.ui.setting.view.PrivacyPolicyActivity
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.shortToast
 import timber.log.Timber
@@ -41,19 +42,36 @@ class LoginActivity :
             if (!task.isSuccessful) {
                 return@OnCompleteListener
             }
-
             // Get new FCM registration token
             val token = task.result
             Timber.d("device token $token")
         })
     }
 
+    private fun setPrivacyPolicyActivity(title: String, text: String): Intent {
+        val intent = Intent(this, PrivacyPolicyActivity::class.java)
+        intent.apply {
+            putExtra("title", title)
+            putExtra("text", text)
+        }
+        return intent
+    }
+
     private fun setClickListener() {
         with(binding) {
             tvLoginPolicyUseOfTerm.setOnClickListener {
+                val intent = setPrivacyPolicyActivity(
+                    getString(R.string.policy_text_title),
+                    getString(R.string.policy_text)
+                )
+                startActivity(intent)
             }
             tvLoginPolicyPrivate.setOnClickListener {
-
+                val intent = setPrivacyPolicyActivity(
+                    getString(R.string.privacy_text_title),
+                    getString(R.string.privacy_text)
+                )
+                startActivity(intent)
             }
             btnLoginKakao.setOnClickListener {
 //                setKakaoLogin()
@@ -62,6 +80,7 @@ class LoginActivity :
             btnLoginNaver.setOnClickListener {
                 setNaverLogin()
             }
+
         }
     }
 
@@ -76,10 +95,10 @@ class LoginActivity :
     private fun testKakao() {
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
-                //자동로그인 안됨 -> 로그아웃 했거나 , 비회원
+                //자동로그인 안됨 -> 로그아웃 or 만료  , 비회원
                 shortToast("토근 정보 보기 실패")
             } else if (tokenInfo != null) {
-                //이미 로그인 되어있는 상태
+                //이미 로그인 되어있는 상태 -> 자동 로그인
                 Timber.d("tokenInfo : $tokenInfo")
                 shortToast("토큰 정보 보기 성공")
                 val intent = Intent(this, MainActivity::class.java)
@@ -106,7 +125,7 @@ class LoginActivity :
                     kakaoUserToken = token.accessToken
                     kakaoUserRefreshToken = token.refreshToken
                 }
-                //회원 가입뷰
+                //회원 가입뷰에서 넘어감
                 shortToast("login success")
                 val intent = Intent(this, SetNameActivity::class.java)
                 intent.putExtra("social", "kakao")
