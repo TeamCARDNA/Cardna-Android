@@ -17,7 +17,8 @@ import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.lifeCycled
 
 @AndroidEntryPoint
-class TempCardYouStoreActivity : BaseViewUtil.BaseAppCompatActivity<ActivityTempCardYouStoreBinding>(R.layout.activity_temp_card_you_store) {
+class TempCardYouStoreActivity :
+    BaseViewUtil.BaseAppCompatActivity<ActivityTempCardYouStoreBinding>(R.layout.activity_temp_card_you_store) {
 
     private val cardPackViewModel: CardPackViewModel by viewModels()
 
@@ -43,6 +44,7 @@ class TempCardYouStoreActivity : BaseViewUtil.BaseAppCompatActivity<ActivityTemp
     }
 
     private fun initData() {
+        binding.cardpackViewModel = cardPackViewModel
         cardPackViewModel.getCardYouStore()
     }
 
