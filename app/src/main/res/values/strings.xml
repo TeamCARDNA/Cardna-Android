@@ -237,5 +237,9 @@
     <string name="onboarding_skip">건너뛰기</string>
     <string name="onboarding_next">다음</string>
 
+    <!--    CardYouStoreActivity-->
+    <string name="cardyoustore_text">보관함에 있는 카드너는 나만 볼 수 있어요!\n내 코드를 친구에게 공유해 카드너를 받아보세요</string>
+    <string name="cardyoustore_button_text">내 코드 복사</string>
+    <string name="cardyoustore_code_text">한지우#1234</string>
 
 </resources>

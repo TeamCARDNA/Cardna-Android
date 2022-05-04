@@ -10,6 +10,7 @@ import org.cardna.data.remote.model.card.ResponseCardMeData
 import org.cardna.data.remote.model.card.ResponseCardYouData
 import org.cardna.data.remote.model.card.ResponseCardYouStoreData
 import org.cardna.domain.repository.CardRepository
+import org.cardna.domain.repository.MyPageRepository
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CardPackViewModel @Inject constructor(
     private val cardRepository: CardRepository, // 이렇게 쓰는 거 맞나
+    private val myPageRepository: MyPageRepository,
 ) : ViewModel() { // FriendCardPackActivity 와 CardPack, CardYou, CardMeFragment 가 CardPackViewModel 사용
 
 
@@ -55,6 +57,9 @@ class CardPackViewModel @Inject constructor(
     val cardYouStoreList: LiveData<MutableList<ResponseCardYouStoreData.Data>>
         get() = _cardYouStoreList
 
+    private val _isMyCode = MutableLiveData<String>()
+    val isMyCode: LiveData<String> = _isMyCode
+
     fun setUserId(id: Int?) {
         _id = id
     } // 타인의 프래그먼트 생성시, 그 프래그먼트 코드 단에서 getArguments 로 받아온 newId를 setUserId(newId) 이런형식으로 설정 ?
@@ -65,7 +70,7 @@ class CardPackViewModel @Inject constructor(
 
     fun setTotalCardCnt() { // 본인 카드팩 접근시에만 필요
         viewModelScope.launch {
-            runCatching{
+            runCatching {
                 cardRepository.getCardAll().data
             }.onSuccess {
                 _totalCardCnt.value = it.totalCardCnt
@@ -97,7 +102,7 @@ class CardPackViewModel @Inject constructor(
                     cardRepository.getOtherCardMe(_id!!).data
                 }.onSuccess {
                     it.apply {
-                        _cardMeList.value= it.cardMeList
+                        _cardMeList.value = it.cardMeList
                         _isCardMeEmpty.value = (it.totalCardCnt == 0)
                     }
                 }.onFailure {
@@ -128,7 +133,7 @@ class CardPackViewModel @Inject constructor(
                     cardRepository.getOtherCardYou(_id!!).data
                 }.onSuccess {
                     it.apply {
-                        _cardYouList.value= it.cardYouList
+                        _cardYouList.value = it.cardYouList
                         _isCardYouEmpty.value = (it.totalCardCnt == 0)
                     }
                 }.onFailure {
@@ -146,6 +151,18 @@ class CardPackViewModel @Inject constructor(
                 _cardYouStoreList.value = it
             }.onFailure {
                 Timber.e(it.toString())
+            }
+        }
+    }
+
+    fun getIsMyCode() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                myPageRepository.getMyPageUser().data
+            }.onSuccess {
+                _isMyCode.value = it.code
+            }.onFailure {
+                Timber.e("error :$it")
             }
         }
     }
