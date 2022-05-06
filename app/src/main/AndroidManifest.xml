@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cardna"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name="org.cardna.presentation.ui.login.view.SplashActivity"
             android:exported="true">
