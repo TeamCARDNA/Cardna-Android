@@ -7,9 +7,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-
     <application
-        android:name="org.cardna.CardNaApplication"
+        android:name=".CardNaApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,9 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cardna"
         android:usesCleartextTraffic="true">
-
         <activity
-            android:name="org.cardna.presentation.ui.login.view.SplashActivity"
+            android:name=".presentation.ui.login.view.OnBoardingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.login.view.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,75 +43,71 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity"
+            android:name=".presentation.ui.cardpack.view.CardYouStoreActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.OtherCardCreateCompleteActivity"
+            android:name=".presentation.ui.cardpack.view.OtherCardCreateCompleteActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.CardCreateCompleteActivity"
+            android:name=".presentation.ui.cardpack.view.CardCreateCompleteActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.TempCardYouStoreActivity"
+            android:name=".presentation.ui.cardpack.view.TempCardYouStoreActivity"
             android:exported="true" />
         <activity
-            android:name="org.cardna.presentation.ui.login.view.LoginActivity"
+            android:name=".presentation.ui.login.view.LoginActivity"
             android:exported="true" />
         <activity
-            android:name="org.cardna.presentation.ui.maincard.view.MainCardActivity"
+            android:name=".presentation.ui.maincard.view.MainCardActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.editcard.view.EditCardActivity"
-            android:exported="false" />
-
-        <activity
-            android:name="org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity"
-            android:exported="false" />
-
-        <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity"
+            android:name=".presentation.ui.editcard.view.EditCardActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.CardCreateActivity"
+            android:name=".presentation.ui.mypage.view.SearchFriendCodeActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.detailcard.view.CardShareActivity"
+            android:name=".presentation.ui.cardpack.view.FriendCardPackActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.detailcard.view.DetailCardActivity"
+            android:name=".presentation.ui.cardpack.view.CardCreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.detailcard.view.CardShareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.detailcard.view.DetailCardActivity"
             android:exported="true" />
         <activity
-            android:name="org.cardna.presentation.ui.alarm.view.AlarmActivity"
+            android:name=".presentation.ui.alarm.view.AlarmActivity"
             android:exported="true" />
         <activity
-            android:name="org.cardna.presentation.ui.setting.view.SecessionActivity"
+            android:name=".presentation.ui.setting.view.SecessionActivity"
             android:exported="true" />
         <activity
-            android:name="org.cardna.presentation.ui.setting.view.ServiceOperationActivity"
+            android:name=".presentation.ui.setting.view.ServiceOperationActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.setting.view.PrivacyPolicyActivity"
+            android:name=".presentation.ui.setting.view.PrivacyPolicyActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.setting.view.DeveloperInfoActivity"
+            android:name=".presentation.ui.setting.view.DeveloperInfoActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.setting.view.VersionInfoActivity"
+            android:name=".presentation.ui.setting.view.VersionInfoActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.setting.view.SettingActivity"
+            android:name=".presentation.ui.setting.view.SettingActivity"
             android:exported="true" />
         <activity
-            android:name="org.cardna.presentation.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
-            android:name="org.cardna.presentation.ui.login.view.SetNameFinishedActivity"
+            android:name=".presentation.ui.login.view.SetNameFinishedActivity"
             android:exported="true" />
         <activity
-            android:name="org.cardna.presentation.ui.login.view.SetNameActivity"
+            android:name=".presentation.ui.login.view.SetNameActivity"
             android:exported="false" />
     </application>
 
