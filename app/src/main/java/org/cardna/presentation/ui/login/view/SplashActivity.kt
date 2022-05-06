@@ -7,15 +7,20 @@ import android.os.Looper
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import androidx.activity.viewModels
+import com.kakao.sdk.user.UserApiClient
 import org.cardna.R
 import org.cardna.databinding.ActivitySplashBinding
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
 import org.cardna.presentation.util.StatusBarUtil
+import timber.log.Timber
 
 class SplashActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>(R.layout.activity_splash) {
+    private val loginViewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         CardNaRepository.init(this)
@@ -24,8 +29,14 @@ class SplashActivity :
 
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
+        initData()
         setFullScreen()
         setNextActivity()
+    }
+
+    private fun initData() {
+//        loginViewModel.getKakaoLogin()
+        loginViewModel.getTokenIssuance()
     }
 
     private fun setFullScreen() {
@@ -48,26 +59,49 @@ class SplashActivity :
         }
     }
 
+    private fun autoKakaoLoginCheck() {
+        loginViewModel.message.observe(this) { message ->
+            when (message) {
+                ACCESS_NOW -> {
+                    moveMain()
+                }
+                REFRESH_SUCCESS -> {
+                    loginViewModel.issuanceTokenList.observe(this) {
+                        with(CardNaRepository) {
+                            kakaoUserToken = it.accessToken
+                            kakaoUserRefreshToken = it.refreshToken
+                            userToken = kakaoUserToken
+                        }
+                    }
+                    moveMain()
+                }
+                else -> {
+                    moveOnLogin()
+                }
+            }
+        }
+    }
 
     private fun setNextActivity() {
-        //모든 소셜에서 이름이 없으면->회원가입 안함
         if (CardNaRepository.kakaoUserfirstName.isEmpty() && CardNaRepository.naverUserfirstName.isEmpty()) {
+            //모든 소셜에서 이름이 없으면->회원가입 안함
             moveOnLogin()
+            Timber.d("kakaoUserFirstName : ${CardNaRepository.kakaoUserfirstName}")
 
-            //카카오로 자동로그인
-            //1. 카카오에 이름잇음+카카오에서 로그아웃 안함
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) {
-            CardNaRepository.userToken = CardNaRepository.kakaoUserToken
-            moveMain()
-
+            //카카오로 자동로그인
+            //1. 카카오에 이름잇음+카카오에서 로그아웃 안함 -> 이미 완성된거
+            //firebaseToken, fcmToken 은 회원가입때 이미 넣어줬겠지?
+//            CardNaRepository.userToken = CardNaRepository.kakaoUserToken
+            autoKakaoLoginCheck()
+        } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
             //네이버로 자동로그인
             //2.네이버에 이름잇음+네이버에서 로그아웃 안함
-        } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
+            Timber.d("kakaoUserFirstName : ${CardNaRepository.naverUserfirstName}")
             CardNaRepository.userToken = CardNaRepository.naverUserToken
             moveMain()
-
-            //로그아웃
         } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {
+            //로그아웃
             moveOnLogin()
         }
     }
@@ -93,5 +127,10 @@ class SplashActivity :
                 startActivity(intent)
                 finish()
             }, 2000)
+    }
+
+    companion object {
+        const val REFRESH_SUCCESS = "토큰 재발급 성공"
+        const val ACCESS_NOW = "유효한 토큰입니다."
     }
 }
