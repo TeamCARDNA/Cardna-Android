@@ -5,7 +5,7 @@ import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
+//import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApi
@@ -33,21 +33,21 @@ class LoginActivity :
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
         setClickListener()
-        getDeviceToken()
+//        getDeviceToken()
 //        testKakao()
     }
 
-    private fun getDeviceToken() {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                return@OnCompleteListener
-            }
-            // Get new FCM registration token
-            val token = task.result
-            CardNaRepository.fireBaseToken = token
-            Timber.d("fcm token ${CardNaRepository.fireBaseToken}")
-        })
-    }
+//    private fun getDeviceToken() {
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                return@OnCompleteListener
+//            }
+//            // Get new FCM registration token
+//            val token = task.result
+//            CardNaRepository.fireBaseToken = token
+//            Timber.d("fcm token ${CardNaRepository.fireBaseToken}")
+//        })
+//    }
 
     private fun setPrivacyPolicyActivity(title: String, text: String): Intent {
         val intent = Intent(this, PrivacyPolicyActivity::class.java)
