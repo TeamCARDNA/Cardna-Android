@@ -1,33 +1,55 @@
 {
   "project_info": {
+<<<<<<< HEAD
     "project_number": "870498300524",
     "project_id": "cardna-77520",
     "storage_bucket": "cardna-77520.appspot.com"
+=======
+    "project_number": "769397107490",
+    "project_id": "cardna-f30ae",
+    "storage_bucket": "cardna-f30ae.appspot.com"
+>>>>>>> develop
   },
   "client": [
     {
       "client_info": {
+<<<<<<< HEAD
         "mobilesdk_app_id": "1:870498300524:android:5dd7727fe866e43e205e49",
+=======
+        "mobilesdk_app_id": "1:769397107490:android:198727763b736f82cf137b",
+>>>>>>> develop
         "android_client_info": {
           "package_name": "org.cardna"
         }
       },
       "oauth_client": [
         {
+<<<<<<< HEAD
           "client_id": "870498300524-2mouq48nuarqkac0kkg3uam9f33q72d0.apps.googleusercontent.com",
+=======
+          "client_id": "769397107490-17sud7hmlh51qd0q63ul0sqts61ue9fh.apps.googleusercontent.com",
+>>>>>>> develop
           "client_type": 3
         }
       ],
       "api_key": [
         {
+<<<<<<< HEAD
           "current_key": "AIzaSyBnx7V3kdeWxlybpvhR_UO2qwCB1hxbmwA"
+=======
+          "current_key": "AIzaSyB_31kL1r9pR8dgqaw_gOXhrv9QpCwZkt4"
+>>>>>>> develop
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
+<<<<<<< HEAD
               "client_id": "870498300524-2mouq48nuarqkac0kkg3uam9f33q72d0.apps.googleusercontent.com",
+=======
+              "client_id": "769397107490-17sud7hmlh51qd0q63ul0sqts61ue9fh.apps.googleusercontent.com",
+>>>>>>> develop
               "client_type": 3
             }
           ]
