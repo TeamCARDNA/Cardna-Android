@@ -21,7 +21,7 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideAlarmService(@RetrofitModule.MoshiConverter retrofit: Retrofit): AlarmService {
+    fun provideAlarmService(@RetrofitModule.GsonConverter retrofit: Retrofit): AlarmService {
         return retrofit.create(AlarmService::class.java)
     }
 

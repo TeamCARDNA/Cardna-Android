@@ -7,13 +7,12 @@ data class ResponseSocialLoginData(
     val data: Data
 ) {
     data class Data(
-        val social: String = "",
-        val type: String = "",
-        val uuid: String = "",
-
+        val type: String,
         val name: String = "",
         val code: String = "",
+        val social: String = "",
+        val uuid: String = "",
         val accessToken: String = "",
-        val refreshToken: String = ""
+        val refreshToken: String = "",
     )
 }

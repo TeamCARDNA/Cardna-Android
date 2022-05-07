@@ -9,21 +9,21 @@ import org.cardna.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val authRepository: AuthDataSource
+    private val authDataSource: AuthDataSource
 ) : AuthRepository {
     override suspend fun getKakaoLogin(): ResponseSocialLoginData {
-        return authRepository.getKakaoLogin()
+        return authDataSource.getKakaoLogin()
     }
 
     override suspend fun getNaverLogin(fcmToken: String): ResponseSocialLoginData {
-        return authRepository.getNaverLogin(fcmToken)
+        return authDataSource.getNaverLogin(fcmToken)
     }
 
     override suspend fun postSignUp(requestSignUpData: RequestSignUpData): ResponseSignUpData {
-        return authRepository.postSignUp(requestSignUpData)
+        return authDataSource.postSignUp(requestSignUpData)
     }
 
     override suspend fun getTokenIssuance(accessToken: String, refreshToken: String): ResponseTokenIssuanceData {
-        return authRepository.getTokenIssuance(accessToken, refreshToken)
+        return authDataSource.getTokenIssuance(accessToken, refreshToken)
     }
 }

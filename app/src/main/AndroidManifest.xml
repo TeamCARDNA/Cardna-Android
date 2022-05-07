@@ -7,9 +7,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-
     <application
-        android:name="org.cardna.CardNaApplication"
+        android:name=".CardNaApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,84 +17,107 @@
         android:theme="@style/Theme.Cardna"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity"
+            android:name=".presentation.ui.login.view.OnBoardingActivity"
             android:exported="false" />
         <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.OtherCardCreateCompleteActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.CardCreateCompleteActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.login.view.SplashActivity"
-            android:exported="false" />
-
-        <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.TempCardYouStoreActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.login.view.LoginActivity"
-            android:exported="true" />
-        <activity
-            android:name="org.cardna.presentation.ui.maincard.view.MainCardActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.editcard.view.EditCardActivity"
-            android:exported="false" />
-
-        <activity
-            android:name="org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity"
-            android:exported="false" />
-
-        <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.cardpack.view.CardCreateActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.detailcard.view.CardShareActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.detailcard.view.DetailCardActivity"
-            android:exported="true" />
-        <activity
-            android:name="org.cardna.presentation.ui.alarm.view.AlarmActivity"
-            android:exported="true" />
-        <activity
-            android:name="org.cardna.presentation.ui.setting.view.SecessionActivity"
-            android:exported="true" />
-        <activity
-            android:name="org.cardna.presentation.ui.setting.view.ServiceOperationActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.setting.view.PrivacyPolicyActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.setting.view.DeveloperInfoActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.setting.view.VersionInfoActivity"
-            android:exported="false" />
-        <activity
-            android:name="org.cardna.presentation.ui.setting.view.SettingActivity"
-            android:exported="true" />
-        <activity
-            android:name="org.cardna.presentation.MainActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustPan">
+            android:name=".presentation.ui.login.view.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<!--        <activity-->
+<!--            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+<!--                <data-->
+<!--                    android:host="oauth"-->
+<!--                    android:scheme="${kakaoKey}" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <activity
-            android:name="org.cardna.presentation.ui.login.view.SetNameFinishedActivity"
+            android:name=".presentation.ui.cardpack.view.CardYouStoreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.cardpack.view.OtherCardCreateCompleteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.cardpack.view.CardCreateCompleteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.cardpack.view.TempCardYouStoreActivity"
             android:exported="true" />
         <activity
-            android:name="org.cardna.presentation.ui.login.view.SetNameActivity"
+            android:name=".presentation.ui.login.view.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.ui.maincard.view.MainCardActivity"
             android:exported="false" />
+        <activity
+            android:name=".presentation.ui.editcard.view.EditCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.mypage.view.SearchFriendCodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.cardpack.view.FriendCardPackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.cardpack.view.CardCreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.detailcard.view.CardShareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.detailcard.view.DetailCardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.ui.alarm.view.AlarmActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.ui.setting.view.SecessionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.ui.setting.view.ServiceOperationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.setting.view.PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.setting.view.DeveloperInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.setting.view.VersionInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.setting.view.SettingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".presentation.ui.login.view.SetNameFinishedActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.ui.login.view.SetNameActivity"
+            android:exported="false" />
+
+        <service
+            android:name=".FirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

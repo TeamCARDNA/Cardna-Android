@@ -10,9 +10,9 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthService {
+
     @GET("auth/kakao")
     suspend fun getKakaoLogin(): ResponseSocialLoginData
-
 
     // 소셜 로그인 API - 네이버
     @GET("auth/naver")

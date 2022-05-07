@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.data.remote.model.user.RequestDeleteUserData
+import org.cardna.domain.repository.AlarmRepository
 import org.cardna.domain.repository.UserRepository
 import org.cardna.presentation.ui.setting.view.SecessionActivity
 import timber.log.Timber
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val alarmRepository: AlarmRepository
 ) : ViewModel() {
 
     private val _secessionReasonOneCheck = MutableLiveData(false)
@@ -51,6 +53,12 @@ class SettingViewModel @Inject constructor(
 
     private val _etcContent = MutableLiveData<String?>()
     val etcContent: LiveData<String?> = _etcContent
+
+    private val _userSocial = MutableLiveData<Boolean>()
+    val userSocial: LiveData<Boolean> = _userSocial
+
+    private val _isAcceptPush = MutableLiveData<Boolean>(true)
+    val isAcceptPush: LiveData<Boolean> = _isAcceptPush
 
     fun setSecessionReasonOneStatus(status: Boolean) {
         _secessionReasonOneCheck.value = status
@@ -139,6 +147,32 @@ class SettingViewModel @Inject constructor(
                 _isDeleteUserSuccess.value = true
             }.onFailure {
                 _isDeleteUserSuccess.value = false
+                Timber.e(it.message)
+            }
+        }
+    }
+
+    fun getUser() {
+        viewModelScope.launch {
+            runCatching {
+                userRepository.getUser()
+            }.onSuccess {
+                it.data.apply {
+                    _userSocial.value = social == "kakao"
+                    _isAcceptPush.value = acceptPush
+                }
+            }.onFailure {
+                Timber.e(it.message)
+            }
+        }
+    }
+
+    fun switchPushAlarm() {
+        viewModelScope.launch {
+            runCatching {
+                alarmRepository.putAlarm()
+            }.onSuccess {
+            }.onFailure {
                 Timber.e(it.message)
             }
         }

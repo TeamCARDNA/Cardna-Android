@@ -11,3 +11,8 @@ data class ResponseTokenIssuanceData(
         val refreshToken: String
     )
 }
+
+data class IssuanceTokenList(
+    val accessToken: String = "",
+    val refreshToken: String = "",
+)

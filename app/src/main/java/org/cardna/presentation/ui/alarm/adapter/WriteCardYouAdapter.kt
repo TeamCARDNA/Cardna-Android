@@ -1,22 +1,33 @@
 package org.cardna.presentation.ui.alarm.adapter
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import org.cardna.data.remote.model.alarm.ResponseGetAlarmData
 import org.cardna.databinding.ItemAlarmWriteCardyouBinding
 
+
 class WriteCardYouAdapter(
-    private val clickListener: (FriendResponseData) -> Unit
-) : androidx.recyclerview.widget.ListAdapter<FriendResponseData, WriteCardYouAdapter.WriteCardYouViewHolder>(diffUtil) {
+    private val activity: Activity,
+    private val clickListener: (ResponseGetAlarmData.Data.Alarm) -> Unit
+) : ListAdapter<ResponseGetAlarmData.Data.Alarm, WriteCardYouAdapter.WriteCardYouViewHolder>(diffUtil) {
 
     inner class WriteCardYouViewHolder(private val binding: ItemAlarmWriteCardyouBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: FriendResponseData) {
-            binding.apply {
 
+        fun onBind(data: ResponseGetAlarmData.Data.Alarm) {
+            binding.apply {
                 //TODO  서버연결 후 data 연결
-                tvItemAlarmWriteCardyouFriendName.text = data.friendName
-                tvItemAlarmWriteCardyouDate.text = data.requestDate
+                tvItemAlarmWriteCardyouFriendName.text = data.name
+                tvItemAlarmWriteCardyouDate.text = data.date
+                tvItemAlarmWriteCardyouSentence.text = data.content
+                Glide.with(activity)
+                    .load(data.profileImage)
+                    .circleCrop()
+                    .into(ivItemAlarmWriteCardyou)
                 root.setOnClickListener {
                     clickListener(data)
                 }
@@ -30,18 +41,19 @@ class WriteCardYouAdapter(
     }
 
     override fun onBindViewHolder(holder: WriteCardYouViewHolder, position: Int) {
-        holder.onBind(getItem(position))
+        holder.onBind(currentList[position])
     }
 
-    override fun getItemCount() = currentList.size
-
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<FriendResponseData>() {
-            override fun areContentsTheSame(oldItem: FriendResponseData, newItem: FriendResponseData) =
+        val diffUtil = object : DiffUtil.ItemCallback<ResponseGetAlarmData.Data.Alarm>() {
+            override fun areContentsTheSame(oldItem: ResponseGetAlarmData.Data.Alarm, newItem: ResponseGetAlarmData.Data.Alarm) =
                 oldItem == newItem
 
-            override fun areItemsTheSame(oldItem: FriendResponseData, newItem: FriendResponseData) =
-                oldItem.friendName == newItem.friendName  //TODO 친구 id로 비교
+            override fun areItemsTheSame(oldItem: ResponseGetAlarmData.Data.Alarm, newItem: ResponseGetAlarmData.Data.Alarm):Boolean {
+                if (newItem.cardId == null) return oldItem.friendId == newItem.friendId
+                else if (newItem.friendId == null)    return oldItem.cardId == newItem.cardId
+                else return true
+            }
         }
     }
 }

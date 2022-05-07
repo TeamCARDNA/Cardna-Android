@@ -5,5 +5,5 @@ data class RequestSignUpData(
     val uuid: String,
     val lastName: String,
     val firstName: String,
-    val deviceToken: String,
+    val fcmToken: String,
 )

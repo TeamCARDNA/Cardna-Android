@@ -1,13 +1,10 @@
 package org.cardna.data.remote.api.user
 
-import org.cardna.data.remote.model.like.RequestLikeData
-import org.cardna.data.remote.model.like.ResponseLikeData
-import org.cardna.data.remote.model.user.RequestDeleteUserData
-import org.cardna.data.remote.model.user.RequestPostReportUserData
-import org.cardna.data.remote.model.user.ResponseDeleteUserData
-import org.cardna.data.remote.model.user.ResponsePostReportUserData
+import org.cardna.data.remote.model.mypage.ResponseMyPageData
+import org.cardna.data.remote.model.user.*
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface UserService {
@@ -21,4 +18,7 @@ interface UserService {
     suspend fun postReportUser(
         @Body body: RequestPostReportUserData
     ): ResponsePostReportUserData
+
+    @GET("user")
+    suspend fun getUser(): ResponseUserData
 }
