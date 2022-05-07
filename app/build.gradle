@@ -10,6 +10,7 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 def manifest_kakao_app_key = properties.getProperty('manifest_kakao_app_key')
 def kakao_app_key = properties.getProperty('kakao_app_key')
+def multidex_version = "2.0.1"
 android {
     compileSdk 31
 
@@ -25,6 +26,10 @@ android {
         //base_url
         buildConfigField "String", "BASE_URL", properties["base_url"]
         buildConfigField "String", "KAKAO_APP_KEY", "$kakao_app_key"
+
+        //
+        multiDexEnabled true
+
     }
 
     buildTypes {
@@ -43,6 +48,7 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
 }
 
 dependencies {
@@ -51,6 +57,10 @@ dependencies {
     implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.12.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+
+    //
+    implementation "androidx.multidex:multidex:$multidex_version"
+
 
     //DotsIndicator
     implementation 'com.tbuonomo:dotsindicator:4.2'
