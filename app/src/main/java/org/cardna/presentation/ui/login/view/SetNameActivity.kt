@@ -95,6 +95,10 @@ class SetNameActivity :
     private fun positiveClickListener(button: Button, dialog: Dialog, name: String) {
         button.setOnClickListener {
             dialog.dismiss()
+
+            // 이름 등록 및 회원가입 API 호출
+
+            //
             initAnimation(name)
         }
     }
@@ -126,7 +130,6 @@ class SetNameActivity :
         binding.clSetnameContainer.visibility = View.GONE
 
         startSetNameFinishedActivity(welcomeText)
-
     }
 
     private fun setTextGradient(welcomeText: String): Spannable {
