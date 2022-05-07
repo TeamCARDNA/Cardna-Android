@@ -3,6 +3,7 @@ package org.cardna.presentation.ui.login.view
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import com.google.android.gms.tasks.OnCompleteListener
 import com.navercorp.nid.NaverIdLoginSDK
 import org.cardna.R
 import org.cardna.databinding.ActivityLoginBinding
@@ -11,6 +12,8 @@ import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
+import timber.log.Timber
+
 @AndroidEntryPoint
 class LoginActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityLoginBinding>(R.layout.activity_login) {
@@ -95,4 +98,16 @@ class LoginActivity :
             startActivity(this)
         }
     }
+
+//
+//    private fun getDeviceToken() {
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                return@OnCompleteListener
+//            }
+//            // Get new FCM registration token
+//            val token = task.result
+//            Timber.d("device token $token")
+//        })
+//    }
 }
