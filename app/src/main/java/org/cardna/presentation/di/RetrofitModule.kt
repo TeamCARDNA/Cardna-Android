@@ -1,5 +1,6 @@
 package org.cardna.presentation.di
 
+import com.google.gson.GsonBuilder
 import org.cardna.BuildConfig
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -21,6 +22,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
     private val BASE_URL = BuildConfig.BASE_URL
+    private val gson=GsonBuilder().setLenient().create()
 
     private fun httpLoggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
@@ -41,7 +43,7 @@ object RetrofitModule {
     @Singleton
     fun provideRetrofitObjectGson(): Retrofit {
         return Retrofit.Builder().baseUrl(BASE_URL).client(getOkHttpClient())
-            .addConverterFactory(GsonConverterFactory.create()).build()
+            .addConverterFactory(GsonConverterFactory.create(gson)).build()
     }
 
     @MoshiConverter

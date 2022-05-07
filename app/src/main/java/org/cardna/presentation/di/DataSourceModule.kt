@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.cardna.data.remote.api.alarm.AlarmService
 import org.cardna.data.remote.api.auth.AuthService
 import org.cardna.data.remote.api.card.CardService
 import org.cardna.data.remote.api.friend.FriendService
@@ -17,6 +18,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataSourceModule {
+
+    @Provides
+    @Singleton
+    fun provideAlarmDataSource(alarmService: AlarmService): AlarmDataSource {
+        return AlarmDataSourceImpl(alarmService)
+    }
 
     @Provides
     @Singleton

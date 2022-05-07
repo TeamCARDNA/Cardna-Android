@@ -2,18 +2,22 @@ package org.cardna.presentation.ui.alarm.view
 
 import android.content.Intent
 import android.graphics.Color
+import android.opengl.Visibility
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.ActivityAlarmBinding
+import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.adapter.FriendRequestAdapter
 import org.cardna.presentation.ui.alarm.adapter.FriendResponseData
 import org.cardna.presentation.ui.alarm.adapter.WriteCardYouAdapter
 import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
+import org.cardna.presentation.ui.maincard.view.MainCardActivity
 import org.cardna.presentation.util.StatusBarUtil
 
 @AndroidEntryPoint
@@ -31,8 +35,6 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     override fun initView() {
         StatusBarUtil.setStatusBar(this, Color.BLACK)
         initData()
-        setFriendRequestAdapter()
-        setWriteCardYouAdapter()
         setObserve()
     }
 
@@ -42,61 +44,44 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     private fun initData() {
-        alarmViewModel.getFriendRequest()
-        alarmViewModel.getWriteCardYou()
+        alarmViewModel.geAllAlarm()
     }
 
     private fun setObserve() {
-        //TODO api연결 후 정의
-/*        alarmViewModel.friendRequest.observe(this) { friendRequest ->
-            friendRequestAdapter.submitList(friendRequest)
+        alarmViewModel.isFriendRequestEmpty.observe(this) { isFriendRequestEmpty ->
+            if (!isFriendRequestEmpty) setFriendRequestAdapter()
+        }
+        alarmViewModel.friendRequest.observe(this) { friendRequest ->
+            if (friendRequest.isNotEmpty()) friendRequestAdapter.submitList(friendRequest)
+        }
+
+        alarmViewModel.isWriteCardYouEmpty.observe(this) { isWriteCardYouEmpty ->
+            if (!isWriteCardYouEmpty) setWriteCardYouAdapter()
         }
         alarmViewModel.writeCardYou.observe(this) { writeCardYou ->
-            writeCardYouAdapter.submitList(friendRequest)
+            if (writeCardYou.isNotEmpty()) writeCardYouAdapter.submitList(writeCardYou)
         }
 
-        alarmViewModel.deletePostSuccess.observe(this) { deleteSuccess ->
-            if (deleteSuccess)
-                alarmViewModel.getFriendRequest()
+        alarmViewModel.isRequestDeny.observe(this) { isRequestDeny ->
+            if (isRequestDeny) initData()
         }
-
-        alarmViewModel.deletePostSuccess.observe(this) { deleteSuccess ->
-            if (deleteSuccess)
-                alarmViewModel.getFriendRequest()
-        }*/
     }
 
     private fun setFriendRequestAdapter() {
-        //TODO 서버연결 후 삭제
-        val dataList = mutableListOf(
-            FriendResponseData("김다빈", "2022/24/42", 1),
-            FriendResponseData("박민우", "2022/24/42", 2),
-            FriendResponseData("이종찬", "2022/24/42", 3),
-            FriendResponseData("김다빈", "2022/24/42", 4),
-        )
-
-        //TODO 친구 대표카드 뷰로 이동
-        friendRequestAdapter = FriendRequestAdapter(alarmViewModel, this) { item ->
-            //    startActivity(Intent(this, DetailInfoActivity::class.java))
+        friendRequestAdapter = FriendRequestAdapter(this, alarmViewModel) { item ->
+            startActivity(Intent(this, MainCardActivity::class.java).apply {
+                putExtra("friendId", item.id)
+            })
         }
         with(binding.rcvAlarmFriendRequest) {
             adapter = friendRequestAdapter
-        //    layoutManager = LinearLayoutManager(this@AlarmActivity)
+            layoutManager = LinearLayoutManager(this@AlarmActivity)
             setUnfoldListener(friendRequestAdapter)
-            friendRequestAdapter.submitList(dataList)
         }
     }
 
     private fun setWriteCardYouAdapter() {
-        val dataList = mutableListOf(
-            FriendResponseData("김다빈", "2022/24/42", 1),
-            FriendResponseData("박민우", "2022/24/42", 2),
-            FriendResponseData("이종찬", "2022/24/42", 3),
-        )
-
-
-        //TODO 카드상세 페이지로 이동->카드 아이디 보내서 이동 friendId cardId로 변경
-        writeCardYouAdapter = WriteCardYouAdapter { item ->
+        writeCardYouAdapter = WriteCardYouAdapter(this) { item ->
             val intent = Intent(this, DetailCardActivity::class.java).let {
                 it.putExtra(BaseViewUtil.CARD_ID, item.friendId)
             }
@@ -105,7 +90,6 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         with(binding.rcvAlarmWriteCardyou) {
             adapter = writeCardYouAdapter
             layoutManager = LinearLayoutManager(this@AlarmActivity)
-            writeCardYouAdapter.submitList(dataList)  //TODO 서버연결 후 삭제
         }
     }
 
@@ -119,7 +103,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
                     tvAlarmFriendViewAll.text = VIEW_ALL
                     adapter.defaultStatus = true
                 }
-                adapter.notifyDataSetChanged() //TODO viewmodel연결
+                adapter.submitList(adapter.currentList)
             }
         }
     }

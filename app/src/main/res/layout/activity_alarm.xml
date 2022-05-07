@@ -138,6 +138,19 @@
                         tools:listitem="@layout/item_alarm_write_cardyou" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="216dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="최근 알림이 없어요"
+                android:textColor="@color/white_3"
+                android:textSize="16sp"
+                android:visibility="@{alarmViewModel.isAllAlarmEmpty ==true  ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
