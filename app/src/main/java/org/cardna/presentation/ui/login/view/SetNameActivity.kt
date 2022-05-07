@@ -1,29 +1,32 @@
 package org.cardna.presentation.ui.login.view
 
+import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Spannable
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import androidx.core.text.set
-import androidx.core.text.toSpannable
+import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import org.cardna.R
 import org.cardna.databinding.ActivitySetNameBinding
 import org.cardna.databinding.DialogSetNameBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.data.remote.model.auth.RequestSignUpData
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.util.LinearGradientSpan
+import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
+import org.cardna.presentation.util.setGradientText
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SetNameActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivitySetNameBinding>(R.layout.activity_set_name) {
-
+    private val loginViewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
@@ -62,14 +65,16 @@ class SetNameActivity :
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initAlertDialog() {
         binding.btnSignUpNameAccess.setOnClickListener {
             val dialog = Dialog(this)
             val dialogBinding = DialogSetNameBinding.inflate(dialog.layoutInflater)
             dialog.setContentView(dialogBinding.root)
 
-            val name = with(binding) { "${etSignupLastname.text}${etSignupFirstname.text}" }
             val firstname = binding.etSignupFirstname.text.toString()
+            val lastname = binding.etSignupLastname.text.toString()
+            val name = lastname + firstname
 
             dialogBinding.tvAlertTitle.text =
                 "${name}${getString(R.string.signup_tv_username_check)}"
@@ -78,7 +83,13 @@ class SetNameActivity :
 
             with(dialogBinding) {
                 negativeClickListener(btnAlertNegative, dialog)
-                positiveClickListener(btnAlertPositive, dialog, firstname)
+                Timber.d("name : $lastname, $firstname")
+                Timber.d("1-1-1-")
+                Timber.d("RequestuserSocial : ${CardNaRepository.userSocial}")
+                Timber.d("RequestuserUUid : ${CardNaRepository.userUuid}")
+                Timber.d("Requestfirstname : ${CardNaRepository.kakaoUserfirstName}")
+                Timber.d("RequestfcmToken : ${CardNaRepository.fireBaseToken}")
+                positiveClickListener(btnAlertPositive, dialog, firstname, lastname)
             }
 
             dialog.setCancelable(false)
@@ -92,10 +103,24 @@ class SetNameActivity :
         }
     }
 
-    private fun positiveClickListener(button: Button, dialog: Dialog, name: String) {
+    private fun positiveClickListener(
+        button: Button,
+        dialog: Dialog,
+        firstname: String,
+        lastname: String
+    ) {
         button.setOnClickListener {
-            dialog.dismiss()
-            initAnimation(name)
+            with(CardNaRepository) {
+                loginViewModel.postSignUp(
+                    RequestSignUpData(userSocial, userUuid, lastname, firstname, fireBaseToken)
+                )
+            }
+            loginViewModel.isLogin.observe(this) { success ->
+                if (success) {
+                    dialog.dismiss()
+                    initAnimation(firstname)
+                }
+            }
         }
     }
 
@@ -120,7 +145,7 @@ class SetNameActivity :
 
     private fun initAnimation(name: String) {
         val welcomeText = "${name}님 반가워요!"
-        val gradientText = setTextGradient(welcomeText)
+        val gradientText = setGradientText(welcomeText)
         binding.tvSetnameUsername.text = gradientText
         binding.tvSetnameUsername.visibility = View.VISIBLE
         binding.clSetnameContainer.visibility = View.GONE
@@ -129,19 +154,15 @@ class SetNameActivity :
 
     }
 
-    private fun setTextGradient(welcomeText: String): Spannable {
-        val green = getColor(R.color.main_green)
-        val purple = getColor(R.color.main_purple)
-        val spannable = welcomeText.toSpannable()
-        spannable[0..welcomeText.length] =
-            LinearGradientSpan(welcomeText, welcomeText, green, purple)
-        return spannable
-    }
-
     private fun startSetNameFinishedActivity(welcomeText: String) {
         val intent = Intent(this, SetNameFinishedActivity::class.java)
         val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         intent.putExtra("welcomeText", welcomeText)
         startActivity(intent, bundle)
+    }
+
+    companion object {
+        const val KAKAO = "kakao"
+        const val NAVER = "naver"
     }
 }
