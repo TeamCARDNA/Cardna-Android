@@ -4,11 +4,10 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.cardna.data.remote.model.alarm.ResponseAlarmData
+import org.cardna.data.remote.model.alarm.ResponseGetAlarmData
 import org.cardna.databinding.ItemAlarmFriendRequestBinding
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
@@ -16,14 +15,14 @@ import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
 class FriendRequestAdapter(
     private val activity: Activity,
     private val alarmViewModel: AlarmViewModel,
-    private val clickListener: (ResponseAlarmData.Data.Request.Requester) -> Unit
-) : androidx.recyclerview.widget.ListAdapter<ResponseAlarmData.Data.Request.Requester, FriendRequestAdapter.FriendRequestViewHolder>(diffUtil) {
+    private val clickListener: (ResponseGetAlarmData.Data.Request.Requester) -> Unit
+) : androidx.recyclerview.widget.ListAdapter<ResponseGetAlarmData.Data.Request.Requester, FriendRequestAdapter.FriendRequestViewHolder>(diffUtil) {
 
     var defaultStatus = true
 
     inner class FriendRequestViewHolder(private val binding: ItemAlarmFriendRequestBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(data: ResponseAlarmData.Data.Request.Requester) {
+        fun onBind(data: ResponseGetAlarmData.Data.Request.Requester) {
             binding.apply {
 
                 //TODO  서버연결 후 data 연결
@@ -78,11 +77,11 @@ class FriendRequestAdapter(
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<ResponseAlarmData.Data.Request.Requester>() {
-            override fun areContentsTheSame(oldItem: ResponseAlarmData.Data.Request.Requester, newItem: ResponseAlarmData.Data.Request.Requester) =
+        val diffUtil = object : DiffUtil.ItemCallback<ResponseGetAlarmData.Data.Request.Requester>() {
+            override fun areContentsTheSame(oldItem: ResponseGetAlarmData.Data.Request.Requester, newItem: ResponseGetAlarmData.Data.Request.Requester) =
                 oldItem == newItem
 
-            override fun areItemsTheSame(oldItem: ResponseAlarmData.Data.Request.Requester, newItem: ResponseAlarmData.Data.Request.Requester) =
+            override fun areItemsTheSame(oldItem: ResponseGetAlarmData.Data.Request.Requester, newItem: ResponseGetAlarmData.Data.Request.Requester) =
                 oldItem.id == newItem.id
         }
     }

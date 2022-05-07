@@ -1,13 +1,12 @@
 package org.cardna.presentation.ui.alarm.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.cardna.data.remote.model.alarm.ResponseAlarmData
+import org.cardna.data.remote.model.alarm.ResponseGetAlarmData
 import org.cardna.data.remote.model.friend.RequestAcceptOrDenyFriendData
 import org.cardna.domain.repository.AlarmRepository
 import org.cardna.domain.repository.FriendRepository
@@ -21,11 +20,11 @@ class AlarmViewModel @Inject constructor(
 ) : ViewModel() {
 
     //리스트
-    private val _friendRequest = MutableLiveData<List<ResponseAlarmData.Data.Request.Requester?>>()
-    val friendRequest: LiveData<List<ResponseAlarmData.Data.Request.Requester?>> = _friendRequest
+    private val _friendRequest = MutableLiveData<List<ResponseGetAlarmData.Data.Request.Requester?>>()
+    val friendRequest: LiveData<List<ResponseGetAlarmData.Data.Request.Requester?>> = _friendRequest
 
-    private val _writeCardYou = MutableLiveData<List<ResponseAlarmData.Data.Alarm?>>()
-    val writeCardYou: LiveData<List<ResponseAlarmData.Data.Alarm?>> = _writeCardYou
+    private val _writeCardYou = MutableLiveData<List<ResponseGetAlarmData.Data.Alarm?>>()
+    val writeCardYou: LiveData<List<ResponseGetAlarmData.Data.Alarm?>> = _writeCardYou
 
     //엠티인지 처리
     private val _isFriendRequestEmpty = MutableLiveData(true)

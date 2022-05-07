@@ -1,7 +1,7 @@
 package org.cardna.data.remote.model.alarm
 
 
-data class ResponseAlarmData(
+data class ResponseGetAlarmData(
     val status: Int,
     val success: Boolean,
     val message: String,

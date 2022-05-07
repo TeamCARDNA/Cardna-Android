@@ -7,18 +7,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.cardna.data.remote.model.alarm.ResponseAlarmData
+import org.cardna.data.remote.model.alarm.ResponseGetAlarmData
 import org.cardna.databinding.ItemAlarmWriteCardyouBinding
 
 
 class WriteCardYouAdapter(
     private val activity: Activity,
-    private val clickListener: (ResponseAlarmData.Data.Alarm) -> Unit
-) : ListAdapter<ResponseAlarmData.Data.Alarm, WriteCardYouAdapter.WriteCardYouViewHolder>(diffUtil) {
+    private val clickListener: (ResponseGetAlarmData.Data.Alarm) -> Unit
+) : ListAdapter<ResponseGetAlarmData.Data.Alarm, WriteCardYouAdapter.WriteCardYouViewHolder>(diffUtil) {
 
     inner class WriteCardYouViewHolder(private val binding: ItemAlarmWriteCardyouBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(data: ResponseAlarmData.Data.Alarm) {
+        fun onBind(data: ResponseGetAlarmData.Data.Alarm) {
             binding.apply {
                 //TODO  서버연결 후 data 연결
                 tvItemAlarmWriteCardyouFriendName.text = data.name
@@ -45,11 +45,11 @@ class WriteCardYouAdapter(
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<ResponseAlarmData.Data.Alarm>() {
-            override fun areContentsTheSame(oldItem: ResponseAlarmData.Data.Alarm, newItem: ResponseAlarmData.Data.Alarm) =
+        val diffUtil = object : DiffUtil.ItemCallback<ResponseGetAlarmData.Data.Alarm>() {
+            override fun areContentsTheSame(oldItem: ResponseGetAlarmData.Data.Alarm, newItem: ResponseGetAlarmData.Data.Alarm) =
                 oldItem == newItem
 
-            override fun areItemsTheSame(oldItem: ResponseAlarmData.Data.Alarm, newItem: ResponseAlarmData.Data.Alarm):Boolean {
+            override fun areItemsTheSame(oldItem: ResponseGetAlarmData.Data.Alarm, newItem: ResponseGetAlarmData.Data.Alarm):Boolean {
                 if (newItem.cardId == null) return oldItem.friendId == newItem.friendId
                 else if (newItem.friendId == null)    return oldItem.cardId == newItem.cardId
                 else return true
