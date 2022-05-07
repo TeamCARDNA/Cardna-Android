@@ -15,8 +15,8 @@ class AuthDataSourceImpl @Inject constructor(
         return authService.getKakaoLogin()
     }
 
-    override suspend fun getNaverLogin(): ResponseSocialLoginData {
-        return authService.getNaverLogin()
+    override suspend fun getNaverLogin(fcmToken: String): ResponseSocialLoginData {
+        return authService.getNaverLogin(fcmToken)
     }
 
     override suspend fun postSignUp(requestSignUpData: RequestSignUpData): ResponseSignUpData {
