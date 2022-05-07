@@ -2,10 +2,13 @@ package org.cardna.presentation.ui.login.view
 
 import android.content.Intent
 import android.os.Bundle
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import org.cardna.R
 import org.cardna.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginActivity :
@@ -16,8 +19,30 @@ class LoginActivity :
     }
 
     override fun initView() {
+        getDeviceToken()
         setClickListener()
     }
+
+    //디바이스 토큰 얻기기
+       private fun getDeviceToken(){
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(
+                OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Timber.e(
+                            "CardNaRepository.TAG",
+                            "Fetching FCM registration token failed",
+                            task.exception
+                        )
+                        return@OnCompleteListener
+                    } else {
+                        val token = task.result
+                        Timber.e("ddd",token.toString()
+                        )
+                        //  CardNaRepository.fireBaseToken = token ?: "SomeThing"  //이후 사용해주세요
+                    }
+                }
+            )
+        }
 
     private fun setClickListener() {
         with(binding) {
