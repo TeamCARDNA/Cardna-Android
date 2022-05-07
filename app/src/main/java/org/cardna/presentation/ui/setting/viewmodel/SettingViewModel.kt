@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.data.remote.model.user.RequestDeleteUserData
+import org.cardna.domain.repository.AlarmRepository
 import org.cardna.domain.repository.UserRepository
 import org.cardna.presentation.ui.setting.view.SecessionActivity
 import timber.log.Timber
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val alarmRepository: AlarmRepository
 ) : ViewModel() {
 
     private val _secessionReasonOneCheck = MutableLiveData(false)
@@ -55,7 +57,7 @@ class SettingViewModel @Inject constructor(
     private val _userSocial = MutableLiveData<Boolean>()
     val userSocial: LiveData<Boolean> = _userSocial
 
-    private val _isAcceptPush = MutableLiveData<Boolean>()
+    private val _isAcceptPush = MutableLiveData<Boolean>(true)
     val isAcceptPush: LiveData<Boolean> = _isAcceptPush
 
     fun setSecessionReasonOneStatus(status: Boolean) {
@@ -160,7 +162,18 @@ class SettingViewModel @Inject constructor(
                     _isAcceptPush.value = acceptPush
                 }
             }.onFailure {
+                Timber.e(it.message)
+            }
+        }
+    }
 
+    fun switchPushAlarm() {
+        viewModelScope.launch {
+            runCatching {
+                alarmRepository.putAlarm()
+            }.onSuccess {
+            }.onFailure {
+                Timber.e(it.message)
             }
         }
     }

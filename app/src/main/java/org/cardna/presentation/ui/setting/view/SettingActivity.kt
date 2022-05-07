@@ -33,7 +33,7 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
         setAlarmSwitchClickListener()
     }
 
-    private fun initData(){
+    private fun initData() {
         settingViewModel.getUser()
     }
 
@@ -43,6 +43,9 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
             switchBtnSetting.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) ivSettingAlarm.setBackgroundResource(R.drawable.bg_switch_track_on)
                 else ivSettingAlarm.setBackgroundResource(R.drawable.bg_switch_track_off)
+            }
+            switchBtnSetting.setOnClickListener {
+                settingViewModel?.switchPushAlarm() ?: return@setOnClickListener
             }
         }
     }
