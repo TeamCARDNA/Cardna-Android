@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "769397107490",
+    "project_id": "cardna-f30ae",
+    "storage_bucket": "cardna-f30ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769397107490:android:198727763b736f82cf137b",
+        "android_client_info": {
+          "package_name": "org.cardna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "769397107490-17sud7hmlh51qd0q63ul0sqts61ue9fh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_31kL1r9pR8dgqaw_gOXhrv9QpCwZkt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "769397107490-17sud7hmlh51qd0q63ul0sqts61ue9fh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

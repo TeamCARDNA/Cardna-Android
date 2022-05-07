@@ -6,11 +6,15 @@ import org.cardna.data.remote.model.auth.ResponseSocialLoginData
 import org.cardna.data.remote.model.auth.ResponseTokenIssuanceData
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthService {
+
     @GET("auth/kakao")
-    suspend fun getKakaoLogin(): ResponseSocialLoginData
+    suspend fun getKakaoLogin(
+        @Header("Content-Type :") newHeader: Header
+    ): ResponseSocialLoginData
 
     @GET("auth/naver")
     suspend fun getNaverLogin(): ResponseSocialLoginData
