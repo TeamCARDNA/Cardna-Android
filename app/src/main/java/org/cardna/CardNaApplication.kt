@@ -25,10 +25,10 @@ class CardNaApplication : Application() {
         Timber.plant(Timber.DebugTree())
     }
 
-    private fun initKakaoLogin() {
-        val kakaoAppKey = BuildConfig.KAKAO_APP_KEY
-        KakaoSdk.init(this, kakaoAppKey)
-    }
+//    private fun initKakaoLogin() {
+//        val kakaoAppKey = BuildConfig.KAKAO_APP_KEY
+//        KakaoSdk.init(this, kakaoAppKey)
+//    }
 
 //    private fun initFirebaseApp() {
 //        FirebaseApp.initializeApp(this)
