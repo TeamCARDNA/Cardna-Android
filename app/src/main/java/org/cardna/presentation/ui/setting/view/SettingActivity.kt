@@ -5,27 +5,36 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.viewModels
 import org.cardna.R
 import org.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.view.LoginActivity
+import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.shortToast
 import org.cardna.presentation.util.showCustomDialog
 
 @AndroidEntryPoint
 class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBinding>(R.layout.activity_setting) {
+    private val settingViewModel: SettingViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.settingViewModel = settingViewModel
         initView()
     }
 
     override fun initView() {
         StatusBarUtil.setStatusBar(this, Color.BLACK)
+        initData()
         setClickListener()
         setAlarmSwitchClickListener()
+    }
+
+    private fun initData(){
+        settingViewModel.getUser()
     }
 
     @SuppressLint("ResourceType")

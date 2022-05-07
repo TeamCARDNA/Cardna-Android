@@ -52,6 +52,12 @@ class SettingViewModel @Inject constructor(
     private val _etcContent = MutableLiveData<String?>()
     val etcContent: LiveData<String?> = _etcContent
 
+    private val _userSocial = MutableLiveData<Boolean>()
+    val userSocial: LiveData<Boolean> = _userSocial
+
+    private val _isAcceptPush = MutableLiveData<Boolean>()
+    val isAcceptPush: LiveData<Boolean> = _isAcceptPush
+
     fun setSecessionReasonOneStatus(status: Boolean) {
         _secessionReasonOneCheck.value = status
         setSecessionReasonValid()
@@ -140,6 +146,21 @@ class SettingViewModel @Inject constructor(
             }.onFailure {
                 _isDeleteUserSuccess.value = false
                 Timber.e(it.message)
+            }
+        }
+    }
+
+    fun getUser() {
+        viewModelScope.launch {
+            runCatching {
+                userRepository.getUser()
+            }.onSuccess {
+                it.data.apply {
+                    _userSocial.value = social == "kakao"
+                    _isAcceptPush.value = acceptPush
+                }
+            }.onFailure {
+
             }
         }
     }
