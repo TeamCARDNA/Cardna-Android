@@ -101,13 +101,24 @@
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".presentation.ui.login.view.SetNameFinishedActivity"
             android:exported="true" />
         <activity
             android:name=".presentation.ui.login.view.SetNameActivity"
             android:exported="false" />
+
+        <service
+            android:name=".FirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+
+            <intent-filter>
+
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

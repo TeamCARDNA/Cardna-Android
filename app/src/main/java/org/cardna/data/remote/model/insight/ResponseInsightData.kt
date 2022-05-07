@@ -25,3 +25,4 @@ data class BlindArea(
     val isInsight: Boolean?,
     val title: String?
 )
+

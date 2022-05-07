@@ -15,6 +15,12 @@ object RepositoryModule {
 
     @Provides
     @Singleton
+    fun provideAlarmRepository(alarmDataSource: AlarmDataSource): AlarmRepository {
+        return AlarmRepositoryImpl(alarmDataSource)
+    }
+
+    @Provides
+    @Singleton
     fun provideUserRepository(userDataSource: UserDataSource): UserRepository {
         return UserRepositoryImpl(userDataSource)
     }

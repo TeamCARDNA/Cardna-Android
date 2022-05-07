@@ -106,9 +106,9 @@ class LoginActivity :
                 getErrorLog(error)
             } else if (token != null) {
                 //카카오 로그인 콜백
-                    with(CardNaRepository){
-                        Timber.d("token")
-                    }
+                with(CardNaRepository){
+                    Timber.d("token")
+                }
                 with(loginViewModel) {
                     getKakaoLogin()
                     isLogin.observe(this@LoginActivity) { success ->
