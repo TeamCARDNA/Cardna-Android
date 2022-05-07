@@ -12,9 +12,7 @@ import retrofit2.http.POST
 interface AuthService {
 
     @GET("auth/kakao")
-    suspend fun getKakaoLogin(
-        @Header("Content-Type :") newHeader: Header
-    ): ResponseSocialLoginData
+    suspend fun getKakaoLogin(): ResponseSocialLoginData
 
     @GET("auth/naver")
     suspend fun getNaverLogin(): ResponseSocialLoginData
