@@ -1,13 +1,14 @@
 package org.cardna.presentation.ui.login.view
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
+import com.kakao.sdk.user.UserApi
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
@@ -18,7 +19,6 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
 import org.cardna.presentation.ui.setting.view.PrivacyPolicyActivity
 import org.cardna.presentation.util.StatusBarUtil
-import org.cardna.presentation.util.shortToast
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -33,8 +33,8 @@ class LoginActivity :
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
         setClickListener()
-        testKakao()
         getDeviceToken()
+//        testKakao()
     }
 
     private fun getDeviceToken() {
@@ -44,7 +44,8 @@ class LoginActivity :
             }
             // Get new FCM registration token
             val token = task.result
-            Timber.d("fcm token $token")
+            CardNaRepository.fireBaseToken = token
+            Timber.d("fcm token ${CardNaRepository.fireBaseToken}")
         })
     }
 
@@ -74,7 +75,7 @@ class LoginActivity :
                 startActivity(intent)
             }
             btnLoginKakao.setOnClickListener {
-                setKakaoLogin()
+                setKakaoBtnListener()
 //                testKakao()
             }
             btnLoginNaver.setOnClickListener {
@@ -88,107 +89,57 @@ class LoginActivity :
 
     }
 
-    private fun setKakaoLogin() {
-        val userName = CardNaRepository.kakaoUserfirstName
-
-        binding.btnLoginKakao.setOnClickListener {
-
-        }
-
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
-    private fun kakaoLoginChecker() {
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                //자동로그인 안됨 -> 로그아웃 or 만료  , 비회원
-                Timber.d("토큰 정보 보기 실패 $error")
-            } else if (tokenInfo != null) {
-                //이미 로그인 되어있는 상태 -> 자동 로그인
-                Timber.d("토큰 정보 보기 성공 : $tokenInfo")
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                startActivity(intent)
-//                logout()
-                finish()
-            }
-        }
+    private fun startSetNameActivity() {
+        val intent = Intent(this, SetNameActivity::class.java)
+        startActivity(intent)
     }
 
-    private fun callBack() {
+    private fun setKakaoBtnListener() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
-                getErrorToast(error)
+                getErrorLog(error)
             } else if (token != null) {
-                Timber.d("token : ${token.accessToken}")
-                //회원 가입뷰에서 넘어감
-                shortToast("login success")
-                val intent = Intent(this, SetNameActivity::class.java)
-                intent.putExtra("social", "kakao")
-//                loginViewModel.setToken(token)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                finish()
-            }
-        }
-    }
-
-//    private fun initKakaoLogin() {
-//        binding.btnLoginKakao.setOnClickListener {
-//            //회원, 비회원 부터 구별한다.
-//            val context = this
-//            with(UserApiClient.instance) {
-//                if (isKakaoTalkLoginAvailable(context)) {
-//                    //kakaoTalk (o) ->  kakaoTalk login
-//                    loginWithKakaoTalk(context, callback = callback)
-//                } else {
-//                    //kakaoTalk (x) kakao account login
-//                    loginWithKakaoAccount(context, callback = callback)
-//                }
-//            }
-//        }
-//    }
-
-
-    private fun testKakao() {
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                //자동로그인 안됨 -> 로그아웃 or 만료  , 비회원
-                Timber.d("토큰 정보 보기 실패 $error")
-            } else if (tokenInfo != null) {
-                //이미 로그인 되어있는 상태 -> 자동 로그인
-                Timber.d("토큰 정보 보기 성공 : $tokenInfo")
-//                val intent = Intent(this, MainActivity::class.java)
-//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-//                startActivity(intent)
-                finish()
-                logout()
-            }
-        }
-
-        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-            if (error != null) {
-                getErrorToast(error)
-            } else if (token != null) {
-                Timber.d("token : ${token.accessToken}")
-                with(CardNaRepository) {
-                    //유저 토큰은 post로 받아와야함
-//                    userToken = loginViewModel.postSignUp(RequestSignUpData(
-//                        social = "kakao",
-//                        uuid = kakaoUserToken,
-//                        lastName =
-//
-//                        )).toString()
-                    kakaoUserToken = token.accessToken
-                    kakaoUserRefreshToken = token.refreshToken
+                //카카오 로그인 콜백
+                    with(CardNaRepository){
+                        Timber.d("token")
+                    }
+                with(loginViewModel) {
+                    getKakaoLogin()
+                    isLogin.observe(this@LoginActivity) { success ->
+                        if (success) {
+                            startMainActivity()
+                        } else {
+                            startSetNameActivity()
+                        }
+                    }
                 }
-                //회원 가입뷰에서 넘어감
-                shortToast("login success")
-                val intent = Intent(this, SetNameActivity::class.java)
-                intent.putExtra("social", "kakao")
-//                loginViewModel.setToken(token)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
-            } else {
-                shortToast("token lost")
+            }
+        }
+        binding.btnLoginKakao.setOnClickListener {
+            val context = this
+            with(UserApiClient.instance) {
+                if (isKakaoTalkLoginAvailable(context)) {
+                    //kakaoTalk (o) ->  kakaoTalk login
+                    loginWithKakaoTalk(context, callback = callback)
+                } else {
+                    //kakaoTalk (x) kakao account login
+                    loginWithKakaoAccount(context, callback = callback)
+                }
+                accessTokenInfo { tokenInfo, error ->
+                    if (error != null) {
+                        getErrorLog(error)
+                    } else if (tokenInfo != null) {
+                        CardNaRepository.userUuid = tokenInfo.id.toString()
+                        Timber.d("userUuid : ${tokenInfo.id}")
+                        Timber.d("userUuid : ${CardNaRepository.userUuid}")
+                    }
+                }
             }
         }
     }
@@ -196,44 +147,44 @@ class LoginActivity :
     private fun logout() {
         UserApiClient.instance.logout { error ->
             if (error != null) {
-                shortToast("logout success")
+                Timber.d("logout success")
             } else {
-                shortToast("logout fail")
+                Timber.d("logout fail")
             }
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP))
-//            finish()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP))
+            finish()
         }
     }
 
-    private fun getErrorToast(error: Throwable) {
+    private fun getErrorLog(error: Throwable) {
         when {
             error.toString() == AuthErrorCause.AccessDenied.toString() -> {
-                shortToast("접근이 거부 됨(동의 취소)")
+                Timber.e("접근이 거부 됨(동의 취소)")
             }
             error.toString() == AuthErrorCause.InvalidClient.toString() -> {
-                shortToast("유효하지 않은 앱")
+                Timber.e("유효하지 않은 앱")
             }
             error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
-                shortToast("인증 수단이 유효하지 않아 인증할 수 없는 상태")
+                Timber.e("인증 수단이 유효하지 않아 인증할 수 없는 상태")
             }
             error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
-                shortToast("요청 파라미터 오류")
+                Timber.e("요청 파라미터 오류")
             }
             error.toString() == AuthErrorCause.InvalidScope.toString() -> {
-                shortToast("유효하지 않은 scope ID")
+                Timber.e("유효하지 않은 scope ID")
             }
             error.toString() == AuthErrorCause.Misconfigured.toString() -> {
-                shortToast("설정이 올바르지 않음(android key hash)")
+                Timber.e("설정이 올바르지 않음(android key hash)")
             }
             error.toString() == AuthErrorCause.ServerError.toString() -> {
-                shortToast("서버 내부 에러")
+                Timber.e("서버 내부 에러")
             }
             error.toString() == AuthErrorCause.Unauthorized.toString() -> {
-                shortToast("앱이 요청 권한이 없음")
+                Timber.e("앱이 요청 권한이 없음")
             }
             else -> { // Unknown
-                shortToast("기타 에러")
+                Timber.e("기타 에러")
             }
         }
     }

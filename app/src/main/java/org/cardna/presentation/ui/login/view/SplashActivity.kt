@@ -9,6 +9,7 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.activity.viewModels
 import com.kakao.sdk.user.UserApiClient
+import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.ActivitySplashBinding
 import org.cardna.data.local.singleton.CardNaRepository
@@ -18,6 +19,7 @@ import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
 import org.cardna.presentation.util.StatusBarUtil
 import timber.log.Timber
 
+@AndroidEntryPoint
 class SplashActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>(R.layout.activity_splash) {
     private val loginViewModel: LoginViewModel by viewModels()
@@ -61,22 +63,13 @@ class SplashActivity :
 
     private fun autoKakaoLoginCheck() {
         loginViewModel.message.observe(this) { message ->
+            Timber.d("message : $message")
             when (message) {
-                ACCESS_NOW -> {
-                    moveMain()
-                }
-                REFRESH_SUCCESS -> {
-                    loginViewModel.issuanceTokenList.observe(this) {
-                        with(CardNaRepository) {
-                            kakaoUserToken = it.accessToken
-                            kakaoUserRefreshToken = it.refreshToken
-                            userToken = kakaoUserToken
-                        }
-                    }
+                ACCESS_NOW, REFRESH_SUCCESS -> {
                     moveMain()
                 }
                 else -> {
-                    moveOnLogin()
+                    moveOnboarding()
                 }
             }
         }
@@ -85,7 +78,7 @@ class SplashActivity :
     private fun setNextActivity() {
         if (CardNaRepository.kakaoUserfirstName.isEmpty() && CardNaRepository.naverUserfirstName.isEmpty()) {
             //모든 소셜에서 이름이 없으면->회원가입 안함
-            moveOnLogin()
+            moveOnboarding()
             Timber.d("kakaoUserFirstName : ${CardNaRepository.kakaoUserfirstName}")
 
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) {
@@ -102,12 +95,12 @@ class SplashActivity :
             moveMain()
         } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {
             //로그아웃
-            moveOnLogin()
+            moveOnboarding()
         }
     }
 
-    private fun moveOnLogin() {
-        val intent = Intent(baseContext, LoginActivity::class.java).apply {
+    private fun moveOnboarding() {
+        val intent = Intent(baseContext, OnBoardingActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         startNextActivityWithHandling(intent)

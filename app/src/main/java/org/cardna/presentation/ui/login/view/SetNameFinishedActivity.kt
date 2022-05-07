@@ -16,6 +16,7 @@ import org.cardna.databinding.ActivitySetNameFinishedBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.LinearGradientSpan
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.setGradientText
 
 @AndroidEntryPoint
 class SetNameFinishedActivity :
@@ -28,7 +29,6 @@ class SetNameFinishedActivity :
     override fun initView() {
         StatusBarUtil.setStatusBar(this, Color.BLACK)
         getScreenHeight()
-        setSleep()
         setClickListener()
         setTextView()
     }
@@ -52,7 +52,8 @@ class SetNameFinishedActivity :
         with(binding.ctlSetnamefinishedMessage) {
             visibility = View.VISIBLE
             val fadeIn = AnimationUtils.loadAnimation(this@SetNameFinishedActivity, R.anim.fade_in)
-            val fadeOut = AnimationUtils.loadAnimation(this@SetNameFinishedActivity, R.anim.fade_out)
+            val fadeOut =
+                AnimationUtils.loadAnimation(this@SetNameFinishedActivity, R.anim.fade_out)
             startAnimation(fadeOut)
             startAnimation(fadeIn)
             Handler(Looper.getMainLooper()).postDelayed({ setButtonAnim() }, 670)
@@ -63,7 +64,8 @@ class SetNameFinishedActivity :
         with(binding.llSetnamefinishedBtn) {
             visibility = View.VISIBLE
             val fadeIn = AnimationUtils.loadAnimation(this@SetNameFinishedActivity, R.anim.fade_in)
-            val fadeOut = AnimationUtils.loadAnimation(this@SetNameFinishedActivity, R.anim.fade_out)
+            val fadeOut =
+                AnimationUtils.loadAnimation(this@SetNameFinishedActivity, R.anim.fade_out)
             startAnimation(fadeOut)
             startAnimation(fadeIn)
         }
@@ -87,19 +89,6 @@ class SetNameFinishedActivity :
             tvSetnamefinishedMessage3.text =
                 setGradientText(getString(R.string.setnamefinished_tv_message3))
         }
-    }
-
-    private fun setGradientText(welcomeText: String): Spannable {
-        val green = getColor(R.color.main_green)
-        val purple = getColor(R.color.main_purple)
-        val spannable = welcomeText.toSpannable()
-        spannable[0..welcomeText.length] =
-            LinearGradientSpan(welcomeText, welcomeText, green, purple)
-        return spannable
-    }
-
-    private fun setSleep() {
-
     }
 
     private fun negativeButtonClickListener() {
