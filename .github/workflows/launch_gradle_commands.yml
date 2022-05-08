@@ -13,7 +13,15 @@ on:
       BASE_URL:
         description: 'base url for network'
         required: true
-
+      NAVER_API_APP_NAME:
+        description: 'naver api name for never login'
+        required: true  
+      NAVER_API_CLIENT_ID:
+        description: 'naver api client id for never login'
+        required: true   
+      NAVER_API_CLIENT_SECRET:
+        description: 'naver api client secret for never login'
+        required: true   
 jobs:
   launch_gradle_commands:
     name: Gradle
