@@ -3,10 +3,14 @@ package org.cardna.presentation
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.ActivityMainBinding
-import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.ui.cardpack.view.CardPackFragment
 import org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity
@@ -16,6 +20,7 @@ import org.cardna.presentation.ui.mypage.view.MyPageFragment
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.replace
 import org.cardna.ui.cardpack.BottomDialogCardFragment
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity :
@@ -30,9 +35,11 @@ class MainActivity :
         initView()
     }
 
+
     override fun initView() {
         initBottomNavigation()
         setBottomNavigationSelectListener()
+        initDynamicLink()
     }
 
     private fun initBottomNavigation() {
@@ -73,7 +80,7 @@ class MainActivity :
     }
 
     // cardPackFragment 의 + 버튼을 눌렀을 때, 이 메서드 실행
-    // 즉, MainActivity 에서 BottomSheetDialog 를 띄워주는 메서드
+// 즉, MainActivity 에서 BottomSheetDialog 를 띄워주는 메서드
     fun showBottomDialogCardFragment() {
         // 바텀싯 다이얼로그가 뜬 후, 카드나 or 카드너를 선택했을 때, 그거에 따라 어떤 액티비티를 띄워줘야 하는지를 명세한 Fragment 정의하고
         val bottomDialogCardFragment = BottomDialogCardFragment {
@@ -96,5 +103,23 @@ class MainActivity :
             }
         }
         bottomDialogCardFragment.show(supportFragmentManager, bottomDialogCardFragment.tag)
+    }
+
+    /** DynamicLink */
+    private fun initDynamicLink() {
+        val dynamicLinkData = intent.extras
+        if (dynamicLinkData != null) {
+            //상세로 가나 카드너보관함으로가나 ?
+            if (dynamicLinkData.get("body").toString().contains("작성")) {
+                startActivity(Intent(this, CardYouStoreActivity::class.java).apply {
+          //          putExtra(BaseViewUtil.CARD_ID, 28) TODO 상세페이지로 이동하는거라면 카드 아이디 필요
+                })
+            } else {
+                Timber.e( dynamicLinkData.get("uniId").toString())
+                startActivity(Intent(this, AlarmActivity::class.java).apply {
+           //         putExtra("uniId", dynamicLinkData.get("uniId").toString())
+                })
+            }
+        }
     }
 }
