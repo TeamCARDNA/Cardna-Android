@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
 import androidx.activity.viewModels
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 //import com.google.android.gms.tasks.OnCompleteListener
 //import com.google.firebase.messaging.FirebaseMessaging
 
@@ -20,6 +22,7 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
 import org.cardna.presentation.ui.setting.view.PrivacyPolicyActivity
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.getErrorLog
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -34,21 +37,21 @@ class LoginActivity :
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
         setClickListener()
-//        getDeviceToken()
+        getDeviceToken()
 //        testKakao()
     }
 
-//    private fun getDeviceToken() {
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                return@OnCompleteListener
-//            }
-//            // Get new FCM registration token
-//            val token = task.result
-//            CardNaRepository.fireBaseToken = token
-//            Timber.d("fcm token ${CardNaRepository.fireBaseToken}")
-//        })
-//    }
+    private fun getDeviceToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+            // Get new FCM registration token
+            val token = task.result
+            CardNaRepository.fireBaseToken = token.toString()
+            Timber.d("fcm token ${CardNaRepository.fireBaseToken}")
+        })
+    }
 
     private fun setPrivacyPolicyActivity(title: String, text: String): Intent {
         val intent = Intent(this, PrivacyPolicyActivity::class.java)
@@ -80,14 +83,10 @@ class LoginActivity :
 //                testKakao()
             }
             btnLoginNaver.setOnClickListener {
-                setNaverLogin()
+//                setNaverLogin()
             }
 
         }
-    }
-
-    private fun setNaverLogin() {
-
     }
 
     private fun startMainActivity() {
@@ -106,7 +105,7 @@ class LoginActivity :
                 getErrorLog(error)
             } else if (token != null) {
                 //카카오 로그인 콜백
-                with(CardNaRepository){
+                with(CardNaRepository) {
                     Timber.d("token")
                 }
                 with(loginViewModel) {
@@ -145,7 +144,7 @@ class LoginActivity :
         }
     }
 
-    private fun logout() {
+    private fun kakaoLogout() {
         UserApiClient.instance.logout { error ->
             if (error != null) {
                 Timber.d("logout success")
@@ -155,38 +154,6 @@ class LoginActivity :
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP))
             finish()
-        }
-    }
-
-    private fun getErrorLog(error: Throwable) {
-        when {
-            error.toString() == AuthErrorCause.AccessDenied.toString() -> {
-                Timber.e("접근이 거부 됨(동의 취소)")
-            }
-            error.toString() == AuthErrorCause.InvalidClient.toString() -> {
-                Timber.e("유효하지 않은 앱")
-            }
-            error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
-                Timber.e("인증 수단이 유효하지 않아 인증할 수 없는 상태")
-            }
-            error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
-                Timber.e("요청 파라미터 오류")
-            }
-            error.toString() == AuthErrorCause.InvalidScope.toString() -> {
-                Timber.e("유효하지 않은 scope ID")
-            }
-            error.toString() == AuthErrorCause.Misconfigured.toString() -> {
-                Timber.e("설정이 올바르지 않음(android key hash)")
-            }
-            error.toString() == AuthErrorCause.ServerError.toString() -> {
-                Timber.e("서버 내부 에러")
-            }
-            error.toString() == AuthErrorCause.Unauthorized.toString() -> {
-                Timber.e("앱이 요청 권한이 없음")
-            }
-            else -> { // Unknown
-                Timber.e("기타 에러")
-            }
         }
     }
 }

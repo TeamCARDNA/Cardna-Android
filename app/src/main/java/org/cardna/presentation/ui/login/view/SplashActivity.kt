@@ -37,7 +37,7 @@ class SplashActivity :
     }
 
     private fun initData() {
-//        loginViewModel.getKakaoLogin()
+        loginViewModel.getKakaoLogin()
         loginViewModel.getTokenIssuance()
     }
 
@@ -86,6 +86,7 @@ class SplashActivity :
             //1. 카카오에 이름잇음+카카오에서 로그아웃 안함 -> 이미 완성된거
             //firebaseToken, fcmToken 은 회원가입때 이미 넣어줬겠지?
 //            CardNaRepository.userToken = CardNaRepository.kakaoUserToken
+            Timber.d("kakaoUserFirstName : ${CardNaRepository.kakaoUserfirstName}")
             autoKakaoLoginCheck()
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
             //네이버로 자동로그인

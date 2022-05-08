@@ -1,6 +1,7 @@
 package org.cardna
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 //import com.google.firebase.FirebaseApp
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
@@ -13,7 +14,7 @@ class CardNaApplication : Application() {
         super.onCreate()
         initPixelUtil()
         initLogger()
-//        initKakaoLogin()
+        initKakaoLogin()
 //        initFirebaseApp()
     }
 
@@ -25,10 +26,10 @@ class CardNaApplication : Application() {
         Timber.plant(Timber.DebugTree())
     }
 
-//    private fun initKakaoLogin() {
-//        val kakaoAppKey = BuildConfig.KAKAO_APP_KEY
-//        KakaoSdk.init(this, kakaoAppKey)
-//    }
+    private fun initKakaoLogin() {
+        val kakaoAppKey = BuildConfig.KAKAO_APP_KEY
+        KakaoSdk.init(this, kakaoAppKey)
+    }
 
 //    private fun initFirebaseApp() {
 //        FirebaseApp.initializeApp(this)

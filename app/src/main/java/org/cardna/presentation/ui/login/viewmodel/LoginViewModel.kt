@@ -52,6 +52,8 @@ class LoginViewModel @Inject constructor(
                         kakaoUserfirstName = it.data.name
                         userSocial = KAKAO
                         _isLogin.value = true
+                        Timber.d("accessToken : ${it.data.accessToken}")
+                        Timber.d("refreshToken : ${it.data.refreshToken}")
                     } else {
                         //탈퇴했거나 가입하지 않은 유저
                         userSocial = KAKAO
@@ -74,9 +76,12 @@ class LoginViewModel @Inject constructor(
                 authRepository.postSignUp(singUpData)
             }.onSuccess {
                 with(CardNaRepository) {
+                    kakaoUserfirstName = it.data.name
                     kakaoUserToken = it.data.accessToken
                     kakaoUserRefreshToken = it.data.refreshToken
+                    Timber.d("post name : $kakaoUserfirstName")
                 }
+
                 _isLogin.value = true
             }.onFailure {
                 _isLogin.value = false
