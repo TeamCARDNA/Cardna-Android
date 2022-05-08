@@ -67,6 +67,11 @@ dependencies {
 
     //naverLogin
     implementation 'com.navercorp.nid:oauth:5.1.0' // jdk 11
+    implementation 'com.airbnb.android:lottie:3.1.0'
+    implementation 'androidx.security:security-crypto:1.1.0-alpha03'
+    implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
+    implementation 'androidx.browser:browser:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
 
     // Lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"

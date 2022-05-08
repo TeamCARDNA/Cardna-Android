@@ -4,6 +4,7 @@ import android.app.Application
 //import com.google.firebase.FirebaseApp
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
+import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.util.PixelRatio
 import timber.log.Timber
 
@@ -13,6 +14,7 @@ class CardNaApplication : Application() {
         super.onCreate()
         initPixelUtil()
         initLogger()
+        CardNaRepository.init(this)
 //        initKakaoLogin()
 //        initFirebaseApp()
     }

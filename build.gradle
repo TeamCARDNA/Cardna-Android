@@ -20,6 +20,7 @@ buildscript {
     repositories {
         google()
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}
+        jcenter()
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.3.10'
