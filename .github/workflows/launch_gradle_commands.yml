@@ -39,6 +39,21 @@ jobs:
         env:
           API_KEY: ${{ secrets.BASE_URL }}
         run: echo base_url=\"$BASE_URL\" >> ./local.properties
+        
+      - name: Write NAVER_API_APP_NAME
+        env:
+          NAVER_API_APP_NAME: ${{ secrets.NAVER_API_APP_NAME }}
+        run: echo naver_api_app_name=\"$NAVER_API_APP_NAME\" >> ./local.properties
+
+      - name: Write NAVER_API_CLIENT_ID
+        env:
+          NAVER_API_CLIENT_ID: ${{ secrets.NAVER_API_CLIENT_ID }}
+        run: echo naver_api_client_id=\"$NAVER_API_CLIENT_ID\" >> ./local.properties
+        
+      - name: Write NAVER_API_CLIENT_SECRET
+        env:
+          NAVER_API_CLIENT_SECRET: ${{ secrets.NAVER_API_CLIENT_SECRET }}
+        run: echo naver_api_client_secret=\"$NAVER_API_CLIENT_SECRET\" >> ./local.properties
 
       - uses: gradle/gradle-build-action@v2
         with:
