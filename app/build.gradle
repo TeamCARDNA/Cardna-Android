@@ -24,8 +24,8 @@ android {
         buildConfigField "String", "BASE_URL", properties["base_url"]
 
         //네이버
-        buildConfigField "String", "NAVER_API_CLIENT_ID", properties["naver_api_client_id"]
         buildConfigField "String", "NAVER_API_CLIENT_SECRET", properties["naver_api_client_secret"]
+        buildConfigField "String", "NAVER_API_CLIENT_ID", properties["naver_api_client_id"]
         buildConfigField "String", "NAVER_API_APP_NAME", properties["naver_api_app_name"]
     }
 
