@@ -3,6 +3,7 @@ package org.cardna.presentation.ui.login.view
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 //import com.google.android.gms.tasks.OnCompleteListener
 //import com.google.firebase.messaging.FirebaseMessaging
@@ -11,7 +12,11 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApi
 import com.kakao.sdk.user.UserApiClient
+import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.log.NidLog
+import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.BuildConfig
 import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.databinding.ActivityLoginBinding
@@ -87,7 +92,32 @@ class LoginActivity :
     }
 
     private fun setNaverLogin() {
+        NidLog.init()
+        NaverIdLoginSDK.initialize(
+            this,
+            BuildConfig.NAVER_API_CLIENT_ID,
+            BuildConfig.NAVER_API_CLIENT_SECRET,
+            BuildConfig.NAVER_API_APP_NAME
+        )
 
+        val oauthLoginCallback = object : OAuthLoginCallback {
+            override fun onError(errorCode: Int, message: String) {
+                onFailure(errorCode, message)
+            }
+
+            override fun onFailure(httpStatus: Int, message: String) {
+                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                val errorDesc = NaverIdLoginSDK.getLastErrorDescription()
+            }
+
+            override fun onSuccess() {
+                val accessToken = NaverIdLoginSDK.getAccessToken() ?: return
+                val refreshToken = NaverIdLoginSDK.getRefreshToken() ?: return
+                Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ네이버 토큰ㅡㅡㅡㅡㅡㅡㅡㅡ", accessToken.toString())
+              //  TODO 여기에 로그인 후 원하는 실행동작 넣어주면 대
+            }
+        }
+        NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
     }
 
     private fun startMainActivity() {
@@ -106,7 +136,7 @@ class LoginActivity :
                 getErrorLog(error)
             } else if (token != null) {
                 //카카오 로그인 콜백
-                with(CardNaRepository){
+                with(CardNaRepository) {
                     Timber.d("token")
                 }
                 with(loginViewModel) {
