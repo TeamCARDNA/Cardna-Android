@@ -1,40 +1,34 @@
 package org.cardna.presentation.ui.login.view
 
+// import com.google.android.gms.tasks.OnCompleteListener
+
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import com.google.android.gms.tasks.OnCompleteListener
-import com.navercorp.nid.NaverIdLoginSDK
-import androidx.activity.viewModels
 import com.google.firebase.messaging.FirebaseMessaging
-// import com.google.android.gms.tasks.OnCompleteListener
-
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
-import com.kakao.sdk.user.UserApi
 import com.kakao.sdk.user.UserApiClient
-import com.navercorp.nid.log.NidLog
+import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
-import org.cardna.R
-import org.cardna.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.BuildConfig
+import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.databinding.ActivityLoginBinding
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
-import timber.log.Timber
 import org.cardna.presentation.ui.setting.view.PrivacyPolicyActivity
 import org.cardna.presentation.util.StatusBarUtil
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityLoginBinding>(R.layout.activity_login) {
-
     private val loginViewModel: LoginViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
@@ -92,6 +86,7 @@ class LoginActivity :
                 Timber.d("naver login btn click")
                 setNaverLogin()
             }
+
         }
     }
 
@@ -158,7 +153,7 @@ class LoginActivity :
                 getErrorLog(error)
             } else if (token != null) {
                 //카카오 로그인 콜백
-                with(CardNaRepository){
+                with(CardNaRepository) {
                     Timber.d("token")
                 }
                 with(loginViewModel) {

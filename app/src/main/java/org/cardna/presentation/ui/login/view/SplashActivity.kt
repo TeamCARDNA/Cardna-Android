@@ -123,7 +123,7 @@ class SplashActivity :
             else if(loginViewModel.issuanceMessage == "모든 토큰이 만료되었습니다.") { // 3. 둘다 만료
 
                 // 네이버 소셜 로그인을 통해 naver accessToken 얻기
-                NaverIdLoginSDK.authenticate(this, loginViewModel.oauthLoginCallback)
+//                NaverIdLoginSDK.authenticate(this, loginViewModel.oauthLoginCallback)
 
                 // 소셜로그인 API를 호출하기 위해 헤더의 토큰을 naver 소셜 토큰으로 갈아끼움
                 CardNaRepository.userToken = loginViewModel.naverSocialUserToken!!

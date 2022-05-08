@@ -16,31 +16,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cardna"
         android:usesCleartextTraffic="true">
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_name" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.de"
+            android:resource="@drawable/ic_stat_name" />
+
         <activity
             android:name=".presentation.ui.login.view.OnBoardingActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.ui.login.view.SplashActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-<!--        <activity-->
-<!--            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+        <!--        <activity-->
+        <!--            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"-->
+        <!--            android:exported="true">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.VIEW" />-->
+        <!--                <category android:name="android.intent.category.DEFAULT" />-->
+        <!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-<!--                <data-->
-<!--                    android:host="oauth"-->
-<!--                    android:scheme="${kakaoKey}" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <!--                <data-->
+        <!--                    android:host="oauth"-->
+        <!--                    android:scheme="${kakaoKey}" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
         <activity
             android:name=".presentation.ui.cardpack.view.CardYouStoreActivity"
             android:exported="false" />
@@ -55,7 +58,13 @@
             android:exported="true" />
         <activity
             android:name=".presentation.ui.login.view.LoginActivity"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".presentation.ui.maincard.view.MainCardActivity"
             android:exported="false" />
@@ -101,7 +110,8 @@
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
         <activity
             android:name=".presentation.ui.login.view.SetNameFinishedActivity"
             android:exported="true" />

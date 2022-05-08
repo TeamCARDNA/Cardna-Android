@@ -60,27 +60,6 @@ class LoginViewModel @Inject constructor(
     val naverSocialUserToken: String?
         get() = _naverSocialUserToken
 
-    // 네이버 소셜로그인 콜백
-    val oauthLoginCallback = object : OAuthLoginCallback {
-        override fun onSuccess() {
-            // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
-            _naverSocialUserToken = NaverIdLoginSDK.getAccessToken().toString()
-            Timber.d("naver onSuccess: ${_naverSocialUserToken}")
-        }
-
-        override fun onFailure(httpStatus: Int, message: String) {
-            val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-            val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-            Timber.d("naver ErrorCode : ${errorCode}")
-            Timber.d("naver ErrorDescription : ${errorDescription}")
-//            shortToast("errorCode:$errorCode, errorDesc:$errorDescription")
-        }
-
-        override fun onError(errorCode: Int, message: String) {
-            onFailure(errorCode, message)
-        }
-    }
-
     fun getKakaoLogin() {
         viewModelScope.launch {
             kotlin.runCatching {
