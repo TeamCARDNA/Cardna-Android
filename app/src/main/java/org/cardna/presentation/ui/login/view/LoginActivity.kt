@@ -106,7 +106,8 @@ class LoginActivity :
             } else if (token != null) {
                 //카카오 로그인 콜백
                 with(CardNaRepository) {
-                    Timber.d("token")
+                    kakaoAccessToken = token.accessToken
+                    Timber.d("kakaoAccessToken : $kakaoAccessToken")
                 }
                 with(loginViewModel) {
                     getKakaoLogin()

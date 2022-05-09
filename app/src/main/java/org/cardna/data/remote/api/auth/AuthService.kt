@@ -10,7 +10,7 @@ interface AuthService {
 
     @GET("auth/kakao")
     suspend fun getKakaoLogin(
-        @Header("token") socialToken: String,
+        @Header("token") token: String,
         @Header("fcmtoken") fcmToken: String,
     ): ResponseSocialLoginData
 
