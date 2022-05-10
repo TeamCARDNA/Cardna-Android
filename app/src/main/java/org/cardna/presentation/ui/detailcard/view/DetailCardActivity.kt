@@ -165,7 +165,12 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     }
 
     fun setCardShareClickListener() {
-        startActivity(Intent(this@DetailCardActivity, CardShareActivity::class.java))
+        val intent = Intent(this@DetailCardActivity, CardShareActivity::class.java)
+        intent.putExtra(
+            BaseViewUtil.CARD_IMG,
+            detailCardViewModel.cardImg.value
+            )
+        startActivity(intent)
     }
 
     fun setLikeClickListener() {
