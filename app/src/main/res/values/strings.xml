@@ -137,6 +137,9 @@
     <string name="bottom_card_cardyou">카드너 추가</string>
     <string name="bottom_card_cardyou_detail">카드너 보관함에서 카드를 추가해보세요</string>
 
+    <!-- CardShareAcitivity -->
+    <string name="cardshare_cardme">%1$s님의 카드나</string>
+    <string name="cardshare_cardyou">%1$s님의 카드너</string>
 
     <!--    LoginActivity-->
     <string name="login_policy">가입 시,\nCARDNA의 다음 사항에 동의하는 것으로 간주합니다.</string>
