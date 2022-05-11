@@ -166,10 +166,9 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
 
     fun setCardShareClickListener() {
         val intent = Intent(this@DetailCardActivity, CardShareActivity::class.java)
-        intent.putExtra(
-            BaseViewUtil.CARD_IMG,
-            detailCardViewModel.cardImg.value
-            )
+        intent.putExtra(BaseViewUtil.CARD_IMG, detailCardViewModel.cardImg.value) // 카드 이미지 uri
+        intent.putExtra(BaseViewUtil.CARD_TITLE, detailCardViewModel.title.value) // 카드 title
+        intent.putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, detailCardViewModel.type.value) // 카드나 인지 카드너 인지
         startActivity(intent)
     }
 

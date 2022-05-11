@@ -8,6 +8,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctl_card_share_capture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/real_black"
@@ -24,7 +25,7 @@
             app:layout_constraintBottom_toTopOf="@+id/ctl_card_share_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="지우님의 카드나" />
+            tools:text="윤주님의 카드나" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctl_card_share_image"
@@ -45,6 +46,9 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="10dp"
                 android:scaleType="fitXY"
+                android:background="@color/main_black"
+                android:padding="2dp"
+                tools:src="@drawable/ic_symbol_cardme_0"
                 app:layout_constraintDimensionRatio="228:324"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,12 +66,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/iv_card_share_img"
                 app:layout_constraintTop_toBottomOf="@id/iv_card_share_img"
-                tools:text="하둘셋넷다여일여아열하둘셋넷" />
+                tools:text="봄 여름 가을 겨울" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ctl_card_share"
+            android:id="@+id/ctl_card_share_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -97,12 +101,12 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ctl_card_share_save"
+            android:id="@+id/ctl_card_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            app:layout_constraintStart_toEndOf="@+id/ctl_card_share"
-            app:layout_constraintTop_toTopOf="@+id/ctl_card_share">
+            android:layout_marginEnd="88dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ctl_card_share_save">
 
             <ImageView
                 android:id="@+id/iv_card_share"
@@ -116,7 +120,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="9dp"
                 android:text="공유하기"
                 android:textAppearance="@style/card_share_text"
                 android:textColor="@color/white_1"

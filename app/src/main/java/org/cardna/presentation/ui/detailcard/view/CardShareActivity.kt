@@ -35,54 +35,69 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
     }
 
     override fun initView() {
+        // intent 로 넘겨준 카드 이미지 세팅
         setSrcWithGlide(intent.getStringExtra(BaseViewUtil.CARD_IMG)!!, binding.ivCardShareImg)
 
+        // intent 로 넘겨준 카드 title 세팅
+        binding.tvCardshareTitle.text = intent.getStringExtra(BaseViewUtil.CARD_TITLE)
+
         // 카드나, 카드너에 따라
-        if(intent.getBooleanExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_ME)){ // 안넘겨주면, 카드나
+        if(intent.getStringExtra(BaseViewUtil.IS_CARD_ME_OR_YOU) == "me"){ // 카드나
             // 배경색 설정
             binding.ctlCardShareImage.setBackgroundResource(R.drawable.bg_cardme)
 
-            // title 색 설정
-            binding.tvCardshareTitle.setTextColor(ContextCompat.getColor(this, R.color.main_green))
-
-            // title 설정
-           if(CardNaRepository.userSocial == "naver"){
-                binding.tvCardshareTitle.text = resources.getString(R.string.cardshare_cardme, CardNaRepository.naverUserfirstName)
+            // ?? 님의 카드나 색, 내용 설정
+            binding.tvCardmeOrYou.setTextColor(ContextCompat.getColor(this, R.color.main_green))
+            if(CardNaRepository.userSocial == "naver"){ // 네이버일 경우
+               binding.tvCardmeOrYou.text = resources.getString(R.string.cardshare_cardme, CardNaRepository.naverUserfirstName)
             }
-            else{
-                binding.tvCardshareTitle.text = resources.getString(R.string.cardshare_cardme, CardNaRepository.kakaoUserfirstName)
+            else{ // 카카오일 경우
+               binding.tvCardmeOrYou.text = resources.getString(R.string.cardshare_cardme, CardNaRepository.kakaoUserfirstName)
             }
         }
         else{ // 카드너
             binding.ctlCardShareImage.setBackgroundResource(R.drawable.bg_cardyou)
 
             // title 색 설정
-            binding.tvCardshareTitle.setTextColor(ContextCompat.getColor(this, R.color.main_purple))
+            binding.tvCardmeOrYou.setTextColor(ContextCompat.getColor(this, R.color.main_purple))
 
+            // ?? 님의 카드너
             if(CardNaRepository.userSocial == "naver"){
-                binding.tvCardshareTitle.text = resources.getString(R.string.cardshare_cardyou, CardNaRepository.naverUserfirstName)
+                binding.tvCardmeOrYou.text = resources.getString(R.string.cardshare_cardyou, CardNaRepository.naverUserfirstName)
             }
             else{
-                binding.tvCardshareTitle.text = resources.getString(R.string.cardshare_cardyou, CardNaRepository.kakaoUserfirstName)
+                binding.tvCardmeOrYou.text = resources.getString(R.string.cardshare_cardyou, CardNaRepository.kakaoUserfirstName)
             }
         }
-
-        binding.tvCardshareTitle.text = "임시로"
     }
 
 
     fun setClickListener() {
 
         // 저장하기 버튼 누르면
-        binding.ivCardShareSave.setOnClickListener {
-            saveCardImageToGallery(binding.ctlCardShareImage, "example")
+        binding.ctlCardShareSave.setOnClickListener {
+            // 카드 이미지 저장전, 저장하기 공유하기 글자 잠깐 없애기
+            binding.ctlCardShare.visibility = View.GONE
+            binding.ctlCardShareSave.visibility = View.GONE
+
+            // 이미지 저장 => 사진 이름 설정
+            saveCardImageToGallery(binding.ctlCardShareCapture, "example")
+
+            // 다시 보이도록
+            binding.ctlCardShare.visibility = View.VISIBLE
+            binding.ctlCardShareSave.visibility = View.VISIBLE
         }
 
         // 공유하기 버튼 누르면
-        binding.ivCardShare.setOnClickListener {
+        binding.ctlCardShare.setOnClickListener {
+            binding.ctlCardShare.visibility = View.GONE
+            binding.ctlCardShareSave.visibility = View.GONE
 
             //view->bitmap: 공유하고싶은 이미지 ctl view를 bitmap으로 변환 후
-            val bitmap = viewToBitmap(binding.ctlCardShareImage)
+            val bitmap = viewToBitmap(binding.ctlCardShareCapture)
+
+            binding.ctlCardShare.visibility = View.VISIBLE
+            binding.ctlCardShareSave.visibility = View.VISIBLE
 
             //bitmap->url
             val uri: Uri? = getImageUri(this, bitmap)
@@ -97,27 +112,7 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
         }
     }
 
-    fun viewToBitmap(view: View): Bitmap {
-        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        view.draw(canvas)
-
-        return bitmap
-    }
-
-    private fun getImageUri(context: Context, inImage: Bitmap): Uri? {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)
-        val path: String = MediaStore.Images.Media.insertImage(
-            context.contentResolver,
-            inImage,
-            "Title",
-            null
-        )
-        return Uri.parse(path)
-    }
-
-    // 특정 뷰 캡쳐해서 저장하기
+    // 카드 이미지 저장
     private fun saveCardImageToGallery(view: View?, title: String) {
         if (view == null) { // Null Point Exception ERROR 방지
             println("::::ERROR:::: view == NULL")
@@ -164,4 +159,27 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
             shortToast("사진이 저장되었습니다.")
         }
     }
+
+
+
+    fun viewToBitmap(view: View): Bitmap {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+
+        return bitmap
+    }
+
+    private fun getImageUri(context: Context, inImage: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(
+            context.contentResolver,
+            inImage,
+            "Title",
+            null
+        )
+        return Uri.parse(path)
+    }
+
 }
