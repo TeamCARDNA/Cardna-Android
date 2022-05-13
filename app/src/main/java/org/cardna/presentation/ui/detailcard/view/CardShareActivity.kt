@@ -3,15 +3,19 @@ package org.cardna.presentation.ui.detailcard.view
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Environment.DIRECTORY_PICTURES
 import android.provider.MediaStore
 import android.view.View
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.drawToBitmap
 import org.cardna.databinding.ActivityCardShareBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.CardNaApplication
@@ -21,10 +25,7 @@ import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.util.setSrcWithGlide
 import org.cardna.presentation.util.shortToast
 import timber.log.Timber
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
+import java.io.*
 
 @AndroidEntryPoint
 class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBinding>(R.layout.activity_card_share) {
@@ -81,7 +82,7 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
             binding.ctlCardShareSave.visibility = View.GONE
 
             // 이미지 저장 => 사진 이름 설정
-            saveCardImageToGallery(binding.ctlCardShareCapture, "example")
+            saveCardImageToGallery(binding.ctlCardShareCapture, "cardna")
 
             // 다시 보이도록
             binding.ctlCardShare.visibility = View.VISIBLE
@@ -114,28 +115,21 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
 
     // 카드 이미지 저장
     private fun saveCardImageToGallery(view: View?, title: String) {
-        if (view == null) { // Null Point Exception ERROR 방지
-            println("::::ERROR:::: view == NULL")
+        if (view == null)  // NPE 방지
             return
-        }
 
-        view.buildDrawingCache() //캐시 비트 맵 만들기
+        // 원하는 뷰를 비트맵 이미지로 저장
+        val bitmap = viewToBitmap(view)
 
-        // 1
-        val bitmap = view.drawingCache
-
-        // 2
         var fos: OutputStream? = null
 
-        // 3
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            // 4
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android API Level Q 이상
+            Timber.d("Q 이상")
             this?.contentResolver?.also { resolver ->
 
-                // 5
                 val contentValues = ContentValues().apply {
-                    put(MediaStore.MediaColumns.DISPLAY_NAME, "$title.png")
-                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, System.currentTimeMillis().toString() + ".png")
+                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg") // 왜 여기는 jpg?
                     put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
                 }
 
@@ -145,24 +139,59 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
                 // 7
                 fos = imageUri?.let { resolver.openOutputStream(it) }
 
-                Timber.d("Q 이상")
             }
-        } else {
-            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-            val image = File(imagesDir, "$title.png")
-            fos = FileOutputStream(image)
-            Timber.d("Q 이하")
+        } else { // Android API Level Q 미만
+            Timber.d("Q 미만")
+
+            // 일단 권한을 요청해야함. 아니면 permission denied error 남
+            val writePermission = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+            if(writePermission == PackageManager.PERMISSION_GRANTED) { // 권한 요청 받았을 때
+                val externalStorage =
+                    Environment.getExternalStorageDirectory().absolutePath // 외부저장소의 절대 경로 찾음
+                val dir = File(externalStorage)
+
+                if (dir.exists().not()) { // 폴더 없으면 생성 ?
+                    Timber.d("폴더 없음")
+                    dir.mkdirs()
+                }
+
+                try {
+                    val filename = System.currentTimeMillis().toString() + ".png"
+                    val fileItem = File("$dir/$filename")
+                    fileItem.createNewFile()
+                    fos = FileOutputStream(fileItem)
+                    //파일 아웃풋 스트림 객체를 통해서 Bitmap 압축.
+                } catch (e: FileNotFoundException) {
+                    e.printStackTrace()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            else{
+                val requestExternalStorageCode = 1
+
+                val permissionStorage = arrayOf(
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+
+                ActivityCompat.requestPermissions(this, permissionStorage, requestExternalStorageCode)
+            }
         }
 
         fos?.use {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
             shortToast("사진이 저장되었습니다.")
         }
+
+        fos?.close()
     }
 
 
-
-    fun viewToBitmap(view: View): Bitmap {
+    private fun viewToBitmap(view: View): Bitmap {
         val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         view.draw(canvas)
