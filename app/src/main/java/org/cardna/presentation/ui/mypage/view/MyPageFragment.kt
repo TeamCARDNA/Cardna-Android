@@ -1,5 +1,9 @@
 package org.cardna.presentation.ui.mypage.view
 
+import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -26,6 +30,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.myPageViewModel = myPageViewModel
         binding.myPageFragment = this
         initView()
@@ -33,6 +38,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     override fun onResume() {
         super.onResume()
+        binding.etMypageNameSearchBackground.clearFocus()
         initData()
     }
 
@@ -42,24 +48,21 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         setMyPageFriendAdapter()
         setInputField()
         setObserve()
+        copyMyCodeClickListener()
         initRootClickEvent(binding.ctlMypageTop)
         initRootClickEvent(binding.ctlMypageHeader)
     }
 
     private fun initData() {
-        Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡinitData")
         val query = myPageViewModel.searchNameQuery.value ?: ""
-        Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡinitDataㅇㅇㅇㅇㅇ${query + myPageViewModel.updateSearchNameQuerySuccess.value}")
-        Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡisNullOrEmptyㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${query + myPageViewModel.updateSearchNameQuerySuccess.value}")
+
         if ((query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == true) ||
             (query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == false)
         ) {
-            Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡisNullOrEmptyㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${query + myPageViewModel.updateSearchNameQuerySuccess.value}")
             myPageViewModel.getUserMyPage()
             myPageViewModel.setUpdateSearchNameQueryState(false)
         } else if ((query.isNotEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == false)) {
             myPageViewModel.updateSearchNameQuery(query)
-            Timber.e("${query + myPageViewModel.updateSearchNameQuerySuccess.value}")
         }
     }
 
@@ -80,11 +83,19 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     private fun setMyPageFriendAdapter() {
         myPageFriendAdapter = MyPageFriendAdapter(requireActivity()) { item ->
-            startActivity(
-                Intent(requireContext(), MainCardActivity::class.java)
-                    .putExtra("friendId", item.id)
-                    .putExtra("name", item.name)
-            )
+            val bundle = Bundle().apply {
+                putInt("id", item.id)
+                putString("name", item.name)
+                putString("sentence", item.sentence)
+            }
+
+            val mainCardFragment = MainCardFragment()
+            mainCardFragment.arguments = bundle
+
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.fcv_main, mainCardFragment)
+            transaction.commit()
         }
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
@@ -137,5 +148,24 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         myPageViewModel.searchFriendNameResult.observe(viewLifecycleOwner) { searchFriendNameResult ->
             myPageFriendAdapter.submitList(searchFriendNameResult)
         }
+    }
+
+    private fun copyMyCodeClickListener() {
+        binding.ivMypageCode.setOnClickListener {
+            createClipData(binding.tvMypageCode.text.toString())
+        }
+    }
+
+    private fun createClipData(message: String) {
+        val clipBoardManger: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText("TAG", message)
+        clipBoardManger.setPrimaryClip(clipData)
+        requireContext().shortToast("코드가 복사되었습니다")
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onDestroyView() {
+        binding.ivMypageSetting.setOnTouchListener { _, _ -> true }
+        super.onDestroyView()
     }
 }
