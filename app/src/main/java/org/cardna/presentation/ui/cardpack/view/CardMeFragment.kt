@@ -41,13 +41,24 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
 
     // Adapter 생성
     private fun initCardMeRvAdapter(){
-        cardMeAdapter = CardPackMeRecyclerViewAdapter() { // 어댑터 초기화 =>
-            // 1. 각 리사이클러뷰 아이템에 달아줄 람다 전달
-            Intent(requireContext(), DetailCardActivity::class.java).apply {
-                putExtra(BaseViewUtil.CARD_ID, it.id) // 리사이클러뷰의 아이템 중 카드 선택시 그 카드의 id를 전달
-                startActivity(this)
+
+        lateinit var cardMeAdapter: CardPackMeRecyclerViewAdapter
+
+        if(cardPackViewModel.id == null) { //  내 카드나
+            cardMeAdapter = CardPackMeRecyclerViewAdapter() { // 어댑터 초기화 =>
+                // 1. 각 리사이클러뷰 아이템 카드 전체에 달아줄 람다 전달
+                Intent(requireContext(), DetailCardActivity::class.java).apply {
+                    putExtra(BaseViewUtil.CARD_ID, it.id) // 리사이클러뷰의 아이템 중 카드 선택시 그 카드의 id를 전달
+                    startActivity(this)
+                }
+                // 2. 타인의 카드나일 때는, 공감버튼에 달아줄 리스너 하나 더 전달해줘야 한다.
+                
             }
-        // 2. 타인의 카드나일 때는, 공감버튼에 달아줄 리스너 하나 더 전달해줘야 한다.
+        }
+        else{ // 친구 카드나 ->
+
+
+
         }
 
         Timber.e("CardMe : Adapter 생성")

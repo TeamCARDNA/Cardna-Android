@@ -9,7 +9,9 @@ import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.card.ResponseCardMeData
 import org.cardna.data.remote.model.card.ResponseCardYouData
 import org.cardna.data.remote.model.card.ResponseCardYouStoreData
+import org.cardna.data.remote.model.like.RequestLikeData
 import org.cardna.domain.repository.CardRepository
+import org.cardna.domain.repository.LikeRepository
 import org.cardna.domain.repository.MyPageRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -19,6 +21,7 @@ import javax.inject.Inject
 class CardPackViewModel @Inject constructor(
     private val cardRepository: CardRepository, // 이렇게 쓰는 거 맞나
     private val myPageRepository: MyPageRepository,
+    private val likeRepository: LikeRepository,
 ) : ViewModel() { // FriendCardPackActivity 와 CardPack, CardYou, CardMeFragment 가 CardPackViewModel 사용
 
 
@@ -163,6 +166,18 @@ class CardPackViewModel @Inject constructor(
                 _isMyCode.value = it.code
             }.onFailure {
                 Timber.e("error :$it")
+            }
+        }
+    }
+
+    fun postLikeCardPack(cardId: Int?) {
+        viewModelScope.launch {
+            runCatching {
+                likeRepository.postLike(RequestLikeData(cardId ?: return@launch))
+            }.onSuccess {
+                Timber.d(it.message)
+            }.onFailure {
+                Timber.e(it.toString())
             }
         }
     }

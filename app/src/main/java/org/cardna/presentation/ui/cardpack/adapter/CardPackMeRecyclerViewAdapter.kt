@@ -11,7 +11,8 @@ import org.cardna.data.remote.model.card.ResponseCardMeData
 import timber.log.Timber
 
 class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
-    private val clickListener: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null,
+    private val clickListenerDetail: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null,
+
 ) : ListAdapter<ResponseCardMeData.CardList.CardMe, CardPackMeRecyclerViewAdapter.CardPackMeViewHolder>(CardMeComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardPackMeViewHolder {
@@ -21,7 +22,7 @@ class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
 
     override fun onBindViewHolder(holder: CardPackMeViewHolder, position: Int) {
         val cardMe: ResponseCardMeData.CardList.CardMe = getItem(position)
-        holder.onBind(cardMe, clickListener)
+        holder.onBind(cardMe, clickListenerDetail)
     }
 
 
@@ -33,6 +34,7 @@ class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
             with(binding){
                 Glide.with(itemView.context).load(cardMe.cardImg).into(binding.ivCardpackRecyclerview)
                 tvCardpackRecyclerview.text = cardMe.title
+                isLiked = cardMe.isLiked // null이면 내 카드
                 root.setOnClickListener{
                     onCardMeClick?.invoke(cardMe)
                 }
