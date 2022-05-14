@@ -1,5 +1,7 @@
 package org.cardna.presentation.ui.maincard.view
 
+
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -20,6 +22,7 @@ import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 class MainCardActivity :
@@ -170,6 +173,7 @@ class MainCardActivity :
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setCardYouWrite() {
         binding.ivMaincardWrite.setOnClickListener {
             val friendId = intent.getIntExtra("friendId", 0)
@@ -183,6 +187,7 @@ class MainCardActivity :
             }
         }
     }
+
 
     companion object {
         const val UNKNOWN = "1.0"
