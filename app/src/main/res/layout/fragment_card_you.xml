@@ -27,24 +27,24 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctl_bg_empty"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="56dp"
-                android:layout_marginEnd="72dp"
-                android:layout_marginBottom="28dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="56dp"
+                android:layout_marginBottom="46dp"
                 android:background="@drawable/bg_stroke_white_4_1dp_radius_10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <!-- empty 일 때 내 카드너 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/ctl_my_cardyou_empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="136dp"
-                    android:layout_marginBottom="136dp"
+                    android:layout_marginTop="134dp"
+                    android:layout_marginBottom="134dp"
                     android:visibility="@{(cardPackViewModel.id == null) ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -57,6 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:includeFontPadding="false"
                         android:text="@string/cardpack_make_new_cardyou"
                         android:theme="@style/cardpack_empty_textView"
                         app:layout_constraintEnd_toEndOf="parent"
