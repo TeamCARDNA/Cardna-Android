@@ -27,6 +27,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.myPageViewModel = myPageViewModel
         binding.myPageFragment = this
         initView()
@@ -139,7 +140,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onDestroyView() {
-        super.onDestroyView()
         binding.ivMypageSetting.setOnTouchListener { _, _ -> true }
+        super.onDestroyView()
     }
 }
