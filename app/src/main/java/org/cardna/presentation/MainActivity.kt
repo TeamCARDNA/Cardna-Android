@@ -14,6 +14,7 @@ import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.ui.cardpack.view.CardPackFragment
 import org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.insight.view.InsightFragment
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.view.MyPageFragment
@@ -33,9 +34,6 @@ class MainActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
-
-
-
 
 
     }
@@ -116,13 +114,13 @@ class MainActivity :
         if (dynamicLinkData != null) {
             //상세로 가나 카드너보관함으로가나 ?
             if (dynamicLinkData.get("body").toString().contains("작성")) {
-                startActivity(Intent(this, CardYouStoreActivity::class.java).apply {
-          //          putExtra(BaseViewUtil.CARD_ID, 28) TODO 상세페이지로 이동하는거라면 카드 아이디 필요
-                })
+                startActivity(
+                    Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())
+                )
             } else {
-                Timber.e( dynamicLinkData.get("uniId").toString())
+                Timber.e(dynamicLinkData.get("uniId").toString())
                 startActivity(Intent(this, AlarmActivity::class.java).apply {
-           //         putExtra("uniId", dynamicLinkData.get("uniId").toString())
+                    //         putExtra("uniId", dynamicLinkData.get("uniId").toString())
                 })
             }
         }
