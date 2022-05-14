@@ -64,13 +64,9 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setLargeIcon(
-                    getBitmapCircleCrop(
-                        getBitmapCircleCrop(
-                            (convertBitmap(remoteMessage.data["imageUrl"] ?: return) ?: return)
-                        )
-                    )
+                    (BitmapFactory.decodeResource(resources, R.drawable.img_logo))
                 )
-                .setContentTitle(remoteMessage.data["title"].toString())
+                .setContentTitle("카드나")
                 .setContentText(remoteMessage.data["body"].toString())
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
@@ -89,8 +85,8 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                     NotificationManager.IMPORTANCE_DEFAULT,
                     //NotificationManager.IMPORTANCE_LOW
                 )
-            /*  channel.vibrationPattern = longArrayOf(0) // 진동 끄기
-              channel.enableVibration(true) // 진동 끄기*/
+              channel.vibrationPattern = longArrayOf(0) // 진동 끄기
+              channel.enableVibration(false) // 진동 끄기*/
 
             channel.vibrationPattern = longArrayOf(100, 200) // 진동주기
 
@@ -99,23 +95,9 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         notificationManager.notify(uniId, notificationBuilder.build())
     }
 
-    private fun convertBitmap(url: String): Bitmap? {
-        try {
-            val url = URL(url)
-            val connection = url.openConnection() as HttpURLConnection
-            connection.doInput = true
-            connection.connect()
-            val input = connection.inputStream
-            val bitmap = BitmapFactory.decodeStream(input)
 
-            return bitmap
-        } catch (e: IOException) {
-            Timber.e(e)
-        }
-        return null
-    }
 
-    fun getBitmapCircleCrop(bitmap: Bitmap, Width: Int = 0, Height: Int = 0): Bitmap {
+/*    fun getBitmapCircleCrop(bitmap: Bitmap, Width: Int = 0, Height: Int = 0): Bitmap {
         val output = Bitmap.createBitmap(
             bitmap.width,
             bitmap.height, Bitmap.Config.ARGB_8888
@@ -138,6 +120,6 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         //width, Height에 0,0을 넣으면 원본 사이즈 그대로 출력
         if (Width != 0 && Height != 0) CroppedBitmap = Bitmap.createScaledBitmap(output, Width, Height, false)
         return CroppedBitmap
-    }
+    }*/
 
 }

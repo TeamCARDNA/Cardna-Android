@@ -1,9 +1,12 @@
 package org.cardna.presentation.ui.alarm.adapter
 
 import android.app.Activity
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -15,17 +18,16 @@ import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
 class FriendRequestAdapter(
     private val activity: Activity,
     private val alarmViewModel: AlarmViewModel,
+    private val viewLifeCycleOwer: LifecycleOwner,
     private val clickListener: (ResponseGetAlarmData.Data.Request.Requester) -> Unit
 ) : androidx.recyclerview.widget.ListAdapter<ResponseGetAlarmData.Data.Request.Requester, FriendRequestAdapter.FriendRequestViewHolder>(diffUtil) {
-
-    var defaultStatus = true
+    var loadStatus = true  //처음엔 접힌 상태로 시작
 
     inner class FriendRequestViewHolder(private val binding: ItemAlarmFriendRequestBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(data: ResponseGetAlarmData.Data.Request.Requester) {
             binding.apply {
 
-                //TODO  서버연결 후 data 연결
                 tvItemAlarmFriendRequestFriendName.text = data.name
                 tvItemAlarmFriendRequestDate.text = data.date
                 Glide.with(activity)
@@ -37,7 +39,7 @@ class FriendRequestAdapter(
                 root.setOnClickListener {
                     clickListener(data)
                 }
-                //TODO  서버연결 후 수락 api
+
                 mbItemAlarmFriendRequestAccept.setOnClickListener {
                     ctlItemAlarmFriendRequestBtn.visibility = View.INVISIBLE
                     ctlItemAlarmFriendRequestAccept.visibility = View.VISIBLE
@@ -46,16 +48,14 @@ class FriendRequestAdapter(
                     alarmViewModel.acceptOrDenyFriend(data.id, true)
                 }
 
-                //TODO  서버연결 후 거절 api
                 mbItemAlarmFriendRequestRefuse.setOnClickListener {
                     alarmViewModel.acceptOrDenyFriend(data.id, false)
                 }
-
-                if (defaultStatus) {
+      /*          if (loadStatus) {
                     viewItemAlarmFriendRequestDiv.visibility = View.INVISIBLE
                 } else {
                     viewItemAlarmFriendRequestDiv.visibility = View.VISIBLE
-                }
+                }*/
             }
         }
     }
@@ -66,11 +66,16 @@ class FriendRequestAdapter(
     }
 
     override fun getItemCount() =
-        if (defaultStatus) {
-            AlarmActivity.DEFAULT_COUNT
+        if (loadStatus) {  //접힌 상태
+            if (AlarmActivity.DEFAULT_COUNT > currentList.size) {
+                currentList.size
+            } else {
+                AlarmActivity.DEFAULT_COUNT
+            }
         } else {
-            currentList.size
+            currentList.size  //펼친 상태라면 모든 아이템을 그린다
         }
+
 
     override fun onBindViewHolder(holder: FriendRequestViewHolder, position: Int) {
         holder.onBind(currentList[position])
