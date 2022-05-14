@@ -89,7 +89,7 @@ class CardPackViewModel @Inject constructor(
                 }.onSuccess {
                     it.apply {
                         _cardMeList.value = it.cardMeList
-                        _isCardMeEmpty.value = (it.totalCardCnt == 0) // 0일 때 true
+                        _isCardMeEmpty.value = (it.cardMeList.isEmpty())
                         Timber.e("CardMe: updateCardMeList")
                     }
                 }.onFailure {
@@ -103,7 +103,7 @@ class CardPackViewModel @Inject constructor(
                 }.onSuccess {
                     it.apply {
                         _cardMeList.value = it.cardMeList
-                        _isCardMeEmpty.value = (it.totalCardCnt == 0)
+                        _isCardMeEmpty.value = (it.cardMeList.isEmpty())
                     }
                 }.onFailure {
                     Timber.e(it.toString())
@@ -121,7 +121,7 @@ class CardPackViewModel @Inject constructor(
                 }.onSuccess {
                     it.apply {
                         _cardYouList.value = it.cardYouList
-                        _isCardYouEmpty.value = (it.totalCardCnt == 0)
+                        _isCardYouEmpty.value = (it.cardYouList.isEmpty())
                     }
                 }.onFailure {
                     Timber.e(it.toString())
@@ -134,7 +134,7 @@ class CardPackViewModel @Inject constructor(
                 }.onSuccess {
                     it.apply {
                         _cardYouList.value = it.cardYouList
-                        _isCardYouEmpty.value = (it.totalCardCnt == 0)
+                        _isCardYouEmpty.value = (it.cardYouList.isEmpty())
                     }
                 }.onFailure {
                     Timber.e(it.toString())

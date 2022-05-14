@@ -111,7 +111,7 @@
     <string name="cardcreate_make_cardme">카드나 작성</string>
     <string name="cardcreate_make_cardyou">카드너 작성</string>
     <string name="cardcreate_make_cardme_title">나는</string>
-    <string name="cardcreate_make_cardyou_title">%1$s는</string>
+    <string name="cardcreate_make_cardyou_title">%1$s님은</string>
     <string name="cardcreate_tv_keyword_length">%1$d/14</string>
     <string name="cardcreate_tv_detail_length">%1$d/200</string>
     <string name="cardcreate_complete">완료</string>
@@ -137,6 +137,9 @@
     <string name="bottom_card_cardyou">카드너 추가</string>
     <string name="bottom_card_cardyou_detail">카드너 보관함에서 카드를 추가해보세요</string>
 
+    <!-- CardShareAcitivity -->
+    <string name="cardshare_cardme">%1$s님의 카드나</string>
+    <string name="cardshare_cardyou">%1$s님의 카드너</string>
 
     <!--    LoginActivity-->
     <string name="login_policy">가입 시,\nCARDNA의 다음 사항에 동의하는 것으로 간주합니다.</string>

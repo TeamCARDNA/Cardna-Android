@@ -24,6 +24,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.cardPackViewModel = cardPackViewModel
         initView()
     }
 

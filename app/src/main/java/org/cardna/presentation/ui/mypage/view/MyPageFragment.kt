@@ -10,11 +10,13 @@ import org.cardna.R
 import org.cardna.databinding.FragmentMyPageBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.maincard.view.MainCardActivity
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.adapter.MyPageFriendAdapter
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.ui.setting.view.SettingActivity
 import org.cardna.presentation.util.*
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -45,12 +47,19 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun initData() {
+        Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡinitData")
         val query = myPageViewModel.searchNameQuery.value ?: ""
-        if (query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == true) {
+        Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡinitDataㅇㅇㅇㅇㅇ${query + myPageViewModel.updateSearchNameQuerySuccess.value}")
+        Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡisNullOrEmptyㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${query + myPageViewModel.updateSearchNameQuerySuccess.value}")
+        if ((query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == true) ||
+            (query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == false)
+        ) {
+            Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡisNullOrEmptyㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${query + myPageViewModel.updateSearchNameQuerySuccess.value}")
             myPageViewModel.getUserMyPage()
             myPageViewModel.setUpdateSearchNameQueryState(false)
         } else if ((query.isNotEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == false)) {
             myPageViewModel.updateSearchNameQuery(query)
+            Timber.e("${query + myPageViewModel.updateSearchNameQuerySuccess.value}")
         }
     }
 
@@ -71,19 +80,11 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     private fun setMyPageFriendAdapter() {
         myPageFriendAdapter = MyPageFriendAdapter(requireActivity()) { item ->
-            val bundle = Bundle().apply {
-                putInt("id", item.id)
-                putString("name", item.name)
-                putString("sentence", item.sentence)
-            }
-
-            val mainCardFragment = MainCardFragment()
-            mainCardFragment.arguments = bundle
-
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                .addToBackStack(null)
-                .add(R.id.fcv_main, mainCardFragment)
-            transaction.commit()
+            startActivity(
+                Intent(requireContext(), MainCardActivity::class.java)
+                    .putExtra("friendId", item.id)
+                    .putExtra("name", item.name)
+            )
         }
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
