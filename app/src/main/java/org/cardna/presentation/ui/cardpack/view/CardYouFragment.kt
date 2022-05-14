@@ -3,6 +3,7 @@ package org.cardna.presentation.ui.cardpack.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,7 +26,9 @@ class CardYouFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.cardPackViewModel = cardPackViewModel
         initView()
+//        initObserve()
     }
 
     override fun onResume() {
@@ -39,6 +42,21 @@ class CardYouFragment :
         Timber.e("CardYou : ${cardPackViewModel.id}")
         Timber.e("CardYou isCardYouEmpty : ${cardPackViewModel.isCardYouEmpty.value}")
         Timber.e("CardYou isCardMeEmpty : ${cardPackViewModel.isCardMeEmpty.value}")
+    }
+
+    private fun initObserve() {
+        cardPackViewModel.isCardYouEmpty.observe(viewLifecycleOwner){ it ->
+            if(it){ // empty 라면
+                Timber.e("CardYou 비어있음")
+                binding.ctlCardyouEmpty.visibility = View.VISIBLE
+                binding.ctlCardyouNotEmpty.visibility = View.GONE
+            }
+            else{
+                Timber.e("CardYou 안비어있음")
+                binding.ctlCardyouEmpty.visibility = View.GONE
+                binding.ctlCardyouNotEmpty.visibility = View.VISIBLE
+            }
+        }
     }
 
 
@@ -73,7 +91,7 @@ class CardYouFragment :
         // 1. 내 카드너 엠티뷰 => 카드너 추가
         binding.ctlBgAddCardyou.setOnClickListener {
             // 카드너 보관함 액티비티로 이동
-            val intent = Intent(requireActivity(), CardYouStoreActivity::class.java)
+            val intent = Intent(requireActivity(), TempCardYouStoreActivity::class.java)
             // 아무것도 안넘겨줘도 됨
             startActivity(intent)
         }

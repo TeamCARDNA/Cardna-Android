@@ -50,6 +50,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     private fun initData() {
         val query = myPageViewModel.searchNameQuery.value ?: ""
+
         if ((query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == true) ||
             (query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == false)
         ) {
@@ -59,6 +60,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
             myPageViewModel.updateSearchNameQuery(query)
         }
     }
+
 
     private fun setStickyScroll() {
         binding.scMypage.run {

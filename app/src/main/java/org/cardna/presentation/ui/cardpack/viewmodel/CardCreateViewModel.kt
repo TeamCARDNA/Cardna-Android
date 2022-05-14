@@ -32,7 +32,7 @@ class CardCreateViewModel @Inject constructor(
     val name: String?
         get() = _name
 
-    private var _isCardMeOrYou: Boolean? = null // 나의 카드나 작성일 경우 true, 친구의 카드너 작성일 경우 false
+    private var _isCardMeOrYou: Boolean? = false // 나의 카드나 작성일 경우 true, 친구의 카드너 작성일 경우 false
     val isCardMeOrYou: Boolean?
         get() = _isCardMeOrYou
 
@@ -122,7 +122,7 @@ class CardCreateViewModel @Inject constructor(
 
     // 카드 작성 method
     fun makeCard(makeUriToFile: MultipartBody.Part?) { // Activity 에서 선택된 이미지 uri 만 multipart data 로 바꿔서 인자로 넣어줌
-        if (id == null) {  // 카드나 작성 => friendId값 x
+        if (isCardMeOrYou!!) {  // 카드나 작성 => friendId값 x
             val body = RequestCreateCardMeData(
                 etKeywordText.value!!,
                 etDetailText.value!!,
@@ -156,15 +156,15 @@ class CardCreateViewModel @Inject constructor(
             if (makeUriToFile== null) { // 심볼 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, null) }
-                        .onSuccess { Timber.e("카드나 작성 성공 : ${it.message}") }
-                        .onFailure { Timber.e("카드나 작성 실패 : ${it.message}") }
+                        .onSuccess { Timber.e("카드너 작성 성공 : ${it.message}") }
+                        .onFailure { Timber.e("카드너 작성 실패 : ${it.message}") }
                 }
             } else { // 이미지 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, makeUriToFile) }
-                        .onSuccess { Timber.e("카드나 작성 성공 : ${it.message}") }
+                        .onSuccess { Timber.e("카드너 작성 성공 : ${it.message}") }
                         .onFailure {
-                            Timber.e("카드나 작성 실패 : ${it.message}")
+                            Timber.e("카드너 작성 실패 : ${it.message}")
                             it.printStackTrace()
                         }
                 }

@@ -12,6 +12,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.log.NidLog
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.BuildConfig
@@ -92,6 +93,8 @@ class LoginActivity :
 
     private fun setNaverLogin() {
         // 1. 네이버 자체 소셜로그인을 통해 naverSocialToken 얻어와서 header token 에 끼우기
+
+        NidLog.init()
 
         Timber.d("네아로 init")
         NaverIdLoginSDK.initialize(this,
