@@ -45,10 +45,11 @@ android {
     buildFeatures {
         dataBinding = true
     }
-}
-lintOptions {
+    lintOptions {
 
-    abortOnError false
+        abortOnError false
+
+    }
 
 }
 
