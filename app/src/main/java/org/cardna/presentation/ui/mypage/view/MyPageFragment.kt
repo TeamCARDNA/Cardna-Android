@@ -1,6 +1,9 @@
 package org.cardna.presentation.ui.mypage.view
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -45,6 +48,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         setMyPageFriendAdapter()
         setInputField()
         setObserve()
+        copyMyCodeClickListener()
         initRootClickEvent(binding.ctlMypageTop)
         initRootClickEvent(binding.ctlMypageHeader)
     }
@@ -136,6 +140,19 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         myPageViewModel.searchFriendNameResult.observe(viewLifecycleOwner) { searchFriendNameResult ->
             myPageFriendAdapter.submitList(searchFriendNameResult)
         }
+    }
+
+    private fun copyMyCodeClickListener() {
+        binding.ivMypageCode.setOnClickListener {
+            createClipData(binding.tvMypageCode.text.toString())
+        }
+    }
+
+    private fun createClipData(message: String) {
+        val clipBoardManger: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText("TAG", message)
+        clipBoardManger.setPrimaryClip(clipData)
+        requireContext().shortToast("코드가 복사되었습니다")
     }
 
     @SuppressLint("ClickableViewAccessibility")
