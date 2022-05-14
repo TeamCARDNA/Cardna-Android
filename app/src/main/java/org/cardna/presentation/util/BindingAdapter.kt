@@ -34,6 +34,7 @@ fun setOnCheckedChanged(view: AppCompatButton, viewModel: ViewModel, activity: A
             1 -> (viewModel as? MyPageViewModel)?.applyFriend() //친구신청  1->3
             2 -> (activity as? SearchFriendCodeActivity)?.showBreakUpFriendDialog() //친구끊기 2->1
             3 -> (activity as? SearchFriendCodeActivity)?.showCancelFriendRequestDialog() //요청3->요청취소1
+            4-> return@setOnClickListener
         }
     }
 }

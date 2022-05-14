@@ -35,6 +35,8 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     override fun initView() {
         StatusBarUtil.setStatusBar(this, Color.BLACK)
         initData()
+        setFriendRequestAdapter()
+        setWriteCardYouAdapter()
         setObserve()
     }
 
@@ -48,18 +50,18 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     private fun setObserve() {
-        alarmViewModel.isFriendRequestEmpty.observe(this) { isFriendRequestEmpty ->
-            if (!isFriendRequestEmpty) setFriendRequestAdapter()
-        }
+        /*   alarmViewModel.isFriendRequestEmpty.observe(this) { isFriendRequestEmpty ->
+               if (!isFriendRequestEmpty) setFriendRequestAdapter()
+           }*/
         alarmViewModel.friendRequest.observe(this) { friendRequest ->
-            if (friendRequest.isNotEmpty()) friendRequestAdapter.submitList(friendRequest)
+            friendRequestAdapter.submitList(friendRequest)
         }
 
-        alarmViewModel.isWriteCardYouEmpty.observe(this) { isWriteCardYouEmpty ->
-            if (!isWriteCardYouEmpty) setWriteCardYouAdapter()
-        }
+        /* alarmViewModel.isWriteCardYouEmpty.observe(this) { isWriteCardYouEmpty ->
+             if (!isWriteCardYouEmpty) setWriteCardYouAdapter()
+         }*/
         alarmViewModel.writeCardYou.observe(this) { writeCardYou ->
-            if (writeCardYou.isNotEmpty()) writeCardYouAdapter.submitList(writeCardYou)
+            writeCardYouAdapter.submitList(writeCardYou)
         }
 
         alarmViewModel.isRequestDeny.observe(this) { isRequestDeny ->
