@@ -106,6 +106,7 @@ class MyPageViewModel @Inject constructor(
                 friendRepository.getSearchFriendCode(query).data
             }.onSuccess {
                 it.apply {
+                    Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",it.toString())
                     _searchFriendCodeResult.value = it
                     _isNonExistFriendCode.value = false
                     _friendRelationType.value = relationType
