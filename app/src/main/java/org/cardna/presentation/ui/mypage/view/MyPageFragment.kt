@@ -61,13 +61,12 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         if ((query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == true) ||
             (query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == false)
         ) {
-            myPageViewModel.getUserMyPage()
+           myPageViewModel.getUserMyPage()
             myPageViewModel.setUpdateSearchNameQueryState(false)
         } else if ((query.isNotEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == false)) {
-            myPageViewModel.updateSearchNameQuery(query)
+          //  myPageViewModel.updateSearchNameQuery(query)
         }
     }
-
 
     private fun setStickyScroll() {
         binding.scMypage.run {
@@ -84,7 +83,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun setMyPageFriendAdapter() {
-        myPageFriendAdapter = MyPageFriendAdapter(requireActivity(),myPageViewModel) { item ->
+        myPageFriendAdapter = MyPageFriendAdapter(requireActivity(), myPageViewModel) { item ->
             val bundle = Bundle().apply {
                 putInt("id", item.id)
                 putString("name", item.name)
@@ -99,7 +98,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
                 .add(R.id.fcv_main, mainCardFragment)
             transaction.commit()
         }
-
+        binding.rvMypage.addItemDecoration(MyPageItemVerticalDecoration())
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         with(binding) {
             rvMypage.layoutManager = gridLayoutManager

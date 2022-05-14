@@ -21,14 +21,13 @@ class FriendRequestAdapter(
     private val viewLifeCycleOwer: LifecycleOwner,
     private val clickListener: (ResponseGetAlarmData.Data.Request.Requester) -> Unit
 ) : androidx.recyclerview.widget.ListAdapter<ResponseGetAlarmData.Data.Request.Requester, FriendRequestAdapter.FriendRequestViewHolder>(diffUtil) {
-
+    var loadStatus = true  //처음엔 접힌 상태로 시작
 
     inner class FriendRequestViewHolder(private val binding: ItemAlarmFriendRequestBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(data: ResponseGetAlarmData.Data.Request.Requester) {
             binding.apply {
 
-                //TODO  서버연결 후 data 연결
                 tvItemAlarmFriendRequestFriendName.text = data.name
                 tvItemAlarmFriendRequestDate.text = data.date
                 Glide.with(activity)
@@ -40,7 +39,7 @@ class FriendRequestAdapter(
                 root.setOnClickListener {
                     clickListener(data)
                 }
-                //TODO  서버연결 후 수락 api
+
                 mbItemAlarmFriendRequestAccept.setOnClickListener {
                     ctlItemAlarmFriendRequestBtn.visibility = View.INVISIBLE
                     ctlItemAlarmFriendRequestAccept.visibility = View.VISIBLE
@@ -49,19 +48,14 @@ class FriendRequestAdapter(
                     alarmViewModel.acceptOrDenyFriend(data.id, true)
                 }
 
-                //TODO  서버연결 후 거절 api
                 mbItemAlarmFriendRequestRefuse.setOnClickListener {
                     alarmViewModel.acceptOrDenyFriend(data.id, false)
                 }
-                alarmViewModel.foldStatus.observe(viewLifeCycleOwer) { foldStatus ->
-                    if (foldStatus) {
-                        Log.d("ㅡㅡㅡㅡㅡㅡㅡ어댑터ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", foldStatus.toString())
-                        viewItemAlarmFriendRequestDiv.visibility = View.INVISIBLE
-                    } else {
-                        Log.d("ㅡㅡㅡㅡㅡㅡㅡ어댑터ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", foldStatus.toString())
-                        viewItemAlarmFriendRequestDiv.visibility = View.VISIBLE
-                    }
-                }
+      /*          if (loadStatus) {
+                    viewItemAlarmFriendRequestDiv.visibility = View.INVISIBLE
+                } else {
+                    viewItemAlarmFriendRequestDiv.visibility = View.VISIBLE
+                }*/
             }
         }
     }
@@ -72,12 +66,14 @@ class FriendRequestAdapter(
     }
 
     override fun getItemCount() =
-        if (alarmViewModel.foldStatus.value == true) {
-            AlarmActivity.DEFAULT_COUNT
-            Log.d("ㅡㅡㅡㅡㅡㅡㅡcDEFAULT_COUNTㅡㅡㅡㅡㅡㅡㅡ", currentList.size.toString())
+        if (loadStatus) {  //접힌 상태
+            if (AlarmActivity.DEFAULT_COUNT > currentList.size) {
+                currentList.size
+            } else {
+                AlarmActivity.DEFAULT_COUNT
+            }
         } else {
-            currentList.size-1
-            Log.d("ㅡㅡㅡㅡㅡㅡㅡcurrentListㅡㅡㅡㅡㅡㅡㅡ", currentList.size.toString())
+            currentList.size  //펼친 상태라면 모든 아이템을 그린다
         }
 
 

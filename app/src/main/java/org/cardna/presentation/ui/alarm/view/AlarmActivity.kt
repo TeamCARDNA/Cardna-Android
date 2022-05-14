@@ -15,12 +15,15 @@ import org.cardna.presentation.ui.alarm.adapter.WriteCardYouAdapter
 import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.maincard.view.MainCardActivity
+import org.cardna.presentation.util.DividerItemDecoration
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.convertDPtoPX
 
 @AndroidEntryPoint
 class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R.layout.activity_alarm) {
     private lateinit var friendRequestAdapter: FriendRequestAdapter
     private lateinit var writeCardYouAdapter: WriteCardYouAdapter
+    private lateinit var dividerItemDecoration: DividerItemDecoration
     private val alarmViewModel: AlarmViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +77,8 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         }
         with(binding.rcvAlarmFriendRequest) {
             adapter = friendRequestAdapter
+            dividerItemDecoration = DividerItemDecoration(this@AlarmActivity, R.drawable.bgbgbgbgbg, 0,0)
+            addItemDecoration(dividerItemDecoration)
             layoutManager = LinearLayoutManager(this@AlarmActivity)
             setUnfoldListener(friendRequestAdapter)
         }
@@ -93,23 +98,16 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     private fun setUnfoldListener(adapter: FriendRequestAdapter) {
-        alarmViewModel!!.foldStatus.observe(this@AlarmActivity) { foldStatus ->
-            with(binding) {
-                tvAlarmFriendViewAll.setOnClickListener {
-                    if (foldStatus) {
-                        tvAlarmFriendViewAll.text = COLLAPSE_LIST
-                        alarmViewModel!!.setFriendRequestUnfold(false)
-                        //       adapter.defaultStatus = false
-                        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "목록접기->모두보기")
-                    } else {
-                        tvAlarmFriendViewAll.text = VIEW_ALL
-                        alarmViewModel!!.setFriendRequestUnfold(true)
-                        //       adapter.defaultStatus = true
-                        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "모두보기->목록접기")
-                    }
-                    submitFriendRequestList()
-                }
+
+        binding.tvAlarmFriendViewAll.setOnClickListener {
+            if (adapter.loadStatus) {
+                binding.tvAlarmFriendViewAll.text = COLLAPSE_LIST
+                adapter.loadStatus = false
+            } else {
+                binding.tvAlarmFriendViewAll.text = VIEW_ALL
+                adapter.loadStatus = true
             }
+            friendRequestAdapter.notifyDataSetChanged()  //리스트 크기 매번 변경해야함으로 사용
         }
     }
 
