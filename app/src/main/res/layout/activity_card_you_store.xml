@@ -5,14 +5,101 @@
 
     <data>
 
+        <variable
+            name="cardpackViewModel"
+            type="org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel" />
+
+        <import type="android.view.View" />
     </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/real_black"
-        tools:context=".ui.cardpack.CardYouStoreActivity">
+        android:background="@color/main_black"
+        tools:context="org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mt_cardyoustore_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/mt_title_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/cardyoustore_mt_title" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cardyoustore"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingHorizontal="16dp"
+            android:visibility="@{cardpackViewModel.cardYouStoreList.size == 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mt_cardyoustore_title"
+            tools:itemCount="24"
+            tools:listitem="@layout/item_cardyoustore"
+            tools:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/cl_cardyoustore_empty_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="168dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{cardpackViewModel.cardYouStoreList.size != 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toBottomOf="@id/mt_cardyoustore_title">
+
+
+            <TextView
+                style="@style/cardyoustore_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/cardyoustore_text" />
+
+            <LinearLayout
+                android:id="@+id/ll_cardyoustore_copy_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_cardyoustore_main_purple_darker_1_radius_45"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:background="@drawable/ic_cardyoustore_copy" />
+
+                <TextView
+                    style="@style/cardyoustore_btn_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="18dp"
+                    android:text="@string/cardyoustore_button_text" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_cardyoustore_code_text"
+                style="@style/cardyoustore_code_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="@{cardpackViewModel.isMyCode}"
+                tools:text="@string/cardyoustore_code_text" />
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
