@@ -90,11 +90,10 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                         if ((view as TextView).text == "보관") {
                             shortToast("보관함에 보관되었어요!ㅎ")
                             detailCardViewModel.keepOrAddCard()
-                            popup.dismiss()
-                            goPreviousActivityWithHandling()
+                            finish()
                         } else {
                             detailCardViewModel.deleteCard()
-                            popup.dismiss()
+                            finish()
                         }
                     }
                     popup.show()
@@ -107,7 +106,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                             popup.dismiss()
                         } else {
                             detailCardViewModel.deleteCard()
-                            popup.dismiss()
+                            finish()
                         }
                     }
                     popup.show()
@@ -189,7 +188,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     fun setCardAddClickListener() {
         shortToast("카드너에 추가되었어요!ㅎ")
         detailCardViewModel.keepOrAddCard()
-        goPreviousActivityWithHandling()
+        finish()
     }
 
     private fun showLikeLottie() {

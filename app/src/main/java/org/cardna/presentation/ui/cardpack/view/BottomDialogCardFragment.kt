@@ -1,5 +1,6 @@
 package org.cardna.ui.cardpack
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import org.cardna.databinding.FragmentBottomDialogCardBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity
 
 
 class BottomDialogCardFragment(val itemClick: (Boolean) -> Unit) : BottomSheetDialogFragment() {
@@ -40,7 +42,8 @@ class BottomDialogCardFragment(val itemClick: (Boolean) -> Unit) : BottomSheetDi
         }
 
         binding.clBottomdialogCardBottom.setOnClickListener{
-            itemClick(BaseViewUtil.CARD_YOU)
+            startActivity(Intent(requireContext(),CardYouStoreActivity::class.java))
+       //     itemClick(BaseViewUtil.CARD_YOU)
             dialog?.dismiss()
         }
     }

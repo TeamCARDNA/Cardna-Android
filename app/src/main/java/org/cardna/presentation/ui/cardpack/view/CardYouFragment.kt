@@ -3,7 +3,6 @@ package org.cardna.presentation.ui.cardpack.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -91,7 +90,7 @@ class CardYouFragment :
         // 1. 내 카드너 엠티뷰 => 카드너 추가
         binding.ctlBgAddCardyou.setOnClickListener {
             // 카드너 보관함 액티비티로 이동
-            val intent = Intent(requireActivity(), TempCardYouStoreActivity::class.java)
+            val intent = Intent(requireActivity(), CardYouStoreActivity::class.java)
             // 아무것도 안넘겨줘도 됨
             startActivity(intent)
         }
