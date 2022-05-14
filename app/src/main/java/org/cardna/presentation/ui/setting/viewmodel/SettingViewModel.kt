@@ -18,8 +18,13 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val userRepository: UserRepository,
-    private val alarmRepository: AlarmRepository
 ) : ViewModel() {
+
+    private val _pushAlarmOn = MutableLiveData(CardNaRepository.pushAlarmOn)
+    val pushAlarmOn: LiveData<Boolean> = _pushAlarmOn
+
+    private val _userSocial = MutableLiveData(CardNaRepository.userSocial)
+    val userSocial: LiveData<String> = _userSocial
 
     private val _secessionReasonOneCheck = MutableLiveData(false)
     val secessionReasonOneCheck: LiveData<Boolean> = _secessionReasonOneCheck
@@ -53,9 +58,6 @@ class SettingViewModel @Inject constructor(
 
     private val _etcContent = MutableLiveData<String?>()
     val etcContent: LiveData<String?> = _etcContent
-
-    private val _userSocial = MutableLiveData<Boolean>()
-    val userSocial: LiveData<Boolean> = _userSocial
 
     private val _isAcceptPush = MutableLiveData<Boolean>(true)
     val isAcceptPush: LiveData<Boolean> = _isAcceptPush
@@ -152,29 +154,9 @@ class SettingViewModel @Inject constructor(
         }
     }
 
-    fun getUser() {
-        viewModelScope.launch {
-            runCatching {
-                userRepository.getUser()
-            }.onSuccess {
-                it.data.apply {
-                    _userSocial.value = social == "kakao"
-                    _isAcceptPush.value = acceptPush
-                }
-            }.onFailure {
-                Timber.e(it.message)
-            }
-        }
-    }
-
     fun switchPushAlarm() {
-        viewModelScope.launch {
-            runCatching {
-                alarmRepository.putAlarm()
-            }.onSuccess {
-            }.onFailure {
-                Timber.e(it.message)
-            }
-        }
+        CardNaRepository.pushAlarmOn = !CardNaRepository.pushAlarmOn
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "$CardNaRepository.pushAlarmOn")
+        _pushAlarmOn.value = CardNaRepository.pushAlarmOn
     }
 }

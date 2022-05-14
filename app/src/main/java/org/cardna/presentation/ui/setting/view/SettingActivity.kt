@@ -28,13 +28,17 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
 
     override fun initView() {
         StatusBarUtil.setStatusBar(this, Color.BLACK)
-        initData()
         setClickListener()
         setAlarmSwitchClickListener()
+        setInitAlarmState()
     }
 
-    private fun initData() {
-        settingViewModel.getUser()
+    private fun setInitAlarmState() {
+        settingViewModel.pushAlarmOn.observe(this) {
+            if (it == false) {
+                binding.ivSettingAlarm.setBackgroundResource(R.drawable.bg_switch_track_off)
+            }
+        }
     }
 
     @SuppressLint("ResourceType")
@@ -45,7 +49,7 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
                 else ivSettingAlarm.setBackgroundResource(R.drawable.bg_switch_track_off)
             }
             switchBtnSetting.setOnClickListener {
-                settingViewModel?.switchPushAlarm() ?: return@setOnClickListener
+                settingViewModel?.switchPushAlarm()
             }
         }
     }
