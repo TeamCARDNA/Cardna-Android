@@ -2,18 +2,14 @@ package org.cardna.presentation.ui.alarm.view
 
 import android.content.Intent
 import android.graphics.Color
-import android.opengl.Visibility
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.ActivityAlarmBinding
-import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.adapter.FriendRequestAdapter
-import org.cardna.presentation.ui.alarm.adapter.FriendResponseData
 import org.cardna.presentation.ui.alarm.adapter.WriteCardYouAdapter
 import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
@@ -84,9 +80,8 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
 
     private fun setWriteCardYouAdapter() {
         writeCardYouAdapter = WriteCardYouAdapter(this) { item ->
-            val intent = Intent(this, DetailCardActivity::class.java).let {
-                it.putExtra(BaseViewUtil.CARD_ID, item.friendId)
-            }
+            val intent = Intent(this, DetailCardActivity::class.java)
+                .putExtra(BaseViewUtil.CARD_ID, item.friendId)
             startActivity(intent)
         }
         with(binding.rcvAlarmWriteCardyou) {
