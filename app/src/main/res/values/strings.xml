@@ -111,7 +111,7 @@
     <string name="cardcreate_make_cardme">카드나 작성</string>
     <string name="cardcreate_make_cardyou">카드너 작성</string>
     <string name="cardcreate_make_cardme_title">나는</string>
-    <string name="cardcreate_make_cardyou_title">%1$s는</string>
+    <string name="cardcreate_make_cardyou_title">%1$s님은</string>
     <string name="cardcreate_tv_keyword_length">%1$d/14</string>
     <string name="cardcreate_tv_detail_length">%1$d/200</string>
     <string name="cardcreate_complete">완료</string>

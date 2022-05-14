@@ -30,7 +30,7 @@
             android:id="@+id/tv_othercardcreate_complete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="타인 소개를 작성했어요!"
+            android:text="카드너를 작성했어요!"
             android:textAppearance="@style/create_card_complete"
             android:textColor="@color/white_1"
             app:layout_constraintBottom_toBottomOf="parent"
