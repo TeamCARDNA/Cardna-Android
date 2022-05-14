@@ -1,9 +1,12 @@
 package org.cardna.presentation.ui.alarm.adapter
 
 import android.app.Activity
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -15,10 +18,10 @@ import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
 class FriendRequestAdapter(
     private val activity: Activity,
     private val alarmViewModel: AlarmViewModel,
+    private val viewLifeCycleOwer: LifecycleOwner,
     private val clickListener: (ResponseGetAlarmData.Data.Request.Requester) -> Unit
 ) : androidx.recyclerview.widget.ListAdapter<ResponseGetAlarmData.Data.Request.Requester, FriendRequestAdapter.FriendRequestViewHolder>(diffUtil) {
 
-    var defaultStatus = true
 
     inner class FriendRequestViewHolder(private val binding: ItemAlarmFriendRequestBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -50,11 +53,14 @@ class FriendRequestAdapter(
                 mbItemAlarmFriendRequestRefuse.setOnClickListener {
                     alarmViewModel.acceptOrDenyFriend(data.id, false)
                 }
-
-                if (defaultStatus) {
-                    viewItemAlarmFriendRequestDiv.visibility = View.INVISIBLE
-                } else {
-                    viewItemAlarmFriendRequestDiv.visibility = View.VISIBLE
+                alarmViewModel.foldStatus.observe(viewLifeCycleOwer) { foldStatus ->
+                    if (foldStatus) {
+                        Log.d("ㅡㅡㅡㅡㅡㅡㅡ어댑터ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", foldStatus.toString())
+                        viewItemAlarmFriendRequestDiv.visibility = View.INVISIBLE
+                    } else {
+                        Log.d("ㅡㅡㅡㅡㅡㅡㅡ어댑터ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", foldStatus.toString())
+                        viewItemAlarmFriendRequestDiv.visibility = View.VISIBLE
+                    }
                 }
             }
         }
@@ -66,11 +72,14 @@ class FriendRequestAdapter(
     }
 
     override fun getItemCount() =
-        if (defaultStatus) {
+        if (alarmViewModel.foldStatus.value == true) {
             AlarmActivity.DEFAULT_COUNT
+            Log.d("ㅡㅡㅡㅡㅡㅡㅡcDEFAULT_COUNTㅡㅡㅡㅡㅡㅡㅡ", currentList.size.toString())
         } else {
-            currentList.size
+            currentList.size-1
+            Log.d("ㅡㅡㅡㅡㅡㅡㅡcurrentListㅡㅡㅡㅡㅡㅡㅡ", currentList.size.toString())
         }
+
 
     override fun onBindViewHolder(holder: FriendRequestViewHolder, position: Int) {
         holder.onBind(currentList[position])

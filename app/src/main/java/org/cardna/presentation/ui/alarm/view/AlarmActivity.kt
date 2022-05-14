@@ -67,7 +67,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     private fun setFriendRequestAdapter() {
-        friendRequestAdapter = FriendRequestAdapter(this, alarmViewModel) { item ->
+        friendRequestAdapter = FriendRequestAdapter(this, alarmViewModel, this) { item ->
             startActivity(Intent(this, MainCardActivity::class.java).apply {
                 putExtra("friendId", item.id)
             })
@@ -83,7 +83,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         writeCardYouAdapter = WriteCardYouAdapter(this) { item ->
             val intent = Intent(this, DetailCardActivity::class.java)
                 .putExtra(BaseViewUtil.CARD_ID, item.cardId)
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡCARD_IDㅡㅡㅡㅡㅡㅡㅡ",item.cardId.toString())
+            Log.e("ㅡㅡㅡㅡㅡㅡㅡCARD_IDㅡㅡㅡㅡㅡㅡㅡ", item.cardId.toString())
             startActivity(intent)
         }
         with(binding.rcvAlarmWriteCardyou) {
@@ -93,17 +93,30 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     private fun setUnfoldListener(adapter: FriendRequestAdapter) {
-        with(binding) {
-            tvAlarmFriendViewAll.setOnClickListener {
-                if (adapter.defaultStatus) {
-                    tvAlarmFriendViewAll.text = COLLAPSE_LIST
-                    adapter.defaultStatus = false
-                } else {
-                    tvAlarmFriendViewAll.text = VIEW_ALL
-                    adapter.defaultStatus = true
+        alarmViewModel!!.foldStatus.observe(this@AlarmActivity) { foldStatus ->
+            with(binding) {
+                tvAlarmFriendViewAll.setOnClickListener {
+                    if (foldStatus) {
+                        tvAlarmFriendViewAll.text = COLLAPSE_LIST
+                        alarmViewModel!!.setFriendRequestUnfold(false)
+                        //       adapter.defaultStatus = false
+                        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "목록접기->모두보기")
+                    } else {
+                        tvAlarmFriendViewAll.text = VIEW_ALL
+                        alarmViewModel!!.setFriendRequestUnfold(true)
+                        //       adapter.defaultStatus = true
+                        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "모두보기->목록접기")
+                    }
+                    submitFriendRequestList()
                 }
-                adapter.submitList(adapter.currentList)
             }
+        }
+    }
+
+    private fun submitFriendRequestList() {
+        alarmViewModel.friendRequest.observe(this) {
+            friendRequestAdapter.submitList(it)
+            Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "$it")
         }
     }
 
