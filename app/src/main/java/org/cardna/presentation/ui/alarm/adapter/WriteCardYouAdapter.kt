@@ -23,6 +23,7 @@ class WriteCardYouAdapter(
                 //TODO  서버연결 후 data 연결
                 tvItemAlarmWriteCardyouDate.text = data.date
                 tvItemAlarmWriteCardyouSentence.text = data.content
+                tvItemAlarmWriteCardyouFriendName.text =data.name
                 Glide.with(activity)
                     .load(data.profileImage)
                     .circleCrop()

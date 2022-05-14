@@ -84,7 +84,7 @@
             android:id="@+id/ctl_item_alarm_friend_request_btn"
             android:layout_width="0dp"
             android:layout_height="32dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_item_alarm_friend_request_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_item_alarm_friend_request_friend_name">
@@ -111,6 +111,7 @@
                 android:layout_marginStart="12dp"
                 android:backgroundTint="@color/white_3"
                 android:text="@string/item_friend_request_refuse"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/mb_item_alarm_friend_request_accept"
                 app:layout_constraintTop_toTopOf="parent" />
