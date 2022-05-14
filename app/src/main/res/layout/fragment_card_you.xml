@@ -29,12 +29,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="56dp"
-                android:layout_marginEnd="56dp"
+                android:layout_marginEnd="72dp"
+                android:layout_marginBottom="28dp"
                 android:background="@drawable/bg_stroke_white_4_1dp_radius_10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <!-- empty 일 때 내 카드너 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
