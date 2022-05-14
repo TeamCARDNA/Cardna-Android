@@ -90,11 +90,10 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                         if ((view as TextView).text == "보관") {
                             shortToast("보관함에 보관되었어요!ㅎ")
                             detailCardViewModel.keepOrAddCard()
-                            popup.dismiss()
                             finish()
                         } else {
                             detailCardViewModel.deleteCard()
-                            popup.dismiss()
+                            finish()
                         }
                     }
                     popup.show()

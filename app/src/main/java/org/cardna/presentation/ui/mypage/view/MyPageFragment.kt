@@ -83,11 +83,19 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     private fun setMyPageFriendAdapter() {
         myPageFriendAdapter = MyPageFriendAdapter(requireActivity()) { item ->
-            startActivity(
-                Intent(requireContext(), MainCardActivity::class.java)
-                    .putExtra("friendId", item.id)
-                    .putExtra("name", item.name)
-            )
+            val bundle = Bundle().apply {
+                putInt("id", item.id)
+                putString("name", item.name)
+                putString("sentence", item.sentence)
+            }
+
+            val mainCardFragment = MainCardFragment()
+            mainCardFragment.arguments = bundle
+
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.fcv_main, mainCardFragment)
+            transaction.commit()
         }
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
