@@ -60,6 +60,9 @@ class CardPackViewModel @Inject constructor(
     private val _isMyCode = MutableLiveData<String>()
     val isMyCode: LiveData<String> = _isMyCode
 
+    private val _tabPosition = MutableLiveData<Int>()
+    val tabPosition: LiveData<Int> = _tabPosition
+
     fun setUserId(id: Int?) {
         _id = id
     } // 타인의 프래그먼트 생성시, 그 프래그먼트 코드 단에서 getArguments 로 받아온 newId를 setUserId(newId) 이런형식으로 설정 ?
@@ -165,5 +168,9 @@ class CardPackViewModel @Inject constructor(
                 Timber.e("error :$it")
             }
         }
+    }
+
+    fun saveInitTabPosition(tabPosition: Int) {
+        _tabPosition.value = tabPosition
     }
 }

@@ -1,5 +1,7 @@
 package org.cardna.presentation.ui.maincard.view
 
+
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -17,8 +19,10 @@ import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
+import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 class MainCardActivity :
@@ -32,6 +36,7 @@ class MainCardActivity :
 
     //메인 프레그먼트 마이페이지 -> 타인꺼보는 것과 똑같은 구조 -> 내가 내껄 볼일은 없음
     override fun initView() {
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
         initAdapter()
         initData()
         initDialog()
@@ -168,6 +173,7 @@ class MainCardActivity :
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setCardYouWrite() {
         binding.ivMaincardWrite.setOnClickListener {
             val friendId = intent.getIntExtra("friendId", 0)
@@ -181,6 +187,7 @@ class MainCardActivity :
             }
         }
     }
+
 
     companion object {
         const val UNKNOWN = "1.0"

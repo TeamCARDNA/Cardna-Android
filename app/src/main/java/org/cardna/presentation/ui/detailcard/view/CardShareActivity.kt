@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -22,6 +23,7 @@ import org.cardna.CardNaApplication
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.setSrcWithGlide
 import org.cardna.presentation.util.shortToast
 import timber.log.Timber
@@ -33,6 +35,7 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
         super.onCreate(savedInstanceState)
         initView()
         setClickListener()
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
     }
 
     override fun initView() {
