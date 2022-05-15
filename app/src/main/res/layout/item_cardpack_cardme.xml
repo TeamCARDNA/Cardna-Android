@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
 
@@ -44,6 +45,25 @@
             app:layout_constraintTop_toBottomOf="@id/iv_cardpack_recyclerview"
             tools:text="댕댕이 짱 좋아" />
 
+        <CheckedTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkMark="@drawable/selector_like"
+            android:checked="false"
+            android:id="@+id/ctv_cardpack_cardme"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/la_cardpack_cardyou_lottie"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/iv_cardpack_recyclerview"
+            app:layout_constraintStart_toStartOf="@+id/iv_cardpack_recyclerview"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

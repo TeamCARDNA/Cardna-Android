@@ -41,7 +41,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
 
     // Adapter 생성
     private fun initCardMeRvAdapter(){
-        cardMeAdapter = CardPackMeRecyclerViewAdapter() { // 어댑터 초기화 =>
+        cardMeAdapter = CardPackMeRecyclerViewAdapter(cardPackViewModel,viewLifecycleOwner) { // 어댑터 초기화 =>
             // 1. 각 리사이클러뷰 아이템에 달아줄 람다 전달
             Intent(requireContext(), DetailCardActivity::class.java).apply {
                 putExtra(BaseViewUtil.CARD_ID, it.id) // 리사이클러뷰의 아이템 중 카드 선택시 그 카드의 id를 전달

@@ -37,6 +37,7 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
     }
 
     private fun initViewModel() {
+
         binding.cardPackViewModel = cardPackViewModel
         // 1. MainActivity 에서 cardPackFragment 접근 시, bundle 로 넘어오는 값이 없을 것이고, id, name 은 는 기본값인 null 로 되어있을 것임
         // 2. FriendCardPackActivity 에서 cardPackFragment 접근 시, FriendCardPackActivity 에서 이미 intent 로 받은 id와 name 을

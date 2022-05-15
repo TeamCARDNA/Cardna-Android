@@ -9,7 +9,7 @@ import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 fun showLottie(view: LottieAnimationView, type: String, json: String) {
     val lottie = view
 
-    when (type) {   //TODO 서버 API 완성 시 type으로 변환환
+    when (type) {
         DetailCardActivity.CARD_ME -> {
             lottie.setAnimation(json)
         }
