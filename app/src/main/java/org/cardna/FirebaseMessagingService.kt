@@ -27,11 +27,11 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
         Timber.e("From: " + remoteMessage.data)
 
-        //푸시알림 ON OFF저장해야함
+        //푸시알림 ON OFF저장해야함  && CardNaApplication.isBackground
         if (remoteMessage.data.isNotEmpty() && CardNaApplication.isBackground) {
             sendNotiNotification(remoteMessage)
-            Timber.d(remoteMessage.data["title"].toString())
-            Timber.d(remoteMessage.data["body"].toString())
+            Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${remoteMessage.data["title"].toString()}")
+            Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${remoteMessage.data["body"].toString()}")
         } else {
             Timber.d("pushAlarm", "Forground상태이거나 data가 비어있습니다. 메시지를 수신하지 못했습니다.")
         }
