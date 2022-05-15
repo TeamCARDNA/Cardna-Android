@@ -12,6 +12,7 @@ object CardNaRepository {
     private const val KAKAO_USER_LOG_OUT = "KAKAO_USER_LOG_OUT" //로그아웃 유무
     private const val KAKAO_UT_KEY = "KAKAO_UT_KEY"  //유저토큰 키
     private const val KAKAO_URT_KEY = "KAKAO_URT_KEY"  //유저 리프레시토큰 키
+    private const val KAKAO_ACCESS = "KAKAO_ACCESS" //
 
     //네이버
     private const val NAVER_USER_FIRST_NAME = "NAVER_USER_FIRST_NAME" //유저네임
@@ -87,6 +88,10 @@ object CardNaRepository {
     var kakaoUserRefreshToken: String
         get() = authPreferences.getString(KAKAO_URT_KEY, "") ?: ""
         set(value) = authPreferences.edit { it.putString(KAKAO_URT_KEY, value) }
+
+    var kakaoAccessToken: String
+        get() = authPreferences.getString(KAKAO_ACCESS, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(KAKAO_ACCESS, value) }
 
     //카카오 유저 이름
     var kakaoUserfirstName: String

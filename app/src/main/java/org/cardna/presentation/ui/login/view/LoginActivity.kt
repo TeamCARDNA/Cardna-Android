@@ -8,6 +8,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+//import com.google.android.gms.tasks.OnCompleteListener
+//import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
@@ -24,6 +26,7 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
 import org.cardna.presentation.ui.setting.view.PrivacyPolicyActivity
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.getErrorLog
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -42,6 +45,17 @@ class LoginActivity :
 //        testKakao()
     }
 
+//    private fun getDeviceToken() {
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                return@OnCompleteListener
+//            }
+//            // Get new FCM registration token
+//            val token = task.result
+//            CardNaRepository.fireBaseToken = token!!
+//            Timber.d("fcm token ${CardNaRepository.fireBaseToken}")
+//        })
+//    }
     private fun getDeviceToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -49,7 +63,7 @@ class LoginActivity :
             }
             // Get new FCM registration token
             val token = task.result
-            CardNaRepository.fireBaseToken = token!!
+            CardNaRepository.fireBaseToken = token.toString()
             Timber.d("fcm token ${CardNaRepository.fireBaseToken}")
         })
     }
@@ -157,7 +171,8 @@ class LoginActivity :
             } else if (token != null) {
                 //카카오 로그인 콜백
                 with(CardNaRepository) {
-                    Timber.d("token")
+                    kakaoAccessToken = token.accessToken
+                    Timber.d("kakaoAccessToken : $kakaoAccessToken")
                 }
                 with(loginViewModel) {
                     getKakaoLogin()
@@ -195,7 +210,7 @@ class LoginActivity :
         }
     }
 
-    private fun logout() {
+    private fun kakaoLogout() {
         UserApiClient.instance.logout { error ->
             if (error != null) {
                 Timber.d("logout success")

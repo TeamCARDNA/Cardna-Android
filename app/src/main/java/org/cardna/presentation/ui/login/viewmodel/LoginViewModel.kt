@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.model.OAuthToken
-import com.navercorp.nid.NaverIdLoginSDK
-import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.local.singleton.CardNaRepository
@@ -73,6 +71,9 @@ class LoginViewModel @Inject constructor(
                         kakaoUserfirstName = it.data.name
                         userSocial = KAKAO
                         _isLogin.value = true
+                        kakaoUserlogOut = false
+                        Timber.d("accessToken : ${it.data.accessToken}")
+                        Timber.d("refreshToken : ${it.data.refreshToken}")
                     } else {
                         //탈퇴했거나 가입하지 않은 유저
                         userSocial = KAKAO
@@ -122,6 +123,14 @@ class LoginViewModel @Inject constructor(
                     CardNaRepository.naverUserRefreshToken
                 )
             }.onSuccess {
+                with(CardNaRepository) {
+                    kakaoUserfirstName = it.data.name
+                    kakaoUserToken = it.data.accessToken
+                    kakaoUserRefreshToken = it.data.refreshToken
+                    kakaoUserlogOut = false
+                    Timber.d("post name : $kakaoUserfirstName")
+                }
+                _isLogin.value = true
                 Timber.d("재발급 성공 : ${it.message}")
 
                 CardNaRepository.naverUserToken = it.data.accessToken
@@ -150,26 +159,16 @@ class LoginViewModel @Inject constructor(
                     CardNaRepository.kakaoUserToken = it.data.accessToken
                     CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
                 }
+                _message.value = it.message
+                CardNaRepository.kakaoUserToken = it.data.accessToken
+                CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
+                Timber.d("토큰 재발급 메서드")
             }.onFailure {
                 Timber.d("회원가입 실패 : ${it.message}")
                 _isLogin.value = false
             }
         }
     }
-
-//    fun getTokenIssuance() {
-//        viewModelScope.launch {
-//            kotlin.runCatching {
-//                authRepository.getTokenIssuance()
-//            }.onSuccess {
-//                _message.value = it.message
-//                CardNaRepository.kakaoUserToken = it.data.accessToken
-//                CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
-//            }.onFailure {
-//                _message.value = it.message
-//            }
-//        }
-//    }
 
     fun setAccessToken(token: String) {
         _accessToken.value = token

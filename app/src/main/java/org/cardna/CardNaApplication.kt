@@ -2,6 +2,9 @@ package org.cardna
 
 import android.app.Activity
 import android.app.Application
+import com.google.firebase.FirebaseApp
+//import com.google.firebase.FirebaseApp
+import com.kakao.sdk.common.KakaoSdk
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Bundle
@@ -21,6 +24,8 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         CardNaRepository.init(this)
 
 //        initKakaoLogin()
+        initKakaoLogin()
+        CardNaRepository.init(this)
 //        initFirebaseApp()
     }
 
@@ -38,10 +43,10 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         Timber.plant(Timber.DebugTree())
     }
 
-//    private fun initKakaoLogin() {
-//        val kakaoAppKey = BuildConfig.KAKAO_APP_KEY
-//        KakaoSdk.init(this, kakaoAppKey)
-//    }
+    private fun initKakaoLogin() {
+        val kakaoAppKey = BuildConfig.KAKAO_APP_KEY
+        KakaoSdk.init(this, kakaoAppKey)
+    }
 
     override fun onActivityCreated(p0: Activity, p1: Bundle?) {
     }

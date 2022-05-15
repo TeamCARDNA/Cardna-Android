@@ -8,12 +8,14 @@ plugins {
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def manifest_kakao_app_key = properties.getProperty('manifest_kakao_app_key')
 
 android {
     compileSdk 31
 
     defaultConfig {
         applicationId "org.cardna"
+        manifestPlaceholders = [kakaoKey: manifest_kakao_app_key]
         minSdk 26
         targetSdk 31
         versionCode 1
@@ -27,6 +29,7 @@ android {
         buildConfigField "String", "NAVER_API_CLIENT_SECRET", properties["naver_api_client_secret"]
         buildConfigField "String", "NAVER_API_CLIENT_ID", properties["naver_api_client_id"]
         buildConfigField "String", "NAVER_API_APP_NAME", properties["naver_api_app_name"]
+        buildConfigField "String", "KAKAO_APP_KEY", properties["kakao_app_key"]
     }
 
     buildTypes {
@@ -60,6 +63,14 @@ dependencies {
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.12.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
 
+
+    // Naver Login
+    implementation 'com.navercorp.nid:oauth:5.0.0'
+    implementation 'com.airbnb.android:lottie:3.1.0'
+    implementation 'androidx.security:security-crypto:1.1.0-alpha03'
+    implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
+    implementation 'androidx.browser:browser:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
 
     // Firebase
     implementation "com.google.firebase:firebase-bom:29.3.1"
