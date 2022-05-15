@@ -93,10 +93,10 @@ class MyPageViewModel @Inject constructor(
             runCatching {
                 friendRepository.getSearchFriendName(query!!)
             }.onSuccess {
-                _isNonExistFriendName.value = false
-                _searchFriendNameResult.value = it
+                _isNonExistFriendName.value = it.isNullOrEmpty()  ///결과 리스트가 비워져 있지 않으면 결과 있음
+                _searchFriendNameResult.value = it //결과 집어넣기
             }.onFailure {
-                _isNonExistFriendName.value = true
+       //         _isNonExistFriendName.value = true
                 Timber.e(it.toString())
             }
         }

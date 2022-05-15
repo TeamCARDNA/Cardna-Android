@@ -40,11 +40,14 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     override fun onResume() {
         super.onResume()
         binding.etMypageNameSearchBackground.clearFocus()
-        initData()
+//        initData()
     }
 
     override fun initView() {
-        initData()
+      //  initData()
+
+        //처음 들어갈떄 뿌리긴 해야하니까
+
         setStickyScroll()
         setMyPageFriendAdapter()
         setInputField()
@@ -115,6 +118,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(newText: String?): Boolean {
                     if (newText?.isNotEmpty() == true) {
+                        //todo 검색 -> 검색내용 업데이트
                         myPageViewModel.updateSearchNameQuery(newText.toString())
                         clearFocus()
                     }
@@ -122,12 +126,13 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
+                    //todo 초기화-> X버튼 눌렀을때
                     if (newText.isNullOrEmpty()) {
                         myPageViewModel.updateSearchNameQuery("")
-                        myPageViewModel.setUpdateSearchNameQueryState(true)
+                   /*     myPageViewModel.setUpdateSearchNameQueryState(true)
                         myPageViewModel.updateSearchNameQuerySuccess.observe(viewLifecycleOwner) {
                             if (it) initData()
-                        }
+                        }*/
                     }
                     return false
                 }
@@ -136,16 +141,22 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun setObserve() {
+        //todo 쿼리가 업데이트 되면 검색api호출
         myPageViewModel.searchNameQuery.observe(viewLifecycleOwner) {
             myPageViewModel.searchNamePost()
         }
 
+
+        //이건 걍 내정보
         if (binding.etMypageNameSearchBackground.query.isNullOrEmpty()) {
             myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
+                //todo 맨처음에는 마이페이지 친구 리스트 던져야함
                 myPageFriendAdapter.submitList(myPage.friendList)
                 requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
             }
         }
+
+        //todo 검색결과 있으면 submitlist
         myPageViewModel.searchFriendNameResult.observe(viewLifecycleOwner) { searchFriendNameResult ->
             myPageFriendAdapter.submitList(searchFriendNameResult)
         }
