@@ -8,28 +8,26 @@ plugins {
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def manifest_kakao_app_key = properties.getProperty('manifest_kakao_app_key')
+def kakao_key_manifest = properties.getProperty('kakao_key_manifest')
 
 android {
     compileSdk 31
 
     defaultConfig {
         applicationId "org.cardna"
-        manifestPlaceholders = [kakaoKey: manifest_kakao_app_key]
         minSdk 26
         targetSdk 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        //base_url
-        buildConfigField "String", "BASE_URL", properties["base_url"]
 
-        //네이버
+        buildConfigField "String", "BASE_URL", properties["base_url"]     //base_url
+        manifestPlaceholders = [kakaoKey: kakao_key_manifest]
         buildConfigField "String", "NAVER_API_CLIENT_SECRET", properties["naver_api_client_secret"]
         buildConfigField "String", "NAVER_API_CLIENT_ID", properties["naver_api_client_id"]
         buildConfigField "String", "NAVER_API_APP_NAME", properties["naver_api_app_name"]
-        buildConfigField "String", "KAKAO_APP_KEY", properties["kakao_app_key"]
+        buildConfigField "String", "KAKAO_NATIVE_KEY", properties["kakao_native_key"]
     }
 
     buildTypes {

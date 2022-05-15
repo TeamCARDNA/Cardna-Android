@@ -44,7 +44,7 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
     }
 
     private fun initKakaoLogin() {
-        val kakaoAppKey = BuildConfig.KAKAO_APP_KEY
+        val kakaoAppKey = BuildConfig.KAKAO_NATIVE_KEY
         KakaoSdk.init(this, kakaoAppKey)
     }
 
