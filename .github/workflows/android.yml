@@ -14,5 +14,7 @@ jobs:
       NAVER_API_APP_NAME: ${{ secrets.NAVER_API_APP_NAME }}
       NAVER_API_CLIENT_ID: ${{ secrets.NAVER_API_CLIENT_ID }}
       NAVER_API_CLIENT_SECRET: ${{ secrets.NAVER_API_CLIENT_SECRET }}
+      KAKAO_KEY_MANIFEST: ${{ secrets.KAKAO_KEY_MANIFEST }}
+      KAKAO_NATIVE_KEY: ${{ secrets.KAKAO_NATIVE_KEY }}
     with:
       commands: build
