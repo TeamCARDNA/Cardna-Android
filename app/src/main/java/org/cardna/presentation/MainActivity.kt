@@ -35,7 +35,21 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         initView()
 
-
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(
+            OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(
+                        "BeMeApplication.TAG",
+                        "Fetching FCM registration token failed",
+                        task.exception
+                    )
+                    return@OnCompleteListener
+                } else {
+                    val token = task.result
+                    Log.d("BeMeApplication.TAGㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", token.toString())
+                }
+            }
+        )
     }
 
 
