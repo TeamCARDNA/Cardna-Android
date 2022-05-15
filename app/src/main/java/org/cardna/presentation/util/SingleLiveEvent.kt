@@ -1,6 +1,5 @@
 package org.cardna.presentation.util
 
-import android.util.Log
 import androidx.annotation.MainThread
 import androidx.annotation.Nullable
 import androidx.lifecycle.LifecycleOwner
@@ -16,6 +15,7 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
         if (hasActiveObservers()) {
         }
 
+        // Observe the internal MutableLiveData
         super.observe(owner, Observer { t ->
             if (mPending.compareAndSet(true, false)) {
                 observer.onChanged(t)

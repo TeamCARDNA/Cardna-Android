@@ -36,12 +36,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
 
     private fun initData() {
         val id = intent.getIntExtra(BaseViewUtil.CARD_ID, 0)
-
         detailCardViewModel.setCardId(id)
-        detailCardViewModel.isNotExistCardYou.observe(this) {
-            shortToast("존재하지 않는 카드입니다")
-            finish()
-        }
     }
 
     @SuppressLint("ResourceType")

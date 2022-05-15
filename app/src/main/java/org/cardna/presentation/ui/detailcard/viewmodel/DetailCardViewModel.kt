@@ -1,8 +1,11 @@
 package org.cardna.presentation.ui.detailcard.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.cardna.data.local.dao.DeletedCardYouDao
+import org.cardna.data.local.entity.DeletedCardYouData
 import org.cardna.data.remote.model.card.ResponseDetailCardData
 import org.cardna.data.remote.model.like.RequestLikeData
 import org.cardna.data.remote.model.user.RequestPostReportUserData
@@ -11,7 +14,6 @@ import org.cardna.domain.repository.LikeRepository
 import org.cardna.domain.repository.UserRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
-import org.cardna.presentation.util.SingleLiveEvent
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,7 +22,8 @@ class DetailCardViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val cardRepository: CardRepository,
     private val likeRepository: LikeRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val deletedCardYouDao: DeletedCardYouDao
 ) : ViewModel() {
 
     private var cardId = savedStateHandle.get<Int>(BaseViewUtil.CARD_ID)
@@ -65,9 +68,6 @@ class DetailCardViewModel @Inject constructor(
 
     val myDefault = MutableLiveData("")
 
-    private val _isNotExistCardYou = SingleLiveEvent<Any>()
-    val isNotExistCardYou: LiveData<Any> = _isNotExistCardYou
-
 
     /* 저장소 : storage true true
     * 내가 카드나 : me true false
@@ -105,7 +105,6 @@ class DetailCardViewModel @Inject constructor(
 
                 }
             }.onFailure {
-                _isNotExistCardYou.call()
                 Timber.e(it.toString())
             }
         }
@@ -130,6 +129,8 @@ class DetailCardViewModel @Inject constructor(
                 cardRepository.deleteCard(cardId)
             }.onSuccess {
                 Timber.d(it.message)
+                Log.d("ㅡㅡㅡㅡㅡㅡ삭제되고 룸에저장ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${cardId}")
+                deletedCardYouDao.insertDeletedCardYou(DeletedCardYouData(cardId))
             }.onFailure {
                 Timber.e(it.toString())
             }

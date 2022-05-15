@@ -18,6 +18,7 @@ import org.cardna.presentation.ui.maincard.view.MainCardActivity
 import org.cardna.presentation.util.DividerItemDecoration
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.convertDPtoPX
+import org.cardna.presentation.util.shortToast
 
 @AndroidEntryPoint
 class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R.layout.activity_alarm) {
@@ -83,9 +84,18 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         writeCardYouAdapter = WriteCardYouAdapter(this) { item ->
             val intent = Intent(this, DetailCardActivity::class.java)
                 .putExtra(BaseViewUtil.CARD_ID, item.cardId)
-            Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", item.cardId.toString())
-            startActivity(intent)
+            alarmViewModel.getDeletedCardYouList(item.cardId ?: return@WriteCardYouAdapter)
+
+            alarmViewModel.viewEvent.observe(this) {
+                it.getContentIfNotHandled()?.let { event ->
+                    when (event) {
+                        AlarmViewModel.DELETED_CARD -> shortToast("삭제된 카드입니다")
+                        else -> startActivity(intent)
+                    }
+                }
+            }
         }
+
         with(binding.rcvAlarmWriteCardyou) {
             adapter = writeCardYouAdapter
             layoutManager = LinearLayoutManager(this@AlarmActivity)

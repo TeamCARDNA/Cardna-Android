@@ -126,9 +126,7 @@ class MainActivity :
         val dynamicLinkData = intent.extras
         if (dynamicLinkData != null) {
             if (dynamicLinkData.get("body").toString().contains("작성")) {
-                //  startActivity(
-                //       Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())
-                //    )
+                return
             } else {
                 Timber.e(dynamicLinkData.get("uniId").toString())
                 startActivity(Intent(this, AlarmActivity::class.java).apply {

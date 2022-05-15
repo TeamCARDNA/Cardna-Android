@@ -5,18 +5,14 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.*
+import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import me.leolin.shortcutbadger.ShortcutBadger
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.MainActivity
 import timber.log.Timber
-import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URL
 
 
 class FirebaseMessagingService : FirebaseMessagingService() {
