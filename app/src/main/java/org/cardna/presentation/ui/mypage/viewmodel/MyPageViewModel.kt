@@ -1,9 +1,7 @@
 package org.cardna.presentation.ui.mypage.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,7 +14,6 @@ import org.cardna.presentation.base.BaseViewModel
 import org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity
 import org.cardna.presentation.util.SingleLiveEvent
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
 

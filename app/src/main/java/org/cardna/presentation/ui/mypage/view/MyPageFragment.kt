@@ -1,27 +1,23 @@
 package org.cardna.presentation.ui.mypage.view
 
-import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.FragmentMyPageBinding
-import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.maincard.view.MainCardActivity
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.adapter.MyPageFriendAdapter
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.ui.setting.view.SettingActivity
 import org.cardna.presentation.util.*
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -56,7 +52,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun setInitSearchResultStatus() {
-        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${myPageViewModel.searchNameQuery.value}" + "${myPageViewModel.isNonExistFriend.value}")
         if (myPageViewModel.searchNameQuery.value?.isNotEmpty() == true && myPageViewModel.isNonExistFriend.value == false) {
             myPageFriendAdapter.submitList(myPageViewModel.searchFriendNameResult.value)
         } else if (myPageViewModel.searchNameQuery.value?.isNotEmpty() == true && myPageViewModel.isNonExistFriend.value == true) {
@@ -81,7 +76,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         startActivity(Intent(requireContext(), SearchFriendCodeActivity::class.java))
     }
 
-
     //TODO 쿼리 상태 쨰려서 뷰 업데이트
     private fun setSearchFriendNameResultObserve() {
         myPageViewModel.viewEvent.observe(viewLifecycleOwner) {
@@ -97,7 +91,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
             }
         }
     }
-
 
     fun setInputField() {
         with(binding.etMypageNameSearchBackground) {
