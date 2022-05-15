@@ -86,12 +86,9 @@ class AlarmViewModel @Inject constructor(
             runCatching {
                 deletedCardYouDao.getAllDeletedCardYou()
             }.onSuccess { it ->
-                if (it?.map { it.cardId }?.contains(cardId) == true) {
-                    viewEvent(DELETED_CARD)
-                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it?.map { it.cardId }.toString())
-                } else {
-                    viewEvent(EXISTED_CARD)
-                }
+                if (it?.map { it.cardId }?.contains(cardId) == true) viewEvent(DELETED_CARD)
+                else viewEvent(EXISTED_CARD)
+
             }.onFailure {
                 Timber.e(it.toString())
             }
@@ -105,7 +102,6 @@ class AlarmViewModel @Inject constructor(
         }
     }
 
-    //viewEvent관련
     private fun setCardSateResult(state: String) = viewEvent(state)
 
     companion object {

@@ -45,7 +45,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         setInputField()
         setObserve()
         copyMyCodeClickListener()
-        setSettingBtnValidObserve()
         initData()
         initRootClickEvent(binding.ctlMypageTop)
         initRootClickEvent(binding.ctlMypageHeader)
@@ -128,10 +127,19 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun setObserve() {
-
+        //내 정보
         myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
-            //todo 맨처음에는 마이페이지 친구 리스트 던져야함
             requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
+        }
+
+        //클릭 가능 여부
+        myPageViewModel.settingBtnIsValid.observe(viewLifecycleOwner) {
+            binding.ivMypageSetting.isClickable = it
+        }
+
+        //친구 리프레시
+        myPageViewModel.refreshFriendList.observe(viewLifecycleOwner) {
+            setInitSearchResultStatus()
         }
     }
 
@@ -170,12 +178,5 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         val clipData = ClipData.newPlainText("TAG", message)
         clipBoardManger.setPrimaryClip(clipData)
         requireContext().shortToast("코드가 복사되었습니다")
-    }
-
-    private fun setSettingBtnValidObserve() {
-        myPageViewModel.settingBtnIsValid.observe(viewLifecycleOwner) {
-            binding.ivMypageSetting.isClickable = it
-            if (it) setInitSearchResultStatus()
-        }
     }
 }

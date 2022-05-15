@@ -90,7 +90,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
                 it.getContentIfNotHandled()?.let { event ->
                     when (event) {
                         AlarmViewModel.DELETED_CARD -> shortToast("삭제된 카드입니다")
-                        else -> startActivity(intent)
+                        AlarmViewModel.EXISTED_CARD -> startActivity(intent)
                     }
                 }
             }

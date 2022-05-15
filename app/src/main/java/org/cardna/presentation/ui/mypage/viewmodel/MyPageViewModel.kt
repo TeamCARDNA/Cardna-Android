@@ -14,6 +14,7 @@ import org.cardna.domain.repository.FriendRepository
 import org.cardna.domain.repository.MyPageRepository
 import org.cardna.presentation.base.BaseViewModel
 import org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity
+import org.cardna.presentation.util.SingleLiveEvent
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -27,6 +28,9 @@ class MyPageViewModel @Inject constructor(
 
     private val _settingBtnIsValid = MutableLiveData<Boolean>(false)
     val settingBtnIsValid: LiveData<Boolean> = _settingBtnIsValid
+
+    private val _refreshFriendList = SingleLiveEvent<Any>()
+    val refreshFriendList: LiveData<Any> = _refreshFriendList
 
     private val _myPage = MutableLiveData<ResponseMyPageData.Data>()
     val myPage: LiveData<ResponseMyPageData.Data> = _myPage
@@ -164,6 +168,10 @@ class MyPageViewModel @Inject constructor(
 
     fun settingBtnIsValid(valid: Boolean) {
         _settingBtnIsValid.value = valid
+    }
+
+    fun refreshFriendList() {
+        _refreshFriendList.call()
     }
 
     //친구2->손절1

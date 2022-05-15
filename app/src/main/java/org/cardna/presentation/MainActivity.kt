@@ -125,13 +125,8 @@ class MainActivity :
     private fun initDynamicLink() {
         val dynamicLinkData = intent.extras
         if (dynamicLinkData != null) {
-            if (dynamicLinkData.get("body").toString().contains("작성")) {
-                return
-            } else {
-                Timber.e(dynamicLinkData.get("uniId").toString())
-                startActivity(Intent(this, AlarmActivity::class.java).apply {
-                })
-            }
+            if (dynamicLinkData.get("body").toString().contains("작성")) return
+            else startActivity(Intent(this, AlarmActivity::class.java))
         }
     }
 }
