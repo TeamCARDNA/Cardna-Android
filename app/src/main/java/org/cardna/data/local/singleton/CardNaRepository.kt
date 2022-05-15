@@ -79,7 +79,7 @@ object CardNaRepository {
         get() = authPreferences.getString(USER_UUID_KEY, "") ?: ""
         set(value) = authPreferences.edit { it.putString(USER_UUID_KEY, value) }
 
-    //카카오 유저 토큰ㄹ
+    //카카오 유저 토큰
     var kakaoUserToken: String
         get() = authPreferences.getString(KAKAO_UT_KEY, "") ?: ""
         set(value) = authPreferences.edit { it.putString(KAKAO_UT_KEY, value) }

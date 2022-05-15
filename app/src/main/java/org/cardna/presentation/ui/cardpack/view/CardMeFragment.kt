@@ -40,14 +40,13 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
     }
 
     // Adapter 생성
-    private fun initCardMeRvAdapter(){
-        cardMeAdapter = CardPackMeRecyclerViewAdapter(cardPackViewModel,viewLifecycleOwner) { // 어댑터 초기화 =>
-            // 1. 각 리사이클러뷰 아이템에 달아줄 람다 전달
+
+    private fun initCardMeRvAdapter() {
+        cardMeAdapter = CardPackMeRecyclerViewAdapter(cardPackViewModel, viewLifecycleOwner) { // 어댑터 초기화 =>
             Intent(requireContext(), DetailCardActivity::class.java).apply {
                 putExtra(BaseViewUtil.CARD_ID, it.id) // 리사이클러뷰의 아이템 중 카드 선택시 그 카드의 id를 전달
                 startActivity(this)
             }
-        // 2. 타인의 카드나일 때는, 공감버튼에 달아줄 리스너 하나 더 전달해줘야 한다.
         }
 
         Timber.e("CardMe : Adapter 생성")
@@ -62,12 +61,12 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
         // cardMeList 에 observer 등록
         // onResume 될 때, cardMeList 를 업데이트 시키고 cardMeList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
         cardPackViewModel.cardMeList.observe(viewLifecycleOwner) { it ->
-            it?.let { cardMeAdapter.submitList(it)}
+            it?.let { cardMeAdapter.submitList(it) }
         }
     }
 
-    private fun initEmptyViewListener(){
-        binding.ctlBgAddCardme.setOnClickListener{
+    private fun initEmptyViewListener() {
+        binding.ctlBgAddCardme.setOnClickListener {
             // CardCreateActivity 로 이동
             val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
                 putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_ME) // 내 카드나 작성이므로

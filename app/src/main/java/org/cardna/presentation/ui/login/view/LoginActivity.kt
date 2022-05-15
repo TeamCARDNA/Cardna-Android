@@ -106,22 +106,22 @@ class LoginActivity :
     }
 
     private fun setNaverLogin() {
-        // 1. 네이버 자체 소셜로그인을 통해 naverSocialToken 얻어와서 header token 에 끼우기
 
+
+        // 1. 네이버 자체 소셜로그인을 통해 naverSocialToken 얻어와서 header token 에 끼우기
         NidLog.init()
 
-        Timber.d("네아로 init")
         NaverIdLoginSDK.initialize(this,
             BuildConfig.NAVER_API_CLIENT_ID,
             BuildConfig.NAVER_API_CLIENT_SECRET,
             BuildConfig.NAVER_API_APP_NAME
         )
 
-        Timber.d("네아로 콜백 생성")
         val oauthLoginCallback = object : OAuthLoginCallback {
             override fun onSuccess() {
                 // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
                 Timber.d("naver onSuccess: ")
+                loginViewModel.setNaverSocialUserToken(NaverIdLoginSDK.getAccessToken()!!)
             }
 
             override fun onFailure(httpStatus: Int, message: String) {
@@ -136,12 +136,12 @@ class LoginActivity :
                 onFailure(errorCode, message)
             }
         }
-        Timber.d("네아로 authenticate 전")
-        NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
-        Timber.d("네아로 authenticate 후")
 
+        // 네이버 자체 소셜 로그인 호출
+        NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
+
+        // 소셜로그인 API 호출을 위해 헤더토큰 naverToken으로 갈아끼움
         CardNaRepository.userToken = loginViewModel.naverSocialUserToken!!
-        Timber.d("naverSocialUserToken : ${loginViewModel.naverSocialUserToken}")
 
         // 2. 소셜로그인 API 호출
         loginViewModel.getNaverLogin()

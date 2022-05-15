@@ -100,7 +100,7 @@ class CardYouFragment :
         binding.ctlFriendEmptyMakeCardyou.setOnClickListener {
             val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
                 putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_YOU) // 내 카드나 작성이므로
-                putExtra(BaseViewUtil.ID, cardPackViewModel.id)
+                putExtra(BaseViewUtil.ID, cardPackViewModel.id.value)
                 putExtra(BaseViewUtil.NAME, cardPackViewModel.name)
                 putExtra(BaseViewUtil.IS_CARDPACK_OR_MAINCARD, BaseViewUtil.FROM_CARDPACK) // 카드팩에서 왔음을 알려줌
             }

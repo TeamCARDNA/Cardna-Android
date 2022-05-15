@@ -7,7 +7,13 @@
 
         <import type="android.view.View" />
 
+        <variable
+            name="isLiked"
+            type="Boolean" />
 
+        <variable
+            name="isMyCard"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,6 +39,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@drawable/dummy_img_cardpack_1" />
 
+        <CheckedTextView
+            android:id="@+id/ctv_cardme_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:checkMark="@drawable/ic_selector_detailcard_like"
+            android:checked="false"
+            app:layout_constraintEnd_toEndOf="@id/iv_cardpack_recyclerview"
+            app:layout_constraintTop_toTopOf="@id/iv_cardpack_recyclerview" />
+
         <TextView
             android:id="@+id/tv_cardpack_recyclerview"
             android:layout_width="wrap_content"
@@ -46,14 +63,14 @@
             tools:text="댕댕이 짱 좋아" />
 
         <CheckedTextView
+            android:id="@+id/ctv_cardpack_cardme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checkMark="@drawable/selector_like"
             android:checked="false"
-            android:id="@+id/ctv_cardpack_cardme"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="16dp"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:checkMark="@drawable/selector_like"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/la_cardpack_cardyou_lottie"

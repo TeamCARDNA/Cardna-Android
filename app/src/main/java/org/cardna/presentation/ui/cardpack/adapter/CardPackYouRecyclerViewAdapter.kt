@@ -50,21 +50,29 @@ class CardPackYouRecyclerViewAdapter(
                 // 애초에 item_cardpack_cardme xml 파일에 공감버튼을 추가하고, id가 null이면 이를 gone 시키고,
                 // 이에 대해 리스너도 달아줘야함
 
-                cardPackViewModel.cardMeList.observe(context) { cardMeList ->
-                    for (item in cardMeList) {
-                        if (item.id == cardYou.id && item.isLiked == true)
-                            ctvCardpackCardme.isChecked = true
+         cardPackViewModel.cardYouList.observe(context) { cardYouList ->
+                    cardPackViewModel.id.observe(context) {
+                        if (it != null) {
+                            for (item in cardYouList) {
+                                if (item.id == cardYou.id) {
+                                    ctvCardpackCardme.isChecked = cardYou.isLiked ?: false
+                                }
+                            }
+                        }
                     }
                 }
-                if (cardPackViewModel.id != null) {
-                    ctvCardpackCardme.setOnClickListener {
-                        ctvCardpackCardme.toggle()
-                        showLottie(binding.laCardpackCardyouLottie, DetailCardActivity.CARD_YOU, "lottie_cardyou.json")
-                        cardPackViewModel.postLike(cardYou.id)
+
+                cardPackViewModel.id.observe(context) {
+                    if (it != null) {
+                        ctvCardpackCardme.setOnClickListener {
+                            ctvCardpackCardme.toggle()
+                            showLottie(binding.laCardpackCardyouLottie, DetailCardActivity.CARD_YOU, "lottie_cardyou.json")
+                            cardPackViewModel.postLike(cardYou.id)
+                        }
+                    } else {
+                        ctvCardpackCardme.isChecked = true
+                        ctvCardpackCardme.isClickable = false
                     }
-                } else {
-                    ctvCardpackCardme.isChecked = true
-                    ctvCardpackCardme.isClickable = false
                 }
             }
         }
