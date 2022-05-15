@@ -311,10 +311,9 @@ class CardCreateActivity :
         val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
         // input stream 으로부터 bitmap을 만들어내는 것.
 
-
         val byteArrayOutputStream = ByteArrayOutputStream()
 
-        bitmap!!.compress(Bitmap.CompressFormat.PNG, 8, byteArrayOutputStream)
+        bitmap!!.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
 
         val fileBody = RequestBody.create(
             "image/png".toMediaTypeOrNull(),

@@ -8,6 +8,7 @@ plugins {
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def kakao_key_manifest = properties.getProperty('kakao_key_manifest')
 
 android {
     compileSdk 31
@@ -20,13 +21,13 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        //base_url
-        buildConfigField "String", "BASE_URL", properties["base_url"]
 
-        //네이버
+        buildConfigField "String", "BASE_URL", properties["base_url"]     //base_url
+        manifestPlaceholders = [kakaoKey: kakao_key_manifest]
         buildConfigField "String", "NAVER_API_CLIENT_SECRET", properties["naver_api_client_secret"]
         buildConfigField "String", "NAVER_API_CLIENT_ID", properties["naver_api_client_id"]
         buildConfigField "String", "NAVER_API_APP_NAME", properties["naver_api_app_name"]
+        buildConfigField "String", "KAKAO_NATIVE_KEY", properties["kakao_native_key"]
     }
 
     buildTypes {
@@ -60,6 +61,14 @@ dependencies {
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.12.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
 
+
+    // Naver Login
+    implementation 'com.navercorp.nid:oauth:5.0.0'
+    implementation 'com.airbnb.android:lottie:3.1.0'
+    implementation 'androidx.security:security-crypto:1.1.0-alpha03'
+    implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
+    implementation 'androidx.browser:browser:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
 
     // Firebase
     implementation "com.google.firebase:firebase-bom:29.3.1"

@@ -4,15 +4,15 @@ import org.cardna.data.remote.model.auth.RequestSignUpData
 import org.cardna.data.remote.model.auth.ResponseSignUpData
 import org.cardna.data.remote.model.auth.ResponseSocialLoginData
 import org.cardna.data.remote.model.auth.ResponseTokenIssuanceData
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface AuthService {
 
     @GET("auth/kakao")
-    suspend fun getKakaoLogin(): ResponseSocialLoginData
+    suspend fun getKakaoLogin(
+        @Header("token") token: String,
+        @Header("fcmtoken") fcmToken: String,
+    ): ResponseSocialLoginData
 
     // 소셜 로그인 API - 네이버
     @GET("auth/naver")
@@ -31,7 +31,7 @@ interface AuthService {
     // 토큰 재발급 API
     @GET("auth/token")
     suspend fun getTokenIssuance(
-        @Header("accesstoken") accessToken: String,
-        @Header("refreshtoken") refreshToken: String
+        @Header("accessToken") accessToken: String,
+        @Header("refreshToken") refreshToken: String,
     ): ResponseTokenIssuanceData
 }

@@ -24,7 +24,7 @@ import timber.log.Timber
 
 
 @AndroidEntryPoint
-class  SplashActivity :
+class SplashActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>(R.layout.activity_splash) {
     private val loginViewModel: LoginViewModel by viewModels()
 
@@ -41,10 +41,14 @@ class  SplashActivity :
     }
 
     // naverLogin
-    private fun initNaverLogin(){
+    private fun initNaverLogin() {
         Timber.d("initNaverLogin")
-        NaverIdLoginSDK.initialize(this, NAVER_API_CLIENT_ID, NAVER_API_CLIENT_SECRET, NAVER_API_APP_NAME)
+//        NaverIdLoginSDK.initialize(this, NAVER_API_CLIENT_ID, NAVER_API_CLIENT_SECRET, NAVER_API_APP_NAME)
     }
+//    private fun initData() {
+//        loginViewModel.getTokenIssuance()
+////        loginViewModel.getKakaoLogin()
+//    }
 
     private fun setFullScreen() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
@@ -84,6 +88,13 @@ class  SplashActivity :
         if (CardNaRepository.kakaoUserfirstName.isEmpty() && CardNaRepository.naverUserfirstName.isEmpty()) {
             //모든 소셜에서 이름이 없으면 -> 회원가입 안함
             moveOnboarding()
+            with(CardNaRepository) {
+                Timber.d("if kakao : ${kakaoUserfirstName.isEmpty()}")
+                Timber.d("if naver : ${naverUserfirstName.isEmpty()}")
+                Timber.d("if : ${kakaoUserfirstName.isEmpty() || naverUserfirstName.isEmpty()}")
+            }
+            Timber.d("if kakaoUserFirstName : ${CardNaRepository.kakaoUserfirstName}")
+
             Timber.d("kakaoUserFirstName : ${CardNaRepository.kakaoUserfirstName}")
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) {
             //카카오로 자동로그인
@@ -93,8 +104,12 @@ class  SplashActivity :
 //            loginViewModel.getKakaoLogin()
 //            loginViewModel.getTokenIssuance()
 //            CardNaRepository.userToken = CardNaRepository.kakaoUserToken
-            autoKakaoLoginCheck()
+//            autoKakaoLoginCheck()
 
+            CardNaRepository.userToken = CardNaRepository.kakaoUserToken
+            moveMain()
+//            autoKakaoLoginCheck()
+        } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
             //네이버로 자동로그인
             //2.네이버에 이름잇음+네이버에서 로그아웃 안함
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
@@ -153,8 +168,15 @@ class  SplashActivity :
                 // Main으로 이동
                 moveMain()
             }
+            else{
+
+            }
             //로그아웃
+
         } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {
+            Timber.d("else if logout kakaoUserFirstName : ${CardNaRepository.naverUserfirstName}")
+            moveOnboarding()
+        } else {
             moveOnboarding()
         }
     }
@@ -185,5 +207,6 @@ class  SplashActivity :
     companion object {
         const val REFRESH_SUCCESS = "토큰 재발급 성공"
         const val ACCESS_NOW = "유효한 토큰입니다."
+        const val LOGIN_SUCCESS = "로그인 성공"
     }
 }
