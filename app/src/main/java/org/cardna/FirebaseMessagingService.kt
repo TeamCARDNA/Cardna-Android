@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import me.leolin.shortcutbadger.ShortcutBadger
+import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.MainActivity
 import timber.log.Timber
 import java.io.IOException
@@ -29,7 +30,8 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         Timber.e("From: " + remoteMessage.data)
 
         //푸시알림 ON OFF저장해야함  && CardNaApplication.isBackground
-        if (remoteMessage.data.isNotEmpty() && CardNaApplication.isBackground) {
+        if (remoteMessage.data.isNotEmpty() && CardNaApplication.isBackground && CardNaRepository.pushAlarmOn) {
+            Timber.e("${CardNaRepository.pushAlarmOn}")
             sendNotiNotification(remoteMessage)
         } else {
             Timber.d("pushAlarm", "Forground상태이거나 data가 비어있습니다. 메시지를 수신하지 못했습니다.")
@@ -71,10 +73,10 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                 .setContentIntent(pendingIntent)
                 .setSound(null) //소리
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) //잠금
-            //    .setNumber(1) //배지 갯수 넣는부분
+                //    .setNumber(1) //배지 갯수 넣는부분
                 .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL) //배지 스타일을 이렇게 주어야한다.
 
-   //     ShortcutBadger.applyCount(applicationContext, 1)// <--해당부분을 통해 배지 갯수가 표시된다
+        //     ShortcutBadger.applyCount(applicationContext, 1)// <--해당부분을 통해 배지 갯수가 표시된다
 
 
         val notificationManager =
