@@ -73,6 +73,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         friendRequestAdapter = FriendRequestAdapter(this, alarmViewModel, this) { item ->
             startActivity(Intent(this, MainCardActivity::class.java).apply {
                 putExtra("friendId", item.id)
+                putExtra("name", item.name)
             })
         }
         with(binding.rcvAlarmFriendRequest) {
