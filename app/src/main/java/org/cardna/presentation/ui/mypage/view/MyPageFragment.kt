@@ -37,37 +37,28 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         initView()
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.etMypageNameSearchBackground.clearFocus()
-//        initData()
-    }
-
     override fun initView() {
-      //  initData()
-
-        //처음 들어갈떄 뿌리긴 해야하니까
-
+        binding.etMypageNameSearchBackground.clearFocus()
+        setSearchFriendNameResultObserve()
         setStickyScroll()
         setMyPageFriendAdapter()
         setInputField()
         setObserve()
         copyMyCodeClickListener()
         setSettingBtnValidObserve()
+        initData()
         initRootClickEvent(binding.ctlMypageTop)
         initRootClickEvent(binding.ctlMypageHeader)
     }
 
     private fun initData() {
-        val query = myPageViewModel.searchNameQuery.value ?: ""
-
-        if ((query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == true) ||
-            (query.isNullOrEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == false)
-        ) {
-           myPageViewModel.getUserMyPage()
-            myPageViewModel.setUpdateSearchNameQueryState(false)
-        } else if ((query.isNotEmpty() && myPageViewModel.updateSearchNameQuerySuccess.value == false)) {
-          //  myPageViewModel.updateSearchNameQuery(query)
+        myPageViewModel.getUserMyPage()
+        if (myPageViewModel.searchNameQuery.value?.isNotEmpty() == true && myPageViewModel.isNonExistFriend.value == false) {
+            myPageFriendAdapter.submitList(myPageViewModel.searchFriendNameResult.value)
+        } else if (myPageViewModel.searchNameQuery.value?.isNotEmpty() == true && myPageViewModel.isNonExistFriend.value == true) {
+            return
+        } else {
+            myPageFriendAdapter.submitList(myPageViewModel.friendList.value)
         }
     }
 
@@ -83,6 +74,56 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     fun setSearchCodeClickListener() {
         startActivity(Intent(requireContext(), SearchFriendCodeActivity::class.java))
+    }
+
+
+    //TODO 쿼리 상태 쨰려서 뷰 업데이트
+    private fun setSearchFriendNameResultObserve() {
+        myPageViewModel.viewEvent.observe(viewLifecycleOwner) {
+            it.getContentIfNotHandled()?.let { event ->
+                when (event) {
+                    MyPageViewModel.SEARCH_QUERY -> myPageFriendAdapter.submitList(myPageViewModel.searchFriendNameResult.value)//진짜 검색해서 결과뜬 경우
+                    MyPageViewModel.EXIST_QUERY -> myPageFriendAdapter.submitList(myPageViewModel.friendList.value)//쿼리있는데 왔다가 온경우 ->업데이트 없어야함
+                    MyPageViewModel.DEFAULT_STATE -> myPageFriendAdapter.submitList(myPageViewModel.friendList.value) //가장 처음엔 운래 친구리스트
+                }
+            }
+        }
+    }
+
+
+    fun setInputField() {
+        with(binding.etMypageNameSearchBackground) {
+            setTextSize(16f)
+            setTextColor(requireContext(), R.color.white_2, R.color.white_1)
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(newText: String?): Boolean {
+                    if (newText?.isNotEmpty() == true) {
+                        myPageViewModel.updateSearchNameQuery(newText.toString())
+                        clearFocus()
+                    }
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText.isNullOrEmpty()) {
+                        myPageViewModel.updateSearchNameQuery("")
+                        myPageViewModel.isNonExistFriendName(false)
+                        myPageViewModel.friendList.observe(viewLifecycleOwner) {
+                            myPageFriendAdapter.submitList(it)
+                        }
+                    }
+                    return false
+                }
+            })
+        }
+    }
+
+    private fun setObserve() {
+
+        myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
+            //todo 맨처음에는 마이페이지 친구 리스트 던져야함
+            requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
+        }
     }
 
     private fun setMyPageFriendAdapter() {
@@ -107,59 +148,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
             rvMypage.layoutManager = gridLayoutManager
             rvMypage.adapter = myPageFriendAdapter
         }
-    }
 
-    fun setInputField() {
-        with(binding.etMypageNameSearchBackground) {
-            setTextSize(16f)
-            setTextColor(requireContext(), R.color.white_2, R.color.white_1)
-
-
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(newText: String?): Boolean {
-                    if (newText?.isNotEmpty() == true) {
-                        //todo 검색 -> 검색내용 업데이트
-                        myPageViewModel.updateSearchNameQuery(newText.toString())
-                        clearFocus()
-                    }
-                    return false
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    //todo 초기화-> X버튼 눌렀을때
-                    if (newText.isNullOrEmpty()) {
-                        myPageViewModel.updateSearchNameQuery("")
-                   /*     myPageViewModel.setUpdateSearchNameQueryState(true)
-                        myPageViewModel.updateSearchNameQuerySuccess.observe(viewLifecycleOwner) {
-                            if (it) initData()
-                        }*/
-                    }
-                    return false
-                }
-            })
-        }
-    }
-
-    private fun setObserve() {
-        //todo 쿼리가 업데이트 되면 검색api호출
-        myPageViewModel.searchNameQuery.observe(viewLifecycleOwner) {
-            myPageViewModel.searchNamePost()
-        }
-
-
-        //이건 걍 내정보
-        if (binding.etMypageNameSearchBackground.query.isNullOrEmpty()) {
-            myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
-                //todo 맨처음에는 마이페이지 친구 리스트 던져야함
-                myPageFriendAdapter.submitList(myPage.friendList)
-                requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
-            }
-        }
-
-        //todo 검색결과 있으면 submitlist
-        myPageViewModel.searchFriendNameResult.observe(viewLifecycleOwner) { searchFriendNameResult ->
-            myPageFriendAdapter.submitList(searchFriendNameResult)
-        }
     }
 
     private fun copyMyCodeClickListener() {
