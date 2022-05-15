@@ -58,6 +58,11 @@ class LoginViewModel @Inject constructor(
     val naverSocialUserToken: String?
         get() = _naverSocialUserToken
 
+    // 네이버 소셜 토큰 set 메서드
+    fun setNaverSocialUserToken(newNaverSocialUserToken: String){
+        _naverSocialUserToken = newNaverSocialUserToken
+    }
+
     fun getKakaoLogin() {
         viewModelScope.launch {
             kotlin.runCatching {
@@ -104,6 +109,7 @@ class LoginViewModel @Inject constructor(
                     CardNaRepository.userToken = it.data.accessToken // 헤더 토큰 갈아 끼우기
                 } else { // it.data.type == "signup" 2. 회원가입
                     _loginType = "signup"
+                    // 아직 이름등록 및 회원가입 전인데 social이랑 uuid를 shardPre에 저장해둬도 되나
                     CardNaRepository.userSocial = it.data.social
                     CardNaRepository.userUuid = it.data.uuid
                 }
@@ -123,16 +129,6 @@ class LoginViewModel @Inject constructor(
                     CardNaRepository.naverUserRefreshToken
                 )
             }.onSuccess {
-                with(CardNaRepository) {
-               //     kakaoUserfirstName = it.data.name
-                    kakaoUserToken = it.data.accessToken
-                    kakaoUserRefreshToken = it.data.refreshToken
-                    kakaoUserlogOut = false
-                    Timber.d("post name : $kakaoUserfirstName")
-                }
-                _isLogin.value = true
-                Timber.d("재발급 성공 : ${it.message}")
-
                 CardNaRepository.naverUserToken = it.data.accessToken
                 CardNaRepository.naverUserRefreshToken = it.data.refreshToken
                 CardNaRepository.userToken = it.data.accessToken // 헤더 토큰 갈아 끼우기
@@ -159,10 +155,6 @@ class LoginViewModel @Inject constructor(
                     CardNaRepository.kakaoUserToken = it.data.accessToken
                     CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
                 }
-                _message.value = it.message
-                CardNaRepository.kakaoUserToken = it.data.accessToken
-                CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
-                Timber.d("토큰 재발급 메서드")
             }.onFailure {
                 Timber.d("회원가입 실패 : ${it.message}")
                 _isLogin.value = false
