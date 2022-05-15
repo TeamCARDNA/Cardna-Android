@@ -67,6 +67,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         } else if (myPageViewModel.searchNameQuery.value?.isNotEmpty() == true && myPageViewModel.isNonExistFriend.value == true) {
             return
         } else {
+            myPageViewModel.getUserMyPage()
             myPageViewModel.friendList.observe(viewLifecycleOwner) {
                 myPageFriendAdapter.submitList(it)
             }
