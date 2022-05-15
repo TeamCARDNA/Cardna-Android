@@ -6,6 +6,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.viewpager2.widget.ViewPager2
 import org.cardna.R
 import org.cardna.databinding.CardpackCustomTablayoutBinding
 import org.cardna.databinding.FragmentCardPackBinding
@@ -32,6 +33,7 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
         super.onResume()
         if(cardPackViewModel.id == null) // 내 카드팩일때만 onResume 해주면 됨.
             cardPackViewModel.setTotalCardCnt()
+        binding.vpCardpack.setCurrentItem(cardPackViewModel.tabPosition.value ?: 0, false)
     }
 
     private fun initViewModel() {
@@ -46,6 +48,8 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
         initCardPackAdapter()
         initCardPackTabLayout()
         initMeOrFriendCardLayout()
+        setInitPagePosition()
+        binding.vpCardpack.setCurrentItem(cardPackViewModel.tabPosition.value ?: 0, false)
     }
 
 
@@ -121,4 +125,14 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
             // 나머지 분기처리는 xml 상에서 삼항연산자 이용
         }
     }
+    private fun setInitPagePosition() {
+        binding.vpCardpack.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                cardPackViewModel.saveInitTabPosition(position)
+            }
+        })
+    }
+
 }

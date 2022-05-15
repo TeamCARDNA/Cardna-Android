@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.cardna.data.remote.model.mypage.ResponseMyPageData
 import org.cardna.databinding.ItemMypageFriendBinding
+import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 
 
 class MyPageFriendAdapter(
     private val activity: Activity,
+    private val myPageViewModel: MyPageViewModel,
     private val clickListener: ((ResponseMyPageData.Data.FriendList) -> Unit),
 ) : ListAdapter<ResponseMyPageData.Data.FriendList, MyPageFriendAdapter.MyPageFriendViewHolder>(FriendComparator()) {
 
@@ -30,6 +32,7 @@ class MyPageFriendAdapter(
 
                 clRvItem.setOnClickListener {
                     clickListener(data)
+                    myPageViewModel.settingBtnIsValid(false)
                 }
             }
         }

@@ -26,7 +26,9 @@ import timber.log.Timber
 @AndroidEntryPoint
 class SetNameActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivitySetNameBinding>(R.layout.activity_set_name) {
+
     private val loginViewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
@@ -110,6 +112,7 @@ class SetNameActivity :
         lastname: String
     ) {
         button.setOnClickListener {
+            // 이름 등록 및 회원가입 API 호출
             with(CardNaRepository) {
                 loginViewModel.postSignUp(
                     RequestSignUpData(userSocial, userUuid, lastname, firstname, fireBaseToken)
@@ -151,7 +154,6 @@ class SetNameActivity :
         binding.clSetnameContainer.visibility = View.GONE
 
         startSetNameFinishedActivity(welcomeText)
-
     }
 
     private fun startSetNameFinishedActivity(welcomeText: String) {

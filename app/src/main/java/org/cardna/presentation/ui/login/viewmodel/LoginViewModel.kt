@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.login.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,8 @@ import org.cardna.data.remote.model.auth.RequestSignUpData
 import org.cardna.data.remote.model.auth.ResponseSocialLoginData
 import org.cardna.data.remote.model.auth.ResponseTokenIssuanceData
 import org.cardna.domain.repository.AuthRepository
+import org.cardna.domain.repository.CardRepository
+import org.cardna.presentation.util.shortToast
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -38,6 +41,22 @@ class LoginViewModel @Inject constructor(
 
     private val _socialType = MutableLiveData<String>()
     val socialType: LiveData<String> = _socialType
+
+
+    // 토큰 재발급 메서드에 대한 message
+    private var _issuanceMessage = ""
+    val issuanceMessage: String?
+        get() = _issuanceMessage
+
+    // 소셜로그인 API 호출 시, 1. 회원가입 인지 2. 재로그인 인지
+    private var _loginType = "signin"
+    val loginType: String
+        get() = _loginType
+
+    // 네이버 소셜 토큰
+    private var _naverSocialUserToken = ""
+    val naverSocialUserToken: String?
+        get() = _naverSocialUserToken
 
     fun getKakaoLogin() {
         viewModelScope.launch {
@@ -71,10 +90,38 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun postSignUp(singUpData: RequestSignUpData) {
+    fun getNaverLogin() { // 소셜로그인 API => 1. 토큰 만료되어 재로그인 or 2. 신규유저 회원가입
         viewModelScope.launch {
             kotlin.runCatching {
-                authRepository.postSignUp(singUpData)
+                authRepository.getNaverLogin(CardNaRepository.fireBaseToken)
+            }.onSuccess {
+                Timber.d("login success : ${it.data}")
+
+                if (it.data.type == "signin") { // 1. 재로그인
+                    _loginType = "signin"
+                    CardNaRepository.naverUserToken = it.data.accessToken
+                    CardNaRepository.naverUserRefreshToken = it.data.refreshToken
+                    CardNaRepository.userToken = it.data.accessToken // 헤더 토큰 갈아 끼우기
+                } else { // it.data.type == "signup" 2. 회원가입
+                    _loginType = "signup"
+                    CardNaRepository.userSocial = it.data.social
+                    CardNaRepository.userUuid = it.data.uuid
+                }
+            }.onFailure {
+                Timber.e("error $it")  //
+            }
+        }
+    }
+
+
+    fun getNaverTokenIssuance() { // 토큰 재발급(API) 네이버
+        viewModelScope.launch {
+            kotlin.runCatching {
+                // API 메서드 body 안에 header 를 accessToken 이랑 refreshToken 추가하면 되므로 requestData 필요 없음
+                authRepository.getTokenIssuance(
+                    CardNaRepository.naverUserToken,
+                    CardNaRepository.naverUserRefreshToken
+                )
             }.onSuccess {
                 with(CardNaRepository) {
                     kakaoUserfirstName = it.data.name
@@ -84,23 +131,41 @@ class LoginViewModel @Inject constructor(
                     Timber.d("post name : $kakaoUserfirstName")
                 }
                 _isLogin.value = true
+                Timber.d("재발급 성공 : ${it.message}")
+
+                CardNaRepository.naverUserToken = it.data.accessToken
+                CardNaRepository.naverUserRefreshToken = it.data.refreshToken
+                CardNaRepository.userToken = it.data.accessToken // 헤더 토큰 갈아 끼우기
+
+                _issuanceMessage = it.message
             }.onFailure {
+                Timber.d("재발급 실패 : ${it.message}")
                 _isLogin.value = false
             }
         }
     }
 
-    fun getTokenIssuance() {
+    fun postSignUp(singUpData: RequestSignUpData) { // 이름 등록 및 회원가입 API
         viewModelScope.launch {
             kotlin.runCatching {
-                authRepository.getTokenIssuance()
+                authRepository.postSignUp(singUpData)
             }.onSuccess {
+                Timber.d("회원가입 성공 : ${it.message}")
+                _isLogin.value = true
+                if (singUpData.social == "naver") {
+                    CardNaRepository.naverUserToken = it.data.accessToken
+                    CardNaRepository.naverUserRefreshToken = it.data.refreshToken
+                } else { // kakao
+                    CardNaRepository.kakaoUserToken = it.data.accessToken
+                    CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
+                }
                 _message.value = it.message
                 CardNaRepository.kakaoUserToken = it.data.accessToken
                 CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
                 Timber.d("토큰 재발급 메서드")
             }.onFailure {
-                _message.value = it.message
+                Timber.d("회원가입 실패 : ${it.message}")
+                _isLogin.value = false
             }
         }
     }

@@ -23,6 +23,9 @@ class MyPageViewModel @Inject constructor(
     private val friendRepository: FriendRepository
 ) : ViewModel() {
 
+    private val _settingBtnIsValid = MutableLiveData<Boolean>(false)
+    val settingBtnIsValid: LiveData<Boolean> = _settingBtnIsValid
+
     private val _myPage = MutableLiveData<ResponseMyPageData.Data>()
     val myPage: LiveData<ResponseMyPageData.Data> = _myPage
 
@@ -106,6 +109,7 @@ class MyPageViewModel @Inject constructor(
                 friendRepository.getSearchFriendCode(query).data
             }.onSuccess {
                 it.apply {
+                    Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",it.toString())
                     _searchFriendCodeResult.value = it
                     _isNonExistFriendCode.value = false
                     _friendRelationType.value = relationType
@@ -128,6 +132,10 @@ class MyPageViewModel @Inject constructor(
                 Timber.e(it.toString())
             }
         }
+    }
+
+    fun settingBtnIsValid(valid:Boolean){
+        _settingBtnIsValid.value=valid
     }
 
     //친구2->손절1

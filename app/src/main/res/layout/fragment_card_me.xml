@@ -27,13 +27,15 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctl_bg_empty"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="56dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginEnd="56dp"
+                android:layout_marginBottom="46dp"
                 android:background="@drawable/bg_stroke_white_4_1dp_radius_10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <!-- empty 일 때 내 카드나 -->
                 <androidx.constraintlayout.widget.ConstraintLayout

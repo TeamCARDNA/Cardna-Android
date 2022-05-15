@@ -21,9 +21,9 @@ class WriteCardYouAdapter(
         fun onBind(data: ResponseGetAlarmData.Data.Alarm) {
             binding.apply {
                 //TODO  서버연결 후 data 연결
-                tvItemAlarmWriteCardyouFriendName.text = data.name
                 tvItemAlarmWriteCardyouDate.text = data.date
                 tvItemAlarmWriteCardyouSentence.text = data.content
+                tvItemAlarmWriteCardyouFriendName.text =data.name
                 Glide.with(activity)
                     .load(data.profileImage)
                     .circleCrop()
@@ -49,9 +49,9 @@ class WriteCardYouAdapter(
             override fun areContentsTheSame(oldItem: ResponseGetAlarmData.Data.Alarm, newItem: ResponseGetAlarmData.Data.Alarm) =
                 oldItem == newItem
 
-            override fun areItemsTheSame(oldItem: ResponseGetAlarmData.Data.Alarm, newItem: ResponseGetAlarmData.Data.Alarm):Boolean {
+            override fun areItemsTheSame(oldItem: ResponseGetAlarmData.Data.Alarm, newItem: ResponseGetAlarmData.Data.Alarm): Boolean {
                 if (newItem.cardId == null) return oldItem.friendId == newItem.friendId
-                else if (newItem.friendId == null)    return oldItem.cardId == newItem.cardId
+                else if (newItem.friendId == null) return oldItem.cardId == newItem.cardId
                 else return true
             }
         }

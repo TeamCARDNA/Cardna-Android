@@ -20,6 +20,7 @@ import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.editcard.view.EditCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
+import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.util.setGradientText
 import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
@@ -29,6 +30,7 @@ class MainCardFragment :
     BaseViewUtil.BaseFragment<FragmentMainCardBinding>(R.layout.fragment_main_card) {
     private lateinit var mainCardAdapter: MainCardAdapter
     private val mainCardViewModel: MainCardViewModel by activityViewModels()
+    private val myPageViewModel: MyPageViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -272,6 +274,12 @@ class MainCardFragment :
                 mainCardViewModel.saveInitCardPosition(position)
             }
         })
+    }
+
+    //TODO 나 다빈인데 마이페이지랑 연관된 로직이 필요해서 적어뒀엉 지우지 마라조~
+    override fun onDestroyView() {
+        myPageViewModel.settingBtnIsValid(true)
+        super.onDestroyView()
     }
 
     companion object {

@@ -24,6 +24,11 @@ android {
 
         //base_url
         buildConfigField "String", "BASE_URL", properties["base_url"]
+
+        //네이버
+        buildConfigField "String", "NAVER_API_CLIENT_SECRET", properties["naver_api_client_secret"]
+        buildConfigField "String", "NAVER_API_CLIENT_ID", properties["naver_api_client_id"]
+        buildConfigField "String", "NAVER_API_APP_NAME", properties["naver_api_app_name"]
         buildConfigField "String", "KAKAO_APP_KEY", properties["kakao_app_key"]
     }
 
@@ -43,25 +48,47 @@ android {
     buildFeatures {
         dataBinding = true
     }
+    lintOptions {
+
+        abortOnError false
+
+    }
+
 }
 
 dependencies {
-    implementation ("com.squareup.moshi:moshi-kotlin:1.12.0")
-    implementation ("com.squareup.moshi:moshi:1.12.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+    implementation("com.squareup.moshi:moshi:1.12.0")
     implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.12.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
 
 
+    // Naver Login
+    implementation 'com.navercorp.nid:oauth:5.0.0'
+    implementation 'com.airbnb.android:lottie:3.1.0'
+    implementation 'androidx.security:security-crypto:1.1.0-alpha03'
+    implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
+    implementation 'androidx.browser:browser:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+
     // Firebase
     implementation "com.google.firebase:firebase-bom:29.3.1"
-   // implementation "com.google.firebase:firebase-analytics-ktx"
+    // implementation "com.google.firebase:firebase-analytics-ktx"
     implementation "com.google.firebase:firebase-messaging-ktx:23.0.0"
     implementation 'com.tbuonomo:dotsindicator:4.2'
 
 
     //kakaoLogin
-    implementation "com.kakao.sdk:v2-user:2.9.0" // 카카오 로그인
+    implementation "com.kakao.sdk:v2-user:2.9.0"
+
+    // Naver Login
+    implementation 'com.navercorp.nid:oauth:5.0.0'
+    implementation 'com.airbnb.android:lottie:3.1.0'
+    implementation 'androidx.security:security-crypto:1.1.0-alpha03'
+    implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
+    implementation 'androidx.browser:browser:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
 
     // Lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"

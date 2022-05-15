@@ -29,6 +29,9 @@ object CardNaRepository {
     private const val USER_SOCIAL_KEY = "USER_SOCIAL_KEY" //소셜 키
     private const val USER_UUID_KEY = "USER_UUID_KEY" //유저아이디 키
 
+    //푸시알림
+    private const val PUSH_ALARM_KEY = "PUSH_ALARM_KEY" //유저아이디 키
+
     private lateinit var preferences: SharedPreferences
     private lateinit var authPreferences: SharedPreferences
     private lateinit var masterKeyAlias: MasterKey
@@ -56,12 +59,15 @@ object CardNaRepository {
     }
 
     //현재 유저 토큰: 일단 박아둘게
-//    var userToken =
-//        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInV1aWQiOiIyMTk2MjQyNjU5IiwibGFzdE5hbWUiOiLjhYsiLCJmaXJzdE5hbWUiOiLjhYvjhYciLCJjb2RlIjoi44WL44WL44WHIzcyNDQiLCJpYXQiOjE2NTEyNDEwMTUsImV4cCI6MTY1MzgzMzAxNSwiaXNzIjoiY2FyZG5hIn0.8BbnrNxvDpFIXKEIs0V3DrguzJQPBFRm3V0V6MvSw1U"
-    //현재 유저 토큰
+    var userToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInV1aWQiOiIyMTk2MjQyNjU5IiwibGFzdE5hbWUiOiLjhYsiLCJmaXJzdE5hbWUiOiLjhYvjhYciLCJjb2RlIjoi44WL44WL44WHIzcyNDQiLCJpYXQiOjE2NTEyNDEwMTUsImV4cCI6MTY1MzgzMzAxNSwiaXNzIjoiY2FyZG5hIn0.8BbnrNxvDpFIXKEIs0V3DrguzJQPBFRm3V0V6MvSw1U"
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInV1aWQiOiI1UFRvTVd0TkZpRVpOc2loQnUxbDhSRmJVYjBkUkV4UEFHRENJU2thb0xFIiwibGFzdE5hbWUiOiLquYAiLCJmaXJzdE5hbWUiOiLri6TruYgiLCJjb2RlIjoi6rmA64uk67mIIzU1NDkiLCJpYXQiOjE2NTI1MjYyNzUsImV4cCI6MTY1NTExODI3NSwiaXNzIjoiY2FyZG5hIn0.HWZ4XKQCWSviqSL_ORs66FdD42ha5dhIYK9vdbWSBTE"
+
+
+/*    //현재 유저 토큰
     var userToken: String
         get() = authPreferences.getString(UT_KEY, "") ?: ""
-        set(value) = authPreferences.edit { it.putString(UT_KEY, value) }
+        set(value) = authPreferences.edit { it.putString(UT_KEY, value) }*/
 
     //현재 유저 소셜
     var userSocial: String
@@ -73,7 +79,7 @@ object CardNaRepository {
         get() = authPreferences.getString(USER_UUID_KEY, "") ?: ""
         set(value) = authPreferences.edit { it.putString(USER_UUID_KEY, value) }
 
-    //카카오 유저 토큰
+    //카카오 유저 토큰ㄹ
     var kakaoUserToken: String
         get() = authPreferences.getString(KAKAO_UT_KEY, "") ?: ""
         set(value) = authPreferences.edit { it.putString(KAKAO_UT_KEY, value) }
@@ -120,6 +126,14 @@ object CardNaRepository {
     //파이어베이스 토큰
     var fireBaseToken: String
         get() = authPreferences.getString(FB_KEY, "FireCardNa") ?: ""
-        set(value) = authPreferences.edit { it.putString(FB_KEY, value) }
+        set(value) = authPreferences.edit {
+            it.putString(FB_KEY, value)
+        }
 
+    //푸시알림 온,오프
+    var pushAlarmOn: Boolean
+        get() = preferences.getBoolean(PUSH_ALARM_KEY, true)
+        set(value) = preferences.edit {
+            it.putBoolean(PUSH_ALARM_KEY, value)
+        }
 }

@@ -97,13 +97,16 @@
                     tools:text="@string/mypage_code" />
 
                 <ImageView
+                    android:id="@+id/iv_mypage_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:paddingStart="4dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="2dp"
                     android:src="@drawable/ic_mypage_code_copy"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_code"
-                    app:layout_constraintStart_toEndOf="@+id/tv_mypage_code"
-                    app:layout_constraintTop_toTopOf="@+id/tv_mypage_code" />
+                    app:layout_constraintStart_toEndOf="@+id/tv_mypage_code" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -179,7 +182,7 @@
                     android:id="@+id/rv_mypage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginHorizontal="16dp"
                     android:overScrollMode="never"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

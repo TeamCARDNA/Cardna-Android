@@ -27,6 +27,9 @@ class DetailCardViewModel @Inject constructor(
     private val _detailCard = MutableLiveData<ResponseDetailCardData.Data>()
     val detailCard: LiveData<ResponseDetailCardData.Data> = _detailCard
 
+    private val _cardImg = MutableLiveData<String>()
+    val cardImg: LiveData<String> = _cardImg
+
     private val _writerId = MutableLiveData<Int>()
     val writerId: LiveData<Int> = _writerId
 
@@ -80,6 +83,7 @@ class DetailCardViewModel @Inject constructor(
             }.onSuccess {
                 it.apply {
                     _detailCard.value = it
+                    _cardImg.value = cardImg
                     _type.value = type
                     _title.value = title
                     _name.value = name ?: ""
