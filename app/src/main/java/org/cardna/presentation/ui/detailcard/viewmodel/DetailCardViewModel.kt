@@ -11,6 +11,7 @@ import org.cardna.domain.repository.LikeRepository
 import org.cardna.domain.repository.UserRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
+import org.cardna.presentation.util.SingleLiveEvent
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -64,6 +65,10 @@ class DetailCardViewModel @Inject constructor(
 
     val myDefault = MutableLiveData("")
 
+    private val _isNotExistCardYou = SingleLiveEvent<Any>()
+    val isNotExistCardYou: LiveData<Any> = _isNotExistCardYou
+
+
     /* 저장소 : storage true true
     * 내가 카드나 : me true false
     * 내가 카드너 : you true false
@@ -100,6 +105,7 @@ class DetailCardViewModel @Inject constructor(
 
                 }
             }.onFailure {
+                _isNotExistCardYou.call()
                 Timber.e(it.toString())
             }
         }

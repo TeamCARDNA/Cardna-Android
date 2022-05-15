@@ -50,16 +50,10 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     private fun setObserve() {
-        /*   alarmViewModel.isFriendRequestEmpty.observe(this) { isFriendRequestEmpty ->
-               if (!isFriendRequestEmpty) setFriendRequestAdapter()
-           }*/
         alarmViewModel.friendRequest.observe(this) { friendRequest ->
             friendRequestAdapter.submitList(friendRequest)
         }
 
-        /* alarmViewModel.isWriteCardYouEmpty.observe(this) { isWriteCardYouEmpty ->
-             if (!isWriteCardYouEmpty) setWriteCardYouAdapter()
-         }*/
         alarmViewModel.writeCardYou.observe(this) { writeCardYou ->
             writeCardYouAdapter.submitList(writeCardYou)
         }
@@ -78,7 +72,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         }
         with(binding.rcvAlarmFriendRequest) {
             adapter = friendRequestAdapter
-            dividerItemDecoration = DividerItemDecoration(this@AlarmActivity, R.drawable.bgbgbgbgbg, 0,0)
+            dividerItemDecoration = DividerItemDecoration(this@AlarmActivity, R.drawable.bgbgbgbgbg, 0, 0)
             addItemDecoration(dividerItemDecoration)
             layoutManager = LinearLayoutManager(this@AlarmActivity)
             setUnfoldListener(friendRequestAdapter)
@@ -89,7 +83,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         writeCardYouAdapter = WriteCardYouAdapter(this) { item ->
             val intent = Intent(this, DetailCardActivity::class.java)
                 .putExtra(BaseViewUtil.CARD_ID, item.cardId)
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡCARD_IDㅡㅡㅡㅡㅡㅡㅡ", item.cardId.toString())
+            Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", item.cardId.toString())
             startActivity(intent)
         }
         with(binding.rcvAlarmWriteCardyou) {
@@ -109,13 +103,6 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
                 adapter.loadStatus = true
             }
             friendRequestAdapter.notifyDataSetChanged()  //리스트 크기 매번 변경해야함으로 사용
-        }
-    }
-
-    private fun submitFriendRequestList() {
-        alarmViewModel.friendRequest.observe(this) {
-            friendRequestAdapter.submitList(it)
-            Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "$it")
         }
     }
 

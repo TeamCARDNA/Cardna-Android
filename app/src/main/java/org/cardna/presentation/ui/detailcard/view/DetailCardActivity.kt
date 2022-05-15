@@ -36,7 +36,12 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
 
     private fun initData() {
         val id = intent.getIntExtra(BaseViewUtil.CARD_ID, 0)
+
         detailCardViewModel.setCardId(id)
+        detailCardViewModel.isNotExistCardYou.observe(this) {
+            shortToast("존재하지 않는 카드입니다")
+            finish()
+        }
     }
 
     @SuppressLint("ResourceType")
@@ -90,9 +95,11 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                         if ((view as TextView).text == "보관") {
                             shortToast("보관함에 보관되었어요!ㅎ")
                             detailCardViewModel.keepOrAddCard()
+                            popup.dismiss()
                             finish()
                         } else {
                             detailCardViewModel.deleteCard()
+                            popup.dismiss()
                             finish()
                         }
                     }
@@ -106,6 +113,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                             popup.dismiss()
                         } else {
                             detailCardViewModel.deleteCard()
+                            popup.dismiss()
                             finish()
                         }
                     }
