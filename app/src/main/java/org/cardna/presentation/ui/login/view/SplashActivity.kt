@@ -132,8 +132,12 @@ class SplashActivity :
 
                 // Main으로 이동
                 moveMain()
+            } else {
+
             }
             //로그아웃
+
+        } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {
             Timber.d("else if logout kakaoUserFirstName : ${CardNaRepository.naverUserfirstName}")
             moveOnboarding()
         } else {
