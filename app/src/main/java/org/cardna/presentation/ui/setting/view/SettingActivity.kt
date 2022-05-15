@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.viewModels
+import com.navercorp.nid.NaverIdLoginSDK
 import org.cardna.R
 import org.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,6 +81,7 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
                     kakaoUserToken = ""
                     kakaoUserRefreshToken = ""
                 } else {
+//                    NaverIdLoginSDK.logout()
                     naverUserlogOut = true
                     naverUserToken = ""
                     naverUserRefreshToken = ""

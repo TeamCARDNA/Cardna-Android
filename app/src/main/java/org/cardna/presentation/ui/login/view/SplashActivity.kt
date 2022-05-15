@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import com.navercorp.nid.NaverIdLoginSDK
 import org.cardna.BuildConfig.*
 import com.kakao.sdk.user.UserApiClient
+import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.ActivitySplashBinding
@@ -23,7 +24,7 @@ import timber.log.Timber
 
 
 @AndroidEntryPoint
-class SplashActivity :
+class  SplashActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>(R.layout.activity_splash) {
     private val loginViewModel: LoginViewModel by viewModels()
 
@@ -42,7 +43,7 @@ class SplashActivity :
     // naverLogin
     private fun initNaverLogin(){
         Timber.d("initNaverLogin")
-//        NaverIdLoginSDK.initialize(this, NAVER_API_CLIENT_ID, NAVER_API_CLIENT_SECRET, NAVER_API_APP_NAME)
+        NaverIdLoginSDK.initialize(this, NAVER_API_CLIENT_ID, NAVER_API_CLIENT_SECRET, NAVER_API_APP_NAME)
     }
 
     private fun setFullScreen() {
@@ -121,9 +122,27 @@ class SplashActivity :
                 moveMain()
             }
             else if(loginViewModel.issuanceMessage == "모든 토큰이 만료되었습니다.") { // 3. 둘다 만료
+                val oauthLoginCallback = object : OAuthLoginCallback {
+                    override fun onSuccess() {
+                        // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
+                        Timber.d("naver onSuccess: ")
+                        loginViewModel.setNaverSocialUserToken(NaverIdLoginSDK.getAccessToken()!!)
+                    }
+
+                    override fun onFailure(httpStatus: Int, message: String) {
+                        val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                        val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+                        Timber.d("naver ErrorCode : ${errorCode}")
+                        Timber.d("naver ErrorDescription : ${errorDescription}")
+                    }
+
+                    override fun onError(errorCode: Int, message: String) {
+                        onFailure(errorCode, message)
+                    }
+                }
 
                 // 네이버 소셜 로그인을 통해 naver accessToken 얻기
-//                NaverIdLoginSDK.authenticate(this, loginViewModel.oauthLoginCallback)
+                NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
 
                 // 소셜로그인 API를 호출하기 위해 헤더의 토큰을 naver 소셜 토큰으로 갈아끼움
                 CardNaRepository.userToken = loginViewModel.naverSocialUserToken!!
@@ -134,12 +153,9 @@ class SplashActivity :
                 // Main으로 이동
                 moveMain()
             }
-            else{
-
-            }
             //로그아웃
         } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {
-
+            moveOnboarding()
         }
     }
 

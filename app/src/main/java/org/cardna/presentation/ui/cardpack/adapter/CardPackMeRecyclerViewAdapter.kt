@@ -12,7 +12,7 @@ import timber.log.Timber
 
 class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
     private val clickListenerDetail: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null,
-
+    private val clickListenerLike: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null,
 ) : ListAdapter<ResponseCardMeData.CardList.CardMe, CardPackMeRecyclerViewAdapter.CardPackMeViewHolder>(CardMeComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardPackMeViewHolder {
@@ -30,14 +30,25 @@ class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
         private val binding: ItemCardpackCardmeBinding
     ) : RecyclerView.ViewHolder(binding.root){
 
-        fun onBind(cardMe: ResponseCardMeData.CardList.CardMe, onCardMeClick: ((ResponseCardMeData.CardList.CardMe) -> Unit) ?= null) {
+        fun onBind(cardMe: ResponseCardMeData.CardList.CardMe,
+                   onCardMeClick: ((ResponseCardMeData.CardList.CardMe) -> Unit) ?= null,
+                   onCardMeLike: ((ResponseCardMeData.CardList.CardMe) -> Unit) ?= null ) {
             with(binding){
+                // data 채워주기
                 Glide.with(itemView.context).load(cardMe.cardImg).into(binding.ivCardpackRecyclerview)
                 tvCardpackRecyclerview.text = cardMe.title
-                isLiked = cardMe.isLiked // null이면 내 카드
+
+                // 리스너 달기
                 root.setOnClickListener{
                     onCardMeClick?.invoke(cardMe)
                 }
+
+
+                isLiked = cardMe.isLiked // null이면 내 카드이므로 이거 처리 ??!!!?
+                ctvCardmeLike.setOnClickListener{
+                    onCardMeLike?.invoke(cardMe)
+                }
+
                 Timber.e("CardMe onBind")
                 // 타인의 카드나이면, 공감버튼 선택하는 리스너도 달아줘야함
                 // 애초에 item_cardpack_cardme xml 파일에 공감버튼을 추가하고, id가 null이면 이를 gone 시키고,
