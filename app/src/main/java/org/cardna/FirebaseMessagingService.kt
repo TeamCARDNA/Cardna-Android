@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import me.leolin.shortcutbadger.ShortcutBadger
 import org.cardna.presentation.MainActivity
 import timber.log.Timber
 import java.io.IOException
@@ -30,8 +31,6 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         //푸시알림 ON OFF저장해야함  && CardNaApplication.isBackground
         if (remoteMessage.data.isNotEmpty() && CardNaApplication.isBackground) {
             sendNotiNotification(remoteMessage)
-            Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${remoteMessage.data["title"].toString()}")
-            Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${remoteMessage.data["body"].toString()}")
         } else {
             Timber.d("pushAlarm", "Forground상태이거나 data가 비어있습니다. 메시지를 수신하지 못했습니다.")
         }
@@ -72,7 +71,10 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                 .setContentIntent(pendingIntent)
                 .setSound(null) //소리
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) //잠금
-        // .setNumber(6)
+            //    .setNumber(1) //배지 갯수 넣는부분
+                .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL) //배지 스타일을 이렇게 주어야한다.
+
+   //     ShortcutBadger.applyCount(applicationContext, 1)// <--해당부분을 통해 배지 갯수가 표시된다
 
 
         val notificationManager =
@@ -83,43 +85,10 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                 NotificationChannel(
                     channelId, "Notice",
                     NotificationManager.IMPORTANCE_DEFAULT,
-                    //NotificationManager.IMPORTANCE_LOW
                 )
-              channel.vibrationPattern = longArrayOf(0) // 진동 끄기
-              channel.enableVibration(false) // 진동 끄기*/
-
-            channel.vibrationPattern = longArrayOf(100, 200) // 진동주기
-
+            channel.setShowBadge(true)
             notificationManager.createNotificationChannel(channel)
         }
         notificationManager.notify(uniId, notificationBuilder.build())
     }
-
-
-
-/*    fun getBitmapCircleCrop(bitmap: Bitmap, Width: Int = 0, Height: Int = 0): Bitmap {
-        val output = Bitmap.createBitmap(
-            bitmap.width,
-            bitmap.height, Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(output)
-        val color = -0xbdbdbe
-        val paint = Paint()
-        val rect = Rect(0, 0, bitmap.width, bitmap.height)
-        paint.setAntiAlias(true)
-        canvas.drawARGB(0, 0, 0, 0)
-        paint.setColor(color)
-        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-        canvas.drawCircle(
-            (bitmap.width / 2).toFloat(), (bitmap.height / 2).toFloat(),
-            (bitmap.width / 2).toFloat(), paint
-        )
-        paint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
-        canvas.drawBitmap(bitmap, rect, rect, paint)
-        var CroppedBitmap = output
-        //width, Height에 0,0을 넣으면 원본 사이즈 그대로 출력
-        if (Width != 0 && Height != 0) CroppedBitmap = Bitmap.createScaledBitmap(output, Width, Height, false)
-        return CroppedBitmap
-    }*/
-
 }

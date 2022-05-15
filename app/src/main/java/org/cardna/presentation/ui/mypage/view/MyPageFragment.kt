@@ -37,11 +37,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         initView()
     }
 
-    override fun onResume() {
-        super.onResume()
-        setInitSearchResultStatus()
-    }
-
     override fun initView() {
         binding.etMypageNameSearchBackground.clearFocus()
         setSearchFriendNameResultObserve()
@@ -62,15 +57,14 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun setInitSearchResultStatus() {
+        Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${myPageViewModel.searchNameQuery.value}" + "${myPageViewModel.isNonExistFriend.value}")
         if (myPageViewModel.searchNameQuery.value?.isNotEmpty() == true && myPageViewModel.isNonExistFriend.value == false) {
             myPageFriendAdapter.submitList(myPageViewModel.searchFriendNameResult.value)
         } else if (myPageViewModel.searchNameQuery.value?.isNotEmpty() == true && myPageViewModel.isNonExistFriend.value == true) {
             return
         } else {
             myPageViewModel.getUserMyPage()
-            myPageViewModel.friendList.observe(viewLifecycleOwner) {
-                myPageFriendAdapter.submitList(it)
-            }
+            myPageViewModel.setQueryState(MyPageViewModel.DEFAULT_STATE)
         }
     }
 
@@ -96,7 +90,10 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
                 when (event) {
                     MyPageViewModel.SEARCH_QUERY -> myPageFriendAdapter.submitList(myPageViewModel.searchFriendNameResult.value)//진짜 검색해서 결과뜬 경우
                     MyPageViewModel.EXIST_QUERY -> myPageFriendAdapter.submitList(myPageViewModel.friendList.value)//쿼리있는데 왔다가 온경우 ->업데이트 없어야함
-                    MyPageViewModel.DEFAULT_STATE -> myPageFriendAdapter.submitList(myPageViewModel.friendList.value) //가장 처음엔 운래 친구리스트
+                    MyPageViewModel.DEFAULT_STATE ->
+                        myPageViewModel.friendList.observe(viewLifecycleOwner) { friendList ->
+                            myPageFriendAdapter.submitList(friendList) //가장 처음엔 운래 친구리스트
+                        }
                 }
             }
         }
@@ -141,11 +138,10 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     private fun setMyPageFriendAdapter() {
         myPageFriendAdapter = MyPageFriendAdapter(requireActivity(), myPageViewModel) { item ->
             val bundle = Bundle().apply {
-                putInt("id", item.id)
+                putInt(BaseViewUtil.ID, item.id)  //친구 아이디
                 putString("name", item.name)
                 putString("sentence", item.sentence)
             }
-
             val mainCardFragment = MainCardFragment()
             mainCardFragment.arguments = bundle
 
@@ -179,6 +175,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     private fun setSettingBtnValidObserve() {
         myPageViewModel.settingBtnIsValid.observe(viewLifecycleOwner) {
             binding.ivMypageSetting.isClickable = it
+            if (it) setInitSearchResultStatus()
         }
     }
 }

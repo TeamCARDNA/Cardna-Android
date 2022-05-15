@@ -146,6 +146,7 @@ class CardCreateViewModel @Inject constructor(
                 }
             }
         } else { // 카드너 작성 => friendId 포함
+            if (id == -1) return
             val body = RequestCreateCardYouData(
                 etKeywordText.value!!,
                 etDetailText.value!!,
@@ -153,7 +154,8 @@ class CardCreateViewModel @Inject constructor(
                 id // friendId로 들어감
             ).toRequestBody()
 
-            if (makeUriToFile== null) { // 심볼 선택
+            if (makeUriToFile == null) { // 심볼 선택
+
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, null) }
                         .onSuccess { Timber.e("카드너 작성 성공 : ${it.message}") }

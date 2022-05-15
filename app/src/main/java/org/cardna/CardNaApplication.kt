@@ -19,12 +19,10 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         initPixelUtil()
         initLogger()
         CardNaRepository.init(this)
-
-//        initKakaoLogin()
-//        initFirebaseApp()
     }
 
 
+    //백&온그라운드 분기
     override fun onTerminate() {
         super.onTerminate()
         unregisterActivityLifecycleCallbacks(this)
@@ -38,19 +36,11 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         Timber.plant(Timber.DebugTree())
     }
 
-//    private fun initKakaoLogin() {
-//        val kakaoAppKey = BuildConfig.KAKAO_APP_KEY
-//        KakaoSdk.init(this, kakaoAppKey)
-//    }
-
     override fun onActivityCreated(p0: Activity, p1: Bundle?) {
     }
 
     override fun onActivityStarted(p0: Activity) {
         isBackground = false
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancelAll() //앱 실행시 모든 푸시알림 삭제
     }
 
     override fun onActivityResumed(p0: Activity) {

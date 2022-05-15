@@ -122,19 +122,16 @@ class MainActivity :
         bottomDialogCardFragment.show(supportFragmentManager, bottomDialogCardFragment.tag)
     }
 
-    /** DynamicLink */
     private fun initDynamicLink() {
         val dynamicLinkData = intent.extras
         if (dynamicLinkData != null) {
-            //상세로 가나 카드너보관함으로가나 ?
             if (dynamicLinkData.get("body").toString().contains("작성")) {
-                startActivity(
-                    Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())
-                )
+                //  startActivity(
+                //       Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())
+                //    )
             } else {
                 Timber.e(dynamicLinkData.get("uniId").toString())
                 startActivity(Intent(this, AlarmActivity::class.java).apply {
-                    //         putExtra("uniId", dynamicLinkData.get("uniId").toString())
                 })
             }
         }

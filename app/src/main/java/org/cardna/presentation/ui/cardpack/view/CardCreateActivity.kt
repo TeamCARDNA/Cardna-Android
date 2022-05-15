@@ -64,6 +64,7 @@ class CardCreateActivity :
                 -1
             )
         ) // 내 카드나일 경우 null로 setting 되도록
+
         cardCreateViewModel.setUserName(intent.getStringExtra(BaseViewUtil.NAME)) // 안넘겨주면 null ?
     }
 

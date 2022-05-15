@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
@@ -113,11 +114,12 @@ class MainCardFragment :
 
     private fun setCardYouWrite() {
         binding.ivMaincardWrite.setOnClickListener {
-            val friendId = arguments?.getInt("friendId", -1)
+            val friendId = arguments?.getInt(BaseViewUtil.ID, -1)
             val name = arguments?.getString("name")
+
             val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
                 putExtra("isCardMeOrYou", BaseViewUtil.CARD_YOU)
-                putExtra("id", friendId)
+                putExtra(BaseViewUtil.ID, friendId)
                 putExtra("name", name)
                 putExtra("isCardPackOrMainCard", BaseViewUtil.CARD_YOU)
                 startActivity(this)
