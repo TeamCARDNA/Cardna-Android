@@ -37,6 +37,11 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         initView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        setInitSearchResultStatus()
+    }
+
     override fun initView() {
         binding.etMypageNameSearchBackground.clearFocus()
         setSearchFriendNameResultObserve()
@@ -53,12 +58,18 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     private fun initData() {
         myPageViewModel.getUserMyPage()
+        setInitSearchResultStatus()
+    }
+
+    private fun setInitSearchResultStatus() {
         if (myPageViewModel.searchNameQuery.value?.isNotEmpty() == true && myPageViewModel.isNonExistFriend.value == false) {
             myPageFriendAdapter.submitList(myPageViewModel.searchFriendNameResult.value)
         } else if (myPageViewModel.searchNameQuery.value?.isNotEmpty() == true && myPageViewModel.isNonExistFriend.value == true) {
             return
         } else {
-            myPageFriendAdapter.submitList(myPageViewModel.friendList.value)
+            myPageViewModel.friendList.observe(viewLifecycleOwner) {
+                myPageFriendAdapter.submitList(it)
+            }
         }
     }
 
