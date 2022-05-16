@@ -44,7 +44,7 @@
             tools:text="댕댕이 짱 좋아" />
 
         <CheckedTextView
-            android:id="@+id/ctv_cardpack_cardme"
+            android:id="@+id/ctv_cardpack_cardyou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"

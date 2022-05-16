@@ -1,6 +1,7 @@
 package org.cardna.presentation.ui.cardpack.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
@@ -46,34 +47,27 @@ class CardPackYouRecyclerViewAdapter(
                     onCardYouClick?.invoke(cardYou)
                 }
 
-                // 타인의 카드나이면, 공감버튼 선택하는 리스너도 달아줘야함
-                // 애초에 item_cardpack_cardme xml 파일에 공감버튼을 추가하고, id가 null이면 이를 gone 시키고,
-                // 이에 대해 리스너도 달아줘야함
+                cardPackViewModel.id.observe(context) {
+                    if (it != null) {
+                        ctvCardpackCardyou.visibility = View.VISIBLE
 
-         cardPackViewModel.cardYouList.observe(context) { cardYouList ->
-                    cardPackViewModel.id.observe(context) {
-                        if (it != null) {
-                            for (item in cardYouList) {
-                                if (item.id == cardYou.id) {
-                                    ctvCardpackCardme.isChecked = cardYou.isLiked ?: false
+                        cardPackViewModel.cardYouList.observe(context) { cardMeList ->
+                            cardPackViewModel.id.observe(context) {
+                                for (item in cardMeList) {
+                                    if (item.id == cardYou.id) {
+                                        ctvCardpackCardyou.isChecked = cardYou.isLiked ?: false
+                                    }
                                 }
                             }
                         }
-                    }
-                }
 
-                cardPackViewModel.id.observe(context) {
-                    if (it != null) {
-                        ctvCardpackCardme.setOnClickListener {
-                            ctvCardpackCardme.toggle()
+                        ctvCardpackCardyou.setOnClickListener {
                             cardPackViewModel.postLike(cardYou.id)
-                            if(ctvCardpackCardme.isChecked){
+                            ctvCardpackCardyou.toggle()
+                            if (ctvCardpackCardyou.isChecked) {
                                 showLottie(binding.laCardpackCardyouLottie, DetailCardActivity.CARD_YOU, "lottie_cardyou.json")
                             }
                         }
-                    } else {
-                        ctvCardpackCardme.isChecked = true
-                        ctvCardpackCardme.isClickable = false
                     }
                 }
             }
