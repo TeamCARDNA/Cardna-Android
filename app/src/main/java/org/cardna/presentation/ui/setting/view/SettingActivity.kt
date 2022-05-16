@@ -86,7 +86,6 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
                     kakaoUserToken = ""
                     kakaoUserRefreshToken = ""
                 } else {
-//                    NaverIdLoginSDK.logout()
                     naverUserlogOut = true
                     naverUserToken = ""
                     naverUserRefreshToken = ""

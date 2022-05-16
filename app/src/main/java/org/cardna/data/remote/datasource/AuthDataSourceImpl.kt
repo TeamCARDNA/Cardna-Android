@@ -17,8 +17,8 @@ class AuthDataSourceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getNaverLogin(fcmToken: String): ResponseSocialLoginData {
-        return authService.getNaverLogin(fcmToken)
+    override suspend fun getNaverLogin(): ResponseSocialLoginData {
+        return authService.getNaverLogin()
     }
 
     override suspend fun postSignUp(requestSignUpData: RequestSignUpData): ResponseSignUpData {

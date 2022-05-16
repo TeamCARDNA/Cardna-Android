@@ -42,7 +42,6 @@ class LoginActivity :
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
         setClickListener()
-//        testKakao()
     }
 
     private fun setPrivacyPolicyActivity(title: String, text: String): Intent {
@@ -72,7 +71,6 @@ class LoginActivity :
             }
             btnLoginKakao.setOnClickListener {
                 setKakaoBtnListener()
-//                testKakao()
             }
             btnLoginNaver.setOnClickListener {
                 setNaverLogin()
@@ -90,49 +88,31 @@ class LoginActivity :
         )
 
         val oauthLoginCallback = object : OAuthLoginCallback {
-            override fun onSuccess() {
-                // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
-                Timber.d("naver onSuccess: ")
-                loginViewModel.setNaverSocialUserToken(NaverIdLoginSDK.getAccessToken()!!)
+            override fun onError(errorCode: Int, message: String) {
+                onFailure(errorCode, message)
             }
 
             override fun onFailure(httpStatus: Int, message: String) {
                 val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                Timber.d("naver ErrorCode : ${errorCode}")
-                Timber.d("naver ErrorDescription : ${errorDescription}")
-//            shortToast("errorCode:$errorCode, errorDesc:$errorDescription")
+                val errorDesc = NaverIdLoginSDK.getLastErrorDescription()
+                Timber.e("errorCode:$errorCode, errorDesc:$errorDesc")
             }
 
-            override fun onError(errorCode: Int, message: String) {
-                onFailure(errorCode, message)
+            override fun onSuccess() {
+                val accessToken = NaverIdLoginSDK.getAccessToken() ?: return
+                CardNaRepository.naverAccessToken = accessToken
+                with(loginViewModel) {
+                    getNaverLogin()
+                    gotoSetName.observe(this@LoginActivity) { gotoSetName ->
+                        if (gotoSetName) startSetNameActivity()
+                        else startMainActivity()
+
+                        finish()
+                    }
+                }
             }
         }
-
-        // 네이버 자체 소셜 로그인 호출
         NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
-
-        // 소셜로그인 API 호출을 위해 헤더토큰 naverToken으로 갈아끼움
-        CardNaRepository.userToken = loginViewModel.naverSocialUserToken!!
-
-        // 2. 소셜로그인 API 호출
-        loginViewModel.getNaverLogin()
-
-        if (loginViewModel.loginType == "signin") { // 2 - 1. 재로그인 => MainActivity로 이동
-            moveOnMain()
-        } else if (loginViewModel.loginType == "signup") { // 2 - 2. 회원가입
-            moveOnSetName()
-        }
-    }
-
-    private fun startMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun startSetNameActivity() {
-        val intent = Intent(this, SetNameActivity::class.java)
-        startActivity(intent)
     }
 
     //todo 카카오 로그인
@@ -140,20 +120,17 @@ class LoginActivity :
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
             } else if (token != null) {
-                UserApiClient.instance.me { user, error ->
+                UserApiClient.instance.me { _, error ->
                     val accessToken = token.accessToken
-
+                    //토큰저장 후 api콜백
+                    CardNaRepository.kakaoAccessToken = accessToken
                     with(loginViewModel) {
-                        //토큰저장 후 api콜백
-                        CardNaRepository.kakaoAccessToken=accessToken
                         getKakaoLogin()
                         isLogin.observe(this@LoginActivity) { success ->
-                            if (success) {
-                                startMainActivity()
-                            } else {
-                                startSetNameActivity()
-                                finish()
-                            }
+                            if (success) startMainActivity()
+                            else startSetNameActivity()
+
+                            finish()
                         }
                     }
                 }
@@ -203,18 +180,13 @@ class LoginActivity :
         }
     }
 
-    private fun moveOnMain() {
-        Intent(this, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(this)
-        }
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
-
-    private fun moveOnSetName() {
-        Intent(this, SetNameActivity::class.java).apply {
-            startActivity(this)
-        }
+    private fun startSetNameActivity() {
+        val intent = Intent(this, SetNameActivity::class.java)
+        startActivity(intent)
     }
 }
