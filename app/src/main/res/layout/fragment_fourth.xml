@@ -25,14 +25,42 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_fourth_about"
+            android:id="@+id/tv_fourth_about1"
             style="@style/onboarding_about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@string/onboarding_insight_about"
+            android:text="@string/onboarding_insight_about1"
             app:layout_constraintStart_toStartOf="@id/tv_fourth_title"
             app:layout_constraintTop_toBottomOf="@id/tv_fourth_title" />
+
+        <TextView
+            android:id="@+id/tv_fourth_about2"
+            style="@style/onboarding_about"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/onboarding_insight_about2"
+            app:layout_constraintStart_toStartOf="@id/tv_fourth_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_fourth_about1" />
+
+        <TextView
+            android:id="@+id/tv_fourth_about3"
+            style="@style/onboarding_about"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/onboarding_insight_about3"
+            app:layout_constraintStart_toEndOf="@id/tv_fourth_about2"
+            app:layout_constraintTop_toTopOf="@id/tv_fourth_about2" />
+
+        <TextView
+            android:id="@+id/tv_fourth_about4"
+            style="@style/onboarding_about"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/onboarding_insight_about4"
+            app:layout_constraintStart_toEndOf="@id/tv_fourth_about3"
+            app:layout_constraintTop_toTopOf="@id/tv_fourth_about2" />
 
         <ImageView
             android:layout_width="0dp"
@@ -42,7 +70,7 @@
             android:src="@drawable/img_onboarding_insight"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_fourth_about" />
+            app:layout_constraintTop_toBottomOf="@id/tv_fourth_about4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
