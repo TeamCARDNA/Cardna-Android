@@ -64,6 +64,7 @@ class LoginViewModel @Inject constructor(
             kotlin.runCatching {
                 authRepository.getKakaoLogin()
             }.onSuccess {
+                Timber.d("viewmodel : ${it.data}")
                 with(CardNaRepository) {
                     //로그인 성공
                     kakaoAccessToken = ""  //todo 인터셉트바꾸기 위함
@@ -71,6 +72,7 @@ class LoginViewModel @Inject constructor(
                         kakaoUserToken = it.data.accessToken
                         kakaoUserRefreshToken = it.data.refreshToken
                         userSocial = KAKAO
+                        userToken = kakaoUserToken
                         _isLogin.value = true
                         kakaoUserlogOut = false
                     } else {
@@ -80,6 +82,7 @@ class LoginViewModel @Inject constructor(
                         _isLogin.value = false
                     }
                 }
+
                 Timber.d("login success : ${it.data}")
             }.onFailure {
                 //비회원 or 토큰이 올바르지 않은 경우
@@ -101,11 +104,11 @@ class LoginViewModel @Inject constructor(
                         naverUserToken = it.data.accessToken
                         naverUserRefreshToken = it.data.refreshToken
                         userToken = it.data.accessToken
-                        _gotoSetName.value=false
+                        _gotoSetName.value = false
                     } else { // 2. 회원가입
                         userSocial = it.data.social
                         userUuid = it.data.uuid
-                        _gotoSetName.value=true
+                        _gotoSetName.value = true
                     }
                     Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ네이버로그이느ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ $it")
                 }

@@ -25,7 +25,6 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         initLogger()
         initKakaoLogin()
         CardNaRepository.init(this)
-        CardNaRepository.init(this)
         getDeviceToken()
     }
 
