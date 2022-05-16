@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import org.cardna.R
-import org.cardna.databinding.FragmentEditCardDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
+import org.cardna.R
 import org.cardna.data.remote.model.card.RequestEditCardData
+import org.cardna.databinding.FragmentEditCardDialogBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardTabAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
@@ -29,7 +29,6 @@ class EditCardDialogFragment :
         binding.editCardViewModel = editCardViewModel
         initView()
     }
-
 
     override fun initView() {
         (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -51,6 +50,10 @@ class EditCardDialogFragment :
         ) { tab, position ->
             tab.text = tabLabel[position]
         }.attach()
+        binding.tlRepresentcardedit.apply {
+            tabRippleColor = null
+            layoutParams.height = resources.getDimension(R.dimen.tablayout_view_h).toInt()
+        }
     }
 
     private fun initAdapter() {
@@ -59,17 +62,15 @@ class EditCardDialogFragment :
         editCardTabAdapter.fragments.addAll(fragmentList)
 
         binding.rvEditcarddialogContainer.adapter = editCardTabAdapter
-        binding.tlRepresentcardedit.layoutParams.height = resources.getDimension(R.dimen.tablayout_view_h).toInt()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
+        binding.tlRepresentcardedit.layoutParams.height =
+            resources.getDimension(R.dimen.tablayout_view_h).toInt()
     }
 
     private fun mainCardCount() {
-        editCardViewModel.selectedCardList.observe(viewLifecycleOwner) {
-            binding.tvRepresentcardeditCardListCount.text = it.size.toString()
+        binding.tvRepresentcardeditCardListCount.apply {
+            editCardViewModel.selectedCardList.observe(viewLifecycleOwner) {
+                binding.tvRepresentcardeditCardListCount.text = it.size.toString()
+            }
         }
     }
 
@@ -99,7 +100,10 @@ class EditCardDialogFragment :
                     for (i in 0 until tabChildsCount) {
                         val tabViewChild = vgTab.getChildAt(i)
                         if (tabViewChild is TextView) {
-                            val tf = Typeface.createFromAsset(requireActivity().assets, "pretendard_semibold.ttf")
+                            val tf = Typeface.createFromAsset(
+                                requireActivity().assets,
+                                "pretendard_semibold.ttf"
+                            )
                             tabViewChild.typeface = tf
                         }
                     }
@@ -110,7 +114,10 @@ class EditCardDialogFragment :
                     for (i in 0 until tabChildsCount) {
                         val tabViewChild = vgTab.getChildAt(i)
                         if (tabViewChild is TextView) {
-                            val tf = Typeface.createFromAsset(requireActivity().assets, "pretendard_regular.ttf")
+                            val tf = Typeface.createFromAsset(
+                                requireActivity().assets,
+                                "pretendard_regular.ttf"
+                            )
                             tabViewChild.typeface = tf
                         }
                     }
@@ -123,7 +130,10 @@ class EditCardDialogFragment :
                     for (i in 0 until tabChildsCount) {
                         val tabViewChild = vgTab.getChildAt(i)
                         if (tabViewChild is TextView) {
-                            val tf = Typeface.createFromAsset(requireActivity().assets, "pretendard_semibold.ttf")
+                            val tf = Typeface.createFromAsset(
+                                requireActivity().assets,
+                                "pretendard_semibold.ttf"
+                            )
                             tabViewChild.typeface = tf
                         }
                     }
@@ -134,7 +144,10 @@ class EditCardDialogFragment :
                     for (i in 0 until tabChildsCount) {
                         val tabViewChild = vgTab.getChildAt(i)
                         if (tabViewChild is TextView) {
-                            val tf = Typeface.createFromAsset(requireActivity().assets, "pretendard_regular.ttf")
+                            val tf = Typeface.createFromAsset(
+                                requireActivity().assets,
+                                "pretendard_regular.ttf"
+                            )
                             tabViewChild.typeface = tf
                         }
                     }

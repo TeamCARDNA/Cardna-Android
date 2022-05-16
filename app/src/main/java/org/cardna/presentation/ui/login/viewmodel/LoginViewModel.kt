@@ -72,6 +72,7 @@ class LoginViewModel @Inject constructor(
                         kakaoUserRefreshToken = it.data.refreshToken
                         userSocial = KAKAO
                         _isLogin.value = true
+                        userToken = kakaoUserToken
                         kakaoUserlogOut = false
                     } else {
                         //탈퇴했거나 가입하지 않은 유저
@@ -101,11 +102,12 @@ class LoginViewModel @Inject constructor(
                         naverUserToken = it.data.accessToken
                         naverUserRefreshToken = it.data.refreshToken
                         userToken = it.data.accessToken
-                        _gotoSetName.value=false
+                        naverUserfirstName = it.data.name
+                        _gotoSetName.value = false
                     } else { // 2. 회원가입
                         userSocial = it.data.social
                         userUuid = it.data.uuid
-                        _gotoSetName.value=true
+                        _gotoSetName.value = true
                     }
                     Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ네이버로그이느ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ $it")
                 }
