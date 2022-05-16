@@ -9,9 +9,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.ActivityDetailCardBinding
-import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel
 import org.cardna.presentation.util.*
@@ -90,9 +90,11 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                         if ((view as TextView).text == "보관") {
                             shortToast("보관함에 보관되었어요!ㅎ")
                             detailCardViewModel.keepOrAddCard()
+                            popup.dismiss()
                             finish()
                         } else {
                             detailCardViewModel.deleteCard()
+                            popup.dismiss()
                             finish()
                         }
                     }
@@ -106,6 +108,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                             popup.dismiss()
                         } else {
                             detailCardViewModel.deleteCard()
+                            popup.dismiss()
                             finish()
                         }
                     }

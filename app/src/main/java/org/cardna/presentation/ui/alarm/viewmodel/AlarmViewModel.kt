@@ -1,23 +1,26 @@
 package org.cardna.presentation.ui.alarm.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.cardna.data.local.dao.DeletedCardYouDao
 import org.cardna.data.remote.model.alarm.ResponseGetAlarmData
 import org.cardna.data.remote.model.friend.RequestAcceptOrDenyFriendData
 import org.cardna.domain.repository.AlarmRepository
 import org.cardna.domain.repository.FriendRepository
+import org.cardna.presentation.base.BaseViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class AlarmViewModel @Inject constructor(
     private val friendRepository: FriendRepository,
-    private val alarmRepository: AlarmRepository
-) : ViewModel() {
+    private val alarmRepository: AlarmRepository,
+    private val deletedCardYouDao: DeletedCardYouDao
+) : BaseViewModel() {
 
     private val _foldStatus = MutableLiveData(true)
     val foldStatus: LiveData<Boolean> = _foldStatus
@@ -76,6 +79,34 @@ class AlarmViewModel @Inject constructor(
 
     fun setFriendRequestUnfold(foldStatus: Boolean) {
         _foldStatus.value = foldStatus
+    }
+
+    fun getDeletedCardYouList(cardId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                deletedCardYouDao.getAllDeletedCardYou()
+            }.onSuccess { it ->
+                if (it?.map { it.cardId }?.contains(cardId) == true) viewEvent(DELETED_CARD)
+                else viewEvent(EXISTED_CARD)
+
+            }.onFailure {
+                Timber.e(it.toString())
+            }
+        }
+    }
+
+    fun setDeletedCard(cardState: String) {
+        when (cardState) {
+            DELETED_CARD -> setCardSateResult(DELETED_CARD)
+            EXISTED_CARD -> setCardSateResult(EXISTED_CARD)
+        }
+    }
+
+    private fun setCardSateResult(state: String) = viewEvent(state)
+
+    companion object {
+        const val DELETED_CARD = "DELETED_CARD"
+        const val EXISTED_CARD = "EXISTED_CARD"
     }
 }
 

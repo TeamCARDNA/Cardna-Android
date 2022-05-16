@@ -122,6 +122,11 @@ class SearchFriendCodeActivity :
         startActivity(intent)
     }
 
+    override fun onBackPressed() {
+
+        super.onBackPressed()
+    }
+
     companion object {
         const val RELATION_ONE = 1 //모르는 인간
         const val RELATION_TWO = 2 //친구

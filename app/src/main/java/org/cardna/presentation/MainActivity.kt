@@ -46,7 +46,21 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         initView()
 
-
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(
+            OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(
+                        "BeMeApplication.TAG",
+                        "Fetching FCM registration token failed",
+                        task.exception
+                    )
+                    return@OnCompleteListener
+                } else {
+                    val token = task.result
+                    Log.d("BeMeApplication.TAGㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", token.toString())
+                }
+            }
+        )
     }
 
     override fun initView() {
@@ -117,7 +131,9 @@ class MainActivity :
         bottomDialogCardFragment.show(supportFragmentManager, bottomDialogCardFragment.tag)
     }
 
+
     private fun initGetIntent() {
+
         val dynamicLinkData = intent.extras
 
         /** 카드추가유도뷰에서 오는 경우*/
@@ -129,23 +145,10 @@ class MainActivity :
             })
         } ?: replace(R.id.fcv_main, mainCardFragment)
 
- /*       *//** 카드추가유도뷰->카드나 대표카드로 만드는 경우*//*
-        intent.getIntExtra(CardCreateCompleteActivity.CREAT_MAINCARD_KEY, -1).let {
-            lifecycleScope.launch {
-                try {
-                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡ카드나찐ㅡㅡㅡㅡㅡㅡㅡㅡ", it.toString())
-                    if (it != -1) {
-                        cardRepository.putEditCard(RequestEditCardData(listOf(it)))
-                        replace(R.id.fcv_main, mainCardFragment)
-                    }
-                } catch (e: Exception) {
-                    Log.d("실패", e.message.toString())
-                }
-            }
-        }*/
 
         /** 푸시알림에서 오는 경우*/
         if (dynamicLinkData != null) {
+
             if (dynamicLinkData.get("body").toString().contains("작성")) {
                 startActivity(
                     Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())

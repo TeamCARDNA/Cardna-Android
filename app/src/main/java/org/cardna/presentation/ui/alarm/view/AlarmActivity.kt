@@ -18,6 +18,7 @@ import org.cardna.presentation.ui.maincard.view.MainCardActivity
 import org.cardna.presentation.util.DividerItemDecoration
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.convertDPtoPX
+import org.cardna.presentation.util.shortToast
 
 @AndroidEntryPoint
 class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R.layout.activity_alarm) {
@@ -50,7 +51,6 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     private fun setObserve() {
-
         alarmViewModel.friendRequest.observe(this) { friendRequest ->
             friendRequestAdapter.submitList(friendRequest)
         }
@@ -73,7 +73,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         }
         with(binding.rcvAlarmFriendRequest) {
             adapter = friendRequestAdapter
-            dividerItemDecoration = DividerItemDecoration(this@AlarmActivity, R.drawable.bgbgbgbgbg, 0,0)
+            dividerItemDecoration = DividerItemDecoration(this@AlarmActivity, R.drawable.bgbgbgbgbg, 0, 0)
             addItemDecoration(dividerItemDecoration)
             layoutManager = LinearLayoutManager(this@AlarmActivity)
             setUnfoldListener(friendRequestAdapter)
@@ -84,8 +84,19 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         writeCardYouAdapter = WriteCardYouAdapter(this) { item ->
             val intent = Intent(this, DetailCardActivity::class.java)
                 .putExtra(BaseViewUtil.CARD_ID, item.cardId)
-            startActivity(intent)
+
+            alarmViewModel.getDeletedCardYouList(item.cardId ?: return@WriteCardYouAdapter)
+
+            alarmViewModel.viewEvent.observe(this) {
+                it.getContentIfNotHandled()?.let { event ->
+                    when (event) {
+                        AlarmViewModel.DELETED_CARD -> shortToast("삭제된 카드입니다")
+                        AlarmViewModel.EXISTED_CARD -> startActivity(intent)
+                    }
+                }
+            }
         }
+
         with(binding.rcvAlarmWriteCardyou) {
             adapter = writeCardYouAdapter
             layoutManager = LinearLayoutManager(this@AlarmActivity)
@@ -103,13 +114,6 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
                 adapter.loadStatus = true
             }
             friendRequestAdapter.notifyDataSetChanged()  //리스트 크기 매번 변경해야함으로 사용
-        }
-    }
-
-    private fun submitFriendRequestList() {
-        alarmViewModel.friendRequest.observe(this) {
-            friendRequestAdapter.submitList(it)
-            Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "$it")
         }
     }
 

@@ -1,9 +1,7 @@
 package org.cardna.presentation.ui.mypage.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -12,7 +10,9 @@ import org.cardna.data.remote.model.friend.ResponseSearchFriendCodeData
 import org.cardna.data.remote.model.mypage.ResponseMyPageData
 import org.cardna.domain.repository.FriendRepository
 import org.cardna.domain.repository.MyPageRepository
+import org.cardna.presentation.base.BaseViewModel
 import org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity
+import org.cardna.presentation.util.SingleLiveEvent
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,10 +21,13 @@ import javax.inject.Inject
 class MyPageViewModel @Inject constructor(
     private val myPageRepository: MyPageRepository,
     private val friendRepository: FriendRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _settingBtnIsValid = MutableLiveData<Boolean>(false)
     val settingBtnIsValid: LiveData<Boolean> = _settingBtnIsValid
+
+    private val _refreshFriendList = SingleLiveEvent<Any>()
+    val refreshFriendList: LiveData<Any> = _refreshFriendList
 
     private val _myPage = MutableLiveData<ResponseMyPageData.Data>()
     val myPage: LiveData<ResponseMyPageData.Data> = _myPage
@@ -40,8 +43,10 @@ class MyPageViewModel @Inject constructor(
 
     private val _searchFriendNameResult = MutableLiveData<List<ResponseMyPageData.Data.FriendList>>()
     val searchFriendNameResult: LiveData<List<ResponseMyPageData.Data.FriendList>> = _searchFriendNameResult
+    private val _friendList = MutableLiveData<List<ResponseMyPageData.Data.FriendList>>()
+    val friendList: LiveData<List<ResponseMyPageData.Data.FriendList>> = _friendList
 
-    private val _isNonExistFriendName = MutableLiveData<Boolean>(false)
+    private val _isNonExistFriendName = MutableLiveData<Boolean>()
     val isNonExistFriend: LiveData<Boolean> = _isNonExistFriendName
 
     private val _searchFriendCodeResult = MutableLiveData<ResponseSearchFriendCodeData.Data>()
@@ -56,16 +61,52 @@ class MyPageViewModel @Inject constructor(
     private val _friendId = MutableLiveData<Int>()
     val friendId: LiveData<Int> = _friendId
 
-    private val _updateSearchNameQuerySuccess = MutableLiveData<Boolean>(true)
-    val updateSearchNameQuerySuccess: LiveData<Boolean> = _updateSearchNameQuerySuccess
+    private val _isInit = MutableLiveData<Boolean>(true)
+    val isInit: LiveData<Boolean> = _isInit
 
     fun updateSearchNameQuery(name: String) {
         _searchNameQuery.value = name
+        searchNamePost()
     }
 
-    fun setUpdateSearchNameQueryState(state: Boolean) {
-        _updateSearchNameQuerySuccess.value = state
+    fun setQueryState(queryState: String) {
+        when (queryState) {
+            DEFAULT_STATE -> setSearchFriendNameResult(DEFAULT_STATE)
+            SEARCH_QUERY -> setSearchFriendNameResult(SEARCH_QUERY)
+            EXIST_QUERY -> setSearchFriendNameResult(EXIST_QUERY)
+        }
     }
+
+    //viewEvent관련
+    private fun setSearchFriendNameResult(state: String) = viewEvent(state)
+
+    fun searchNamePost() {
+        val query = if (_searchNameQuery.value.isNullOrEmpty()) return else _searchNameQuery.value
+        viewModelScope.launch {
+            runCatching {
+                friendRepository.getSearchFriendName(query!!)
+            }.onSuccess {
+                isNonExistFriendName(false)
+                _searchFriendNameResult.value = it
+                setQueryState(SEARCH_QUERY)
+            }.onFailure {
+                isNonExistFriendName(true)
+                Timber.e(it.toString())
+            }
+        }
+    }
+
+    fun isNonExistFriendName(exist: Boolean) {
+        _isNonExistFriendName.value = exist
+    }
+
+
+    companion object {
+        const val SEARCH_QUERY = "SEARCH_QUERY"
+        const val EXIST_QUERY = "EXIST_QUERY"
+        const val DEFAULT_STATE = "DEFAULT_STATE"
+    }
+
 
     fun updateSearchCodeQuery(code: String) {
         _searchCodeQuery.value = code
@@ -79,24 +120,13 @@ class MyPageViewModel @Inject constructor(
                 it.apply {
                     _myPage.value = it
                     _friendCount.value = friendList.size.toString()
-                    _isNonExistFriendName.value = friendList.size == 0
+                    _friendList.value = it.friendList  //제일처음 친구 리스트
+                    if (_isInit.value == true) {
+                        setQueryState(DEFAULT_STATE)
+                        _isInit.value = false
+                    }
                 }
             }.onFailure {
-                Timber.e(it.toString())
-            }
-        }
-    }
-
-    fun searchNamePost() {
-        val query = if (_searchNameQuery.value.isNullOrEmpty()) return else _searchNameQuery.value
-        viewModelScope.launch {
-            runCatching {
-                friendRepository.getSearchFriendName(query!!)
-            }.onSuccess {
-                _isNonExistFriendName.value = false
-                _searchFriendNameResult.value = it
-            }.onFailure {
-                _isNonExistFriendName.value = true
                 Timber.e(it.toString())
             }
         }
@@ -109,7 +139,6 @@ class MyPageViewModel @Inject constructor(
                 friendRepository.getSearchFriendCode(query).data
             }.onSuccess {
                 it.apply {
-                    Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",it.toString())
                     _searchFriendCodeResult.value = it
                     _isNonExistFriendCode.value = false
                     _friendRelationType.value = relationType
@@ -134,8 +163,12 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    fun settingBtnIsValid(valid:Boolean){
-        _settingBtnIsValid.value=valid
+    fun settingBtnIsValid(valid: Boolean) {
+        _settingBtnIsValid.value = valid
+    }
+
+    fun refreshFriendList() {
+        _refreshFriendList.call()
     }
 
     //친구2->손절1
@@ -155,4 +188,6 @@ class MyPageViewModel @Inject constructor(
         _friendRelationType.value = SearchFriendCodeActivity.RELATION_THREE
         applyOrCancelFriend()
     }
+
+
 }

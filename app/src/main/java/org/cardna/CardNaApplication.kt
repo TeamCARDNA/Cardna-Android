@@ -41,6 +41,7 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
     }
 
 
+    //백&온그라운드 분기
     override fun onTerminate() {
         super.onTerminate()
         unregisterActivityLifecycleCallbacks(this)
