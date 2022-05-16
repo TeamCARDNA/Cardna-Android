@@ -10,16 +10,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_representeditcard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_black">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_rv_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_main_green_radius_8"
+            android:background="@drawable/bg_main_green_stoke_black_radius_8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -28,8 +27,7 @@
                 android:id="@+id/iv_representcardeditlist_image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginHorizontal="6dp"
-                android:layout_marginTop="6dp"
+                android:layout_margin="8dp"
                 android:background="@drawable/bg_solid_black"
                 android:padding="1dp"
                 android:scaleType="fitXY"
@@ -59,7 +57,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_minous_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

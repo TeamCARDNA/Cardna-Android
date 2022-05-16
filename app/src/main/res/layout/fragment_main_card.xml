@@ -23,7 +23,7 @@
             android:id="@+id/cl_maincard_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="28dp"
             android:layout_marginEnd="20dp"
             android:orientation="horizontal"
             android:visibility="@{mainCardViewModel.isMyCard ? View.VISIBLE : View.GONE}"
@@ -32,7 +32,7 @@
 
             <ImageView
                 android:id="@+id/ibtn_maincard_alarm"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_alarm" />
         </LinearLayout>

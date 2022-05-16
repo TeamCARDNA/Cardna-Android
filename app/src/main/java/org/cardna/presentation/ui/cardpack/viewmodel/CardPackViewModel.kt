@@ -60,6 +60,9 @@ class CardPackViewModel @Inject constructor(
     private val _isMyCode = MutableLiveData<String>()
     val isMyCode: LiveData<String> = _isMyCode
 
+    private val _tabPosition = MutableLiveData<Int>()
+    val tabPosition: LiveData<Int> = _tabPosition
+
     fun setUserId(id: Int?) {
         _id = id
     } // 타인의 프래그먼트 생성시, 그 프래그먼트 코드 단에서 getArguments 로 받아온 newId를 setUserId(newId) 이런형식으로 설정 ?
@@ -89,7 +92,7 @@ class CardPackViewModel @Inject constructor(
                 }.onSuccess {
                     it.apply {
                         _cardMeList.value = it.cardMeList
-                        _isCardMeEmpty.value = (it.totalCardCnt == 0) // 0일 때 true
+                        _isCardMeEmpty.value = (it.cardMeList.isEmpty())
                         Timber.e("CardMe: updateCardMeList")
                     }
                 }.onFailure {
@@ -103,7 +106,7 @@ class CardPackViewModel @Inject constructor(
                 }.onSuccess {
                     it.apply {
                         _cardMeList.value = it.cardMeList
-                        _isCardMeEmpty.value = (it.totalCardCnt == 0)
+                        _isCardMeEmpty.value = (it.cardMeList.isEmpty())
                     }
                 }.onFailure {
                     Timber.e(it.toString())
@@ -121,7 +124,7 @@ class CardPackViewModel @Inject constructor(
                 }.onSuccess {
                     it.apply {
                         _cardYouList.value = it.cardYouList
-                        _isCardYouEmpty.value = (it.totalCardCnt == 0)
+                        _isCardYouEmpty.value = (it.cardYouList.isEmpty())
                     }
                 }.onFailure {
                     Timber.e(it.toString())
@@ -134,7 +137,7 @@ class CardPackViewModel @Inject constructor(
                 }.onSuccess {
                     it.apply {
                         _cardYouList.value = it.cardYouList
-                        _isCardYouEmpty.value = (it.totalCardCnt == 0)
+                        _isCardYouEmpty.value = (it.cardYouList.isEmpty())
                     }
                 }.onFailure {
                     Timber.e(it.toString())
@@ -165,5 +168,9 @@ class CardPackViewModel @Inject constructor(
                 Timber.e("error :$it")
             }
         }
+    }
+
+    fun saveInitTabPosition(tabPosition: Int) {
+        _tabPosition.value = tabPosition
     }
 }

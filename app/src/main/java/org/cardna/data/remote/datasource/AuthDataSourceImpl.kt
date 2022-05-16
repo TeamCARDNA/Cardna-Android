@@ -1,5 +1,6 @@
 package org.cardna.data.remote.datasource
 
+import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.data.remote.api.auth.AuthService
 import org.cardna.data.remote.model.auth.RequestSignUpData
 import org.cardna.data.remote.model.auth.ResponseSignUpData
@@ -12,18 +13,33 @@ class AuthDataSourceImpl @Inject constructor(
 ) : AuthDataSource {
 
     override suspend fun getKakaoLogin(): ResponseSocialLoginData {
-        return authService.getKakaoLogin()
+        return authService.getKakaoLogin(
+            CardNaRepository.kakaoAccessToken,
+            CardNaRepository.fireBaseToken
+        )
     }
 
-    override suspend fun getNaverLogin(): ResponseSocialLoginData {
-        return authService.getNaverLogin()
+    override suspend fun getNaverLogin(fcmToken: String): ResponseSocialLoginData {
+        return authService.getNaverLogin(fcmToken)
     }
 
     override suspend fun postSignUp(requestSignUpData: RequestSignUpData): ResponseSignUpData {
         return authService.postSignUp(requestSignUpData)
     }
 
-    override suspend fun getTokenIssuance(): ResponseTokenIssuanceData {
-        return authService.getTokenIssuance()
+    override suspend fun getTokenIssuance(
+        accessToken: String,
+        refreshToken: String
+    ): ResponseTokenIssuanceData {
+        return authService.getTokenIssuance(accessToken, refreshToken)
     }
+
+    //    override suspend fun getTokenIssuance(accessToken: String, refreshToken: String): ResponseTokenIssuanceData {
+//        return authService.getTokenIssuance(accessToken, refreshToken)
+//    override suspend fun getTokenIssuance(): ResponseTokenIssuanceData {
+//        return authService.getTokenIssuance(
+//            CardNaRepository.kakaoUserToken,
+//            CardNaRepository.kakaoUserRefreshToken
+//        )
+//    }
 }

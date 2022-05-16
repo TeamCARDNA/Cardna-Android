@@ -11,5 +11,8 @@ jobs:
     uses: ./.github/workflows/launch_gradle_commands.yml
     secrets:
       BASE_URL: ${{ secrets.BASE_URL }}
+      NAVER_API_APP_NAME: ${{ secrets.NAVER_API_APP_NAME }}
+      NAVER_API_CLIENT_ID: ${{ secrets.NAVER_API_CLIENT_ID }}
+      NAVER_API_CLIENT_SECRET: ${{ secrets.NAVER_API_CLIENT_SECRET }}
     with:
       commands: build

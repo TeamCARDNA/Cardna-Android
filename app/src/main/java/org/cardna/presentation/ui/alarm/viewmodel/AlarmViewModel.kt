@@ -19,6 +19,9 @@ class AlarmViewModel @Inject constructor(
     private val alarmRepository: AlarmRepository
 ) : ViewModel() {
 
+    private val _foldStatus = MutableLiveData(true)
+    val foldStatus: LiveData<Boolean> = _foldStatus
+
     //리스트
     private val _friendRequest = MutableLiveData<List<ResponseGetAlarmData.Data.Request.Requester?>>()
     val friendRequest: LiveData<List<ResponseGetAlarmData.Data.Request.Requester?>> = _friendRequest
@@ -69,6 +72,10 @@ class AlarmViewModel @Inject constructor(
                 Timber.e(it.toString())
             }
         }
+    }
+
+    fun setFriendRequestUnfold(foldStatus: Boolean) {
+        _foldStatus.value = foldStatus
     }
 }
 

@@ -179,8 +179,8 @@
 
                     <TextView
                         android:id="@+id/tv_detailcard_name"
-                        android:layout_width="20dp"
-                        android:layout_height="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="6dp"
                         android:fontFamily="@font/pretendard_regular"
                         android:text="@{detailCardViewModel.name ?? detailCardViewModel.myDefault}"

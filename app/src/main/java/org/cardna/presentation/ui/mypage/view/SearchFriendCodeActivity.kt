@@ -68,7 +68,7 @@ class SearchFriendCodeActivity :
         }
 
         myPageViewModel.searchFriendCodeResult.observe(this) {
-            if (it.userImg.isNotEmpty())  //TODO 현재 서버에서 유저 이미지 temp로 와서 안뜸
+            if (it.userImg.isNotEmpty())
                 this.setSrcWithGlide(
                     it.userImg, binding.ivMypageCodeSearch
                 )
@@ -113,22 +113,19 @@ class SearchFriendCodeActivity :
         }
     }
 
-    //TODO 메인카드 액티비티 생성시 다시 테스트
     fun setGoToFriendMainCardClickListener() {
-        shortToast("가즈아")
-        //여기에서 넘거야겠네 putExtra
         val intent = Intent(this, MainCardActivity::class.java)
         val friendId = myPageViewModel.friendId.value ?: -1
         val name = myPageViewModel.searchFriendCodeResult.value?.name
         intent.putExtra("friendId", friendId)
         intent.putExtra("name", name)
         startActivity(intent)
-        //   startActivity(Intent(this@SearchFriendCodeActivity, MainCardActivity::class.java))
     }
 
     companion object {
         const val RELATION_ONE = 1 //모르는 인간
         const val RELATION_TWO = 2 //친구
         const val RELATION_THREE = 3 //요청중
+        const val RELATION_FOUR = 4 //친구수락 대기중
     }
 }

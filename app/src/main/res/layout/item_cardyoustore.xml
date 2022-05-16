@@ -15,9 +15,9 @@
             android:id="@+id/ctl_cardyoustore_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_dark_gray_10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:includeFontPadding="false"
                 android:text="@string/cardyoustore_card_title"
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="18dp"
                 android:text="@string/cardyoustore_card_name"
                 android:textColor="@color/white_2"
                 android:textSize="12sp"
@@ -63,12 +63,13 @@
                 android:id="@+id/tv_otherwrite_createdAt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/pretendard_regular"
                 android:text="@string/cardyoustore_card_createdAt"
                 android:textColor="@color/white_2"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_cardyoustore_name"
-                app:layout_constraintEnd_toEndOf="@+id/iv_cardyoustore_image"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_cardyoustore_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
