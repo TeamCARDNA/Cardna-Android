@@ -142,15 +142,13 @@ class LoginActivity :
     private fun setKakaoBtnListener() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
-                Log.e("kakao login error", "카카오 로그인 실패", error)
             } else if (token != null) {
                 UserApiClient.instance.me { user, error ->
                     val accessToken = token.accessToken
 
                     with(loginViewModel) {
-                        //todo 토큰저장 후 api콜백
+                        //토큰저장 후 api콜백
                         CardNaRepository.kakaoAccessToken=accessToken
-                        Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${accessToken}")
                         getKakaoLogin()
                         isLogin.observe(this@LoginActivity) { success ->
                             if (success) {

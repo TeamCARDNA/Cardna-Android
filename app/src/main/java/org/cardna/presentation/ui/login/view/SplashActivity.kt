@@ -4,19 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.activity.viewModels
 import com.navercorp.nid.NaverIdLoginSDK
-import org.cardna.BuildConfig.*
-import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.BuildConfig.*
 import org.cardna.R
-import org.cardna.databinding.ActivitySplashBinding
 import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.databinding.ActivitySplashBinding
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
@@ -35,12 +33,15 @@ class SplashActivity :
     }
 
     override fun initView() {
+        with(CardNaRepository) {
+         //   kakaoUserfirstName=""
+         //   kakaoUserToken=""
+         //   kakaoUserRefreshToken=""
+            Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡ맨처음값ㅡㅡㅡㅡㅡㅡㅡㅡㅡ$userToken+$kakaoUserfirstName")
+        }
         StatusBarUtil.setStatusBar(this, R.color.black)
         setFullScreen()
         setNextActivity()
-        with(CardNaRepository) {
-            Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡ맨처음값ㅡㅡㅡㅡㅡㅡㅡㅡㅡ$userToken+$kakaoUserfirstName")
-        }
     }
 
 
@@ -87,7 +88,6 @@ class SplashActivity :
             //todo 카카오 자동로그인
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) {
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.카카오 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + !CardNaRepository.kakaoUserlogOut}")
-            CardNaRepository.kakaoAccessToken = ""
             CardNaRepository.userToken = CardNaRepository.kakaoUserToken
             moveMain()
 
@@ -97,7 +97,7 @@ class SplashActivity :
             CardNaRepository.userToken = CardNaRepository.kakaoUserToken
             autoKakaoLoginCheck()*/
 
-            //todo 카카오 로그아웃
+            //todo 카카오 로그아웃했을 시
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && CardNaRepository.kakaoUserlogOut) {
             moveOnboarding()
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
