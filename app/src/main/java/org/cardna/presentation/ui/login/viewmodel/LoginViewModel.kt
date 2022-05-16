@@ -102,6 +102,7 @@ class LoginViewModel @Inject constructor(
                         naverUserToken = it.data.accessToken
                         naverUserRefreshToken = it.data.refreshToken
                         userToken = it.data.accessToken
+                        naverUserfirstName = it.data.name
                         _gotoSetName.value = false
                     } else { // 2. 회원가입
                         userSocial = it.data.social

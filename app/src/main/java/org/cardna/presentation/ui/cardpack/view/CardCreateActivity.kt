@@ -302,7 +302,7 @@ class CardCreateActivity :
     // 이제 완료 버튼 눌렀을 때, 설정된 uri 값을 서버에 보내기 위해 멀티파트로 바꿔주는 함수
     private fun makeUriToFile(): MultipartBody.Part {
         val options = BitmapFactory.Options()
-        options.inSampleSize = 2
+        options.inSampleSize = 4
         // 1/8 만큼 이미지를 줄여서 decoding
 
         val inputStream: InputStream =
