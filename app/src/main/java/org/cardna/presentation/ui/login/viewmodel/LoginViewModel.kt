@@ -145,6 +145,7 @@ class LoginViewModel @Inject constructor(
                 if (singUpData.social == "naver") {
                     CardNaRepository.naverUserToken = it.data.accessToken
                     CardNaRepository.naverUserRefreshToken = it.data.refreshToken
+                    CardNaRepository.naverUserfirstName = it.data.name
                 } else { // kakao
                     CardNaRepository.kakaoUserToken = it.data.accessToken
                     CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
