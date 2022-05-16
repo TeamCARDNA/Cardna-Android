@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.cardpack.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
@@ -77,8 +78,7 @@ class CardPackMeRecyclerViewAdapter(
                             }
                         }
                     } else {
-                        ctvCardpackCardme.isChecked = true
-                        ctvCardpackCardme.isClickable = false
+                        ctvCardpackCardme.visibility= View.GONE
                     }
                 }
             }
