@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -21,10 +22,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
+import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.initRootClickEvent
+import org.cardna.presentation.util.replace
 import org.cardna.presentation.util.shortToast
 import org.cardna.ui.cardpack.BottomDialogImageFragment
 import timber.log.Timber
@@ -64,15 +68,30 @@ class CardCreateActivity :
                 -1
             )
         ) // 내 카드나일 경우 null로 setting 되도록
-        cardCreateViewModel.setUserName(intent.getStringExtra(BaseViewUtil.NAME)) // 안넘겨주면 null ?
+        cardCreateViewModel.setUserName(intent.getStringExtra(BaseViewUtil.NAME) ?: CardNaRepository.kakaoUserfirstName) // 안넘겨주면 null ?
     }
 
     override fun initView() {
+        //todo 카드추가 유도뷰 로직
+        intent.getStringExtra(SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY_KEY)?.let {
+            cardCreateViewModel.setIsCardMeOrYou(true)
+            cardCreateViewModel.setInduceMakeMainCard(true)
+        }
+
         StatusBarUtil.setStatusBar(this, Color.BLACK)
         setObserver()
         setView() // editText 글자 수에 따라 글자 수 업데이트, 버튼 선택가능하도록
         setChooseCardListener() // 이미지 ctl 눌렀을 때 bottomDialog 띄우도록
-        makeCardListener()
+        cardCreateViewModel.induceMakeMainCard.observe(this) {
+            if (it) {
+                binding.tvCardcreateComplete.setOnClickListener {
+                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${cardCreateViewModel.induceMakeMainCard.value}")
+                    gotoCardInduceCreateComplete()
+                }
+            } else {
+                makeCardListener()
+            }
+        }
     }
 
 
@@ -84,16 +103,16 @@ class CardCreateActivity :
         binding.ivCardcreateGalleryImg.clipToOutline = true
         binding.tvCardcreateComplete.isClickable = false;  // 일단 카드 작성 완료 textView 클릭 안되도록
 
-  /*      binding.etCardcreateKeyword.addTextChangedListener { // editText 의 내용이 바뀔때마다
-            cardCreateViewModel.setEtKeywordLength(binding.etCardcreateKeyword.length())
-            // 뷰모델 프로퍼티 etKeyWordLength 값 업데이트 해주기만 하면, xml 레이아웃에 결합된 변수가 자동으로 뷰에 업데이트
-            checkCompleteTvClickable()
-        }
+        /*      binding.etCardcreateKeyword.addTextChangedListener { // editText 의 내용이 바뀔때마다
+                  cardCreateViewModel.setEtKeywordLength(binding.etCardcreateKeyword.length())
+                  // 뷰모델 프로퍼티 etKeyWordLength 값 업데이트 해주기만 하면, xml 레이아웃에 결합된 변수가 자동으로 뷰에 업데이트
+                  checkCompleteTvClickable()
+              }
 
-        binding.etCardcreateDetail.addTextChangedListener {
-            cardCreateViewModel.setEtDetailLength(binding.etCardcreateDetail.length())
-            checkCompleteTvClickable()
-        }*/
+              binding.etCardcreateDetail.addTextChangedListener {
+                  cardCreateViewModel.setEtDetailLength(binding.etCardcreateDetail.length())
+                  checkCompleteTvClickable()
+              }*/
     }
 
     private fun setObserver() { // addTextChangedListener 대신 이거  ?
@@ -223,6 +242,7 @@ class CardCreateActivity :
                     cardCreateViewModel.uri.toString()
                 ) // 심볼 - null, 갤러리 - uri 값
                 intent.putExtra(BaseViewUtil.CARD_TITLE, cardCreateViewModel.etKeywordText.value)
+
                 startActivity(intent)
             } else {
                 // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
@@ -238,6 +258,62 @@ class CardCreateActivity :
                 // 현재는 카드너 작성이므로 무슨 액티비티 통해서 왔는지만 전달해주면 됨
                 startActivity(intent)
             }
+        }
+    }
+
+    private fun gotoCardInduceCreateComplete() {
+        Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "gotoCardInduceCreateComplete")
+        // 카드나 만들기 버튼을 눌렀을 때
+        // 1. 서버로 title, content, symbolId, uri 전송
+        // symbolId - 카드 이미지 심볼 id, 이미지가 있는 경우 null을 보내주면 됨
+
+        // nullPointException 을 방지하기위한 분기처리
+        if (cardCreateViewModel.uri == null) {
+            cardCreateViewModel.makeCard(null)
+        } else
+            cardCreateViewModel.makeCard(makeUriToFile())
+
+        cardCreateViewModel.mainCardSuccess.observe(this) {
+            if (it) {
+                Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${it}")
+                cardCreateViewModel.mainCardId.observe(this) {  mainCardId->
+                    ss(mainCardId)
+                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${mainCardId}")
+                }
+            }else{}
+        }
+    }
+
+    fun ss(cardId: Int) {
+
+
+
+        if (cardCreateViewModel.isCardMeOrYou!!) {
+            // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
+            val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
+            intent.putExtra(
+                BaseViewUtil.IS_CARD_ME_OR_YOU,
+                cardCreateViewModel.isCardMeOrYou
+            ) // 현재는 카드나 작성이므로 CARD_ME를 보내줌
+            intent.putExtra(
+                BaseViewUtil.SYMBOL_ID,
+                cardCreateViewModel.symbolId
+            ) // 심볼 - symbolId값, 갤러리 - null
+            intent.putExtra(
+                BaseViewUtil.CARD_IMG,
+                cardCreateViewModel.uri.toString()
+            ) // 심볼 - null, 갤러리 - uri 값
+            intent.putExtra(
+                BaseViewUtil.CARD_TITLE,
+                cardCreateViewModel.etKeywordText.value
+            )
+            intent.putExtra(
+                SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY_KEY, true
+            )
+            intent.putExtra(
+                "MAIN_CARD_ID", cardId
+            )
+            startActivity(intent)
         }
     }
 
@@ -283,6 +359,7 @@ class CardCreateActivity :
             }
             //else if (result.resultCode == Activity.RESULT_CANCELED) {} =>Activity.RESULT_CANCELED일때 처리코드가 필요하다면
         }
+
     private fun requestPermission() {
         permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
