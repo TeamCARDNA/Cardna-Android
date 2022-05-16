@@ -20,6 +20,7 @@ import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.data.remote.model.auth.RequestSignUpData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
+import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.setGradientText
 import timber.log.Timber
 
@@ -35,6 +36,7 @@ class SetNameActivity :
     }
 
     override fun initView() {
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setClickListener()
         setChangedListener()
     }
