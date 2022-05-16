@@ -14,6 +14,9 @@ import org.cardna.databinding.ActivitySetNameFinishedBinding
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
+
+import org.cardna.presentation.util.LinearGradientSpan
+
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.setGradientText
 
@@ -96,16 +99,25 @@ class SetNameFinishedActivity :
 
     private fun negativeButtonClickListener() {
         binding.btnSetnamefinishedNegative.setOnClickListener {
-            setNextActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
         }
     }
 
     private fun positiveButtonClickListener() {
         binding.btnSetnamefinishedPositive.setOnClickListener {
-            Intent(this, CardCreateActivity::class.java).apply {
-                putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_ME)
-                setNextActivity(this)
-            }
+            startActivity(Intent(this, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                putExtra(GO_TO_CARDCREAT_ACTIVITY_KEY, GO_TO_CARDCREAT_ACTIVITY)
+            })
         }
+    }
+
+    companion object {
+        const val GO_TO_CARDCREAT_ACTIVITY_KEY = "GO_TO_CARDCREAT_ACTIVITY_KEY"
+        const val GO_TO_CARDCREAT_ACTIVITY = "GO_TO_CARDCREAT_ACTIVITY"
     }
 }
