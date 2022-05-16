@@ -8,6 +8,8 @@ import com.kakao.sdk.common.KakaoSdk
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Bundle
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.HiltAndroidApp
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.util.PixelRatio
@@ -21,12 +23,23 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         registerActivityLifecycleCallbacks(this)
         initPixelUtil()
         initLogger()
-        CardNaRepository.init(this)
-
-//        initKakaoLogin()
         initKakaoLogin()
         CardNaRepository.init(this)
-//        initFirebaseApp()
+        CardNaRepository.init(this)
+        getDeviceToken()
+    }
+
+    //todo 소셜로그인에 필요한 디바이스 토큰을 얻는다
+    private fun getDeviceToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+            val token = task.result
+            //todo 여기서 사용자 토큰 저장
+            CardNaRepository.fireBaseToken = token.toString()
+            Timber.d("fcm token ${CardNaRepository.fireBaseToken}")
+        })
     }
 
 

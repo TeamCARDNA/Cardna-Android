@@ -5,6 +5,7 @@ package org.cardna.presentation.ui.login.view
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -41,31 +42,7 @@ class LoginActivity :
     override fun initView() {
         StatusBarUtil.setStatusBar(this, R.color.black)
         setClickListener()
-        getDeviceToken()
 //        testKakao()
-    }
-
-//    private fun getDeviceToken() {
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                return@OnCompleteListener
-//            }
-//            // Get new FCM registration token
-//            val token = task.result
-//            CardNaRepository.fireBaseToken = token!!
-//            Timber.d("fcm token ${CardNaRepository.fireBaseToken}")
-//        })
-//    }
-    private fun getDeviceToken() {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                return@OnCompleteListener
-            }
-            // Get new FCM registration token
-            val token = task.result
-            CardNaRepository.fireBaseToken = token.toString()
-            Timber.d("fcm token ${CardNaRepository.fireBaseToken}")
-        })
     }
 
     private fun setPrivacyPolicyActivity(title: String, text: String): Intent {
@@ -98,7 +75,6 @@ class LoginActivity :
 //                testKakao()
             }
             btnLoginNaver.setOnClickListener {
-                Timber.d("naver login btn click")
                 setNaverLogin()
             }
 
@@ -106,12 +82,11 @@ class LoginActivity :
     }
 
     private fun setNaverLogin() {
-
-
         // 1. 네이버 자체 소셜로그인을 통해 naverSocialToken 얻어와서 header token 에 끼우기
         NidLog.init()
 
-        NaverIdLoginSDK.initialize(this,
+        NaverIdLoginSDK.initialize(
+            this,
             BuildConfig.NAVER_API_CLIENT_ID,
             BuildConfig.NAVER_API_CLIENT_SECRET,
             BuildConfig.NAVER_API_APP_NAME
@@ -146,10 +121,9 @@ class LoginActivity :
         // 2. 소셜로그인 API 호출
         loginViewModel.getNaverLogin()
 
-        if(loginViewModel.loginType == "signin"){ // 2 - 1. 재로그인 => MainActivity로 이동
+        if (loginViewModel.loginType == "signin") { // 2 - 1. 재로그인 => MainActivity로 이동
             moveOnMain()
-        }
-        else if(loginViewModel.loginType == "signup"){ // 2 - 2. 회원가입
+        } else if (loginViewModel.loginType == "signup") { // 2 - 2. 회원가입
             moveOnSetName()
         }
     }
@@ -164,62 +138,39 @@ class LoginActivity :
         startActivity(intent)
     }
 
+    //todo 카카오 로그인
     private fun setKakaoBtnListener() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
-                getErrorLog(error)
             } else if (token != null) {
-                //카카오 로그인 콜백
-                with(CardNaRepository) {
-                    kakaoAccessToken = token.accessToken
-                    Timber.d("kakaoAccessToken : $kakaoAccessToken")
-                }
-                with(loginViewModel) {
-                    getKakaoLogin()
-                    isLogin.observe(this@LoginActivity) { success ->
-                        if (success) {
-                            startMainActivity()
-                        } else {
-                            startSetNameActivity()
+                UserApiClient.instance.me { user, error ->
+                    val accessToken = token.accessToken
+
+                    with(loginViewModel) {
+                        //토큰저장 후 api콜백
+                        CardNaRepository.kakaoAccessToken=accessToken
+                        getKakaoLogin()
+                        isLogin.observe(this@LoginActivity) { success ->
+                            if (success) {
+                                startMainActivity()
+                            } else {
+                                startSetNameActivity()
+                                finish()
+                            }
                         }
                     }
                 }
-                finish()
             }
         }
-        binding.btnLoginKakao.setOnClickListener {
-            val context = this
-            with(UserApiClient.instance) {
-                if (isKakaoTalkLoginAvailable(context)) {
-                    //kakaoTalk (o) ->  kakaoTalk login
-                    loginWithKakaoTalk(context, callback = callback)
-                } else {
-                    //kakaoTalk (x) kakao account login
-                    loginWithKakaoAccount(context, callback = callback)
-                }
-                accessTokenInfo { tokenInfo, error ->
-                    if (error != null) {
-                        getErrorLog(error)
-                    } else if (tokenInfo != null) {
-                        CardNaRepository.userUuid = tokenInfo.id.toString()
-                        Timber.d("userUuid : ${tokenInfo.id}")
-                        Timber.d("userUuid : ${CardNaRepository.userUuid}")
-                    }
-                }
-            }
-        }
-    }
 
-    private fun kakaoLogout() {
-        UserApiClient.instance.logout { error ->
-            if (error != null) {
-                Timber.d("logout success")
-            } else {
-                Timber.d("logout fail")
-            }
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP))
-            finish()
+        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@LoginActivity)) {
+            UserApiClient.instance.loginWithKakaoTalk(this@LoginActivity, callback = callback)
+
+        } else {
+            UserApiClient.instance.loginWithKakaoAccount(
+                this@LoginActivity,
+                callback = callback
+            )
         }
     }
 
@@ -269,16 +220,4 @@ class LoginActivity :
             startActivity(this)
         }
     }
-
-//
-//    private fun getDeviceToken() {
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                return@OnCompleteListener
-//            }
-//            // Get new FCM registration token
-//            val token = task.result
-//            Timber.d("device token $token")
-//        })
-//    }
 }

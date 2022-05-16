@@ -9,13 +9,12 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.activity.viewModels
 import com.navercorp.nid.NaverIdLoginSDK
-import org.cardna.BuildConfig.*
-import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
+import org.cardna.BuildConfig.*
 import org.cardna.R
-import org.cardna.databinding.ActivitySplashBinding
 import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.databinding.ActivitySplashBinding
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
@@ -34,21 +33,17 @@ class SplashActivity :
     }
 
     override fun initView() {
+        with(CardNaRepository) {
+         //   kakaoUserfirstName=""
+         //   kakaoUserToken=""
+         //   kakaoUserRefreshToken=""
+            Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡ맨처음값ㅡㅡㅡㅡㅡㅡㅡㅡㅡ$userToken+$kakaoUserfirstName")
+        }
         StatusBarUtil.setStatusBar(this, R.color.black)
-        initNaverLogin()
         setFullScreen()
         setNextActivity()
     }
 
-    // naverLogin
-    private fun initNaverLogin() {
-        Timber.d("initNaverLogin")
-//        NaverIdLoginSDK.initialize(this, NAVER_API_CLIENT_ID, NAVER_API_CLIENT_SECRET, NAVER_API_APP_NAME)
-    }
-//    private fun initData() {
-//        loginViewModel.getTokenIssuance()
-////        loginViewModel.getKakaoLogin()
-//    }
 
     private fun setFullScreen() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
@@ -85,33 +80,26 @@ class SplashActivity :
     }
 
     private fun setNextActivity() {
+        //todo  회원가입
         if (CardNaRepository.kakaoUserfirstName.isEmpty() && CardNaRepository.naverUserfirstName.isEmpty()) {
-            //모든 소셜에서 이름이 없으면 -> 회원가입 안함
+            Timber.e("ㅡㅡㅡㅡ1.회원가입안함ㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + CardNaRepository.naverUserfirstName}")
             moveOnboarding()
-            with(CardNaRepository) {
-                Timber.d("if kakao : ${kakaoUserfirstName.isEmpty()}")
-                Timber.d("if naver : ${naverUserfirstName.isEmpty()}")
-                Timber.d("if : ${kakaoUserfirstName.isEmpty() || naverUserfirstName.isEmpty()}")
-            }
-            Timber.d("if kakaoUserFirstName : ${CardNaRepository.kakaoUserfirstName}")
 
-            Timber.d("kakaoUserFirstName : ${CardNaRepository.kakaoUserfirstName}")
+            //todo 카카오 자동로그인
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) {
-            //카카오로 자동로그인
-            //1. 카카오에 이름잇음+카카오에서 로그아웃 안함 -> 이미 완성된거
-            //firebaseToken, fcmToken 은 회원가입때 이미 넣어줬겠지?
-
-//            loginViewModel.getKakaoLogin()
-//            loginViewModel.getTokenIssuance()
-//            CardNaRepository.userToken = CardNaRepository.kakaoUserToken
-//            autoKakaoLoginCheck()
-
+            Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.카카오 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + !CardNaRepository.kakaoUserlogOut}")
             CardNaRepository.userToken = CardNaRepository.kakaoUserToken
             moveMain()
-//            autoKakaoLoginCheck()
-        } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
-            //네이버로 자동로그인
-            //2.네이버에 이름잇음+네이버에서 로그아웃 안함
+
+/*            firebaseToken, fcmToken 은 회원가입때 이미 넣어줬겠지?
+            loginViewModel.getKakaoLogin()
+            loginViewModel.getTokenIssuance()
+            CardNaRepository.userToken = CardNaRepository.kakaoUserToken
+            autoKakaoLoginCheck()*/
+
+            //todo 카카오 로그아웃했을 시
+        } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && CardNaRepository.kakaoUserlogOut) {
+            moveOnboarding()
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
             // 토큰재발급 API 호출
             // 여기서 토큰 재발급 API 호출해서 accessToken, refreshToken 유효성 판단
@@ -130,13 +118,11 @@ class SplashActivity :
              */
             loginViewModel.getNaverTokenIssuance()
 
-            if(loginViewModel.issuanceMessage == ""){ // 2. accessToken 만료, refresh 토큰 유효할 때 갱신 성공했을 것
+            if (loginViewModel.issuanceMessage == "") { // 2. accessToken 만료, refresh 토큰 유효할 때 갱신 성공했을 것
                 moveMain()
-            }
-            else if(loginViewModel.issuanceMessage == "유효한 토큰입니다."){ // 1. accessToken 유효
+            } else if (loginViewModel.issuanceMessage == "유효한 토큰입니다.") { // 1. accessToken 유효
                 moveMain()
-            }
-            else if(loginViewModel.issuanceMessage == "모든 토큰이 만료되었습니다.") { // 3. 둘다 만료
+            } else if (loginViewModel.issuanceMessage == "모든 토큰이 만료되었습니다.") { // 3. 둘다 만료
                 val oauthLoginCallback = object : OAuthLoginCallback {
                     override fun onSuccess() {
                         // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
@@ -167,8 +153,7 @@ class SplashActivity :
 
                 // Main으로 이동
                 moveMain()
-            }
-            else{
+            } else {
 
             }
             //로그아웃

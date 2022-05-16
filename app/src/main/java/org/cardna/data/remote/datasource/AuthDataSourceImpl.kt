@@ -14,8 +14,6 @@ class AuthDataSourceImpl @Inject constructor(
 
     override suspend fun getKakaoLogin(): ResponseSocialLoginData {
         return authService.getKakaoLogin(
-            CardNaRepository.kakaoAccessToken,
-            CardNaRepository.fireBaseToken
         )
     }
 

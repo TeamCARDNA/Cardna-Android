@@ -137,10 +137,15 @@ class SettingViewModel @Inject constructor(
             }.onSuccess {
                 CardNaRepository.apply {
                     if (userSocial == "kakao") {
+                        userSocial = ""
+                        userUuid = ""
                         kakaoUserfirstName = ""
                         kakaoUserToken = ""
                         kakaoUserRefreshToken = ""
                     } else {
+                        userSocial = ""
+                        userUuid = ""
+
                         naverUserfirstName = ""
                         naverUserToken = ""
                         naverUserRefreshToken = ""

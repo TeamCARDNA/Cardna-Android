@@ -19,6 +19,7 @@ object CardNaRepository {
     private const val NAVER_USER_LOG_OUT = "NAVER_USER_LOG_OUT" //로그아웃 유무
     private const val NAVER_UT_KEY = "NAVER_UT_KEY"  //유저토큰 키
     private const val NAVER_URT_KEY = "NAVER_URT_KEY"  //유저리프레시토큰 키
+    private const val NAVER_ACCESS = "NAVER_ACCESS"  //유저리프레시토큰 키
 
     //getSharedPreferences
     private const val FB_KEY = "FB_TOKEN" //파이어베이슨 토큰 키
@@ -58,6 +59,7 @@ object CardNaRepository {
         editor.apply()
     }
 
+/*
     //현재 유저 토큰: 일단 박아둘게
     var userToken =
 //구미동 구미베어  - 구미동구미베어#8521
@@ -68,12 +70,13 @@ object CardNaRepository {
 
 //김다빈  - 김다빈#5549
  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInV1aWQiOiI1UFRvTVd0TkZpRVpOc2loQnUxbDhSRmJVYjBkUkV4UEFHRENJU2thb0xFIiwibGFzdE5hbWUiOiLquYAiLCJmaXJzdE5hbWUiOiLri6TruYgiLCJjb2RlIjoi6rmA64uk67mIIzU1NDkiLCJpYXQiOjE2NTI2MDU0MTIsImV4cCI6MTY1NTE5NzQxMiwiaXNzIjoiY2FyZG5hIn0.RhXTekMMbnuxHvGLxsrrgGPViQ13-WykLxwacruuX4I"
+*/
 
 
-/*    //현재 유저 토큰
+    //현재 유저 토큰
     var userToken: String
         get() = authPreferences.getString(UT_KEY, "") ?: ""
-        set(value) = authPreferences.edit { it.putString(UT_KEY, value) }*/
+        set(value) = authPreferences.edit { it.putString(UT_KEY, value) }
 
     //현재 유저 소셜
     var userSocial: String
@@ -95,6 +98,7 @@ object CardNaRepository {
         get() = authPreferences.getString(KAKAO_URT_KEY, "") ?: ""
         set(value) = authPreferences.edit { it.putString(KAKAO_URT_KEY, value) }
 
+    //카카오 소셜 로그인시 토큰
     var kakaoAccessToken: String
         get() = authPreferences.getString(KAKAO_ACCESS, "") ?: ""
         set(value) = authPreferences.edit { it.putString(KAKAO_ACCESS, value) }
@@ -118,6 +122,10 @@ object CardNaRepository {
     var naverUserRefreshToken: String
         get() = authPreferences.getString(NAVER_URT_KEY, "") ?: ""
         set(value) = authPreferences.edit { it.putString(NAVER_URT_KEY, value) }
+
+    var naverAccessToken: String
+        get() = authPreferences.getString(NAVER_ACCESS, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(NAVER_ACCESS, value) }
 
     //네이버 유저 이름
     var naverUserfirstName: String
