@@ -34,12 +34,13 @@ class SplashActivity :
 
     override fun initView() {
         with(CardNaRepository) {
-            //   kakaoUserfirstName=""
-            //   kakaoUserToken=""
-            //   kakaoUserRefreshToken=""
-            //   naverUserfirstName=""
-            //   naverUserToken=""
-            //    naverUserRefreshToken=""
+//            kakaoUserfirstName = ""
+//            kakaoUserToken = ""
+//            kakaoUserRefreshToken = ""
+//            naverUserfirstName = ""
+//            naverUserToken = ""
+//            naverUserRefreshToken = ""
+
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡ맨처음값ㅡㅡㅡㅡㅡㅡㅡㅡㅡ$userToken+$kakaoUserfirstName")
         }
         StatusBarUtil.setStatusBar(this, R.color.black)
@@ -87,7 +88,6 @@ class SplashActivity :
         if (CardNaRepository.kakaoUserfirstName.isEmpty() && CardNaRepository.naverUserfirstName.isEmpty()) {
             Timber.e("ㅡㅡㅡㅡ1.회원가입안함ㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + CardNaRepository.naverUserfirstName}")
             moveOnboarding()
-
             //todo 카카오 자동로그인
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) {
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.카카오 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + !CardNaRepository.kakaoUserlogOut}")

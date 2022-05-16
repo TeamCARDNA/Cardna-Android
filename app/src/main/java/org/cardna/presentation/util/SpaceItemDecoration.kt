@@ -30,6 +30,20 @@ class SpacesItemDecoration2(private val spaceRight: Int, private val spaceBottom
     }
 }
 
+class SpacesItemDecorationHorizontal :
+    RecyclerView.ItemDecoration() {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        outRect.left = 6
+        outRect.right = 6
+        outRect.bottom = 12
+    }
+}
+
 class SpacesItemDecorationOnlyBottom(private val space: Int) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
