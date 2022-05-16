@@ -100,6 +100,8 @@ class SplashActivity :
             //todo 카카오 로그아웃했을 시
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && CardNaRepository.kakaoUserlogOut) {
             moveOnboarding()
+
+            //TODO 네이버 자동로그인
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
             // 토큰재발급 API 호출
             // 여기서 토큰 재발급 API 호출해서 accessToken, refreshToken 유효성 판단

@@ -77,14 +77,11 @@ class LoginActivity :
             btnLoginNaver.setOnClickListener {
                 setNaverLogin()
             }
-
         }
     }
 
     private fun setNaverLogin() {
-        // 1. 네이버 자체 소셜로그인을 통해 naverSocialToken 얻어와서 header token 에 끼우기
         NidLog.init()
-
         NaverIdLoginSDK.initialize(
             this,
             BuildConfig.NAVER_API_CLIENT_ID,
