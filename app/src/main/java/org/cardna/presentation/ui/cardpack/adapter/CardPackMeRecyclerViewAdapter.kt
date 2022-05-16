@@ -1,19 +1,28 @@
 package org.cardna.presentation.ui.cardpack.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.cardna.databinding.ItemCardpackCardmeBinding
 import org.cardna.data.remote.model.card.ResponseCardMeData
+import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
+import org.cardna.presentation.util.showLottie
 import timber.log.Timber
 
-class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
-    private val clickListenerDetail: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null,
-    private val clickListenerLike: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null,
-) : ListAdapter<ResponseCardMeData.CardList.CardMe, CardPackMeRecyclerViewAdapter.CardPackMeViewHolder>(CardMeComparator()) {
+
+class CardPackMeRecyclerViewAdapter(
+    // naming Me 빼서 수정 필요
+    private val cardPackViewModel: CardPackViewModel,
+    private val context: LifecycleOwner,
+    private val clickListener: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null,
+
+    ) : ListAdapter<ResponseCardMeData.CardList.CardMe, CardPackMeRecyclerViewAdapter.CardPackMeViewHolder>(CardMeComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardPackMeViewHolder {
         val binding = ItemCardpackCardmeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,54 +31,73 @@ class CardPackMeRecyclerViewAdapter( // naming Me 빼서 수정 필요
 
     override fun onBindViewHolder(holder: CardPackMeViewHolder, position: Int) {
         val cardMe: ResponseCardMeData.CardList.CardMe = getItem(position)
-        holder.onBind(cardMe, clickListenerDetail)
+        holder.onBind(cardMe, clickListener)
     }
 
 
-    class CardPackMeViewHolder(
+    inner class CardPackMeViewHolder(
         private val binding: ItemCardpackCardmeBinding
-    ) : RecyclerView.ViewHolder(binding.root){
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(cardMe: ResponseCardMeData.CardList.CardMe,
-                   onCardMeClick: ((ResponseCardMeData.CardList.CardMe) -> Unit) ?= null,
-                   onCardMeLike: ((ResponseCardMeData.CardList.CardMe) -> Unit) ?= null ) {
-            with(binding){
+
+        fun onBind(
+            cardMe: ResponseCardMeData.CardList.CardMe,
+            onCardMeClick: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null,
+            onCardMeLike: ((ResponseCardMeData.CardList.CardMe) -> Unit)? = null
+        ) {
+            with(binding) {
                 // data 채워주기
                 Glide.with(itemView.context).load(cardMe.cardImg).into(binding.ivCardpackRecyclerview)
                 tvCardpackRecyclerview.text = cardMe.title
 
                 // 리스너 달기
-                root.setOnClickListener{
+                root.setOnClickListener {
                     onCardMeClick?.invoke(cardMe)
                 }
 
-
-                isLiked = cardMe.isLiked // null이면 내 카드이므로 이거 처리 ??!!!?
-                ctvCardmeLike.setOnClickListener{
-                    onCardMeLike?.invoke(cardMe)
+                cardPackViewModel.cardMeList.observe(context) { cardMeList ->
+                    cardPackViewModel.id.observe(context) {
+                        if (it != null) {
+                            for (item in cardMeList) {
+                                if (item.id == cardMe.id) {
+                                    ctvCardpackCardme.isChecked = cardMe.isLiked ?: false
+                                }
+                            }
+                        }
+                    }
                 }
 
-                Timber.e("CardMe onBind")
-                // 타인의 카드나이면, 공감버튼 선택하는 리스너도 달아줘야함
-                // 애초에 item_cardpack_cardme xml 파일에 공감버튼을 추가하고, id가 null이면 이를 gone 시키고,
-                // 이에 대해 리스너도 달아줘야함
+                cardPackViewModel.id.observe(context) {
+                    if (it != null) {
+                        ctvCardpackCardme.setOnClickListener {
+                            cardPackViewModel.postLike(cardMe.id)
+                            ctvCardpackCardme.toggle()
+                            if (ctvCardpackCardme.isChecked) {
+                                showLottie(binding.laCardpackCardyouLottie, DetailCardActivity.CARD_ME, "lottie_cardme.json")
+                            }
+                        }
+                    } else {
+                        ctvCardpackCardme.isChecked = true
+                        ctvCardpackCardme.isClickable = false
+                    }
+                }
             }
         }
     }
+}
 
-    private class CardMeComparator: DiffUtil.ItemCallback<ResponseCardMeData.CardList.CardMe>(){
-        override fun areItemsTheSame(
-            oldItem: ResponseCardMeData.CardList.CardMe,
-            newItem: ResponseCardMeData.CardList.CardMe
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
+private class CardMeComparator : DiffUtil.ItemCallback<ResponseCardMeData.CardList.CardMe>() {
+    override fun areItemsTheSame(
+        oldItem: ResponseCardMeData.CardList.CardMe,
+        newItem: ResponseCardMeData.CardList.CardMe
+    ): Boolean {
+        return oldItem.id == newItem.id
+    }
 
-        override fun areContentsTheSame(
-            oldItem: ResponseCardMeData.CardList.CardMe,
-            newItem: ResponseCardMeData.CardList.CardMe
-        ): Boolean {
-            return oldItem == newItem
-        }
+    override fun areContentsTheSame(
+        oldItem: ResponseCardMeData.CardList.CardMe,
+        newItem: ResponseCardMeData.CardList.CardMe
+    ): Boolean {
+        return oldItem == newItem
     }
 }

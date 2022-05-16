@@ -19,12 +19,12 @@
             android:id="@+id/iv_cardpack_recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="142:203"
-            android:scaleType="fitXY"
-            android:padding="1dp"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_main_black"
+            android:padding="1dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="142:203"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -43,6 +43,26 @@
             app:layout_constraintTop_toBottomOf="@id/iv_cardpack_recyclerview"
             tools:text="댕댕이 짱 좋아" />
 
+        <CheckedTextView
+            android:id="@+id/ctv_cardpack_cardme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:checkMark="@drawable/ic_selector_detailcard_like"
+            android:checked="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/la_cardpack_cardyou_lottie"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/iv_cardpack_recyclerview"
+            app:layout_constraintStart_toStartOf="@+id/iv_cardpack_recyclerview"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

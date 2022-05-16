@@ -44,13 +44,12 @@ class CardYouFragment :
     }
 
     private fun initObserve() {
-        cardPackViewModel.isCardYouEmpty.observe(viewLifecycleOwner){ it ->
-            if(it){ // empty 라면
+        cardPackViewModel.isCardYouEmpty.observe(viewLifecycleOwner) { it ->
+            if (it) { // empty 라면
                 Timber.e("CardYou 비어있음")
                 binding.ctlCardyouEmpty.visibility = View.VISIBLE
                 binding.ctlCardyouNotEmpty.visibility = View.GONE
-            }
-            else{
+            } else {
                 Timber.e("CardYou 안비어있음")
                 binding.ctlCardyouEmpty.visibility = View.GONE
                 binding.ctlCardyouNotEmpty.visibility = View.VISIBLE
@@ -62,7 +61,7 @@ class CardYouFragment :
     // Adapter 생성
     private fun initCardYouRvAdapter() { // CardPack
         var cardYouAdapter =
-            CardPackYouRecyclerViewAdapter() { // 어댑터 일단 CardPackMeRecyclerViewAdapter로 공유
+            CardPackYouRecyclerViewAdapter(cardPackViewModel, viewLifecycleOwner) { // 어댑터 일단 CardPackMeRecyclerViewAdapter로 공유
                 // 1. 각 리사이클러뷰 아이템에 달아줄 람다 전달
                 Intent(requireContext(), DetailCardActivity::class.java).apply {
                     putExtra(BaseViewUtil.CARD_ID, it.id) // 리사이클러뷰의 아이템 중 카드 선택시 그 카드의 id를 전달
@@ -76,8 +75,10 @@ class CardYouFragment :
             rvCardyou.adapter = cardYouAdapter
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             rvCardyou.layoutManager = gridLayoutManager
-            rvCardyou.addItemDecoration(SpacesItemDecoration
-                ((12 * resources.displayMetrics.density).roundToInt())) // 화면 비율 조정
+            rvCardyou.addItemDecoration(
+                SpacesItemDecoration
+                    ((12 * resources.displayMetrics.density).roundToInt())
+            ) // 화면 비율 조정
         }
 
         // onResume 될 때, cardYouList 를 업데이트 시키고 cardYouList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
@@ -99,7 +100,7 @@ class CardYouFragment :
         binding.ctlFriendEmptyMakeCardyou.setOnClickListener {
             val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
                 putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_YOU) // 내 카드나 작성이므로
-                putExtra(BaseViewUtil.ID, cardPackViewModel.id)
+                putExtra(BaseViewUtil.ID, cardPackViewModel.id.value)
                 putExtra(BaseViewUtil.NAME, cardPackViewModel.name)
                 putExtra(BaseViewUtil.IS_CARDPACK_OR_MAINCARD, BaseViewUtil.FROM_CARDPACK) // 카드팩에서 왔음을 알려줌
             }

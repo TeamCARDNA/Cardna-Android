@@ -26,9 +26,8 @@ class CardPackViewModel @Inject constructor(
 
 
     // 어떤 id 의 사람의 카드팩 프래그먼트에 접근하는지
-    private var _id: Int? = null
-    val id: Int?
-        get() = _id
+    private var _id = MutableLiveData<Int?>()
+    val id: LiveData<Int?> = _id
 
     // 어떤 name 의 사람의 카드팩 프래그먼트에 접근하는지
     private var _name: String? = null
@@ -67,7 +66,7 @@ class CardPackViewModel @Inject constructor(
     val tabPosition: LiveData<Int> = _tabPosition
 
     fun setUserId(id: Int?) {
-        _id = id
+        _id.value = id
     } // 타인의 프래그먼트 생성시, 그 프래그먼트 코드 단에서 getArguments 로 받아온 newId를 setUserId(newId) 이런형식으로 설정 ?
 
     fun setUserName(name: String?) {
@@ -88,7 +87,7 @@ class CardPackViewModel @Inject constructor(
     }
 
     fun updateCardMeList() {
-        if (_id == null) { // 본인의 카드나 접근
+        if (_id.value == null) { // 본인의 카드나 접근
             viewModelScope.launch {
                 runCatching {
                     cardRepository.getCardMe().data
@@ -105,7 +104,7 @@ class CardPackViewModel @Inject constructor(
         } else { // 타인의 카드나 접근
             viewModelScope.launch {
                 runCatching {
-                    cardRepository.getOtherCardMe(_id!!).data
+                    cardRepository.getOtherCardMe(_id.value ?: return@launch).data
                 }.onSuccess {
                     it.apply {
                         _cardMeList.value = it.cardMeList
@@ -120,7 +119,7 @@ class CardPackViewModel @Inject constructor(
 
 
     fun updateCardYouList() {
-        if (_id == null) { // 본인의 카드너 접근
+        if (_id.value == null) { // 본인의 카드너 접근
             viewModelScope.launch {
                 runCatching {
                     cardRepository.getCardYou().data
@@ -136,7 +135,7 @@ class CardPackViewModel @Inject constructor(
         } else { // 타인의 카드너 접근
             viewModelScope.launch {
                 runCatching {
-                    cardRepository.getOtherCardYou(_id!!).data
+                    cardRepository.getOtherCardYou(_id.value ?: return@launch).data
                 }.onSuccess {
                     it.apply {
                         _cardYouList.value = it.cardYouList
@@ -177,14 +176,14 @@ class CardPackViewModel @Inject constructor(
         _tabPosition.value = tabPosition
     }
 
-    fun postLikeCardPack(cardId: Int?) {
+    fun postLike(cardId: Int) {
         viewModelScope.launch {
             runCatching {
-                likeRepository.postLike(RequestLikeData(cardId ?: return@launch))
+                likeRepository.postLike(RequestLikeData(cardId))
             }.onSuccess {
-                Timber.d(it.message)
+                Timber.e(it.message)
             }.onFailure {
-                Timber.e(it.toString())
+                Timber.e(it.message)
             }
         }
     }

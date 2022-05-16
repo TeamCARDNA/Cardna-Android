@@ -31,12 +31,13 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
     override fun onResume() {
         // 카드팩프래그먼트에서 카드를 눌러 카드 상세페이지로 가서 삭제한다음 왔을 때, 카드팩의 카드들이 업데이트 되어야 하므로 onResume 이 필요
         super.onResume()
-        if(cardPackViewModel.id == null) // 내 카드팩일때만 onResume 해주면 됨.
+        if(cardPackViewModel.id.value == null) // 내 카드팩일때만 onResume 해주면 됨.
             cardPackViewModel.setTotalCardCnt()
         binding.vpCardpack.setCurrentItem(cardPackViewModel.tabPosition.value ?: 0, false)
     }
 
     private fun initViewModel() {
+
         binding.cardPackViewModel = cardPackViewModel
         // 1. MainActivity 에서 cardPackFragment 접근 시, bundle 로 넘어오는 값이 없을 것이고, id, name 은 는 기본값인 null 로 되어있을 것임
         // 2. FriendCardPackActivity 에서 cardPackFragment 접근 시, FriendCardPackActivity 에서 이미 intent 로 받은 id와 name 을
@@ -114,7 +115,7 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
     // 유저 본인의 카드팩 프래그먼트인지, 친구의 카드팩 프래그먼트인지에 따라 작업 해주기
     // 리스너 달기, 텍스트뷰, 버튼 등 레이아웃 변화
     private fun initMeOrFriendCardLayout() {
-        if (cardPackViewModel.id == null) {  // 유저 본인의 카드팩 접근 시
+        if (cardPackViewModel.id.value == null) {  // 유저 본인의 카드팩 접근 시
             cardPackViewModel.setTotalCardCnt() // 카드팩 총 개수 세팅
 
             // 카드추가버튼에 카드나 카드너 추가 바텀씻 올라오는 리스너 달기

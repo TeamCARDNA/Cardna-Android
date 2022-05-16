@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
@@ -16,6 +17,7 @@ import org.cardna.databinding.FragmentMainCardBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
+import org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.editcard.view.EditCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
@@ -65,6 +67,7 @@ class MainCardFragment :
             val name = arguments?.getString("name")
             id = arguments?.getInt("id", -1) ?: -1
             mainCardViewModel.getMyPageUser(name!!)
+            mainCardViewModel.setFriendNameAndId(name,id)
             setFriendIcon()
         } else {
             mainCardViewModel.getMyPageUser()
@@ -109,6 +112,7 @@ class MainCardFragment :
         setEditCardActivity()
         setAlarmActivity()
         setCardYouWrite()
+        setGotoFriendCardPack()
     }
 
     private fun setCardYouWrite() {
@@ -274,6 +278,17 @@ class MainCardFragment :
                 mainCardViewModel.saveInitCardPosition(position)
             }
         })
+    }
+
+    private fun setGotoFriendCardPack() {
+        binding.ivMaincardGotoCardpackBackground.setOnClickListener {
+            startActivity(
+                Intent(requireContext(), FriendCardPackActivity::class.java)
+                    .putExtra(BaseViewUtil.ID, mainCardViewModel.friendId.value)
+                    .putExtra(BaseViewUtil.NAME, mainCardViewModel.friendName.value)
+            )
+            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",mainCardViewModel.friendId.value.toString()+mainCardViewModel.friendName.value)
+        }
     }
 
     //TODO 나 다빈인데 마이페이지랑 연관된 로직이 필요해서 적어뒀엉 지우지 마라조~

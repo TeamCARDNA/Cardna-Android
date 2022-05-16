@@ -42,11 +42,22 @@ class MainCardViewModel @Inject constructor(
     private val _cardPosition = MutableLiveData(0)
     val cardPosition: LiveData<Int> = _cardPosition
 
+    private val _friendName = MutableLiveData<String>()
+    val friendName: LiveData<String> = _friendName
+
+    private val _friendId = MutableLiveData<Int>()
+    val friendId: LiveData<Int> = _friendId
+
     private val _relation = MutableLiveData<Any>()
     val relation: LiveData<Any> = _relation
 
     fun setRelation(friendRelation: String) {
         _relation.value = friendRelation
+    }
+
+    fun setFriendNameAndId(name: String, id: Int) {
+        _friendId.value = id
+        _friendName.value=name
     }
 
     fun getMainCardList(id: Int? = -1) {
