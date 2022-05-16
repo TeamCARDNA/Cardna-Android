@@ -34,8 +34,8 @@ class EditCardViewModel @Inject constructor(
     private val _currentPosition = MutableLiveData<Int>()
     val currentPosition: LiveData<Int> = _currentPosition
 
-    fun setCurrentPosition(position:Int){
-        _currentPosition.value=position
+    fun setCurrentPosition(position: Int) {
+        _currentPosition.value = position
     }
 
     fun getMainCard() {
@@ -77,7 +77,6 @@ class EditCardViewModel @Inject constructor(
         }
     }
 
-
     fun setChangeSelectedList(selectedList: MutableList<Int>) {
         _selectedCardList.value = selectedList //수정에서 삭제한 애들 남긴 선택된카드리스트갱신
         Timber.d("selectedCardList : ${_selectedCardList.value}")
@@ -93,6 +92,10 @@ class EditCardViewModel @Inject constructor(
         _selectedCardList.value?.add(id) //id추가
         Timber.d("추가")
         _selectedCardList.value = _selectedCardList.value
+    }
+
+    fun getSelectedCardListNullCheck(): Boolean {
+        return _selectedCardList.value.isNullOrEmpty()
     }
 
     fun setChangeMainCardList(mainCardList: MutableList<MainCard>) {

@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "870498300524",
-    "project_id": "cardna-77520",
-    "storage_bucket": "cardna-77520.appspot.com"
+    "project_number": "829566710414",
+    "project_id": "cardna-b7188",
+    "storage_bucket": "cardna-b7188.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:870498300524:android:5dd7727fe866e43e205e49",
+        "mobilesdk_app_id": "1:829566710414:android:00c8076fa554650e2f0fdf",
         "android_client_info": {
           "package_name": "org.cardna"
         }
       },
       "oauth_client": [
         {
-          "client_id": "870498300524-2mouq48nuarqkac0kkg3uam9f33q72d0.apps.googleusercontent.com",
+          "client_id": "829566710414-aci0dh7ggcih4e00ln1cdkmeovc6u07t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBnx7V3kdeWxlybpvhR_UO2qwCB1hxbmwA"
+          "current_key": "AIzaSyBPiT2BzLjsA5RHQvXm-QOpn7_qpuK7llA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "870498300524-2mouq48nuarqkac0kkg3uam9f33q72d0.apps.googleusercontent.com",
+              "client_id": "829566710414-aci0dh7ggcih4e00ln1cdkmeovc6u07t.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "829566710414-0vh4g9orbvq5i9bsf8sou30t0p3kmbki.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "kimhyesu.Cardna-iOS"
+              }
             }
           ]
         }

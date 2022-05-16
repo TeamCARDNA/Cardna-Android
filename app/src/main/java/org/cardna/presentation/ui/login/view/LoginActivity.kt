@@ -33,6 +33,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class LoginActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityLoginBinding>(R.layout.activity_login) {
+
     private val loginViewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,12 +125,13 @@ class LoginActivity :
                     val accessToken = token.accessToken
                     //토큰저장 후 api콜백
                     CardNaRepository.kakaoAccessToken = accessToken
+                    Timber.d("login access token : ${accessToken}")
                     with(loginViewModel) {
                         getKakaoLogin()
                         isLogin.observe(this@LoginActivity) { success ->
                             if (success) startMainActivity()
                             else startSetNameActivity()
-
+                            Timber.d("isLogin : ${isLogin.value}")
                             finish()
                         }
                     }

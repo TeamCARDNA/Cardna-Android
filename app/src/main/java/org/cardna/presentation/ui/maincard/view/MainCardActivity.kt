@@ -20,6 +20,7 @@ import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.setGradientText
 import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
 
@@ -57,8 +58,19 @@ class MainCardActivity :
         val name = intent.getStringExtra("name").plus(getString(R.string.maincard_tv_username_tag))
         binding.mainCardViewModel = mainCardViewModel
         mainCardViewModel.getMainCardList(friendId)
+        mainCardViewModel.getMyPageUser(name)
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
         binding.tvMaincardUserName.text = name
+
+        mainCardViewModel.relation.observe(this) {
+            if (it.toString() == "2.0") {
+                binding.tvMaincardGotoCardpack.apply {
+                    this.text = setGradientText(this.text.toString())
+                }
+            } else {
+                binding.tvMaincardGotoCardpack.setTextColor(R.color.white_4)
+            }
+        }
         setInitPagePosition()
     }
 
