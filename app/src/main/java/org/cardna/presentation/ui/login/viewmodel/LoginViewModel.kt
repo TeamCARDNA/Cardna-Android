@@ -64,7 +64,6 @@ class LoginViewModel @Inject constructor(
             kotlin.runCatching {
                 authRepository.getKakaoLogin()
             }.onSuccess {
-                Timber.d("viewmodel : ${it.data}")
                 with(CardNaRepository) {
                     //로그인 성공
                     kakaoAccessToken = ""  //todo 인터셉트바꾸기 위함
@@ -72,8 +71,8 @@ class LoginViewModel @Inject constructor(
                         kakaoUserToken = it.data.accessToken
                         kakaoUserRefreshToken = it.data.refreshToken
                         userSocial = KAKAO
-                        userToken = kakaoUserToken
                         _isLogin.value = true
+                        userToken = kakaoUserToken
                         kakaoUserlogOut = false
                     } else {
                         //탈퇴했거나 가입하지 않은 유저
@@ -82,7 +81,6 @@ class LoginViewModel @Inject constructor(
                         _isLogin.value = false
                     }
                 }
-
                 Timber.d("login success : ${it.data}")
             }.onFailure {
                 //비회원 or 토큰이 올바르지 않은 경우

@@ -16,6 +16,7 @@ import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 import org.cardna.presentation.util.ItemTouchHelperCallback
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.setGradientText
+import org.cardna.presentation.util.shortToast
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -69,13 +70,18 @@ class EditCardActivity :
         binding.fabRepresentcardedit.setOnClickListener {
             val bottomSheetDialog =
                 EditCardDialogFragment()
+            editCardViewModel.mainCardList.observe(this) {
+                if (it.isNullOrEmpty())
+                    editCardViewModel.setChangeSelectedList(mutableListOf<Int>())
+            }
             bottomSheetDialog.show(supportFragmentManager, "init bottom_sheet")
+
         }
     }
 
     private fun putEditCard() {
         binding.tvTvRepresentcardeditFinish.setOnClickListener {
-            val cardsList = RequestEditCardData(editCardAdapter.changedList.map { it.id })
+            val cardsList = RequestEditCardData(editCardAdapter.mutableList.map { it.id })
             Timber.d("list- put : $cardsList")
             editCardViewModel.putEditCard(cardsList)
             finish()
