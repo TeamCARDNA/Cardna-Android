@@ -124,7 +124,7 @@ class LoginViewModel @Inject constructor(
                 )
             }.onSuccess {
                 with(CardNaRepository) {
-                    kakaoUserfirstName = it.data.name
+//                    kakaoUserfirstName = it.data.
                     kakaoUserToken = it.data.accessToken
                     kakaoUserRefreshToken = it.data.refreshToken
                     kakaoUserlogOut = false

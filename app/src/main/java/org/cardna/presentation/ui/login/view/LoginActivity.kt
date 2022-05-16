@@ -32,6 +32,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class LoginActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityLoginBinding>(R.layout.activity_login) {
+
     private val loginViewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
