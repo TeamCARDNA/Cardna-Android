@@ -72,7 +72,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/pretendard_extralight"
-            android:text="@{mainCardViewModel.name+@string/maincard_tv_username_tag}"
+            android:text="@{mainCardViewModel.name!=`null` ? mainCardViewModel.name+@string/maincard_tv_username_tag : ` `}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/mypage_name" />
