@@ -39,8 +39,8 @@ class LoginViewModel @Inject constructor(
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
 
-    private val _socialType = MutableLiveData<String>()
-    val socialType: LiveData<String> = _socialType
+    private val _gotoSetName = MutableLiveData<Boolean>()
+    val gotoSetName: LiveData<Boolean> = _gotoSetName
 
 
     // 토큰 재발급 메서드에 대한 message
@@ -48,10 +48,6 @@ class LoginViewModel @Inject constructor(
     val issuanceMessage: String?
         get() = _issuanceMessage
 
-    // 소셜로그인 API 호출 시, 1. 회원가입 인지 2. 재로그인 인지
-    private var _loginType = "signin"
-    val loginType: String
-        get() = _loginType
 
     // 네이버 소셜 토큰
     private var _naverSocialUserToken = ""
@@ -80,8 +76,8 @@ class LoginViewModel @Inject constructor(
                     } else {
                         //탈퇴했거나 가입하지 않은 유저
                         userSocial = KAKAO
-                        userUuid=it.data.uuid
-                        _isLogin.value = false  
+                        userUuid = it.data.uuid
+                        _isLogin.value = false
                     }
                 }
                 Timber.d("login success : ${it.data}")
@@ -97,27 +93,27 @@ class LoginViewModel @Inject constructor(
     fun getNaverLogin() { // 소셜로그인 API => 1. 토큰 만료되어 재로그인 or 2. 신규유저 회원가입
         viewModelScope.launch {
             kotlin.runCatching {
-                authRepository.getNaverLogin(CardNaRepository.fireBaseToken)
+                authRepository.getNaverLogin()
             }.onSuccess {
-                Timber.d("login success : ${it.data}")
-
-                if (it.data.type == "signin") { // 1. 재로그인
-                    _loginType = "signin"
-                    CardNaRepository.naverUserToken = it.data.accessToken
-                    CardNaRepository.naverUserRefreshToken = it.data.refreshToken
-                    CardNaRepository.userToken = it.data.accessToken // 헤더 토큰 갈아 끼우기
-                } else { // it.data.type == "signup" 2. 회원가입
-                    _loginType = "signup"
-                    // 아직 이름등록 및 회원가입 전인데 social이랑 uuid를 shardPre에 저장해둬도 되나
-                    CardNaRepository.userSocial = it.data.social
-                    CardNaRepository.userUuid = it.data.uuid
+                with(CardNaRepository) {
+                    naverAccessToken = ""  //todo 인터셉트바꾸기 위함
+                    if (it.message == LOGIN_SUCCESS) { // 1. 재로그인
+                        naverUserToken = it.data.accessToken
+                        naverUserRefreshToken = it.data.refreshToken
+                        userToken = it.data.accessToken
+                        _gotoSetName.value=false
+                    } else { // 2. 회원가입
+                        userSocial = it.data.social
+                        userUuid = it.data.uuid
+                        _gotoSetName.value=true
+                    }
+                    Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ네이버로그이느ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ $it")
                 }
             }.onFailure {
-                Timber.e("error $it")  //
+                Timber.e("error $it")
             }
         }
     }
-
 
     fun getNaverTokenIssuance() { // 토큰 재발급(API) 네이버
         viewModelScope.launch {
@@ -152,8 +148,8 @@ class LoginViewModel @Inject constructor(
                 } else { // kakao
                     CardNaRepository.kakaoUserToken = it.data.accessToken
                     CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
-                    CardNaRepository.kakaoUserfirstName=singUpData.firstName
-                    CardNaRepository.userToken=it.data.accessToken
+                    CardNaRepository.kakaoUserfirstName = singUpData.firstName
+                    CardNaRepository.userToken = it.data.accessToken
                 }
             }.onFailure {
                 Timber.d("회원가입 실패 : ${it.message}")

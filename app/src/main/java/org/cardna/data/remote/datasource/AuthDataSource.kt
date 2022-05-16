@@ -9,7 +9,7 @@ interface AuthDataSource {
 
     suspend fun getKakaoLogin(): ResponseSocialLoginData
 
-    suspend fun getNaverLogin(fcmToken: String): ResponseSocialLoginData
+    suspend fun getNaverLogin(): ResponseSocialLoginData
 
     suspend fun postSignUp(requestSignUpData: RequestSignUpData): ResponseSignUpData
 

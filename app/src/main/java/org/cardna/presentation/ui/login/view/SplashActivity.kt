@@ -34,9 +34,12 @@ class SplashActivity :
 
     override fun initView() {
         with(CardNaRepository) {
-         //   kakaoUserfirstName=""
-         //   kakaoUserToken=""
-         //   kakaoUserRefreshToken=""
+            //   kakaoUserfirstName=""
+            //   kakaoUserToken=""
+            //   kakaoUserRefreshToken=""
+            //     naverUserfirstName=""
+            //   naverUserToken=""
+            // naverUserRefreshToken=""
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡ맨처음값ㅡㅡㅡㅡㅡㅡㅡㅡㅡ$userToken+$kakaoUserfirstName")
         }
         StatusBarUtil.setStatusBar(this, R.color.black)
@@ -97,9 +100,7 @@ class SplashActivity :
             CardNaRepository.userToken = CardNaRepository.kakaoUserToken
             autoKakaoLoginCheck()*/
 
-            //todo 카카오 로그아웃했을 시
-        } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && CardNaRepository.kakaoUserlogOut) {
-            moveOnboarding()
+            //todo 네이버 자동로그인
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
             // 토큰재발급 API 호출
             // 여기서 토큰 재발급 API 호출해서 accessToken, refreshToken 유효성 판단
@@ -156,10 +157,10 @@ class SplashActivity :
             } else {
 
             }
-            //로그아웃
 
+
+            //todo 카카오나 네이버 로그아웃 했을시
         } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {
-            Timber.d("else if logout kakaoUserFirstName : ${CardNaRepository.naverUserfirstName}")
             moveOnboarding()
         } else {
             moveOnboarding()
