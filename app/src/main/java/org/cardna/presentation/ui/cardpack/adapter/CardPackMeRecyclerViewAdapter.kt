@@ -70,9 +70,11 @@ class CardPackMeRecyclerViewAdapter(
                 cardPackViewModel.id.observe(context) {
                     if (it != null) {
                         ctvCardpackCardme.setOnClickListener {
-                            ctvCardpackCardme.toggle()
-                            showLottie(binding.laCardpackCardyouLottie, DetailCardActivity.CARD_ME, "lottie_cardme.json")
                             cardPackViewModel.postLike(cardMe.id)
+                            ctvCardpackCardme.toggle()
+                            if (ctvCardpackCardme.isChecked) {
+                                showLottie(binding.laCardpackCardyouLottie, DetailCardActivity.CARD_ME, "lottie_cardme.json")
+                            }
                         }
                     } else {
                         ctvCardpackCardme.isChecked = true

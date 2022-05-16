@@ -66,9 +66,9 @@
             android:id="@+id/ctv_cardpack_cardme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="false"
+            android:checked="true"
             android:layout_margin="16dp"
-            android:checkMark="@drawable/selector_like"
+            android:checkMark="@drawable/ic_selector_detailcard_like"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

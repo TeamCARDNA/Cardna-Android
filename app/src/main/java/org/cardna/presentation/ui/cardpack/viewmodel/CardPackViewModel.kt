@@ -87,7 +87,7 @@ class CardPackViewModel @Inject constructor(
     }
 
     fun updateCardMeList() {
-        if (_id == null) { // 본인의 카드나 접근
+        if (_id.value == null) { // 본인의 카드나 접근
             viewModelScope.launch {
                 runCatching {
                     cardRepository.getCardMe().data
@@ -119,7 +119,7 @@ class CardPackViewModel @Inject constructor(
 
 
     fun updateCardYouList() {
-        if (_id == null) { // 본인의 카드너 접근
+        if (_id.value == null) { // 본인의 카드너 접근
             viewModelScope.launch {
                 runCatching {
                     cardRepository.getCardYou().data

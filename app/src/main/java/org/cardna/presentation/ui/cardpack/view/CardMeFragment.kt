@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.cardpack.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -61,6 +62,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
         // cardMeList 에 observer 등록
         // onResume 될 때, cardMeList 를 업데이트 시키고 cardMeList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
         cardPackViewModel.cardMeList.observe(viewLifecycleOwner) { it ->
+            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",it.toString())
             it?.let { cardMeAdapter.submitList(it) }
         }
     }
