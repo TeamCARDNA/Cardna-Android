@@ -50,16 +50,11 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     private fun setObserve() {
-        /*   alarmViewModel.isFriendRequestEmpty.observe(this) { isFriendRequestEmpty ->
-               if (!isFriendRequestEmpty) setFriendRequestAdapter()
-           }*/
+
         alarmViewModel.friendRequest.observe(this) { friendRequest ->
             friendRequestAdapter.submitList(friendRequest)
         }
 
-        /* alarmViewModel.isWriteCardYouEmpty.observe(this) { isWriteCardYouEmpty ->
-             if (!isWriteCardYouEmpty) setWriteCardYouAdapter()
-         }*/
         alarmViewModel.writeCardYou.observe(this) { writeCardYou ->
             writeCardYouAdapter.submitList(writeCardYou)
         }
@@ -73,6 +68,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         friendRequestAdapter = FriendRequestAdapter(this, alarmViewModel, this) { item ->
             startActivity(Intent(this, MainCardActivity::class.java).apply {
                 putExtra("friendId", item.id)
+                putExtra("name", item.name)
             })
         }
         with(binding.rcvAlarmFriendRequest) {
@@ -88,7 +84,6 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         writeCardYouAdapter = WriteCardYouAdapter(this) { item ->
             val intent = Intent(this, DetailCardActivity::class.java)
                 .putExtra(BaseViewUtil.CARD_ID, item.cardId)
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡCARD_IDㅡㅡㅡㅡㅡㅡㅡ", item.cardId.toString())
             startActivity(intent)
         }
         with(binding.rcvAlarmWriteCardyou) {
