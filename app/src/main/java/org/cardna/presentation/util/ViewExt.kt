@@ -139,12 +139,22 @@ fun Context.showCustomPopUp(
     return popup
 }
 
-fun Context.setGradientText(inputText: String): Spannable {
+fun Context.setGradientText(
+    inputText: String,
+): Spannable {
     val green = getColor(R.color.main_green)
     val purple = getColor(R.color.main_purple)
     val spannable = inputText.toSpannable()
     spannable[0..inputText.length] =
         LinearGradientSpan(inputText, inputText, green, purple)
+    return spannable
+}
+
+fun Context.setSpannableColor(inputText: String, inputColor: Int, start: Int, end: Int): Spannable {
+    val color = getColor(inputColor)
+    val spannable = inputText.toSpannable()
+    spannable[start..end] =
+        LinearGradientSpan(inputText, inputText, color, color)
     return spannable
 }
 
