@@ -1,20 +1,19 @@
 package org.cardna.presentation.ui.login.view
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Spannable
 import android.view.View
 import android.view.animation.AnimationUtils
-import androidx.core.text.set
-import androidx.core.text.toSpannable
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.CardNaApplication
 import org.cardna.R
 import org.cardna.databinding.ActivitySetNameFinishedBinding
+import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.util.LinearGradientSpan
+import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.setGradientText
 
@@ -36,9 +35,9 @@ class SetNameFinishedActivity :
     private fun getScreenHeight() {
         val screenHeight = CardNaApplication.pixelRatio.screenHeight
         if (screenHeight > 2872 || screenHeight < 2560) {
-            setUpAnim(R.anim.anim_translate_up_2560height, 2300L)
+            setUpAnim(R.anim.anim_translate_up_2560height, 1300L)
         } else if (screenHeight in 2560..2872) {
-            setUpAnim(R.anim.anim_translate_up_2872height, 4300L)
+            setUpAnim(R.anim.anim_translate_up_2872height, 1300L)
         }
     }
 
@@ -81,7 +80,7 @@ class SetNameFinishedActivity :
         val welcomeText = intent.getStringExtra("welcomeText") ?: "반가워요"
 
         with(binding) {
-            tvSetnamefinishedTitle.text = setGradientText(welcomeText!!)
+            tvSetnamefinishedTitle.text = setGradientText(welcomeText)
             tvSetnamefinishedMessage1.text =
                 setGradientText(getString(R.string.setnamefinished_tv_message1))
             tvSetnamefinishedMessage2.text =
@@ -91,11 +90,22 @@ class SetNameFinishedActivity :
         }
     }
 
+    private fun setNextActivity(intent: Intent) {
+        startActivity(intent)
+    }
+
     private fun negativeButtonClickListener() {
-        //EmptyView -> 메인 페이지 이동
+        binding.btnSetnamefinishedNegative.setOnClickListener {
+            setNextActivity(Intent(this, MainActivity::class.java))
+        }
     }
 
     private fun positiveButtonClickListener() {
-        //카드나 작성뷰로 이동
+        binding.btnSetnamefinishedPositive.setOnClickListener {
+            Intent(this, CardCreateActivity::class.java).apply {
+                putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_ME)
+                setNextActivity(this)
+            }
+        }
     }
 }
