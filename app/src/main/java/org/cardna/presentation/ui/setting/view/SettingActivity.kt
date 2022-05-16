@@ -13,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.view.LoginActivity
+import org.cardna.presentation.ui.login.view.OnBoardingActivity
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.shortToast
@@ -93,7 +94,7 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
             }
             dialog.dismiss()
             shortToast("로그아웃 되었습니다")
-            moveToLoginActivity()
+            moveToOnBoardingActivity()
         }
 
         cancelBtn.setOnClickListener {
@@ -101,8 +102,8 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
         }
     }
 
-    private fun moveToLoginActivity() {
-        startActivity(Intent(this, LoginActivity::class.java).apply {
+    private fun moveToOnBoardingActivity() {
+        startActivity(Intent(this, OnBoardingActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })

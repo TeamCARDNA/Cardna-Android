@@ -59,7 +59,7 @@ class LoginViewModel @Inject constructor(
         get() = _naverSocialUserToken
 
     // 네이버 소셜 토큰 set 메서드
-    fun setNaverSocialUserToken(newNaverSocialUserToken: String){
+    fun setNaverSocialUserToken(newNaverSocialUserToken: String) {
         _naverSocialUserToken = newNaverSocialUserToken
     }
 
@@ -70,19 +70,18 @@ class LoginViewModel @Inject constructor(
             }.onSuccess {
                 with(CardNaRepository) {
                     //로그인 성공
+                    kakaoAccessToken = ""
                     if (it.message == LOGIN_SUCCESS) {
                         kakaoUserToken = it.data.accessToken
                         kakaoUserRefreshToken = it.data.refreshToken
-                        kakaoUserfirstName = it.data.name
                         userSocial = KAKAO
                         _isLogin.value = true
                         kakaoUserlogOut = false
-                        Timber.d("accessToken : ${it.data.accessToken}")
-                        Timber.d("refreshToken : ${it.data.refreshToken}")
                     } else {
                         //탈퇴했거나 가입하지 않은 유저
                         userSocial = KAKAO
-                        _isLogin.value = false
+                        userUuid=it.data.uuid
+                        _isLogin.value = false  
                     }
                 }
                 Timber.d("login success : ${it.data}")
@@ -142,11 +141,13 @@ class LoginViewModel @Inject constructor(
     }
 
     fun postSignUp(singUpData: RequestSignUpData) { // 이름 등록 및 회원가입 API
+        Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원가입  : postSignUp")
+        Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원가입 성공 : ${singUpData}")
         viewModelScope.launch {
             kotlin.runCatching {
                 authRepository.postSignUp(singUpData)
             }.onSuccess {
-                Timber.d("회원가입 성공 : ${it.message}")
+                Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원가입 성공 : ${it.message}")
                 _isLogin.value = true
                 if (singUpData.social == "naver") {
                     CardNaRepository.naverUserToken = it.data.accessToken
@@ -154,6 +155,9 @@ class LoginViewModel @Inject constructor(
                 } else { // kakao
                     CardNaRepository.kakaoUserToken = it.data.accessToken
                     CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
+                    CardNaRepository.kakaoUserfirstName=singUpData.firstName
+                    CardNaRepository.userToken=it.data.accessToken
+                    Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원가입 성공 : ${it}")
                 }
             }.onFailure {
                 Timber.d("회원가입 실패 : ${it.message}")
