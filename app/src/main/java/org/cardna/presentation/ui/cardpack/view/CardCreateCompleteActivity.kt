@@ -53,10 +53,9 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
         val symbolId = intent.getIntExtra(BaseViewUtil.SYMBOL_ID, -1) // symbolId가 null일 때 -1로
         val cardImg = Uri.parse(intent.getStringExtra(BaseViewUtil.CARD_IMG)) // uri를 string으로 변환한 값을 받아 다시 uri로
         val cardTitle = intent.getStringExtra(BaseViewUtil.CARD_TITLE)
-        val mainCardId = intent.getIntExtra("MAIN_CARD_ID", -100)
-        val induceMakeMainCard = intent.getBooleanExtra(SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY_KEY, false)
+        // val mainCardId = intent.getIntExtra("INDUCE_CARD_ID", -1)
+        //   val induceMakeMainCard = intent.getBooleanExtra(SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY_KEY, false)
 
-        Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ카드나ㅡCompleteActivityㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", mainCardId.toString())
 
         // 카드나인지, 카드너인지에 따라 뷰 띄워주기
         // textView 바꿔주기
@@ -88,14 +87,17 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
         binding.tvCardcreateCompleteTitle.text = cardTitle
         setTextGradient()
 
-            setLottie(isCardMeOrYou, induceMakeMainCard, mainCardId)
+        if (intent.getBooleanExtra(SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY_KEY, false))
+            setInduceLottie(intent.getIntExtra("INDUCE_CARD_ID", -1))
+        else setLottie(isCardMeOrYou)
+
     }
 
-    private fun setLottie(isCardMeOrYou: Boolean, induceMakeMainCard: Boolean, mainCardId: Int) {
+    private fun setLottie(isCardMeOrYou: Boolean) {
         // 로티 띄워주고 인텐트 이용해서 이전 액티비티로 가기
         // onActivityResult? 비스무리한 그 메서드 쓰면 더 좋게 구현할 수 있지 않을까
         val handler = Handler(Looper.getMainLooper())
-        if (isCardMeOrYou == BaseViewUtil.CARD_ME && !induceMakeMainCard) { // 카드나일 경우, MainActivity 로 돌아가줘야 함
+        if (isCardMeOrYou == BaseViewUtil.CARD_ME) { // 카드나일 경우, MainActivity 로 돌아가줘야 함
             handler.postDelayed({
                 // 카드나 작성에서 왔다면 MainActivity 로 돌아가도록 intent 를 연결시켜줘야 하고,
                 var intent = Intent(this, MainActivity::class.java)
@@ -104,10 +106,6 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
                 // MainActivity 로 갈 때, CardCreateActivity pop 하고 가기
                 // 현재 A -> B -> C인데, C -> A로 가도록 intent 써서
             }, LOTTIE_VIEW_TIME) // 이는 CardCreateActivity 가 얼마나 띄워주고 다시 main 으로 갈 건지에 대한 시간, 로티가 뜨는 시간은 아님
-        } else if (isCardMeOrYou == BaseViewUtil.CARD_ME && induceMakeMainCard) {
-            //애니메이션
-            setAni()
-            setInduceBtnClickListener(mainCardId)
         } else if (isCardMeOrYou == BaseViewUtil.CARD_YOU) { // 카드너일 경우, 카드너보관함으로 돌아가줘아 함.
             handler.postDelayed(
                 {
@@ -121,18 +119,23 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
                 }, LOTTIE_VIEW_TIME
             )
         }
+    }
 
-
+    private fun setInduceLottie(induceCardId: Int) {
+        Handler(Looper.getMainLooper()).postDelayed({ setAni() }, LOTTIE_VIEW_TIME)
+        setInduceBtnClickListener(induceCardId)
     }
 
     private fun setAni() {
-        //검은배경 애니메이션
-        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim("background") }, 1800)
-        //텍스트 애니메이션
         setAniTextGradient()
-        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim("text") }, 2800)
+        //검은배경 애니메이션
+        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim("background") }, LOTTIE_BG_TIME)
+        //텍스트 애니메이션
+        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim("text") }, LOTTIE_TEXT_TIME)
         //버튼 애니메이션
-        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim("button") }, 3800)
+        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim("button") }, LOTTIE_BTN_TIME)
+
+
     }
 
     private fun setFadeAnim(type: String) {
@@ -164,7 +167,7 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
         }
     }
 
-    private fun setInduceBtnClickListener(mainCardId: Int) {
+    private fun setInduceBtnClickListener(induceCardId: Int) {
         binding.btnSetmakemaincardNegative.setOnClickListener {
             //메인으로 인텐트
             startActivity(Intent(this, MainActivity::class.java).apply {
@@ -176,8 +179,8 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
             //메인으로 인텐트+대표카드로 만들기
             lifecycleScope.launch {
                 try {
-                    val dd = cardRepository.putEditCard(RequestEditCardData(listOf(intent.getIntExtra("MAIN_CARD_ID", -1))))
-                    if (dd.success) go()
+                    val putEditCard = cardRepository.putEditCard(RequestEditCardData(listOf(induceCardId)))
+                    if (putEditCard.success) goToMainActivity()
                 } catch (e: Exception) {
                     Log.d("실패", e.message.toString())
                 }
@@ -185,7 +188,7 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
         }
     }
 
-    fun go() {
+    fun goToMainActivity() {
         startActivity(Intent(this, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -217,7 +220,8 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
 
     companion object {
         const val LOTTIE_VIEW_TIME = 1670L
-        const val CREAT_MAINCARD_KEY = "CREAT_MAINCARD_KEY"
-        const val CREAT_MAINCARD = true
+        const val LOTTIE_BG_TIME = 1800L
+        const val LOTTIE_TEXT_TIME = 2800L
+        const val LOTTIE_BTN_TIME = 3800L
     }
 }

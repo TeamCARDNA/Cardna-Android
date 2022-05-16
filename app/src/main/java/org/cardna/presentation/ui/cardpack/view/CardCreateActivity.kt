@@ -28,7 +28,6 @@ import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
 import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.initRootClickEvent
-import org.cardna.presentation.util.replace
 import org.cardna.presentation.util.shortToast
 import org.cardna.ui.cardpack.BottomDialogImageFragment
 import timber.log.Timber
@@ -74,24 +73,16 @@ class CardCreateActivity :
     override fun initView() {
         //todo 카드추가 유도뷰 로직
         intent.getStringExtra(SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY_KEY)?.let {
-            cardCreateViewModel.setIsCardMeOrYou(true)
-            cardCreateViewModel.setInduceMakeMainCard(true)
-        }
+            cardCreateViewModel.setIsCardMeOrYou(true) //카드나 작성으로 되어야함
+            cardCreateViewModel.setInduceMakeMainCard(true) //유도뷰 분기처리를 위함
+            setCardInduceListener()
+            Log.e("ㅡㅡㅡㅡㅡ1. 카드추가 유도뷰에서 옴ㅡㅡㅡㅡㅡㅡㅡ", cardCreateViewModel.induceMakeMainCard.toString())
+        } ?: makeCardListener()
 
         StatusBarUtil.setStatusBar(this, Color.BLACK)
         setObserver()
         setView() // editText 글자 수에 따라 글자 수 업데이트, 버튼 선택가능하도록
         setChooseCardListener() // 이미지 ctl 눌렀을 때 bottomDialog 띄우도록
-        cardCreateViewModel.induceMakeMainCard.observe(this) {
-            if (it) {
-                binding.tvCardcreateComplete.setOnClickListener {
-                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${cardCreateViewModel.induceMakeMainCard.value}")
-                    gotoCardInduceCreateComplete()
-                }
-            } else {
-                makeCardListener()
-            }
-        }
     }
 
 
@@ -214,11 +205,12 @@ class CardCreateActivity :
     // 1. 뷰모델의 카드작성 서버통신 메서드 호출해서 서버에 data 전달
     // 2. cardCreateCompleteActivity 인텐트로 이동
     private fun makeCardListener() {
+
         binding.tvCardcreateComplete.setOnClickListener {
             // 카드나 만들기 버튼을 눌렀을 때
             // 1. 서버로 title, content, symbolId, uri 전송
             // symbolId - 카드 이미지 심볼 id, 이미지가 있는 경우 null을 보내주면 됨
-
+            Log.e("ㅡㅡㅡㅡㅡ2. 일반 카드작성 클릭ㅡㅡㅡㅡㅡㅡㅡ", "makeCardListener")
             // nullPointException 을 방지하기위한 분기처리
             if (cardCreateViewModel.uri == null) {
                 cardCreateViewModel.makeCard(null)
@@ -261,40 +253,30 @@ class CardCreateActivity :
         }
     }
 
-    private fun gotoCardInduceCreateComplete() {
-        Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "gotoCardInduceCreateComplete")
-        // 카드나 만들기 버튼을 눌렀을 때
-        // 1. 서버로 title, content, symbolId, uri 전송
-        // symbolId - 카드 이미지 심볼 id, 이미지가 있는 경우 null을 보내주면 됨
+    private fun setCardInduceListener() {
+        binding.tvCardcreateComplete.setOnClickListener {
+            // nullPointException 을 방지하기위한 분기처리
+            if (cardCreateViewModel.uri == null) {
+                cardCreateViewModel.makeCard(null)
+            } else
+                cardCreateViewModel.makeCard(makeUriToFile())
 
-        // nullPointException 을 방지하기위한 분기처리
-        if (cardCreateViewModel.uri == null) {
-            cardCreateViewModel.makeCard(null)
-        } else
-            cardCreateViewModel.makeCard(makeUriToFile())
-
-        cardCreateViewModel.mainCardSuccess.observe(this) {
-            if (it) {
-                Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${it}")
-                cardCreateViewModel.mainCardId.observe(this) {  mainCardId->
-                    ss(mainCardId)
-                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${mainCardId}")
+            cardCreateViewModel.makeInduceCardSuccess.observe(this) { makeInduceCardSuccess ->
+                if (makeInduceCardSuccess)
+                cardCreateViewModel.induceCardId.observe(this) { induceCardId ->
+                    makeCardInduceListener(induceCardId)
                 }
-            }else{}
+            }
         }
     }
 
-    fun ss(cardId: Int) {
-
-
-
+    fun makeCardInduceListener(cardId: Int) {
         if (cardCreateViewModel.isCardMeOrYou!!) {
-            // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
             val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
             intent.putExtra(
                 BaseViewUtil.IS_CARD_ME_OR_YOU,
                 cardCreateViewModel.isCardMeOrYou
-            ) // 현재는 카드나 작성이므로 CARD_ME를 보내줌
+            )
             intent.putExtra(
                 BaseViewUtil.SYMBOL_ID,
                 cardCreateViewModel.symbolId
@@ -311,7 +293,7 @@ class CardCreateActivity :
                 SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY_KEY, true
             )
             intent.putExtra(
-                "MAIN_CARD_ID", cardId
+                "INDUCE_CARD_ID", cardId
             )
             startActivity(intent)
         }
