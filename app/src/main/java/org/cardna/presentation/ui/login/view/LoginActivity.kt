@@ -4,6 +4,7 @@ package org.cardna.presentation.ui.login.view
 
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -40,7 +41,7 @@ class LoginActivity :
     }
 
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, R.color.black)
+        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setClickListener()
     }
 

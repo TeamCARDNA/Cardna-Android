@@ -4,24 +4,32 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.cardna.R
+import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.databinding.ActivityMainBinding
+import org.cardna.domain.repository.CardRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
+import org.cardna.presentation.ui.cardpack.view.CardCreateCompleteActivity
 import org.cardna.presentation.ui.cardpack.view.CardPackFragment
 import org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.insight.view.InsightFragment
+import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.view.MyPageFragment
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.replace
 import org.cardna.ui.cardpack.BottomDialogCardFragment
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity :
@@ -31,6 +39,9 @@ class MainActivity :
     private val insightFragment: InsightFragment by lazy { InsightFragment() }
     private val myPageFragment: MyPageFragment by lazy { MyPageFragment() }
 
+    @Inject
+    lateinit var cardRepository: CardRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
@@ -38,15 +49,13 @@ class MainActivity :
 
     }
 
-
     override fun initView() {
+        initGetIntent()
         initBottomNavigation()
         setBottomNavigationSelectListener()
-        initDynamicLink()
     }
 
     private fun initBottomNavigation() {
-        replace(R.id.fcv_main, mainCardFragment)
         binding.bnvMain.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_bottom_maincard -> {
@@ -108,19 +117,42 @@ class MainActivity :
         bottomDialogCardFragment.show(supportFragmentManager, bottomDialogCardFragment.tag)
     }
 
-    /** DynamicLink */
-    private fun initDynamicLink() {
+    private fun initGetIntent() {
         val dynamicLinkData = intent.extras
+
+        /** 카드추가유도뷰에서 오는 경우*/
+        intent.getStringExtra(SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY_KEY)?.let {
+            replace(R.id.fcv_main, mainCardFragment)
+            startActivity(Intent(this, CardCreateActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                putExtra(SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY_KEY, SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY)
+            })
+        } ?: replace(R.id.fcv_main, mainCardFragment)
+
+ /*       *//** 카드추가유도뷰->카드나 대표카드로 만드는 경우*//*
+        intent.getIntExtra(CardCreateCompleteActivity.CREAT_MAINCARD_KEY, -1).let {
+            lifecycleScope.launch {
+                try {
+                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡ카드나찐ㅡㅡㅡㅡㅡㅡㅡㅡ", it.toString())
+                    if (it != -1) {
+                        cardRepository.putEditCard(RequestEditCardData(listOf(it)))
+                        replace(R.id.fcv_main, mainCardFragment)
+                    }
+                } catch (e: Exception) {
+                    Log.d("실패", e.message.toString())
+                }
+            }
+        }*/
+
+        /** 푸시알림에서 오는 경우*/
         if (dynamicLinkData != null) {
-            //상세로 가나 카드너보관함으로가나 ?
             if (dynamicLinkData.get("body").toString().contains("작성")) {
                 startActivity(
                     Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())
                 )
-            } else {
+            } else if (dynamicLinkData.get("body").toString().contains("친구")) {
                 Timber.e(dynamicLinkData.get("uniId").toString())
                 startActivity(Intent(this, AlarmActivity::class.java).apply {
-                    //         putExtra("uniId", dynamicLinkData.get("uniId").toString())
                 })
             }
         }

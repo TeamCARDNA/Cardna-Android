@@ -37,9 +37,9 @@ class SplashActivity :
             //   kakaoUserfirstName=""
             //   kakaoUserToken=""
             //   kakaoUserRefreshToken=""
-            //     naverUserfirstName=""
+            //   naverUserfirstName=""
             //   naverUserToken=""
-            // naverUserRefreshToken=""
+            //    naverUserRefreshToken=""
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡ맨처음값ㅡㅡㅡㅡㅡㅡㅡㅡㅡ$userToken+$kakaoUserfirstName")
         }
         StatusBarUtil.setStatusBar(this, R.color.black)
