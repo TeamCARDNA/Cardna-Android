@@ -23,9 +23,6 @@ class SettingViewModel @Inject constructor(
     private val _pushAlarmOn = MutableLiveData(CardNaRepository.pushAlarmOn)
     val pushAlarmOn: LiveData<Boolean> = _pushAlarmOn
 
-    private val _userSocial = MutableLiveData(CardNaRepository.userSocial)
-    val userSocial: LiveData<String> = _userSocial
-
     private val _secessionReasonOneCheck = MutableLiveData(false)
     val secessionReasonOneCheck: LiveData<Boolean> = _secessionReasonOneCheck
 

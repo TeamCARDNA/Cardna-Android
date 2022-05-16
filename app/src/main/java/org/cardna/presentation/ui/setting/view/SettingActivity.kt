@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
 import com.navercorp.nid.NaverIdLoginSDK
@@ -29,10 +30,23 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
     }
 
     override fun initView() {
+        setUserAccount()
         StatusBarUtil.setStatusBar(this, Color.BLACK)
         setClickListener()
         setAlarmSwitchClickListener()
         setInitAlarmState()
+    }
+
+    private fun setUserAccount() {
+        with(binding) {
+            if (CardNaRepository.userSocial == "kakao") {
+                ivAccountInfoSocialLogin.setImageResource(R.drawable.logo_kako)
+                tvAccountInfoSocialLoginUser.text = "카카오"
+            } else {
+                ivAccountInfoSocialLogin.setImageResource(R.drawable.logo_naver)
+                tvAccountInfoSocialLoginUser.text = "네이버"
+            }
+        }
     }
 
     private fun setInitAlarmState() {
@@ -63,6 +77,12 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
             }
             tvSettingAppInfoDeveloper.setOnClickListener {
                 startActivity(Intent(this@SettingActivity, DeveloperInfoActivity::class.java))
+            }
+            tvSettingAppInfoPrivacyPolicy.setOnClickListener {
+                startActivity(Intent(this@SettingActivity, PrivacyPolicyActivity::class.java))
+            }
+            tvSettingAppInfoServiceOperationPolicy.setOnClickListener {
+                startActivity(Intent(this@SettingActivity, ServiceOperationActivity::class.java))
             }
             tvSettingEtcSecession.setOnClickListener {
                 startActivity(Intent(this@SettingActivity, SecessionActivity::class.java))
