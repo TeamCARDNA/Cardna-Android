@@ -167,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@{mainCardViewModel.name+@string/maincard_tv_empty_card_about}"
+                android:text="@string/maincard_tv_friend_empty_text"
                 android:textColor="@color/white_3"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -247,8 +247,7 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="@string/maincard_tv_cardpack_text"
                 android:textColor="@color/white_4"
-                android:textSize="12sp"
-                android:visibility="@{mainCardViewModel.isMyCard ? View.GONE : View.VISIBLE}" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 
