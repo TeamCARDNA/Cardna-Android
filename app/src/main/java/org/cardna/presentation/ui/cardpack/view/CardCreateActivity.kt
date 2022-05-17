@@ -74,12 +74,11 @@ class CardCreateActivity :
     }
 
     override fun initView() {
-        //todo 카드추가 유도뷰 로직
+        /** 카드추가 유도뷰 로직 */
         intent.getStringExtra(SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY_KEY)?.let {
             cardCreateViewModel.setIsCardMeOrYou(true) //카드나 작성으로 되어야함
             cardCreateViewModel.setInduceMakeMainCard(true) //유도뷰 분기처리를 위함
             setCardInduceListener()
-            Log.e("ㅡㅡㅡㅡㅡ1. 카드추가 유도뷰에서 옴ㅡㅡㅡㅡㅡㅡㅡ", cardCreateViewModel.induceMakeMainCard.toString())
         } ?: makeCardListener()
 
         this.setSystemBarsColor(Color.BLACK, false)
@@ -213,7 +212,6 @@ class CardCreateActivity :
             // 카드나 만들기 버튼을 눌렀을 때
             // 1. 서버로 title, content, symbolId, uri 전송
             // symbolId - 카드 이미지 심볼 id, 이미지가 있는 경우 null을 보내주면 됨
-            Log.e("ㅡㅡㅡㅡㅡ2. 일반 카드작성 클릭ㅡㅡㅡㅡㅡㅡㅡ", "makeCardListener")
             // nullPointException 을 방지하기위한 분기처리
             if (cardCreateViewModel.uri == null) {
                 cardCreateViewModel.makeCard(null)
@@ -256,6 +254,7 @@ class CardCreateActivity :
         }
     }
 
+    /** 카드추가 유도뷰일 때 클릭 이벤트 */
     private fun setCardInduceListener() {
         binding.tvCardcreateComplete.setOnClickListener {
             // nullPointException 을 방지하기위한 분기처리
@@ -266,9 +265,9 @@ class CardCreateActivity :
 
             cardCreateViewModel.makeInduceCardSuccess.observe(this) { makeInduceCardSuccess ->
                 if (makeInduceCardSuccess)
-                cardCreateViewModel.induceCardId.observe(this) { induceCardId ->
-                    makeCardInduceListener(induceCardId)
-                }
+                    cardCreateViewModel.induceCardId.observe(this) { induceCardId ->
+                        makeCardInduceListener(induceCardId)
+                    }
             }
         }
     }
@@ -364,7 +363,7 @@ class CardCreateActivity :
     // 이제 완료 버튼 눌렀을 때, 설정된 uri 값을 서버에 보내기 위해 멀티파트로 바꿔주는 함수
     private fun makeUriToFile(): MultipartBody.Part {
         val options = BitmapFactory.Options()
-        options.inSampleSize = 4
+      //  options.inSampleSize = 4
         // 1/8 만큼 이미지를 줄여서 decoding
 
         val inputStream: InputStream =
@@ -388,6 +387,6 @@ class CardCreateActivity :
             fileBody
         )
 
-        return part
+        return part  //이거 반환
     }
 }
