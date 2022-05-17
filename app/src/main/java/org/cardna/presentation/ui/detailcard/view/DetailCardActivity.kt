@@ -191,7 +191,6 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     }
 
     fun setCardAddClickListener() {
-        shortToast("카드너에 추가되었어요!ㅎ")
         detailCardViewModel.keepOrAddCard()
         finish()
     }
