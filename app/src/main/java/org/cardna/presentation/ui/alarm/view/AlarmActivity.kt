@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
 import org.cardna.databinding.ActivityAlarmBinding
 import org.cardna.presentation.base.BaseViewUtil
@@ -34,7 +35,6 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
         initData()
         setFriendRequestAdapter()
         setWriteCardYouAdapter()

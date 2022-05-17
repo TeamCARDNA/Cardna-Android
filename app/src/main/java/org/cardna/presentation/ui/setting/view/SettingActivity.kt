@@ -11,6 +11,7 @@ import com.navercorp.nid.NaverIdLoginSDK
 import org.cardna.R
 import org.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.view.LoginActivity
@@ -31,7 +32,6 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
 
     override fun initView() {
         setUserAccount()
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setClickListener()
         setAlarmSwitchClickListener()
         setInitAlarmState()

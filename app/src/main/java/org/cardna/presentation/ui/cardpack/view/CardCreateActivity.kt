@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import org.cardna.R
 import org.cardna.databinding.ActivityCardCreateBinding
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -81,7 +82,7 @@ class CardCreateActivity :
             Log.e("ㅡㅡㅡㅡㅡ1. 카드추가 유도뷰에서 옴ㅡㅡㅡㅡㅡㅡㅡ", cardCreateViewModel.induceMakeMainCard.toString())
         } ?: makeCardListener()
 
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
+        this.setSystemBarsColor(Color.BLACK, false)
         setObserver()
         setView() // editText 글자 수에 따라 글자 수 업데이트, 버튼 선택가능하도록
         setChooseCardListener() // 이미지 ctl 눌렀을 때 bottomDialog 띄우도록

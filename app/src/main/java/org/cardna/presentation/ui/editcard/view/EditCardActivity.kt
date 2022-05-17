@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.cardna.R
 import org.cardna.databinding.ActivityEditCardBinding
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
@@ -31,7 +32,6 @@ class EditCardActivity :
     }
 
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
         initData()
         initAdapter()
         setClickListener()

@@ -9,6 +9,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import land.sungbin.systemuicontroller.setNavigationBarColor
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.data.remote.model.card.RequestEditCardData
@@ -74,25 +76,21 @@ class MainActivity :
             when (it.itemId) {
                 R.id.menu_bottom_maincard -> {
                     supportFragmentManager.popBackStack()
-                    StatusBarUtil.setStatusBar(this, Color.BLACK)
                     replace(R.id.fcv_main, mainCardFragment)
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_bottom_cardpack -> {
                     supportFragmentManager.popBackStack()
-                    StatusBarUtil.setStatusBar(this, Color.BLACK)
                     replace(R.id.fcv_main, CardPackFragment())
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_bottom_insight -> {
                     supportFragmentManager.popBackStack()
-                    StatusBarUtil.setStatusBar(this, Color.BLACK)
                     replace(R.id.fcv_main, insightFragment)
                     return@setOnItemSelectedListener true
                 }
                 else -> {
                     supportFragmentManager.popBackStack()
-                    StatusBarUtil.setStatusBar(this, Color.BLACK)
                     replace(R.id.fcv_main, myPageFragment)
                     return@setOnItemSelectedListener true
                 }

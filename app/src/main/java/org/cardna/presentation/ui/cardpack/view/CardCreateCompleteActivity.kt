@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.CardNaApplication
 import org.cardna.R
 import org.cardna.data.remote.model.card.RequestEditCardData
@@ -43,7 +44,6 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
     }
 
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setCardMeOrYou()
     }
 
