@@ -142,7 +142,7 @@
     <string name="cardshare_cardyou">%1$s님의 카드너</string>
 
     <!--    LoginActivity-->
-    <string name="login_policy">가입 시,\nCARDNA의 다음 사항에 동의하는 것으로 간주합니다.</string>
+    <string name="login_policy">CARDNA의 다음 사항에 동의하는 것으로 간주합니다.</string>
     <string name="login_gwa">과</string>
     <string name="login_policy_term_of_use">이용약관</string>
     <string name="login_private_policy">" 개인정보 정책"</string>

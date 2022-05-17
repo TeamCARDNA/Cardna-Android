@@ -220,8 +220,8 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
 
     companion object {
         const val LOTTIE_VIEW_TIME = 1670L
-        const val LOTTIE_BG_TIME = 1800L
-        const val LOTTIE_TEXT_TIME = 2800L
-        const val LOTTIE_BTN_TIME = 3800L
+        const val LOTTIE_BG_TIME = 160L
+        const val LOTTIE_TEXT_TIME = 1400L
+        const val LOTTIE_BTN_TIME = 2400L
     }
 }
