@@ -44,7 +44,6 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
-        //각 key, value 추가
         for (key in remoteMessage.data.keys) {
             intent.putExtra(key, remoteMessage.data.getValue(key))
         }
@@ -65,7 +64,6 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                 .setContentIntent(pendingIntent)
                 .setSound(null) //소리
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) //잠금
-                .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL) //배지 스타일을 이렇게 주어야한다.
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
