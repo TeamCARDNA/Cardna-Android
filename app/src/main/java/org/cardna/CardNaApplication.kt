@@ -1,23 +1,22 @@
 package org.cardna
 
+//import com.google.firebase.FirebaseApp
+import android.R.id
 import android.app.Activity
 import android.app.Application
-import com.google.firebase.FirebaseApp
-//import com.google.firebase.FirebaseApp
-import com.kakao.sdk.common.KakaoSdk
-import android.app.NotificationManager
-import android.content.Context
 import android.os.Bundle
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
+import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.util.PixelRatio
 import timber.log.Timber
 
+
 @HiltAndroidApp
 class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks {
-
     override fun onCreate() {
         super.onCreate()
         registerActivityLifecycleCallbacks(this)
@@ -42,6 +41,7 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
     }
 
 
+    //백&온그라운드 분기
     override fun onTerminate() {
         super.onTerminate()
         unregisterActivityLifecycleCallbacks(this)
@@ -65,9 +65,6 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
 
     override fun onActivityStarted(p0: Activity) {
         isBackground = false
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancelAll() //앱 실행시 모든 푸시알림 삭제
     }
 
     override fun onActivityResumed(p0: Activity) {

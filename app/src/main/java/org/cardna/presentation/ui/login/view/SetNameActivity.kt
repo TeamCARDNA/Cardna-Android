@@ -16,6 +16,7 @@ import org.cardna.R
 import org.cardna.databinding.ActivitySetNameBinding
 import org.cardna.databinding.DialogSetNameBinding
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.data.remote.model.auth.RequestSignUpData
 import org.cardna.presentation.base.BaseViewUtil
@@ -36,7 +37,6 @@ class SetNameActivity :
     }
 
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setClickListener()
         setChangedListener()
     }

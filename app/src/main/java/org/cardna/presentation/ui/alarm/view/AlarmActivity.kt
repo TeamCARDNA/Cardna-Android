@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
 import org.cardna.databinding.ActivityAlarmBinding
 import org.cardna.presentation.base.BaseViewUtil
@@ -18,6 +19,7 @@ import org.cardna.presentation.ui.maincard.view.MainCardActivity
 import org.cardna.presentation.util.DividerItemDecoration
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.convertDPtoPX
+import org.cardna.presentation.util.shortToast
 
 @AndroidEntryPoint
 class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R.layout.activity_alarm) {
@@ -33,7 +35,6 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
         initData()
         setFriendRequestAdapter()
         setWriteCardYouAdapter()
@@ -50,16 +51,10 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     }
 
     private fun setObserve() {
-        /*   alarmViewModel.isFriendRequestEmpty.observe(this) { isFriendRequestEmpty ->
-               if (!isFriendRequestEmpty) setFriendRequestAdapter()
-           }*/
         alarmViewModel.friendRequest.observe(this) { friendRequest ->
             friendRequestAdapter.submitList(friendRequest)
         }
 
-        /* alarmViewModel.isWriteCardYouEmpty.observe(this) { isWriteCardYouEmpty ->
-             if (!isWriteCardYouEmpty) setWriteCardYouAdapter()
-         }*/
         alarmViewModel.writeCardYou.observe(this) { writeCardYou ->
             writeCardYouAdapter.submitList(writeCardYou)
         }
@@ -73,11 +68,12 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         friendRequestAdapter = FriendRequestAdapter(this, alarmViewModel, this) { item ->
             startActivity(Intent(this, MainCardActivity::class.java).apply {
                 putExtra("friendId", item.id)
+                putExtra("name", item.name)
             })
         }
         with(binding.rcvAlarmFriendRequest) {
             adapter = friendRequestAdapter
-            dividerItemDecoration = DividerItemDecoration(this@AlarmActivity, R.drawable.bgbgbgbgbg, 0,0)
+            dividerItemDecoration = DividerItemDecoration(this@AlarmActivity, R.drawable.bgbgbgbgbg, 0, 0)
             addItemDecoration(dividerItemDecoration)
             layoutManager = LinearLayoutManager(this@AlarmActivity)
             setUnfoldListener(friendRequestAdapter)
@@ -88,9 +84,19 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         writeCardYouAdapter = WriteCardYouAdapter(this) { item ->
             val intent = Intent(this, DetailCardActivity::class.java)
                 .putExtra(BaseViewUtil.CARD_ID, item.cardId)
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡCARD_IDㅡㅡㅡㅡㅡㅡㅡ", item.cardId.toString())
-            startActivity(intent)
+
+            alarmViewModel.getDeletedCardYouList(item.cardId ?: return@WriteCardYouAdapter)
+
+            alarmViewModel.viewEvent.observe(this) {
+                it.getContentIfNotHandled()?.let { event ->
+                    when (event) {
+                        AlarmViewModel.DELETED_CARD -> shortToast("삭제된 카드입니다")
+                        AlarmViewModel.EXISTED_CARD -> startActivity(intent)
+                    }
+                }
+            }
         }
+
         with(binding.rcvAlarmWriteCardyou) {
             adapter = writeCardYouAdapter
             layoutManager = LinearLayoutManager(this@AlarmActivity)
@@ -108,13 +114,6 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
                 adapter.loadStatus = true
             }
             friendRequestAdapter.notifyDataSetChanged()  //리스트 크기 매번 변경해야함으로 사용
-        }
-    }
-
-    private fun submitFriendRequestList() {
-        alarmViewModel.friendRequest.observe(this) {
-            friendRequestAdapter.submitList(it)
-            Log.d("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "$it")
         }
     }
 

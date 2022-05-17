@@ -25,7 +25,7 @@
         tools:backgroundTint="@color/main_green">
 
         <ImageView
-            android:id="@+id/iv_cardpack_recyclerview"
+            android:id="@+id/iv_cardpack_cardme_recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginHorizontal="8dp"
@@ -39,16 +39,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@drawable/dummy_img_cardpack_1" />
 
-        <CheckedTextView
-            android:id="@+id/ctv_cardme_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:checkMark="@drawable/ic_selector_detailcard_like"
-            android:checked="false"
-            app:layout_constraintEnd_toEndOf="@id/iv_cardpack_recyclerview"
-            app:layout_constraintTop_toTopOf="@id/iv_cardpack_recyclerview" />
 
         <TextView
             android:id="@+id/tv_cardpack_recyclerview"
@@ -58,28 +48,29 @@
             android:layout_marginStart="4dp"
             android:theme="@style/cardpack_recyclerview_tv"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/iv_cardpack_recyclerview"
-            app:layout_constraintTop_toBottomOf="@id/iv_cardpack_recyclerview"
+            app:layout_constraintStart_toStartOf="@id/iv_cardpack_cardme_recyclerview"
+            app:layout_constraintTop_toBottomOf="@id/iv_cardpack_cardme_recyclerview"
             tools:text="댕댕이 짱 좋아" />
 
         <CheckedTextView
             android:id="@+id/ctv_cardpack_cardme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:layout_margin="16dp"
             android:checkMark="@drawable/ic_selector_detailcard_like"
+            android:checked="true"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/la_cardpack_cardyou_lottie"
+            android:id="@+id/la_cardpack_cardme_lottie"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginBottom="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/iv_cardpack_recyclerview"
-            app:layout_constraintStart_toStartOf="@+id/iv_cardpack_recyclerview"
+            app:layout_constraintEnd_toEndOf="@+id/iv_cardpack_cardme_recyclerview"
+            app:layout_constraintStart_toStartOf="@+id/iv_cardpack_cardme_recyclerview"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -58,6 +58,7 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
     implementation("com.squareup.moshi:moshi:1.12.0")
     implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
+    implementation 'androidx.room:room-common:2.3.0'
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.12.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
 
@@ -71,9 +72,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
 
     // Firebase
-    implementation "com.google.firebase:firebase-bom:29.3.1"
-    // implementation "com.google.firebase:firebase-analytics-ktx"
-    implementation "com.google.firebase:firebase-messaging-ktx:23.0.0"
+    implementation platform ('com.google.firebase:firebase-bom:30.0.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation "com.google.firebase:firebase-messaging-ktx:23.0.4"
     implementation 'com.tbuonomo:dotsindicator:4.2'
 
 
@@ -134,6 +135,14 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$converterMoshiVersion"
     implementation "com.squareup.moshi:moshi:$moshiVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+
+    //Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+
+    //SystemUiController
+    implementation "land.sungbin:systemuicontroller:$systemuicontroller"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

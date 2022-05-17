@@ -39,7 +39,7 @@
     <string name="developer_info_ios">iOS Developer</string>
     <string name="developer_info_back_end">Backend Developer</string>
     <string name="developer_info_plan_member">곽민주 이정재</string>
-    <string name="developer_info_design_member">신혜원 이정아 한지우</string>
+    <string name="developer_info_design_member">한지우 신혜원 이정아</string>
     <string name="developer_info_android_member">김다빈 박민우 이종찬</string>
     <string name="developer_info_ios_member">김혜수 이경민</string>
     <string name="developer_info_back_end_member">김희빈 이솔</string>
@@ -142,7 +142,7 @@
     <string name="cardshare_cardyou">%1$s님의 카드너</string>
 
     <!--    LoginActivity-->
-    <string name="login_policy">가입 시,\nCARDNA의 다음 사항에 동의하는 것으로 간주합니다.</string>
+    <string name="login_policy">CARDNA의 다음 사항에 동의하는 것으로 간주합니다.</string>
     <string name="login_gwa">과</string>
     <string name="login_policy_term_of_use">이용약관</string>
     <string name="login_private_policy">" 개인정보 정책"</string>
