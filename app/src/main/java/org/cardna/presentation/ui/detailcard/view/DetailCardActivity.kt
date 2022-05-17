@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.detailcard.view
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,6 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
 import org.cardna.databinding.ActivityDetailCardBinding
 import org.cardna.presentation.base.BaseViewUtil
@@ -30,6 +32,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
 
     override fun initView() {
         this.setStatusBarTransparent()
+        this.setSystemBarsColor(Color.TRANSPARENT,false)
         initData()
         setObserve()
     }
