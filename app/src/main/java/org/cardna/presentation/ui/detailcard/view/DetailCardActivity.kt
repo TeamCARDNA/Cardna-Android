@@ -91,7 +91,6 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                     val popup = showCustomPopUp(this, R.array.detail_cardyou_popup, baseContext)
                     popup.setOnItemClickListener { _, view, _, _ ->
                         if ((view as TextView).text == "보관") {
-                            shortToast("보관함에 보관되었어요!ㅎ")
                             detailCardViewModel.keepOrAddCard()
                             popup.dismiss()
                             finish()
