@@ -177,6 +177,7 @@
     <string name="maincard_tv_cardpack_text">카드팩 보기 -></string>
     <string name="maincard_tv_friend_empty_text">친구의 대표카드가 될 만한\n소개글을 작성해볼까요?</string>
 
+
     <!--    My Page  -->
     <string name="mypage_name">김다빈</string>
     <string name="mypage_title">MY</string>
@@ -231,7 +232,7 @@
 
     <!--    OnBoarding Activity-->
     <string name="onboarding_cardme_title">카드나</string>
-    <string name="onboarding_cardme_about">카드나는 “내가 아는 나의 모습이 담긴 카드”에요\n내가 어떤 사람인지 카드나로 만들어 이해해봐요!</string>
+    <string name="onboarding_cardme_about">카드나는 내가 아는 나의 모습이 담긴 카드에요\n내가 어떤 사람인지 카드나로 만들어 이해해봐요!</string>
     <string name="onboarding_cardyou_title">카드너</string>
     <string name="onboarding_cardyou_about">카드너는 타인이 말해준 다양한 나의 모습이에요\n내가 어떤 사람인지 카드너를 받아 이해해봐요!</string>
     <string name="onboarding_represent_title">대표 카드</string>
@@ -240,6 +241,11 @@
     <string name="onboarding_insight_about">서로의 카드에 공감 버튼을 누를 수 있어요. 공감수에\n따라 분석된 카드를 보며, 관계 속 나의 모습을 알아가요!</string>
     <string name="onboarding_skip">건너뛰기</string>
     <string name="onboarding_next">다음</string>
+
+    <string name="onboarding_insight_about1">서로의 카드에 공감 버튼을 누를 수 있어요. 공감수에</string>
+    <string name="onboarding_insight_about2">따라 분석된 카드를 보며,&#160;</string>
+    <string name="onboarding_insight_about3">관계 속 나의 모습</string>
+    <string name="onboarding_insight_about4">을 알아가요!</string>
 
     <!--    CardYouStoreActivity-->
     <string name="cardyoustore_text">보관함에 있는 카드너는 나만 볼 수 있어요!\n내 코드를 친구에게 공유해 카드너를 받아보세요</string>
