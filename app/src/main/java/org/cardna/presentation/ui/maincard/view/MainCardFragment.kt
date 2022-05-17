@@ -117,11 +117,12 @@ class MainCardFragment :
 
     private fun setCardYouWrite() {
         binding.ivMaincardWrite.setOnClickListener {
-            val friendId = arguments?.getInt("friendId", -1)
+            val friendId = arguments?.getInt(BaseViewUtil.ID, -1)
             val name = arguments?.getString("name")
+
             val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
                 putExtra("isCardMeOrYou", BaseViewUtil.CARD_YOU)
-                putExtra("id", friendId)
+                putExtra(BaseViewUtil.ID, friendId)
                 putExtra("name", name)
                 putExtra("isCardPackOrMainCard", BaseViewUtil.CARD_YOU)
                 startActivity(this)
@@ -294,6 +295,7 @@ class MainCardFragment :
     //TODO 나 다빈인데 마이페이지랑 연관된 로직이 필요해서 적어뒀엉 지우지 마라조~
     override fun onDestroyView() {
         myPageViewModel.settingBtnIsValid(true)
+        myPageViewModel.refreshFriendList()
         super.onDestroyView()
     }
 

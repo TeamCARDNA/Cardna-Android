@@ -73,7 +73,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:src="@{settingViewModel.userSocial==`kakao` ? @drawable/logo_kako : @drawable/logo_naver}"
                     app:layout_constraintBottom_toBottomOf="@id/tv_account_info_social_login"
                     app:layout_constraintEnd_toStartOf="@id/tv_account_info_social_login_user"
                     app:layout_constraintTop_toTopOf="@id/tv_account_info_social_login" />
@@ -84,7 +83,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="@{settingViewModel.userSocial==`kakao` ? `카카오` : `네이버`}"
                     android:textColor="@color/white_1_5"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_account_info_social_login"

@@ -34,15 +34,23 @@
             app:layout_constraintStart_toStartOf="@id/tv_first_title"
             app:layout_constraintTop_toBottomOf="@id/tv_first_title" />
 
-        <ImageView
+        <View
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_one"
+            app:layout_constraintEnd_toEndOf="@+id/iv_one"
+            app:layout_constraintStart_toStartOf="@+id/iv_one"/>
+
+        <ImageView
+            android:id="@+id/iv_one"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginHorizontal="38dp"
-            android:layout_marginTop="24dp"
             android:src="@drawable/img_onboarding_cardme"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_first_about" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_first_about" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

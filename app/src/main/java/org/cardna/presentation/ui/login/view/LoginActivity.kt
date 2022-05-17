@@ -19,6 +19,7 @@ import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.log.NidLog
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.BuildConfig
 import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
@@ -42,7 +43,6 @@ class LoginActivity :
     }
 
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setClickListener()
     }
 

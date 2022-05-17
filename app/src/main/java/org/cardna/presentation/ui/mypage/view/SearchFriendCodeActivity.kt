@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
 import org.cardna.databinding.ActivitySearchFriendCodeBinding
 import org.cardna.presentation.base.BaseViewUtil
@@ -29,7 +30,6 @@ class SearchFriendCodeActivity :
     }
 
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setInputField()
         setObserve()
         initRootClickEvent(binding.ctlMypageCodeSearchContainer)
@@ -120,6 +120,11 @@ class SearchFriendCodeActivity :
         intent.putExtra("friendId", friendId)
         intent.putExtra("name", name)
         startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+
+        super.onBackPressed()
     }
 
     companion object {

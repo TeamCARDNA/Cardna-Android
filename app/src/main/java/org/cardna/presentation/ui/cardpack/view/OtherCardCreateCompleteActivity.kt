@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.text.set
 import androidx.core.text.toSpannable
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
 import org.cardna.databinding.ActivityOtherCardCreateCompleteBinding
 import org.cardna.presentation.MainActivity
@@ -23,7 +24,6 @@ class OtherCardCreateCompleteActivity :
     }
 
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
         setTextGradient()
         setLottie(intent.getBooleanExtra(BaseViewUtil.IS_CARDPACK_OR_MAINCARD, BaseViewUtil.FROM_MAINCARD))
     }

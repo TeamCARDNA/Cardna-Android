@@ -1,12 +1,15 @@
 package org.cardna.ui.cardpack
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.cardna.databinding.FragmentBottomDialogCardBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import land.sungbin.systemuicontroller.setNavigationBarColor
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity
 
@@ -30,6 +33,8 @@ class BottomDialogCardFragment(val itemClick: (Boolean) -> Unit) : BottomSheetDi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        this.setSystemBarsColor(Color.BLACK, false)
+        this.setNavigationBarColor(Color.BLACK, false)
         makeCard()
     }
 

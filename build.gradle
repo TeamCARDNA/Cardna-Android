@@ -14,12 +14,14 @@ buildscript {
         timberVersion = "5.0.1"
         lifecycleVersion = "2.2.0"
         circleimageviewVersion = "3.1.0"
-        converterMoshiVersion="2.9.0"
-        moshiVersion="1.12.0"
+        converterMoshiVersion = "2.9.0"
+        moshiVersion = "1.12.0"
+        roomVersion = "2.4.2"
+        systemuicontroller = "1.0.0"
     }
     repositories {
         google()
-        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
         jcenter()
     }
     dependencies {

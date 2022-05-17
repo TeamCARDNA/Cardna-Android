@@ -1,9 +1,11 @@
 package org.cardna.presentation.ui.setting.view
 
+import android.graphics.Color
 import android.os.Bundle
 import org.cardna.R
 import org.cardna.databinding.ActivityPrivacyPolicyBinding
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.StatusBarUtil
 
@@ -16,10 +18,5 @@ class PrivacyPolicyActivity :
     }
 
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, R.color.black)
-        with(binding) {
-            tvPrivacyPolicyTitle.text = intent.getStringExtra("title")
-            tvPrivacyPolicyAbout.text = intent.getStringExtra("text")
-        }
     }
 }

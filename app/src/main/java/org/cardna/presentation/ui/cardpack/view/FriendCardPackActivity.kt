@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
 import org.cardna.databinding.ActivityFriendCardPackBinding
 import org.cardna.presentation.base.BaseViewUtil
@@ -27,7 +28,6 @@ class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriend
     }
 
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
         // 메인 Activity 의 타인의 대표카드 Fragment 에서 id, name 을 intent로 넘겨주면
         // 이를 viewModel 안의 id와 name 프로퍼티에 넣어준다.
         cardPackViewModel.setUserId(intent.getIntExtra(BaseViewUtil.ID, 0))
