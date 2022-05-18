@@ -47,7 +47,6 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/ic_pencil"
-                android:onClick="@{()->friendCardPackActivity.makeCardYou()"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />

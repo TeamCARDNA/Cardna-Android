@@ -38,6 +38,7 @@
             android:text="@string/item_write_cardyou_sentence"
             android:textColor="@color/white_1"
             android:textSize="18sp"
+            tools:text="김수안무거북이와두루님이 카드너를 적어줬어요"
             app:layout_constraintBottom_toTopOf="@+id/tv_item_alarm_write_cardyou_friend_name"
             app:layout_constraintStart_toEndOf="@+id/iv_item_alarm_write_cardyou" />
 

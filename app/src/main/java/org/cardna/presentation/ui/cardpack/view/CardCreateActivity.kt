@@ -203,12 +203,6 @@ class CardCreateActivity :
 
 
     /// **************************** 갤러리 접근 코드 ****************************
-    private fun resToUri(resId: Int): Uri =
-        Uri.Builder().scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-            .authority(resources.getResourcePackageName(resId))
-            .appendPath(resources.getResourceTypeName(resId))
-            .appendPath(resources.getResourceEntryName(resId))
-            .build()
 
 
     // 카드나 만들기 버튼 눌렀을 때,
@@ -223,10 +217,10 @@ class CardCreateActivity :
             // nullPointException 을 방지하기위한 분기처리
             if (cardCreateViewModel.uri.value == null) {
                 cardCreateViewModel.makeCard(null)
-            } else
-                Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmakeCardㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","${cardCreateViewModel.uri.value}")
+            } else {
                 cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
-Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmakeCardㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","${cardCreateViewModel.uri.value}")
+                Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmakeCardㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${cardCreateViewModel.uri.value}")
+            }
             // 2. cardCreateCompleteActivity 로 이동
             if (cardCreateViewModel.isCardMeOrYou!!) {
                 // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
@@ -269,8 +263,9 @@ Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmakeCardㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ�
             // nullPointException 을 방지하기위한 분기처리
             if (cardCreateViewModel.uri.value == null) {
                 cardCreateViewModel.makeCard(null)
-            } else
-                cardCreateViewModel.makeCard(makeUriToFile())
+            } else {
+                cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
+            }
 
             cardCreateViewModel.makeInduceCardSuccess.observe(this) { makeInduceCardSuccess ->
                 if (makeInduceCardSuccess)
@@ -294,8 +289,8 @@ Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmakeCardㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ�
             ) // 심볼 - symbolId값, 갤러리 - null
             intent.putExtra(
                 BaseViewUtil.CARD_IMG,
-                cardCreateViewModel.uri.toString()
-            ) // 심볼 - null, 갤러리 - uri 값
+                cardCreateViewModel.uri.value.toString()
+            )  // 심볼 - null, 갤러리 - uri 값
             intent.putExtra(
                 BaseViewUtil.CARD_TITLE,
                 cardCreateViewModel.etKeywordText.value
@@ -328,12 +323,6 @@ Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmakeCardㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ�
     }
 
     private fun startProcess() {
-        val intent = Intent().apply {
-            setType("image/*")
-            setAction(Intent.ACTION_GET_CONTENT)
-        }
-        // getResultText.launch(intent)
-
         getResultText.launch(
             Intent(
                 Intent.ACTION_GET_CONTENT,
@@ -347,7 +336,6 @@ Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmakeCardㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ�
         { result: ActivityResult ->
             result.data?.let { intent ->
                 intent.data?.let { uri ->
-                    //  if (result.resultCode == Activity.RESULT_OK) {
                     cardCreateViewModel.setUri(uri)  // Intent를 반환 -> Intent에서 Uri로 get하기
                     cardCreateViewModel.setSymbolId(null) // 전에 symbol 선택 후, 다시 갤러리 이미지를 선택했을 경우, 다시 symbolId null로
                     cardCreateViewModel.setIfChooseImg(true)
