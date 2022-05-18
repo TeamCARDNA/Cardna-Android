@@ -40,10 +40,10 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
     private fun setUserAccount() {
         with(binding) {
             if (CardNaRepository.userSocial == "kakao") {
-                ivAccountInfoSocialLogin.setImageResource(R.drawable.logo_kako)
+                ivAccountInfoSocialLogin.setImageResource(R.drawable.ic_logo_kako)
                 tvAccountInfoSocialLoginUser.text = "카카오"
             } else {
-                ivAccountInfoSocialLogin.setImageResource(R.drawable.logo_naver)
+                ivAccountInfoSocialLogin.setImageResource(R.drawable.ic_logo_naver)
                 tvAccountInfoSocialLoginUser.text = "네이버"
             }
         }
