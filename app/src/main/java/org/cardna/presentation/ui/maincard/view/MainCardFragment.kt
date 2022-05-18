@@ -72,6 +72,14 @@ class MainCardFragment :
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
     }
 
+    //click listener
+    private fun setClickListener() {
+        setEditCardActivity()
+        setAlarmActivity()
+        setCardYouWrite()
+        setGotoFriendCardPack()
+    }
+
     private fun checkUserId() {
         var id = -1
         if (arguments != null) {
@@ -118,20 +126,12 @@ class MainCardFragment :
         }
     }
 
-    //click listener
-    private fun setClickListener() {
-        setEditCardActivity()
-        setAlarmActivity()
-        setCardYouWrite()
-        setGotoFriendCardPack()
-    }
-
     private fun setCardYouWrite() {
         binding.ivMaincardWrite.setOnClickListener {
             val friendId = arguments?.getInt(BaseViewUtil.ID, -1)
             val name = arguments?.getString("name")
 
-            val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
+            Intent(requireActivity(), CardCreateActivity::class.java).apply {
                 putExtra("isCardMeOrYou", BaseViewUtil.CARD_YOU)
                 putExtra(BaseViewUtil.ID, friendId)
                 putExtra("name", name)
@@ -142,7 +142,7 @@ class MainCardFragment :
     }
 
     private fun setDetailActivity() {
-        val intent = Intent(requireActivity(), DetailCardActivity::class.java).apply {
+        Intent(requireActivity(), DetailCardActivity::class.java).apply {
             mainCardViewModel.cardPosition.value?.let {
                 mainCardViewModel.cardList.value?.get(it)?.let {
                     putExtra(BaseViewUtil.CARD_ID, it.id)
@@ -175,35 +175,11 @@ class MainCardFragment :
 
         userBlockCheck(isBlock, dialog, blockDialog)
         binding.ivMaincardFriend.setOnClickListener {
-            initRelationDialogTest(dialog, relationDialog)
+            initRelationDialog(dialog, relationDialog)
         }
     }
-
-//    private fun initRelationDialog(
-//        dialog: Dialog,
-//        dialogBinding: DialogRelationBinding
-//    ) {
-//        dialog.setContentView(dialogBinding.root)
-//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        dialog.show()
-//        val relation = mainCardViewModel.relation.value.toString()
-//        val friendId = arguments?.getInt("id", 0) ?: -1
-//        with(dialogBinding) {
-//            when (relation) {
-//                FRIEND -> {
-//                    clRelationDisconnect.visibility = View.VISIBLE
-//                }
-//                PROGRESSING -> {
-//                    clRelationProgressingCancel.visibility = View.VISIBLE
-//                }
-//            }
-//            setCancelDialog(dialog, this)
-////            setConfirmDialog(this, friendId)
-//        }
-//
-//    }
-
-    private fun initRelationDialogTest(
+    
+    private fun initRelationDialog(
         dialog: Dialog,
         dialogBinding: DialogRelationBinding,
     ) {
@@ -236,16 +212,6 @@ class MainCardFragment :
             dialogDismiss(dialog, dialogBinding)
         }
     }
-
-//    private fun setConfirmDialog(
-//        dialogBinding: DialogRelationBinding,
-//        friendId: Int
-//    ) {
-//        dialogBinding.btnRelationConfirm.setOnClickListener {
-//            requireActivity().shortToast("친구 손절")
-//            mainCardViewModel.postFriendRequest(friendId)
-//        }
-//    }
 
     private fun setConfirmDialog(
         dialog: Dialog,
@@ -299,7 +265,6 @@ class MainCardFragment :
                     .putExtra(BaseViewUtil.ID, mainCardViewModel.friendId.value)
                     .putExtra(BaseViewUtil.NAME, mainCardViewModel.friendName.value)
             )
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", mainCardViewModel.friendId.value.toString() + mainCardViewModel.friendName.value)
         }
     }
 

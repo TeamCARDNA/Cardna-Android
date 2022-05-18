@@ -66,11 +66,10 @@ class MainCardActivity :
 
         mainCardViewModel.relation.observe(this) {
             if (it.toString() == "2.0") {
+                Timber.d("if-color")
                 binding.tvMaincardGotoCardpack.apply {
                     this.text = setGradientText(this.text.toString())
                 }
-            } else {
-                binding.tvMaincardGotoCardpack.setTextColor(R.color.white_4)
             }
         }
         setInitPagePosition()
@@ -177,7 +176,7 @@ class MainCardActivity :
     }
 
     private fun setDetailActivity() {
-        val intent = Intent(this, DetailCardActivity::class.java).apply {
+        Intent(this, DetailCardActivity::class.java).apply {
             mainCardViewModel.cardPosition.value?.let {
                 mainCardViewModel.cardList.value?.get(it)?.let { card ->
                     putExtra(BaseViewUtil.CARD_ID, card.id)
@@ -192,7 +191,7 @@ class MainCardActivity :
         binding.ivMaincardWrite.setOnClickListener {
             val friendId = intent.getIntExtra("friendId", 0)
             val name = intent.getStringExtra("name")
-            val intentCardYou = Intent(this, CardCreateActivity::class.java).apply {
+            Intent(this, CardCreateActivity::class.java).apply {
                 putExtra("isCardMeOrYou", BaseViewUtil.CARD_YOU)
                 putExtra("id", friendId)
                 putExtra("name", name)
