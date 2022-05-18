@@ -102,6 +102,9 @@ class SplashActivity :
 
             //todo 네이버 자동로그인
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
+            Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.네이버 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
+
+
             // 토큰재발급 API 호출
             // 여기서 토큰 재발급 API 호출해서 accessToken, refreshToken 유효성 판단
             /*
@@ -117,9 +120,10 @@ class SplashActivity :
                         => 소셜 로그인 API 호출
                         => 발급 받은 naverUserToken, naverUserRefreshToken 저장
              */
+            Timber.d("naver 자동로그인: ")
             loginViewModel.getNaverTokenIssuance()
 
-            if (loginViewModel.issuanceMessage == "") { // 2. accessToken 만료, refresh 토큰 유효할 때 갱신 성공했을 것
+            if (loginViewModel.issuanceMessage == "토큰 재발급 성공") { // 2. accessToken 만료, refresh 토큰 유효할 때 갱신 성공했을 것
                 moveMain()
             } else if (loginViewModel.issuanceMessage == "유효한 토큰입니다.") { // 1. accessToken 유효
                 moveMain()
@@ -155,7 +159,8 @@ class SplashActivity :
                 // Main으로 이동
                 moveMain()
             } else {
-
+                Timber.d("naver move main: ")
+                moveMain()
             }
 
 

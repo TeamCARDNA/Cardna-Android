@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
 import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.oauth.NidOAuthLogin
 import org.cardna.R
 import org.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -106,9 +107,11 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
                     kakaoUserToken = ""
                     kakaoUserRefreshToken = ""
                 } else {
+
                     naverUserlogOut = true
                     naverUserToken = ""
                     naverUserRefreshToken = ""
+                    NidOAuthLogin().logout()
                 }
             }
             dialog.dismiss()

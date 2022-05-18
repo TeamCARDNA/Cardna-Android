@@ -104,13 +104,14 @@ class LoginViewModel @Inject constructor(
                         userToken = it.data.accessToken
                         userSocial = NAVER
                         naverUserfirstName = it.data.name
+                        naverUserlogOut = false
                         _gotoSetName.value = false
                     } else { // 2. 회원가입
                         userSocial = it.data.social
                         userUuid = it.data.uuid
                         _gotoSetName.value = true
                     }
-                    Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ네이버로그이느ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ $it")
+                    Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ네이버로그인ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ $it")
                 }
             }.onFailure {
                 Timber.e("error $it")
@@ -127,6 +128,9 @@ class LoginViewModel @Inject constructor(
                     CardNaRepository.naverUserRefreshToken
                 )
             }.onSuccess {
+                Timber.d("재발급 메세지 : ${it.message}")
+                Timber.d("새로운 accessToken : ${it.data.accessToken}")
+                Timber.d("새로운 refreshToken : ${it.data.refreshToken}")
                 CardNaRepository.naverUserToken = it.data.accessToken
                 CardNaRepository.naverUserRefreshToken = it.data.refreshToken
                 CardNaRepository.userToken = it.data.accessToken // 헤더 토큰 갈아 끼우기
@@ -149,6 +153,7 @@ class LoginViewModel @Inject constructor(
                     CardNaRepository.naverUserToken = it.data.accessToken
                     CardNaRepository.naverUserRefreshToken = it.data.refreshToken
                     CardNaRepository.naverUserfirstName = it.data.name
+                    CardNaRepository.naverUserlogOut = false
                 } else { // kakao
                     CardNaRepository.kakaoUserToken = it.data.accessToken
                     CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
@@ -173,6 +178,6 @@ class LoginViewModel @Inject constructor(
     companion object {
         const val LOGIN_SUCCESS = "로그인 성공"
         const val KAKAO = "kakao"
-        const val NAVER = "naver"
+        const val  NAVER = "naver"
     }
 }

@@ -9,6 +9,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.common.KakaoSdk
+import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.log.NidLog
 import dagger.hilt.android.HiltAndroidApp
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.util.PixelRatio
@@ -23,6 +25,7 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         initPixelUtil()
         initLogger()
         initKakaoLogin()
+        initNaverLogin()
         CardNaRepository.init(this)
         getDeviceToken()
     }
@@ -58,6 +61,16 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
     private fun initKakaoLogin() {
         val kakaoAppKey = BuildConfig.KAKAO_NATIVE_KEY
         KakaoSdk.init(this, kakaoAppKey)
+    }
+
+    private fun initNaverLogin(){
+        NidLog.init()
+        NaverIdLoginSDK.initialize(
+            this,
+            BuildConfig.NAVER_API_CLIENT_ID,
+            BuildConfig.NAVER_API_CLIENT_SECRET,
+            BuildConfig.NAVER_API_APP_NAME
+        )
     }
 
     override fun onActivityCreated(p0: Activity, p1: Bundle?) {
