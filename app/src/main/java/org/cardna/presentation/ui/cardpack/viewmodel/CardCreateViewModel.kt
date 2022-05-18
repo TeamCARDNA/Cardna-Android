@@ -49,9 +49,8 @@ class CardCreateViewModel @Inject constructor(
     val symbolId: Int?
         get() = _symbolId
 
-    private var _uri: Uri? = null // multipart 로 변환해서 서버에 img 로 보내줄 uri
-    val uri: Uri?
-        get() = _uri
+    private val _uri = MutableLiveData<Uri?>()
+    val uri: LiveData<Uri?> = _uri
 
     private var _imgIndex: Int? = BaseViewUtil.GALLERY
     val imgIndex: Int?
@@ -104,7 +103,7 @@ class CardCreateViewModel @Inject constructor(
     }
 
     fun setUri(uri: Uri?) {
-        _uri = uri
+        _uri.value = uri
     }
 
     fun setImgIndex(imgIndex: Int?) {

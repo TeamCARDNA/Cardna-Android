@@ -25,7 +25,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
         Timber.e("From: " + remoteMessage.data)
 
-        //푸시알림 ON OFF저장해야함  && CardNaApplication.isBackground
+        //푸시알림 ON OFF && CardNaApplication.isBackground
         if (remoteMessage.data.isNotEmpty() && CardNaApplication.isBackground && CardNaRepository.pushAlarmOn) {
             Timber.e("${CardNaRepository.pushAlarmOn}")
             sendNotiNotification(remoteMessage)
@@ -44,7 +44,6 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
-        //각 key, value 추가
         for (key in remoteMessage.data.keys) {
             intent.putExtra(key, remoteMessage.data.getValue(key))
         }
@@ -53,27 +52,18 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             this, uniId, intent, PendingIntent.FLAG_MUTABLE
         )
 
-        // 알림 채널 이름
         val channelId = "노티피케이션 메시지"
 
-        // 알림에 대한 UI 정보, 작업
         val notificationBuilder =
             NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.ic_stat_name)
-                .setLargeIcon(
-                    (BitmapFactory.decodeResource(resources, R.drawable.img_logo))
-                )
+                .setSmallIcon(R.mipmap.ic_cardna_logo)
+                .setLargeIcon((BitmapFactory.decodeResource(resources, R.drawable.img_logo)))
                 .setContentTitle("카드나")
                 .setContentText(remoteMessage.data["body"].toString())
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
                 .setSound(null) //소리
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) //잠금
-                //    .setNumber(1) //배지 갯수 넣는부분
-                .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL) //배지 스타일을 이렇게 주어야한다.
-
-        //     ShortcutBadger.applyCount(applicationContext, 1)// <--해당부분을 통해 배지 갯수가 표시된다
-
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

@@ -148,9 +148,11 @@ class MainActivity :
         if (dynamicLinkData != null) {
 
             if (dynamicLinkData.get("body").toString().contains("작성")) {
-                startActivity(
+              /*  startActivity(
                     Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())
-                )
+                )*/
+                startActivity(Intent(this, AlarmActivity::class.java).apply {
+                })
             } else if (dynamicLinkData.get("body").toString().contains("친구")) {
                 Timber.e(dynamicLinkData.get("uniId").toString())
                 startActivity(Intent(this, AlarmActivity::class.java).apply {

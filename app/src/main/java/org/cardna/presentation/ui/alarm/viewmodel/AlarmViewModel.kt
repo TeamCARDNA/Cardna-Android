@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.local.dao.DeletedCardYouDao
+import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.data.remote.model.alarm.ResponseGetAlarmData
 import org.cardna.data.remote.model.friend.RequestAcceptOrDenyFriendData
 import org.cardna.domain.repository.AlarmRepository
@@ -52,11 +53,13 @@ class AlarmViewModel @Inject constructor(
                 alarmRepository.getAlarm()
             }.onSuccess {
                 it.data.apply {
+                    CardNaRepository.alarmExistCount = request.requester.size + alarm.size
                     _friendRequest.value = request.requester
                     _writeCardYou.value = alarm
                     _isFriendRequestEmpty.value = request.count == 0
                     _isWriteCardYouEmpty.value = alarm.isEmpty()
                     _isAllAlarmEmpty.value = _isFriendRequestEmpty.value == true && _isWriteCardYouEmpty.value == true
+                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgeAllAlarmㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${request.requester.size}+${alarm.size}+${CardNaRepository.alarmExistCount}")
                 }
             }.onFailure {
                 Timber.e(it.toString())
