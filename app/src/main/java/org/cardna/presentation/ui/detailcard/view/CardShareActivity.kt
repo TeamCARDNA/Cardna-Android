@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.drawToBitmap
 import org.cardna.databinding.ActivityCardShareBinding
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.CardNaApplication
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.R
@@ -35,7 +36,7 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
         super.onCreate(savedInstanceState)
         initView()
         setClickListener()
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
+        this.setSystemBarsColor(Color.BLACK, false)
     }
 
     override fun initView() {

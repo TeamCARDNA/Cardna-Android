@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/pretendard_semibold"
-                    android:text="설정해볼까요?"
+                    android:text="설정할까요?"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="@+id/tv_ani1"

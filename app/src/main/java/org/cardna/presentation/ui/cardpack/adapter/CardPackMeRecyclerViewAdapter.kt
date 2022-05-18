@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.cardpack.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
@@ -47,7 +48,7 @@ class CardPackMeRecyclerViewAdapter(
         ) {
             with(binding) {
                 // data 채워주기
-                Glide.with(itemView.context).load(cardMe.cardImg).into(binding.ivCardpackRecyclerview)
+                Glide.with(itemView.context).load(cardMe.cardImg).into(binding.ivCardpackCardmeRecyclerview)
                 tvCardpackRecyclerview.text = cardMe.title
 
                 // 리스너 달기
@@ -55,30 +56,28 @@ class CardPackMeRecyclerViewAdapter(
                     onCardMeClick?.invoke(cardMe)
                 }
 
-                cardPackViewModel.cardMeList.observe(context) { cardMeList ->
-                    cardPackViewModel.id.observe(context) {
-                        if (it != null) {
-                            for (item in cardMeList) {
-                                if (item.id == cardMe.id) {
-                                    ctvCardpackCardme.isChecked = cardMe.isLiked ?: false
-                                }
-                            }
-                        }
-                    }
-                }
 
                 cardPackViewModel.id.observe(context) {
                     if (it != null) {
+                        ctvCardpackCardme.visibility = View.VISIBLE
+
+                        cardPackViewModel.cardMeList.observe(context) { cardMeList ->
+                            cardPackViewModel.id.observe(context) {
+                                for (item in cardMeList) {
+                                    if (item.id == cardMe.id) {
+                                        ctvCardpackCardme.isChecked = cardMe.isLiked ?: false
+                                    }
+                                }
+                            }
+                        }
+
                         ctvCardpackCardme.setOnClickListener {
                             cardPackViewModel.postLike(cardMe.id)
                             ctvCardpackCardme.toggle()
                             if (ctvCardpackCardme.isChecked) {
-                                showLottie(binding.laCardpackCardyouLottie, DetailCardActivity.CARD_ME, "lottie_cardme.json")
+                                showLottie(binding.laCardpackCardmeLottie, DetailCardActivity.CARD_ME, "lottie_cardme.json")
                             }
                         }
-                    } else {
-                        ctvCardpackCardme.isChecked = true
-                        ctvCardpackCardme.isClickable = false
                     }
                 }
             }

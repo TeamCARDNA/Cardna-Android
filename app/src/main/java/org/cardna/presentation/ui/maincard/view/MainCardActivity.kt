@@ -9,8 +9,11 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.ColorInt
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
+import land.sungbin.systemuicontroller.setNavigationBarColor
+import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
 import org.cardna.databinding.ActivityMainCardBinding
 import org.cardna.databinding.DialogRelationBinding
@@ -37,7 +40,6 @@ class MainCardActivity :
 
     //메인 프레그먼트 마이페이지 -> 타인꺼보는 것과 똑같은 구조 -> 내가 내껄 볼일은 없음
     override fun initView() {
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
         initAdapter()
         initData()
         initDialog()
@@ -64,11 +66,10 @@ class MainCardActivity :
 
         mainCardViewModel.relation.observe(this) {
             if (it.toString() == "2.0") {
+                Timber.d("if-color")
                 binding.tvMaincardGotoCardpack.apply {
                     this.text = setGradientText(this.text.toString())
                 }
-            } else {
-                binding.tvMaincardGotoCardpack.setTextColor(R.color.white_4)
             }
         }
         setInitPagePosition()
@@ -175,7 +176,7 @@ class MainCardActivity :
     }
 
     private fun setDetailActivity() {
-        val intent = Intent(this, DetailCardActivity::class.java).apply {
+        Intent(this, DetailCardActivity::class.java).apply {
             mainCardViewModel.cardPosition.value?.let {
                 mainCardViewModel.cardList.value?.get(it)?.let { card ->
                     putExtra(BaseViewUtil.CARD_ID, card.id)
@@ -190,7 +191,7 @@ class MainCardActivity :
         binding.ivMaincardWrite.setOnClickListener {
             val friendId = intent.getIntExtra("friendId", 0)
             val name = intent.getStringExtra("name")
-            val intentCardYou = Intent(this, CardCreateActivity::class.java).apply {
+            Intent(this, CardCreateActivity::class.java).apply {
                 putExtra("isCardMeOrYou", BaseViewUtil.CARD_YOU)
                 putExtra("id", friendId)
                 putExtra("name", name)

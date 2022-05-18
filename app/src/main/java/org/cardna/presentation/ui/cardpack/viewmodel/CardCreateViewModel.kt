@@ -24,11 +24,11 @@ class CardCreateViewModel @Inject constructor(
     private var _induceMakeMainCard = MutableLiveData<Boolean>(false)
     val induceMakeMainCard: LiveData<Boolean> = _induceMakeMainCard
 
-    private var _mainCardSuccess = MutableLiveData<Boolean>(false)
-    val mainCardSuccess: LiveData<Boolean> = _mainCardSuccess
+    private var _makeInduceCardSuccess = MutableLiveData<Boolean>(false)
+    val makeInduceCardSuccess: LiveData<Boolean> = _makeInduceCardSuccess
 
-    private var _mainCardId = MutableLiveData<Int>(0)
-    val mainCardId: LiveData<Int> = _mainCardId
+    private var _induceCardId = MutableLiveData<Int>(0)
+    val induceCardId: LiveData<Int> = _induceCardId
 
     // 프로퍼티
     private var _id: Int? = null // 나의 카드나 작성일 경우 null, 친구의 카드너 작성일 경우 친구의 id값
@@ -145,8 +145,8 @@ class CardCreateViewModel @Inject constructor(
                     runCatching { cardRepository.postCreateCardMe(body, null) }
                         .onSuccess {
                             Timber.e("카드나 작성 성공 : ${it.data}")
-                            _mainCardId.value = it.data.id
-                            _mainCardSuccess.value = true
+                            _induceCardId.value = it.data.id
+                            _makeInduceCardSuccess.value = true
                             Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ카드나ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.id.toString())
                         }
                         .onFailure { Timber.e("카드나 작성 실패 : ${it.message}") }
@@ -156,8 +156,8 @@ class CardCreateViewModel @Inject constructor(
                     runCatching { cardRepository.postCreateCardMe(body, makeUriToFile) }
                         .onSuccess {
                             Timber.e("카드나 작성 성공 : ${it.message}")
-                            _mainCardId.value = it.data.id
-                            _mainCardSuccess.value = true
+                            _induceCardId.value = it.data.id
+                            _makeInduceCardSuccess.value = true
                             Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ카드나ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.id.toString())
                         }
                         .onFailure {
@@ -167,6 +167,7 @@ class CardCreateViewModel @Inject constructor(
                 }
             }
         } else { // 카드너 작성 => friendId 포함
+            if (id == -1) return
             val body = RequestCreateCardYouData(
                 etKeywordText.value!!,
                 etDetailText.value!!,
@@ -175,6 +176,7 @@ class CardCreateViewModel @Inject constructor(
             ).toRequestBody()
 
             if (makeUriToFile == null) { // 심볼 선택
+
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, null) }
                         .onSuccess { Timber.e("카드너 작성 성공 : ${it.message}") }

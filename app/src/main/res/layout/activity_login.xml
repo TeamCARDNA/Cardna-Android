@@ -56,7 +56,7 @@
             android:includeFontPadding="false"
             android:textColor="@color/main_black"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@id/btn_login_kakao"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login_kakao"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -64,12 +64,12 @@
             android:id="@+id/btn_login_kakao"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="120dp"
             android:background="@drawable/bt_login_kakao"
             android:fontFamily="@font/pretendard_semibold"
             android:gravity="center"
             android:includeFontPadding="false"
-            app:layout_constraintBottom_toTopOf="@id/tv_login_policy"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/btn_login_naver"
             app:layout_constraintStart_toStartOf="@id/btn_login_naver" />
 
@@ -77,43 +77,61 @@
             android:id="@+id/tv_login_policy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:includeFontPadding="false"
+            android:text="가입 시,"
+            android:textColor="@color/white_3"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btn_login_kakao"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_kakao" />
+
+        <TextView
+            android:id="@+id/tv_login_policy_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:includeFontPadding="false"
             android:text="@string/login_policy"
             android:textColor="@color/white_3"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@id/ll_login_policy_text_container"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_login_policy"
+            app:layout_constraintTop_toBottomOf="@+id/tv_login_policy"
             tools:text="@string/login_policy" />
 
         <LinearLayout
             android:id="@+id/ll_login_policy_text_container"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="@+id/tv_login_policy"
+            app:layout_constraintTop_toBottomOf="@+id/tv_login_policy_two">
 
             <TextView
                 android:id="@+id/tv_login_policy_use_of_term"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login_policy_term_of_use"
-                android:textColor="@color/main_green" />
+                android:textColor="@color/main_green"
+                android:textSize="13sp" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login_gwa"
-                android:textColor="@color/white_3" />
+                android:textColor="@color/white_3"
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tv_login_policy_private"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:text="@string/login_private_policy"
-                android:textColor="@color/main_green" />
+                android:textColor="@color/main_green"
+                android:textSize="13sp" />
         </LinearLayout>
 
 

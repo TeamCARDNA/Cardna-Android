@@ -236,17 +236,16 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingVertical="8dp"
-            android:visibility="@{mainCardViewModel.isMyCard ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/cl_maincard_page_count"
-            tools:background="@drawable/bg_maincard_gradient_radius_45">
+            tools:background="@drawable/bg_maincard_white_4_radius_45">
 
             <TextView
                 android:id="@+id/tv_maincard_goto_cardpack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white_4"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="@string/maincard_tv_cardpack_text"
-                android:textColor="@color/white_4"
                 android:textSize="12sp" />
 
         </LinearLayout>
