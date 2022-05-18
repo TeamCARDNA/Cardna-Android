@@ -123,7 +123,7 @@
     </style>
 
     <!--  Mypage Edittext  -->
-    <style name="mypage_edittext_style">
+    <style name="edittext_style">
         <item name="android:includeFontPadding">false</item>
         <item name="colorControlActivated">@color/white_2</item>
         <item name="android:textCursorDrawable">@color/main_green</item>
@@ -241,7 +241,7 @@
 
     </style>
 
-<!--    OnBoarding-->
+    <!--    OnBoarding-->
     <style name="onboarding_title">
         <item name="android:textSize">20sp</item>
         <item name="fontFamily">@font/pretendard_semibold</item>
@@ -285,6 +285,7 @@
         <item name="lineHeight">21dp</item>
         <item name="android:textColor">@color/white_4</item>
     </style>
+
     <!--    Privacy_Policy-->
     <style name="privacy_policy_title">
         <item name="android:textSize">18sp</item>
@@ -300,6 +301,4 @@
         <item name="android:textColor">@color/white_3</item>
         <item name="android:includeFontPadding">false</item>
     </style>
-
-
 </resources>

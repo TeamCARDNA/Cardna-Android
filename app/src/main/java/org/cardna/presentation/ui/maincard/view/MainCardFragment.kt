@@ -7,6 +7,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,6 +17,7 @@ import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.databinding.DialogMainCardBlockBinding
 import org.cardna.databinding.DialogRelationBinding
 import org.cardna.databinding.FragmentMainCardBinding
+import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
@@ -24,9 +27,12 @@ import org.cardna.presentation.ui.editcard.view.EditCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
+import org.cardna.presentation.util.getToast
 import org.cardna.presentation.util.setGradientText
+import org.cardna.presentation.util.shortToast
 import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
+import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class MainCardFragment :
@@ -178,7 +184,7 @@ class MainCardFragment :
             initRelationDialog(dialog, relationDialog)
         }
     }
-    
+
     private fun initRelationDialog(
         dialog: Dialog,
         dialogBinding: DialogRelationBinding,
@@ -279,5 +285,6 @@ class MainCardFragment :
         const val UNKNOWN = "1.0"
         const val FRIEND = "2.0"
         const val PROGRESSING = "3.0"
+        const val BACK_BTN_WAIT_TIME = 2000L
     }
 }

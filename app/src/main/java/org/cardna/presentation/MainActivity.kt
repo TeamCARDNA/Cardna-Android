@@ -45,8 +45,6 @@ class MainActivity :
     private val mainCardFragment: MainCardFragment by lazy { MainCardFragment() }
     private val insightFragment: InsightFragment by lazy { InsightFragment() }
     private val myPageFragment: MyPageFragment by lazy { MyPageFragment() }
-    private var backBtnWaitTime = 0L
-    private val toast: Toast by lazy { getToast(getString(R.string.main_back_btn_msg)) }
 
     @Inject
     lateinit var cardRepository: CardRepository
@@ -150,21 +148,5 @@ class MainActivity :
                 })
             }
         }
-    }
-
-    override fun onBackPressed() {
-        if (System.currentTimeMillis() - backBtnWaitTime >= BACK_BTN_WAIT_TIME) {
-            backBtnWaitTime = System.currentTimeMillis()
-            shortToast(getString(R.string.main_back_btn_msg))
-        } else {
-            toast.cancel()
-            ActivityCompat.finishAffinity(this)
-            System.runFinalization()
-            exitProcess(0)
-        }
-    }
-
-    companion object {
-        private const val BACK_BTN_WAIT_TIME = 2000L
     }
 }
