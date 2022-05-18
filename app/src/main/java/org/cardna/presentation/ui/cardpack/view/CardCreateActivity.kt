@@ -1,18 +1,12 @@
 package org.cardna.presentation.ui.cardpack.view
 
 import android.Manifest
-import android.app.Activity
-import android.content.ContentResolver
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -21,19 +15,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import org.cardna.R
-import org.cardna.databinding.ActivityCardCreateBinding
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.databinding.ActivityCardCreateBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
 import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
 import org.cardna.presentation.util.MultiPartResolver
-import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.initRootClickEvent
 import org.cardna.presentation.util.shortToast
 import org.cardna.ui.cardpack.BottomDialogImageFragment
@@ -41,7 +34,6 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
-import java.text.SimpleDateFormat
 import java.util.*
 
 // 1. 내 카드팩에서 카드나 작성

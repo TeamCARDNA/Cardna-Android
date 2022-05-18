@@ -6,7 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
-import android.util.Log
+import android.provider.MediaStore
 import androidx.exifinterface.media.ExifInterface
 import dagger.hilt.android.qualifiers.ActivityContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -16,9 +16,8 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
-import java.lang.NullPointerException
 import javax.inject.Inject
-
+import java.lang.NullPointerException
 
 class MultiPartResolver @Inject constructor(
     @ActivityContext private val context: Context
@@ -29,7 +28,6 @@ class MultiPartResolver @Inject constructor(
         val options = BitmapFactory.Options()
         val inputStream = context.contentResolver.openInputStream(uri)
         val byteArrayOutputStream = ByteArrayOutputStream()
-        Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡuriㅡㅡㅡㅡㅡㅡㅡㅡㅡ",uri.toString())
         getRotatedBitmap(
             BitmapFactory.decodeStream(inputStream, null, options),
             getOrientationOfImage(uri)
@@ -53,18 +51,28 @@ class MultiPartResolver @Inject constructor(
         return MultipartBody.Part.createFormData("image", file.name, surveyBody)
     }
 
-
+    fun createImgMultiPart(bitmap: Bitmap): MultipartBody.Part {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val file = File(replaceFileName(bitmap.toString()))
+        val surveyBody =
+            byteArrayOutputStream.toByteArray().toRequestBody("image/jpeg".toMediaTypeOrNull())
+        return MultipartBody.Part.createFormData("image", file.name, surveyBody)
+    }
 
     private fun getOrientationOfImage(uri: Uri): Int {
-        var exif: ExifInterface? = null
-        try {
-            val filePath = getPathFromUri(uri)
-            exif = ExifInterface(filePath)
+        // uri -> inputStream
+        val inputStream =  context.contentResolver.openInputStream(uri)
+        val exif: ExifInterface? = try {
+            ExifInterface(inputStream!!)
         } catch (e: IOException) {
             e.printStackTrace()
             return -1
         }
-        val orientation: Int = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, -1)
+        inputStream.close()
+
+        // 회전된 각도 알아내기
+        val orientation = exif?.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
         if (orientation != -1) {
             when (orientation) {
                 ExifInterface.ORIENTATION_ROTATE_90 -> return 90
@@ -75,7 +83,6 @@ class MultiPartResolver @Inject constructor(
         return 0
     }
 
-
     @Throws(Exception::class)
     fun getRotatedBitmap(bitmap: Bitmap?, degrees: Int): Bitmap? {
         if (bitmap == null) return null
@@ -85,11 +92,13 @@ class MultiPartResolver @Inject constructor(
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
-    private fun getPathFromUri(uri: Uri): String {
-        val cursor: Cursor = context.contentResolver.query(uri, null, null, null, null)
-            ?: throw NullPointerException()
-        cursor.moveToNext()
-        val columnIndex = cursor.getColumnIndex("_data")
+    private fun getPathFromUri(uri: Uri): String? {
+        val projection = arrayOf(
+            MediaStore.Images.Media.BUCKET_DISPLAY_NAME
+        )
+        val cursor = context.contentResolver.query(uri, projection, null, null, null)
+        cursor?.moveToNext()
+        val columnIndex = cursor?.getColumnIndex("_data") ?: return null
         val path =
             cursor.getString(columnIndex)
 
