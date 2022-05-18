@@ -1,15 +1,18 @@
 package org.cardna.presentation.ui.maincard.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.data.remote.model.card.MainCard
 import org.cardna.data.remote.model.card.ResponseMainCardData
 import org.cardna.data.remote.model.friend.RequestApplyOrCancleFriendData
 import org.cardna.data.remote.model.friend.ResponseApplyOrCancleFriendData
+import org.cardna.domain.repository.AlarmRepository
 import org.cardna.domain.repository.CardRepository
 import org.cardna.domain.repository.FriendRepository
 import org.cardna.domain.repository.MyPageRepository
@@ -22,6 +25,7 @@ class MainCardViewModel @Inject constructor(
     private val cardRepository: CardRepository,
     private val myPageRepository: MyPageRepository,
     private val friendRepository: FriendRepository,
+    private val alarmRepository: AlarmRepository
 ) : ViewModel() {
 
     private val _isMyCard = MutableLiveData<Boolean>()
@@ -51,13 +55,35 @@ class MainCardViewModel @Inject constructor(
     private val _relation = MutableLiveData<Any>()
     val relation: LiveData<Any> = _relation
 
+    private val _isAlarmExist = MutableLiveData<Boolean>()
+    val isAlarmExist: LiveData<Boolean> = _isAlarmExist
+
+    private val _updateAlarmCount = MutableLiveData<Int>(0)
+    val updateAlarmCount: LiveData<Int> = _updateAlarmCount
+
+    fun setAlarmExist() {
+        viewModelScope.launch {
+            runCatching {
+                alarmRepository.getAlarm()
+            }.onSuccess {
+                it.data.apply {
+                    _updateAlarmCount.value= request.requester.size + alarm.size
+                    _isAlarmExist.value = CardNaRepository.alarmExistCount == request.requester.size + alarm.size
+                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡsetAlarmExistㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${request.requester.size}+${alarm.size}+${CardNaRepository.alarmExistCount}")
+                }
+            }.onFailure {
+                Timber.e(it.toString())
+            }
+        }
+    }
+
     fun setRelation(friendRelation: String) {
         _relation.value = friendRelation
     }
 
     fun setFriendNameAndId(name: String, id: Int) {
         _friendId.value = id
-        _friendName.value=name
+        _friendName.value = name
     }
 
     fun getMainCardList(id: Int? = -1) {

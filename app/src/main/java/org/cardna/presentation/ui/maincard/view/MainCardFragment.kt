@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
+import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.databinding.DialogMainCardBlockBinding
 import org.cardna.databinding.DialogRelationBinding
 import org.cardna.databinding.FragmentMainCardBinding
@@ -37,7 +38,6 @@ class MainCardFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-
     }
 
     override fun initView() {
@@ -54,8 +54,19 @@ class MainCardFragment :
         checkUserId()
     }
 
+    private fun setAlarmExist() {
+        mainCardViewModel.setAlarmExist()
+    }
+
     //뿌려질 데이터
     private fun initData() {
+        setAlarmExist()
+        mainCardViewModel.isAlarmExist.observe(viewLifecycleOwner) {
+            if (it == false && CardNaRepository.alarmExistCount < mainCardViewModel.updateAlarmCount.value!!) binding.icAlarmStatus.visibility = View.VISIBLE
+            else binding.icAlarmStatus.visibility = View.INVISIBLE
+
+        }
+
         binding.mainCardViewModel = mainCardViewModel
         setInitPagePosition()
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
@@ -67,7 +78,7 @@ class MainCardFragment :
             val name = arguments?.getString("name")
             id = arguments?.getInt("id", -1) ?: -1
             mainCardViewModel.getMyPageUser(name!!)
-            mainCardViewModel.setFriendNameAndId(name,id)
+            mainCardViewModel.setFriendNameAndId(name, id)
             setFriendIcon()
         } else {
             mainCardViewModel.getMyPageUser()
@@ -149,7 +160,7 @@ class MainCardFragment :
     }
 
     private fun setAlarmActivity() {
-        binding.ibtnMaincardAlarm.setOnClickListener {
+        binding.clMaincardAlarm.setOnClickListener {
             val intent = Intent(requireActivity(), AlarmActivity::class.java)
             startActivity(intent)
         }
@@ -288,7 +299,7 @@ class MainCardFragment :
                     .putExtra(BaseViewUtil.ID, mainCardViewModel.friendId.value)
                     .putExtra(BaseViewUtil.NAME, mainCardViewModel.friendName.value)
             )
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",mainCardViewModel.friendId.value.toString()+mainCardViewModel.friendName.value)
+            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", mainCardViewModel.friendId.value.toString() + mainCardViewModel.friendName.value)
         }
     }
 
