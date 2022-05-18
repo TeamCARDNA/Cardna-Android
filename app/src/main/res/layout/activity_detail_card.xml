@@ -230,7 +230,7 @@
             android:id="@+id/bt_detailcard_card_add"
             android:layout_width="0dp"
             android:layout_height="64dp"
-            android:layout_marginBottom="48dp"
+            android:layout_marginBottom="53dp"
             android:background="@drawable/bg_white_1_5_10dp"
             android:fontFamily="@font/pretendard_semibold"
             android:onClick="@{()->detailCardActivity.setCardAddClickListener()}"
