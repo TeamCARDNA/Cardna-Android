@@ -3,6 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="main_back_btn_msg">\'뒤로\'버튼을 한번 더 누르시면 종료됩니다.</string>
+
     <!--  Setting  -->
     <string name="setting_title">설정</string>
     <string name="setting_account_info_title">계정 정보</string>

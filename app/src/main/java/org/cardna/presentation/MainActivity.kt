@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -28,10 +30,13 @@ import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.view.MyPageFragment
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.getToast
 import org.cardna.presentation.util.replace
+import org.cardna.presentation.util.shortToast
 import org.cardna.ui.cardpack.BottomDialogCardFragment
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class MainActivity :
@@ -40,6 +45,8 @@ class MainActivity :
     private val mainCardFragment: MainCardFragment by lazy { MainCardFragment() }
     private val insightFragment: InsightFragment by lazy { InsightFragment() }
     private val myPageFragment: MyPageFragment by lazy { MyPageFragment() }
+    private var backBtnWaitTime = 0L
+    private val toast: Toast by lazy { getToast(getString(R.string.main_back_btn_msg)) }
 
     @Inject
     lateinit var cardRepository: CardRepository
@@ -47,22 +54,6 @@ class MainActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(
-            OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w(
-                        "BeMeApplication.TAG",
-                        "Fetching FCM registration token failed",
-                        task.exception
-                    )
-                    return@OnCompleteListener
-                } else {
-                    val token = task.result
-                    Log.d("BeMeApplication.TAGㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", token.toString())
-                }
-            }
-        )
     }
 
     override fun initView() {
@@ -148,9 +139,9 @@ class MainActivity :
         if (dynamicLinkData != null) {
 
             if (dynamicLinkData.get("body").toString().contains("작성")) {
-              /*  startActivity(
-                    Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())
-                )*/
+                /*  startActivity(
+                      Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())
+                  )*/
                 startActivity(Intent(this, AlarmActivity::class.java).apply {
                 })
             } else if (dynamicLinkData.get("body").toString().contains("친구")) {
@@ -159,5 +150,21 @@ class MainActivity :
                 })
             }
         }
+    }
+
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() - backBtnWaitTime >= BACK_BTN_WAIT_TIME) {
+            backBtnWaitTime = System.currentTimeMillis()
+            shortToast(getString(R.string.main_back_btn_msg))
+        } else {
+            toast.cancel()
+            ActivityCompat.finishAffinity(this)
+            System.runFinalization()
+            exitProcess(0)
+        }
+    }
+
+    companion object {
+        private const val BACK_BTN_WAIT_TIME = 2000L
     }
 }
