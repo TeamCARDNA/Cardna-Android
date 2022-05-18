@@ -31,7 +31,8 @@ object CardNaRepository {
     private const val USER_UUID_KEY = "USER_UUID_KEY" //유저아이디 키
 
     //푸시알림
-    private const val PUSH_ALARM_KEY = "PUSH_ALARM_KEY" //유저아이디 키
+    private const val PUSH_ALARM_KEY = "PUSH_ALARM_KEY" //푸시알림 온오프
+    private const val PUSH_ALARM_EXIST_COUNT_KEY = "PUSH_ALARM_EXIST_COUNT_KEY" //푸시알림 개수
 
     private lateinit var preferences: SharedPreferences
     private lateinit var authPreferences: SharedPreferences
@@ -135,5 +136,12 @@ object CardNaRepository {
         get() = preferences.getBoolean(PUSH_ALARM_KEY, true)
         set(value) = preferences.edit {
             it.putBoolean(PUSH_ALARM_KEY, value)
+        }
+
+    //푸시알림 개수
+    var alarmExistCount: Int
+        get() = preferences.getInt(PUSH_ALARM_EXIST_COUNT_KEY, 0)
+        set(value) = preferences.edit {
+            it.putInt(PUSH_ALARM_EXIST_COUNT_KEY, value)
         }
 }

@@ -1,33 +1,32 @@
 package org.cardna.presentation.ui.cardpack.view
 
 import android.Manifest
-import android.app.Activity
-import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import org.cardna.R
-import org.cardna.databinding.ActivityCardCreateBinding
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.databinding.ActivityCardCreateBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
 import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
-import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.MultiPartResolver
 import org.cardna.presentation.util.initRootClickEvent
 import org.cardna.presentation.util.shortToast
 import org.cardna.ui.cardpack.BottomDialogImageFragment
@@ -35,6 +34,7 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
+import java.util.*
 
 // 1. 내 카드팩에서 카드나 작성
 // 2. 친구 대표카드 or 친구 카드팩에서 카드너 작성
@@ -44,7 +44,7 @@ class CardCreateActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityCardCreateBinding>(R.layout.activity_card_create) {
 
     private val cardCreateViewModel: CardCreateViewModel by viewModels()
-
+    private val multiPartResolver = MultiPartResolver(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel()
@@ -195,12 +195,6 @@ class CardCreateActivity :
 
 
     /// **************************** 갤러리 접근 코드 ****************************
-    private fun resToUri(resId: Int): Uri =
-        Uri.Builder().scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-            .authority(resources.getResourcePackageName(resId))
-            .appendPath(resources.getResourceTypeName(resId))
-            .appendPath(resources.getResourceEntryName(resId))
-            .build()
 
 
     // 카드나 만들기 버튼 눌렀을 때,
@@ -213,11 +207,12 @@ class CardCreateActivity :
             // 1. 서버로 title, content, symbolId, uri 전송
             // symbolId - 카드 이미지 심볼 id, 이미지가 있는 경우 null을 보내주면 됨
             // nullPointException 을 방지하기위한 분기처리
-            if (cardCreateViewModel.uri == null) {
+            if (cardCreateViewModel.uri.value == null) {
                 cardCreateViewModel.makeCard(null)
-            } else
-                cardCreateViewModel.makeCard(makeUriToFile())
-
+            } else {
+                cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
+                Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmakeCardㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${cardCreateViewModel.uri.value}")
+            }
             // 2. cardCreateCompleteActivity 로 이동
             if (cardCreateViewModel.isCardMeOrYou!!) {
                 // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
@@ -232,7 +227,7 @@ class CardCreateActivity :
                 ) // 심볼 - symbolId값, 갤러리 - null
                 intent.putExtra(
                     BaseViewUtil.CARD_IMG,
-                    cardCreateViewModel.uri.toString()
+                    cardCreateViewModel.uri.value.toString()
                 ) // 심볼 - null, 갤러리 - uri 값
                 intent.putExtra(BaseViewUtil.CARD_TITLE, cardCreateViewModel.etKeywordText.value)
 
@@ -258,10 +253,11 @@ class CardCreateActivity :
     private fun setCardInduceListener() {
         binding.tvCardcreateComplete.setOnClickListener {
             // nullPointException 을 방지하기위한 분기처리
-            if (cardCreateViewModel.uri == null) {
+            if (cardCreateViewModel.uri.value == null) {
                 cardCreateViewModel.makeCard(null)
-            } else
-                cardCreateViewModel.makeCard(makeUriToFile())
+            } else {
+                cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
+            }
 
             cardCreateViewModel.makeInduceCardSuccess.observe(this) { makeInduceCardSuccess ->
                 if (makeInduceCardSuccess)
@@ -285,8 +281,8 @@ class CardCreateActivity :
             ) // 심볼 - symbolId값, 갤러리 - null
             intent.putExtra(
                 BaseViewUtil.CARD_IMG,
-                cardCreateViewModel.uri.toString()
-            ) // 심볼 - null, 갤러리 - uri 값
+                cardCreateViewModel.uri.value.toString()
+            )  // 심볼 - null, 갤러리 - uri 값
             intent.putExtra(
                 BaseViewUtil.CARD_TITLE,
                 cardCreateViewModel.etKeywordText.value
@@ -319,30 +315,34 @@ class CardCreateActivity :
     }
 
     private fun startProcess() {
-        val intent = Intent().apply {
-            setType("image/*")
-            setAction(Intent.ACTION_GET_CONTENT)
-        }
-        getResultText.launch(intent)
+        getResultText.launch(
+            Intent(
+                Intent.ACTION_GET_CONTENT,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            )
+        )
     }
 
     val getResultText =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) // 이거 deprecated 되지 않았나 ?
-        { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                cardCreateViewModel.setUri(result.data?.data)  // Intent를 반환 -> Intent에서 Uri로 get하기
-                cardCreateViewModel.setSymbolId(null) // 전에 symbol 선택 후, 다시 갤러리 이미지를 선택했을 경우, 다시 symbolId null로
-                cardCreateViewModel.setIfChooseImg(true)
-                Glide.with(this).load(cardCreateViewModel.uri).into(binding.ivCardcreateGalleryImg)
+        { result: ActivityResult ->
+            result.data?.let { intent ->
+                intent.data?.let { uri ->
+                    cardCreateViewModel.setUri(uri)  // Intent를 반환 -> Intent에서 Uri로 get하기
+                    cardCreateViewModel.setSymbolId(null) // 전에 symbol 선택 후, 다시 갤러리 이미지를 선택했을 경우, 다시 symbolId null로
+                    cardCreateViewModel.setIfChooseImg(true)
+                    Glide.with(this).load(cardCreateViewModel.uri.value).into(binding.ivCardcreateGalleryImg)
 
-                Timber.e("uri 값은  : $cardCreateViewModel.uri")
+                    Timber.e("uri 값은  : ${cardCreateViewModel.uri.value}")
 
-                binding.ivCardcreateGalleryImg.visibility = View.VISIBLE // imageView는 보이도록
-                binding.ctlCardcreateImg.visibility = View.INVISIBLE // 이제 ctl은 invisible
-                checkCompleteTvClickable()
+                    binding.ivCardcreateGalleryImg.visibility = View.VISIBLE // imageView는 보이도록
+                    binding.ctlCardcreateImg.visibility = View.INVISIBLE // 이제 ctl은 invisible
+                    checkCompleteTvClickable()
+                }
             }
-            //else if (result.resultCode == Activity.RESULT_CANCELED) {} =>Activity.RESULT_CANCELED일때 처리코드가 필요하다면
         }
+    //else if (result.resultCode == Activity.RESULT_CANCELED) {} =>Activity.RESULT_CANCELED일때 처리코드가 필요하다면
+    //     }
 
     private fun requestPermission() {
         permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -363,11 +363,11 @@ class CardCreateActivity :
     // 이제 완료 버튼 눌렀을 때, 설정된 uri 값을 서버에 보내기 위해 멀티파트로 바꿔주는 함수
     private fun makeUriToFile(): MultipartBody.Part {
         val options = BitmapFactory.Options()
-      //  options.inSampleSize = 4
+        //  options.inSampleSize = 4
         // 1/8 만큼 이미지를 줄여서 decoding
 
         val inputStream: InputStream =
-            requireNotNull(contentResolver.openInputStream(cardCreateViewModel.uri!!)) // 여기서 문제인가 ?
+            requireNotNull(contentResolver.openInputStream(cardCreateViewModel.uri.value!!)) // 여기서 문제인가 ?
 
         val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
         // input stream 으로부터 bitmap을 만들어내는 것.

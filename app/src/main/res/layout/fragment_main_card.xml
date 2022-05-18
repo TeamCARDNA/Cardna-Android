@@ -19,23 +19,41 @@
         android:layout_height="match_parent"
         android:background="@color/main_black">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_maincard_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
             android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingBottom="10dp"
             android:visibility="@{mainCardViewModel.isMyCard ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/ibtn_maincard_alarm"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_alarm" />
-        </LinearLayout>
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_alarm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ic_alarm_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:visibility="invisible"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_icon_alert"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/ll_maincard_mypage_icon_container"
