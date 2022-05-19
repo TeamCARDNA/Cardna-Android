@@ -222,7 +222,7 @@
     <string name="dialog_relation_progressing_cancel">친구요청을 취소하시겠어요?</string>
     <string name="dialog_relation_disconnect_title">친구를 끊으시겠어요?</string>
     <string name="dialog_relation_add_friend_title">친구를 추가하시겠어요?</string>
-    <string name="dialog_relation_disconnect_about">상대방에게도 친구가 취소되요</string>
+    <string name="dialog_relation_disconnect_about">상대방에게도 친구가 취소돼요</string>
 
     <!--   CardYouStore Activity-->
     <string name="cardyoustore_mt_title">카드너 보관함</string>
