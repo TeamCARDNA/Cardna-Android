@@ -80,7 +80,8 @@ class EditCardActivity :
             val cardsList = RequestEditCardData(editCardAdapter.mutableList.map { it.id })
             Timber.d("list- put : $cardsList")
             editCardViewModel.putEditCard(cardsList)
-            finish()
+            if (editCardViewModel.isSuccess)
+                finish()
         }
     }
 
