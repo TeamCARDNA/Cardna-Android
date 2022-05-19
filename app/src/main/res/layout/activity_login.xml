@@ -65,7 +65,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="120dp"
-            android:background="@drawable/bt_login_kakao"
+            android:background="@drawable/kakao_login_medium_wide"
             android:fontFamily="@font/pretendard_semibold"
             android:gravity="center"
             android:includeFontPadding="false"
