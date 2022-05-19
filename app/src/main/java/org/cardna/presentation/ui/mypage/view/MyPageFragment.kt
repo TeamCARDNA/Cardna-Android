@@ -82,10 +82,10 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
             it.getContentIfNotHandled()?.let { event ->
                 when (event) {
                     MyPageViewModel.SEARCH_QUERY -> myPageFriendAdapter.submitList(myPageViewModel.searchFriendNameResult.value)//진짜 검색해서 결과뜬 경우
-                    MyPageViewModel.EXIST_QUERY -> myPageFriendAdapter.submitList(myPageViewModel.friendList.value)//쿼리있는데 왔다가 온경우 ->업데이트 없어야함
+                    MyPageViewModel.EXIST_QUERY -> myPageFriendAdapter.submitList(myPageViewModel.friendList.value?.reversed())//쿼리있는데 왔다가 온경우 ->업데이트 없어야함
                     MyPageViewModel.DEFAULT_STATE ->
                         myPageViewModel.friendList.observe(viewLifecycleOwner) { friendList ->
-                            myPageFriendAdapter.submitList(friendList) //가장 처음엔 운래 친구리스트
+                            myPageFriendAdapter.submitList(friendList.reversed()) //가장 처음엔 운래 친구리스트
                         }
                 }
             }
@@ -110,7 +110,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
                         myPageViewModel.updateSearchNameQuery("")
                         myPageViewModel.isNonExistFriendName(false)
                         myPageViewModel.friendList.observe(viewLifecycleOwner) {
-                            myPageFriendAdapter.submitList(it)
+                            myPageFriendAdapter.submitList(it.reversed())
                         }
                     }
                     return false

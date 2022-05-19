@@ -5,6 +5,7 @@ import android.R.id
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import com.amplitude.api.Amplitude
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
@@ -23,8 +24,10 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         initPixelUtil()
         initLogger()
         initKakaoLogin()
+        initAmplitude()
         CardNaRepository.init(this)
         getDeviceToken()
+   //     Amplitude.getInstance().logEvent("APP OPEN")
     }
 
     //todo 소셜로그인에 필요한 디바이스 토큰을 얻는다
@@ -40,8 +43,6 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         })
     }
 
-
-    //백&온그라운드 분기
     override fun onTerminate() {
         super.onTerminate()
         unregisterActivityLifecycleCallbacks(this)
@@ -60,6 +61,11 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         KakaoSdk.init(this, kakaoAppKey)
     }
 
+    private fun initAmplitude() {
+        Amplitude.getInstance().initialize(this, "00c76df54b75da7bd287245491b78c37").enableForegroundTracking(this)
+    }
+
+    //백&온그라운드 분기
     override fun onActivityCreated(p0: Activity, p1: Bundle?) {
     }
 

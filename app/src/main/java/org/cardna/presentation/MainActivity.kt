@@ -149,4 +149,9 @@ class MainActivity :
             }
         }
     }
+
+    override fun onBackPressed() {
+        //     Amplitude.getInstance().logEvent("App Close")
+        super.onBackPressed()
+    }
 }
