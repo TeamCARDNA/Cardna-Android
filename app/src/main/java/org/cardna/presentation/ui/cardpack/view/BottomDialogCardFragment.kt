@@ -11,12 +11,17 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import land.sungbin.systemuicontroller.setNavigationBarColor
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.cardpack.view.BottomCardLamdaData
 import org.cardna.presentation.ui.cardpack.view.CardYouStoreActivity
+import timber.log.Timber
 
 
-class BottomDialogCardFragment(val itemClick: (Boolean) -> Unit) : BottomSheetDialogFragment() {
+class BottomDialogCardFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentBottomDialogCardBinding? = null
     private val binding get() = _binding ?: error("Binding이 초기화되지 않았습니다")
+
+    private lateinit var itemClick: (Boolean) -> Unit
+    private lateinit var bottomCardLamdaData: BottomCardLamdaData
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +41,15 @@ class BottomDialogCardFragment(val itemClick: (Boolean) -> Unit) : BottomSheetDi
         this.setSystemBarsColor(Color.BLACK, false)
         this.setNavigationBarColor(Color.BLACK, false)
         makeCard()
+        initRamda()
     }
+
+    private fun initRamda(){
+        Timber.e("Init 람다")
+        bottomCardLamdaData = arguments?.getParcelable("BottomCard")!!
+        itemClick = bottomCardLamdaData.BottomCardListener
+    }
+
 
     private fun makeCard(){
         binding.clBottomdialogCardTop.setOnClickListener{
