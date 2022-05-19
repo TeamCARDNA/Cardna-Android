@@ -52,6 +52,7 @@
             <TextView
                 android:id="@+id/tv_editcard_count"
                 style="@style/detail_card_text_hint"
+                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -60,6 +61,7 @@
             <TextView
                 style="@style/detail_card_text_hint"
                 android:layout_width="wrap_content"
+                android:textSize="12sp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/edit_card_slash"
@@ -70,6 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:textSize="12sp"
                 android:text="@string/edit_card_seven"
                 tools:text="@string/edit_card_seven" />
 
@@ -128,7 +131,7 @@
                     android:id="@+id/rv_representcardedit_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="21dp"
                     android:layout_marginHorizontal="10dp"
                     android:nestedScrollingEnabled="true"
                     android:overScrollMode="never"
@@ -171,6 +174,7 @@
             android:layout_marginStart="20dp"
             android:fontFamily="@font/pretendard_semibold"
             android:includeFontPadding="false"
+            android:visibility="@{editCardViewModel.mainCardList.size != 0 ? View.GONE : View.VISIBLE}"
             android:text="@string/edit_card_float_button_message"
             android:textColor="@color/black"
             android:textSize="14sp"
