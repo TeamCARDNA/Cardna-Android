@@ -58,7 +58,6 @@
                 android:id="@+id/ll_editcarddialog_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/tl_representcardedit">
@@ -67,7 +66,6 @@
                     android:id="@+id/tv_representcardedit_card_list_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="2dp"
                     android:textColor="@color/white_3"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@id/tl_representcardedit"
@@ -78,7 +76,6 @@
                     android:id="@+id/tv_representcardedit_card_list_count_dot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="2dp"
                     android:text="@string/edit_card_slash"
                     android:textColor="@color/white_3"
                     android:textSize="12sp" />
@@ -87,7 +84,6 @@
                     android:id="@+id/tv_representcardedit_card_list_count_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
                     android:text="@string/edit_card_seven"
                     android:textColor="@color/white_3"
                     android:textSize="12sp" />
