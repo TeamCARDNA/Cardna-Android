@@ -60,18 +60,40 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btn_login_kakao"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
             android:layout_marginBottom="120dp"
-            android:background="@drawable/kakao_login_medium_wide"
+            android:background="@drawable/bg_kakao"
             android:fontFamily="@font/pretendard_semibold"
             android:gravity="center"
             android:includeFontPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/btn_login_naver"
             app:layout_constraintStart_toStartOf="@id/btn_login_naver" />
+
+        <ImageView
+            android:id="@+id/iv_kakao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/kakao_login_original"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_login_kakao"
+            app:layout_constraintStart_toStartOf="@+id/btn_login_kakao"
+            app:layout_constraintTop_toTopOf="@+id/btn_login_kakao" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="85dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="카카오 로그인"
+            android:textColor="@color/main_black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_kakao"
+            app:layout_constraintStart_toEndOf="@+id/iv_kakao"
+            app:layout_constraintTop_toTopOf="@+id/iv_kakao" />
 
         <TextView
             android:id="@+id/tv_login_policy"
