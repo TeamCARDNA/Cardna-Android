@@ -14,10 +14,7 @@ import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
-import org.cardna.presentation.util.ItemTouchHelperCallback
-import org.cardna.presentation.util.StatusBarUtil
-import org.cardna.presentation.util.setGradientText
-import org.cardna.presentation.util.shortToast
+import org.cardna.presentation.util.*
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -51,11 +48,10 @@ class EditCardActivity :
         with(binding.rvRepresentcardeditContainer) {
             layoutManager = GridLayoutManager(this@EditCardActivity, 2)
             adapter = editCardAdapter
-
-            val itemTouchHelperCallback = ItemTouchHelperCallback(editCardAdapter)
-            val helper = ItemTouchHelper(itemTouchHelperCallback)
-            helper.attachToRecyclerView(this)
+            addItemDecoration(SpacesItemDecorationHorizontalCustom())
+            itemTouchHelperListener(editCardAdapter, this)
         }
+
         editCardViewModel.mainCardList.observe(this) {
             editCardAdapter.submitList(it)
         }
@@ -84,7 +80,8 @@ class EditCardActivity :
             val cardsList = RequestEditCardData(editCardAdapter.mutableList.map { it.id })
             Timber.d("list- put : $cardsList")
             editCardViewModel.putEditCard(cardsList)
-            finish()
+            if (editCardViewModel.isSuccess)
+                finish()
         }
     }
 

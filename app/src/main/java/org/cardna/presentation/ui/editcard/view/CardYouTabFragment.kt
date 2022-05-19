@@ -11,6 +11,7 @@ import org.cardna.presentation.ui.editcard.adapter.EditCardDialogAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 import org.cardna.presentation.util.SpacesItemDecoration
 import org.cardna.presentation.util.SpacesItemDecorationHorizontal
+import org.cardna.presentation.util.SpacesItemDecorationHorizontalCustom
 import kotlin.math.roundToInt
 
 class CardYouTabFragment :
@@ -51,7 +52,8 @@ class CardYouTabFragment :
         with(binding.rvCardyoutabContainer) {
             this.adapter = editCardDialogAdapter
             layoutManager = GridLayoutManager(requireActivity(), 2)
-            addItemDecoration(SpacesItemDecorationHorizontal())
+            addItemDecoration(SpacesItemDecorationHorizontalCustom())
+
         }
     }
 }
