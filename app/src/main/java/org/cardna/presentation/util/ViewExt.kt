@@ -20,6 +20,8 @@ import androidx.core.text.set
 import androidx.core.text.toSpannable
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -27,6 +29,7 @@ import com.bumptech.glide.Glide
 import com.kakao.sdk.common.model.AuthErrorCause
 import org.cardna.R
 import org.cardna.CardNaApplication
+import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
 import timber.log.Timber
 import kotlin.math.roundToInt
 
@@ -186,6 +189,15 @@ fun copyText(context: Context, text: String) {
     val myClipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val myClip: ClipData = ClipData.newPlainText("Label", text)
     myClipboard.setPrimaryClip(myClip)
+}
+
+fun itemTouchHelperListener(
+    editCardAdapter: EditCardAdapter,
+    recyclerView: RecyclerView
+) {
+    val itemTouchHelperCallback = ItemTouchHelperCallback(editCardAdapter)
+    val helper = ItemTouchHelper(itemTouchHelperCallback)
+    helper.attachToRecyclerView(recyclerView)
 }
 
 

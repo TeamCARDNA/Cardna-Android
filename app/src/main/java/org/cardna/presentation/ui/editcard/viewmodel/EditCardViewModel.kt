@@ -34,6 +34,9 @@ class EditCardViewModel @Inject constructor(
     private val _currentPosition = MutableLiveData<Int>()
     val currentPosition: LiveData<Int> = _currentPosition
 
+    private var _isSuccess = false
+    val isSuccess get() = _isSuccess
+
     fun setCurrentPosition(position: Int) {
         _currentPosition.value = position
     }
@@ -57,6 +60,7 @@ class EditCardViewModel @Inject constructor(
                 cardRepository.putEditCard(cards).data.mainCardList
             }.onSuccess {
                 _mainCardList.value = it
+                _isSuccess = true
             }.onFailure {
                 Timber.e("put_edit_card_error")
             }
