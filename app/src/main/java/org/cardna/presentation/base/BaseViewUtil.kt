@@ -84,6 +84,9 @@ sealed class BaseViewUtil {
         const val CARD_IMG = "cardImg"
         const val CARD_TITLE = "cardTitle"
 
+        const val BOTTOM_CARD = "bottomCard"
+        const val BOTTOM_IMAGE = "bottomImage"
+
         const val IS_CARDPACK_OR_MAINCARD = "isCardPackOrMainCard"
         const val FROM_CARDPACK = true
         const val FROM_MAINCARD = false

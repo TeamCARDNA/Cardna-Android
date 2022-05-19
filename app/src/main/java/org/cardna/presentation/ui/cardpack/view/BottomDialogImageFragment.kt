@@ -37,7 +37,7 @@ class BottomDialogImageFragment
     }
 
     private fun initLamda(){
-        bottomImageLamdaData = arguments?.getParcelable("BottomImage")!!
+        bottomImageLamdaData = arguments?.getParcelable(BaseViewUtil.BOTTOM_IMAGE)!!
         itemClick = bottomImageLamdaData.BottomImageListener
     }
 

@@ -121,7 +121,7 @@ class MainActivity :
         val bottomDialogCardFragment = BottomDialogCardFragment()
         bottomDialogCardFragment.arguments = Bundle().apply {
             putParcelable(
-                "BottomCard", BottomCardLamdaData(itemClick)
+                BaseViewUtil.BOTTOM_CARD, BottomCardLamdaData(itemClick)
             )
         }
 

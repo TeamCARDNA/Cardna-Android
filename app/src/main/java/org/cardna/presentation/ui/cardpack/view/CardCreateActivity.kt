@@ -161,7 +161,7 @@ class CardCreateActivity :
             // 이미지 선택 cl 클릭 시, bottomDialogImageFragment 를 생성한 후, 람다를 bundle로 넘겨줌. 이를 show()
             val bottomDialogImageFragment = BottomDialogImageFragment()
             bottomDialogImageFragment.arguments = Bundle().apply {
-                putParcelable("BottomImage", BottomImageLamdaData(itemClick))
+                putParcelable(BaseViewUtil.BOTTOM_IMAGE, BottomImageLamdaData(itemClick))
             }
             bottomDialogImageFragment.show(supportFragmentManager, bottomDialogImageFragment.tag)
         }
@@ -171,7 +171,7 @@ class CardCreateActivity :
         binding.ivCardcreateGalleryImg.setOnClickListener {
             val bottomDialogImageFragment = BottomDialogImageFragment()
             bottomDialogImageFragment.arguments = Bundle().apply {
-                putParcelable("BottomImage", BottomImageLamdaData(itemClick))
+                putParcelable(BaseViewUtil.BOTTOM_IMAGE, BottomImageLamdaData(itemClick))
             }
             bottomDialogImageFragment.show(supportFragmentManager, bottomDialogImageFragment.tag)
         }

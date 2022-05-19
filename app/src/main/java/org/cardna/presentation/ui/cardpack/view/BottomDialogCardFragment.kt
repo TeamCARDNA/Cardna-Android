@@ -46,7 +46,7 @@ class BottomDialogCardFragment : BottomSheetDialogFragment() {
 
     private fun initRamda(){
         Timber.e("Init 람다")
-        bottomCardLamdaData = arguments?.getParcelable("BottomCard")!!
+        bottomCardLamdaData = arguments?.getParcelable(BaseViewUtil.BOTTOM_CARD)!!
         itemClick = bottomCardLamdaData.BottomCardListener
     }
 
