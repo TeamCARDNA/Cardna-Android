@@ -52,20 +52,20 @@
             <TextView
                 android:id="@+id/tv_editcard_count"
                 style="@style/detail_card_text_hint"
-                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                tools:text="1"
-                android:text="@{String.valueOf(editCardViewModel.mainCardList.size())}" />
+                android:text="@{String.valueOf(editCardViewModel.mainCardList.size())}"
+                android:textSize="12sp"
+                tools:text="1" />
 
             <TextView
                 style="@style/detail_card_text_hint"
                 android:layout_width="wrap_content"
-                android:textSize="12sp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/edit_card_slash"
+                android:textSize="12sp"
                 tools:text="/" />
 
             <TextView
@@ -73,8 +73,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textSize="12sp"
                 android:text="@string/edit_card_seven"
+                android:textSize="12sp"
                 tools:text="@string/edit_card_seven" />
 
         </LinearLayout>
@@ -113,6 +113,7 @@
                         style="@style/represent_card_edit_title_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:text="@string/edit_card_represent_gradient"
                         app:layout_constraintStart_toStartOf="@id/tv_representcardedit_text"
                         app:layout_constraintTop_toBottomOf="@id/tv_representcardedit_text" />
@@ -123,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/edit_card_represent_after"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_representcardedit_color_title"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_representcardedit_color_title"
                         app:layout_constraintStart_toEndOf="@id/tv_representcardedit_color_title"
                         app:layout_constraintTop_toTopOf="@id/tv_representcardedit_color_title" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -163,6 +164,7 @@
             android:id="@+id/iv_editcard_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/ic_bubble"
             android:visibility="@{editCardViewModel.mainCardList.size != 0 ? View.GONE : View.VISIBLE}"
@@ -172,14 +174,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginEnd="2dp"
             android:fontFamily="@font/pretendard_semibold"
             android:includeFontPadding="false"
-            android:visibility="@{editCardViewModel.mainCardList.size != 0 ? View.GONE : View.VISIBLE}"
             android:text="@string/edit_card_float_button_message"
             android:textColor="@color/black"
             android:textSize="14sp"
+            android:visibility="@{editCardViewModel.mainCardList.size != 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_editcard_bubble"
+            app:layout_constraintEnd_toEndOf="@+id/iv_editcard_bubble"
             app:layout_constraintStart_toStartOf="@id/iv_editcard_bubble"
             app:layout_constraintTop_toTopOf="@id/iv_editcard_bubble" />
 
