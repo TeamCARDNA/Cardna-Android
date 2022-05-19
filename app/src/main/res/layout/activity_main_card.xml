@@ -181,9 +181,8 @@
             android:id="@+id/cl_maincard_page_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="104dp"
             android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.INVISIBLE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toTopOf="@id/iv_maincard_goto_cardpack_background">
 
             <TextView
                 android:id="@+id/tv_maincard_page_count"
@@ -230,22 +229,25 @@
             android:id="@+id/iv_maincard_goto_cardpack_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="112dp"
+            android:layout_marginHorizontal="120dp"
             android:layout_marginVertical="8dp"
             android:background="@{mainCardViewModel.relation.equals(`2.0`) ? @drawable/bg_maincard_gradient_radius_45 : @drawable/bg_maincard_white_4_radius_45}"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingVertical="8dp"
-            app:layout_constraintTop_toBottomOf="@id/cl_maincard_page_count"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:background="@drawable/bg_maincard_white_4_radius_45">
 
             <TextView
                 android:id="@+id/tv_maincard_goto_cardpack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white_4"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="@string/maincard_tv_cardpack_text"
+                android:textColor="@color/white_4"
                 android:textSize="12sp" />
 
         </LinearLayout>
