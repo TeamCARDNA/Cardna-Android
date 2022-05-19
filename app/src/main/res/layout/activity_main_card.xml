@@ -143,24 +143,24 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_maincard_list"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@color/main_black"
             android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.INVISIBLE : View.VISIBLE}"
-            app:layout_constraintBottom_toTopOf="@id/cl_maincard_page_count"
-            app:layout_constraintTop_toBottomOf="@id/view_maincard_under_line"
+            app:layout_constraintTop_toTopOf="@id/cl_maincard_empty_view"
+            app:layout_constraintBottom_toBottomOf="@id/cl_maincard_empty_view"
             tools:layout_editor_absoluteX="0dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_maincard_empty_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="56dp"
-            android:layout_marginTop="8dp"
+            android:paddingVertical="164dp"
+            android:layout_marginTop="13dp"
             android:background="@drawable/bg_white_4_stroke_1_raduis_10"
             android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintBottom_toTopOf="@id/cl_maincard_page_count"
-            app:layout_constraintTop_toBottomOf="@id/view_maincard_under_line">
+            app:layout_constraintTop_toBottomOf="@id/tv_maincard_title">
 
             <TextView
                 android:id="@+id/tv_maincard_empty_card_about"
@@ -182,7 +182,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.INVISIBLE : View.VISIBLE}"
-            app:layout_constraintBottom_toTopOf="@id/iv_maincard_goto_cardpack_background"
             app:layout_constraintTop_toBottomOf="@id/vp_maincard_list"
             tools:layout_editor_absoluteX="0dp">
 
@@ -238,9 +237,10 @@
             android:orientation="horizontal"
             android:paddingVertical="8dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintTop_toBottomOf="@id/cl_maincard_page_count"
+            android:layout_marginTop="29dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vp_maincard_list"
             app:layout_constraintStart_toStartOf="parent"
             tools:background="@drawable/bg_maincard_white_4_radius_45">
 
