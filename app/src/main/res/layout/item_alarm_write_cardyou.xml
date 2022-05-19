@@ -12,7 +12,7 @@
         android:id="@+id/cl_item_alarm_write_cardyou"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="11dp"
         android:background="@drawable/bg_dark_gray_10dp">
 
         <ImageView

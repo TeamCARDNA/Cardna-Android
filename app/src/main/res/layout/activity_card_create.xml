@@ -228,6 +228,8 @@
                     android:hint="@string/cardcreate_detail_hint"
                     android:includeFontPadding="false"
                     android:maxLength="200"
+                    android:maxLines="1"
+                    android:inputType="text"
                     android:minHeight="168dp"
                     android:maxHeight="168dp"
                     android:textColor="@color/white_1"
