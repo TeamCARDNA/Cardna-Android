@@ -44,7 +44,7 @@ class SpacesItemDecorationHorizontal :
     }
 }
 
-class SpacesItemDecorationHorizontalCustom :
+class SpacesItemDecorationHorizontalDialog(private val space: Int) :
     RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
@@ -52,9 +52,24 @@ class SpacesItemDecorationHorizontalCustom :
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        outRect.left = 6
-        outRect.right = 6
-        outRect.bottom = 6
+        outRect.left = space
+        outRect.right = space
+        outRect.bottom = space
+        outRect.top = space
+    }
+}
+
+class SpacesItemDecorationHorizontalActivity(private val space: Int) :
+    RecyclerView.ItemDecoration() {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        outRect.left = space
+        outRect.right = space
+        outRect.bottom = space
     }
 }
 
@@ -87,6 +102,7 @@ class MyPageItemVerticalDecoration : RecyclerView.ItemDecoration() {
         }
         outRect.bottom = bottomSpacePx
     }
+
     companion object {
         private const val BETWEEN_SPACE = 6
         private const val BOTTOM_SPACE = 12
