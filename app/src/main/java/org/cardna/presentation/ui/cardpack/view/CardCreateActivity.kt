@@ -236,15 +236,13 @@ class CardCreateActivity :
                 startActivity(intent)
             } else {
                 // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
+                val is_cardpack_or_maincard =   intent.getBooleanExtra(
+                    BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
+                    BaseViewUtil.FROM_MAINCARD
+                ) // 안넘겨주면, 타인 mainCard에서 온 걸로
                 val intent =
                     Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
-                intent.putExtra(
-                    BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
-                    intent.getBooleanExtra(
-                        BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
-                        BaseViewUtil.FROM_MAINCARD
-                    )
-                )
+                intent.putExtra(BaseViewUtil.IS_CARDPACK_OR_MAINCARD, is_cardpack_or_maincard)
                 // 현재는 카드너 작성이므로 무슨 액티비티 통해서 왔는지만 전달해주면 됨
                 startActivity(intent)
             }
