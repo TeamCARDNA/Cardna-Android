@@ -7,10 +7,10 @@
 
     </data>
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/ctl_temp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:id="@+id/ctl_temp"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,9 +21,9 @@
             android:id="@+id/cl_maincard_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="2dp"
             android:src="@color/main_black"
             app:layout_constraintTop_toTopOf="parent"
-            android:padding="2dp"
             tools:background="@drawable/bg_right_null_black_radius_2">
 
             <ImageView
@@ -36,7 +36,7 @@
                 android:background="@color/main_black"
                 android:padding="2dp"
                 android:scaleType="fitXY"
-                app:layout_constraintDimensionRatio="227:323"
+                app:layout_constraintDimensionRatio="227:343"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -47,13 +47,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="5dp"
-                android:paddingBottom="12dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="14dp"
                 android:fontFamily="@font/pretendard_bold"
+                android:includeFontPadding="false"
                 android:textColor="@color/real_black"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/iv_main_card_image"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_main_card_image"
                 tools:text="힘이 들 땐 하늘을 봐..." />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -62,4 +64,4 @@
 
 </layout>
 
-<!--    app:layout_constraintBottom_toTopOf="@id/tv_main_card_title"-->
+    <!--    app:layout_constraintBottom_toTopOf="@id/tv_main_card_title"-->
