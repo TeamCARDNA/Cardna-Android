@@ -91,7 +91,7 @@ class MainCardFragment :
         var id = -1
         if (arguments != null) {
             with(binding) {
-                llMaincardEditLayout.visibility = View.INVISIBLE
+                llMaincardEditLayout.visibility = View.GONE
                 clMaincardAlarm.visibility = View.INVISIBLE  //TODO 뷰갱신될때 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
                 llMaincardMypageIconContainer.visibility = View.VISIBLE  //TODO 뷰갱신될대 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
                 ivMaincardGotoCardpackBackground.visibility = View.VISIBLE

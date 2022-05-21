@@ -9,55 +9,56 @@
             name="cardData"
             type="org.cardna.data.remote.model.card.CardData" />
     </data>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_rv_item"
-            android:layout_width="match_parent"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_rv_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:background="@drawable/bg_main_purple_radius_8">
+
+        <ImageView
+            android:id="@+id/iv_cardpack_recyclerview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_solid_black"
+            android:padding="1dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="142:203"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/dummy_img_cardpack_1" />
+
+        <TextView
+            android:id="@+id/tv_representcard_count"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:background="@drawable/bg_main_purple_radius_8">
-
-            <ImageView
-                android:id="@+id/iv_cardpack_recyclerview"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_solid_black"
-                android:padding="1dp"
-                android:scaleType="fitXY"
-                app:layout_constraintDimensionRatio="142:203"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/dummy_img_cardpack_1" />
-
-            <TextView
-                android:id="@+id/tv_representcard_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/ic_represent_card_pick_count_cricle"
-                android:gravity="center"
-                android:textColor="@color/white_1"
-                android:textSize="14sp"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@id/iv_cardpack_recyclerview"
-                app:layout_constraintEnd_toEndOf="@id/iv_cardpack_recyclerview"
-                tools:text="1" />
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/ic_represent_card_pick_count_cricle"
+            android:gravity="center"
+            android:textColor="@color/white_1"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/iv_cardpack_recyclerview"
+            app:layout_constraintEnd_toEndOf="@id/iv_cardpack_recyclerview"
+            tools:text="1" />
 
 
-            <TextView
-                android:id="@+id/tv_editcarddialog_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:theme="@style/cardpack_recyclerview_tv"
-                android:paddingBottom="6dp"
-                app:layout_constraintStart_toStartOf="@id/iv_cardpack_recyclerview"
-                app:layout_constraintTop_toBottomOf="@id/iv_cardpack_recyclerview"
-                tools:text="댕댕이 짱 좋아" />
+        <TextView
+            android:id="@+id/tv_editcarddialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:theme="@style/cardpack_recyclerview_tv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/iv_cardpack_recyclerview"
+            app:layout_constraintTop_toBottomOf="@id/iv_cardpack_recyclerview"
+            tools:text="댕댕이 짱 좋아" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
