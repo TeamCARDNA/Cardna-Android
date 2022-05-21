@@ -43,8 +43,6 @@ fun showLottie(view: LottieAnimationView, type: String, json: String) {
 
 fun showLoddingLottie(view: LottieAnimationView, type: String, json: String) {
     val lottie = view
-    Handler(Looper.getMainLooper())
-
     lottie.setAnimation(json)
 
 

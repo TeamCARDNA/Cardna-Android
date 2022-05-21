@@ -91,32 +91,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_item_alarm_friend_request_friend_name">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mb_item_alarm_friend_request_refuse"
+                style="@style/materialButton_semiBold12_style"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="@color/white_3"
+                android:text="@string/item_friend_request_refuse"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/mb_item_alarm_friend_request_accept"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/mb_item_alarm_friend_request_accept"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/bg_mainpurple_maingreen_gradient_5dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:includeFontPadding="false"
                 android:text="@string/item_friend_request_accept"
                 android:textColor="@color/dark_gray"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@id/mb_item_alarm_friend_request_refuse"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/mb_item_alarm_friend_request_refuse"
-                style="@style/materialButton_semiBold12_style"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
-                android:backgroundTint="@color/white_3"
-                android:text="@string/item_friend_request_refuse"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/mb_item_alarm_friend_request_accept"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/mb_item_alarm_friend_request_refuse" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

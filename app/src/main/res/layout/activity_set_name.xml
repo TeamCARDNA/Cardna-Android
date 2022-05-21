@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,8 +14,7 @@
             type="String" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_black"
@@ -41,7 +42,8 @@
                 style="@style/detail_card_text_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="7dp"
+                android:fontFamily="@font/pretendard_regular"
                 android:text="@string/signup_tv_about"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_sign_up_name_title" />
@@ -67,15 +69,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:ems="5"
                 android:hint="@string/signup_et_firstname"
+                android:includeFontPadding="false"
                 android:maxLength="10"
                 android:textColor="@color/white_1"
                 android:textColorHint="@color/white_4"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/et_signup_lastname"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/et_signup_lastname"
-                app:layout_constraintTop_toBottomOf="@id/tv_sign_up_name_about" />
+                app:layout_constraintTop_toTopOf="@+id/et_signup_lastname" />
 
             <TextView
                 android:id="@+id/tv_signup_firstname_count"
@@ -91,18 +95,17 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_sign_up_name_access"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
+                android:layout_height="64dp"
                 android:layout_marginTop="56dp"
                 android:background="@drawable/bg_signup_white3_radius_10"
                 android:clickable="false"
                 android:fontFamily="@font/pretendard_semibold"
-
                 android:paddingVertical="16dp"
                 android:text="@string/signup_btn_access"
                 android:textColor="@color/white_2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/et_signup_firstname"
+                app:layout_constraintStart_toStartOf="@+id/et_signup_lastname"
                 app:layout_constraintTop_toBottomOf="@id/et_signup_lastname" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

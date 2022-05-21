@@ -80,7 +80,7 @@ class CardCreateActivity :
             cardCreateViewModel.setIsCardMeOrYou(true) //카드나 작성으로 되어야함
             cardCreateViewModel.setInduceMakeMainCard(true) //유도뷰 분기처리를 위함
             setCardInduceListener()
-        } ?: makeCardListener()
+        } ?: makeCardClickListener()
 
         this.setSystemBarsColor(Color.BLACK, false)
         setObserver()
@@ -201,75 +201,85 @@ class CardCreateActivity :
     // 카드나 만들기 버튼 눌렀을 때,
     // 1. 뷰모델의 카드작성 서버통신 메서드 호출해서 서버에 data 전달
     // 2. cardCreateCompleteActivity 인텐트로 이동
+    private fun makeCardClickListener() {
+        binding.tvCardcreateComplete.setOnClickListener {
+            binding.tvCardcreateComplete.isClickable = false
+            cardCreateViewModel.uri.observe(this) {
+                if (it != null)
+                    cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
+            }
+
+            makeCardListener()
+        }
+    }
+
     private fun makeCardListener() {
 
-        binding.tvCardcreateComplete.setOnClickListener {
-            // 카드나 만들기 버튼을 눌렀을 때
-            // 1. 서버로 title, content, symbolId, uri 전송
-            // symbolId - 카드 이미지 심볼 id, 이미지가 있는 경우 null을 보내주면 됨
-            // nullPointException 을 방지하기위한 분기처리
-            if (cardCreateViewModel.uri.value == null) {
+        //    showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
+        // 카드나 만들기 버튼을 눌렀을 때
+        // 1. 서버로 title, content, symbolId, uri 전송
+        // symbolId - 카드 이미지 심볼 id, 이미지가 있는 경우 null을 보내주면 됨
+        // nullPointException 을 방지하기위한 분기처리
+        cardCreateViewModel.uri.observe(this) {
+            if (it == null) {
                 cardCreateViewModel.makeCard(null)
             } else {
                 cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
-                Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmakeCardㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${cardCreateViewModel.uri.value}")
             }
-            // 2. cardCreateCompleteActivity 로 이동
-            if (cardCreateViewModel.isCardMeOrYou!!) {
-                // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
-                val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
-                intent.putExtra(
-                    BaseViewUtil.IS_CARD_ME_OR_YOU,
-                    cardCreateViewModel.isCardMeOrYou
-                ) // 현재는 카드나 작성이므로 CARD_ME를 보내줌
-                intent.putExtra(
-                    BaseViewUtil.SYMBOL_ID,
-                    cardCreateViewModel.symbolId
-                ) // 심볼 - symbolId값, 갤러리 - null
-                intent.putExtra(
-                    BaseViewUtil.CARD_IMG,
-                    cardCreateViewModel.uri.value.toString()
-                ) // 심볼 - null, 갤러리 - uri 값
-                intent.putExtra(BaseViewUtil.CARD_TITLE, cardCreateViewModel.etKeywordText.value)
+        }
 
-                binding.tvCardcreateComplete.isClickable = false
+        // 2. cardCreateCompleteActivity 로 이동
+        if (cardCreateViewModel.isCardMeOrYou!!) {
+            // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
+            val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
+            intent.putExtra(
+                BaseViewUtil.IS_CARD_ME_OR_YOU,
+                cardCreateViewModel.isCardMeOrYou
+            ) // 현재는 카드나 작성이므로 CARD_ME를 보내줌
+            intent.putExtra(
+                BaseViewUtil.SYMBOL_ID,
+                cardCreateViewModel.symbolId
+            ) // 심볼 - symbolId값, 갤러리 - null
+            intent.putExtra(
+                BaseViewUtil.CARD_IMG,
+                cardCreateViewModel.uri.value.toString()
+            ) // 심볼 - null, 갤러리 - uri 값
+            intent.putExtra(BaseViewUtil.CARD_TITLE, cardCreateViewModel.etKeywordText.value)
 
-                cardCreateViewModel.uri.observe(this) {
-                    if (it != null) showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
-                }
+            binding.tvCardcreateComplete.isClickable = false
+            startActivity(intent)
 
-                startActivity(intent)
-                //
-            } else {
-                // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
-                val intent =
-                    Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
-                intent.putExtra(
+        } else {
+            // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
+            val intent =
+                Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
+            intent.putExtra(
+                BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
+                intent.getBooleanExtra(
                     BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
-                    intent.getBooleanExtra(
-                        BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
-                        BaseViewUtil.FROM_MAINCARD
-                    )
+                    BaseViewUtil.FROM_MAINCARD
                 )
-                // 현재는 카드너 작성이므로 무슨 액티비티 통해서 왔는지만 전달해주면 됨
+            )
+            // 현재는 카드너 작성이므로 무슨 액티비티 통해서 왔는지만 전달해주면 됨
 
-                binding.tvCardcreateComplete.isClickable = false
+            /*           binding.tvCardcreateComplete.isClickable = false
 
-                cardCreateViewModel.uri.observe(this) {
-                    if (it != null) showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
-                }
-                startActivity(intent)
-            }
+                       cardCreateViewModel.uri.observe(this) {
+                           if (it != null) showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
+                       }*/
+            startActivity(intent)
         }
     }
 
     /** 카드추가 유도뷰일 때 클릭 이벤트 */
     private fun setCardInduceListener() {
         binding.tvCardcreateComplete.setOnClickListener {
+            binding.tvCardcreateComplete.isClickable = false
             // nullPointException 을 방지하기위한 분기처리
             if (cardCreateViewModel.uri.value == null) {
                 cardCreateViewModel.makeCard(null)
             } else {
+                showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
                 cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
             }
 
@@ -310,10 +320,10 @@ class CardCreateActivity :
             binding.tvCardcreateComplete.isClickable = false
             //    Handler(Looper.getMainLooper())
             //        .postDelayed({
-            showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
-            //       }, 500)
 
-            //  startActivity(intent)
+
+
+            startActivity(intent)
         }
     }
 
@@ -352,7 +362,6 @@ class CardCreateActivity :
                     cardCreateViewModel.setSymbolId(null) // 전에 symbol 선택 후, 다시 갤러리 이미지를 선택했을 경우, 다시 symbolId null로
                     cardCreateViewModel.setIfChooseImg(true)
                     Glide.with(this).load(cardCreateViewModel.uri.value).into(binding.ivCardcreateGalleryImg)
-
                     Timber.e("uri 값은  : ${cardCreateViewModel.uri.value}")
 
                     binding.ivCardcreateGalleryImg.visibility = View.VISIBLE // imageView는 보이도록
