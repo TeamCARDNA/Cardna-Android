@@ -85,8 +85,9 @@ class EditCardDialogFragment :
                     Timber.d("init submit fragment $list")
                 }
             }
-            if (editCardViewModel.isSuccess)
-                dismiss()
+            editCardViewModel.isSuccess.observe(viewLifecycleOwner) {
+                if (it) dismiss()
+            }
         }
     }
 

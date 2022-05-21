@@ -1,14 +1,21 @@
 package org.cardna.presentation.ui.alarm.adapter
 
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.alarm.ResponseGetAlarmData
+import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.databinding.ItemAlarmWriteCardyouBinding
+import org.cardna.domain.repository.CardRepository
+import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
+import javax.inject.Inject
 
 
 class WriteCardYouAdapter(
@@ -23,7 +30,10 @@ class WriteCardYouAdapter(
                 //TODO  서버연결 후 data 연결
                 tvItemAlarmWriteCardyouDate.text = data.date
                 tvItemAlarmWriteCardyouSentence.text = data.content
-                tvItemAlarmWriteCardyouFriendName.text =data.name
+                tvItemAlarmWriteCardyouFriendName.text = data.name
+
+
+
                 Glide.with(activity)
                     .load(data.profileImage)
                     .circleCrop()

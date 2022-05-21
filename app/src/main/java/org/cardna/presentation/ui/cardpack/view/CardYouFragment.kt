@@ -77,7 +77,7 @@ class CardYouFragment :
             rvCardyou.layoutManager = gridLayoutManager
             rvCardyou.addItemDecoration(
                 SpacesItemDecoration
-                    ((12 * resources.displayMetrics.density).roundToInt())
+                    ()
             ) // 화면 비율 조정
         }
 

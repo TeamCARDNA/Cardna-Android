@@ -167,11 +167,12 @@
             android:layout_marginEnd="2dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/ic_bubble"
-            android:visibility="@{editCardViewModel.mainCardList.size != 0 ? View.GONE : View.VISIBLE}"
+            android:visibility="@{editCardViewModel.isMainCardEmpty? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/fab_representcardedit"
             app:layout_constraintEnd_toStartOf="@id/fab_representcardedit" />
 
         <TextView
+            android:id="@+id/tv_editcard_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
@@ -180,7 +181,7 @@
             android:text="@string/edit_card_float_button_message"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:visibility="@{editCardViewModel.mainCardList.size != 0 ? View.GONE : View.VISIBLE}"
+            android:visibility="@{editCardViewModel.isMainCardEmpty? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_editcard_bubble"
             app:layout_constraintEnd_toEndOf="@+id/iv_editcard_bubble"
             app:layout_constraintStart_toStartOf="@id/iv_editcard_bubble"

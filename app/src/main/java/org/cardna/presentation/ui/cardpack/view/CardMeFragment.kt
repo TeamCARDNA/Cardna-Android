@@ -56,7 +56,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
             rvCardme.adapter = cardMeAdapter
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             rvCardme.layoutManager = gridLayoutManager
-            rvCardme.addItemDecoration(SpacesItemDecoration((12 * resources.displayMetrics.density).roundToInt())) // 화면 비율 조정
+            rvCardme.addItemDecoration(SpacesItemDecoration()) // 화면 비율 조정
         }
 
         // cardMeList 에 observer 등록

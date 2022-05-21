@@ -44,7 +44,7 @@ class CardPackViewModel @Inject constructor(
     val cardMeList: LiveData<MutableList<ResponseCardMeData.CardList.CardMe>>
         get() = _cardMeList
 
-    private val _isCardMeEmpty = MutableLiveData<Boolean>(true)
+    private val _isCardMeEmpty = MutableLiveData<Boolean>()
     val isCardMeEmpty: LiveData<Boolean> = _isCardMeEmpty
 
     // 카드나 List => CardMeFragment 에서 사용
@@ -52,7 +52,7 @@ class CardPackViewModel @Inject constructor(
     val cardYouList: LiveData<MutableList<ResponseCardYouData.CardList.CardYou>>
         get() = _cardYouList
 
-    private val _isCardYouEmpty = MutableLiveData<Boolean>(true)
+    private val _isCardYouEmpty = MutableLiveData<Boolean>()
     val isCardYouEmpty: LiveData<Boolean> = _isCardYouEmpty
 
     private val _cardYouStoreList = MutableLiveData<MutableList<ResponseCardYouStoreData.Data>>()

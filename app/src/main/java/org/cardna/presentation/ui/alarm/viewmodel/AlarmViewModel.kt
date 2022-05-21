@@ -11,8 +11,10 @@ import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.data.remote.model.alarm.ResponseGetAlarmData
 import org.cardna.data.remote.model.friend.RequestAcceptOrDenyFriendData
 import org.cardna.domain.repository.AlarmRepository
+import org.cardna.domain.repository.CardRepository
 import org.cardna.domain.repository.FriendRepository
 import org.cardna.presentation.base.BaseViewModel
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,6 +22,7 @@ import javax.inject.Inject
 class AlarmViewModel @Inject constructor(
     private val friendRepository: FriendRepository,
     private val alarmRepository: AlarmRepository,
+    private val cardRepository: CardRepository,
     private val deletedCardYouDao: DeletedCardYouDao
 ) : BaseViewModel() {
 
@@ -46,6 +49,10 @@ class AlarmViewModel @Inject constructor(
     //거절 성공시 삭제되어야함
     private val _isRequestDeny = MutableLiveData<Boolean>()
     val isRequestDeny: LiveData<Boolean> = _isRequestDeny
+
+    private val _cardContent = MutableLiveData<String>()
+    val cardContent: LiveData<String> = _cardContent
+
 
     fun geAllAlarm() {
         viewModelScope.launch {

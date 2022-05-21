@@ -7,6 +7,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -25,10 +27,9 @@ import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.databinding.ActivityCardCreateBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
-import org.cardna.presentation.util.MultiPartResolver
-import org.cardna.presentation.util.initRootClickEvent
-import org.cardna.presentation.util.shortToast
+import org.cardna.presentation.util.*
 import org.cardna.ui.cardpack.BottomDialogImageFragment
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -231,7 +232,14 @@ class CardCreateActivity :
                 ) // 심볼 - null, 갤러리 - uri 값
                 intent.putExtra(BaseViewUtil.CARD_TITLE, cardCreateViewModel.etKeywordText.value)
 
+                binding.tvCardcreateComplete.isClickable = false
+
+                cardCreateViewModel.uri.observe(this) {
+                    if (it != null) showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
+                }
+
                 startActivity(intent)
+                //
             } else {
                 // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
                 val intent =
@@ -244,6 +252,12 @@ class CardCreateActivity :
                     )
                 )
                 // 현재는 카드너 작성이므로 무슨 액티비티 통해서 왔는지만 전달해주면 됨
+
+                binding.tvCardcreateComplete.isClickable = false
+
+                cardCreateViewModel.uri.observe(this) {
+                    if (it != null) showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
+                }
                 startActivity(intent)
             }
         }
@@ -293,7 +307,13 @@ class CardCreateActivity :
             intent.putExtra(
                 "INDUCE_CARD_ID", cardId
             )
-            startActivity(intent)
+            binding.tvCardcreateComplete.isClickable = false
+            //    Handler(Looper.getMainLooper())
+            //        .postDelayed({
+            showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
+            //       }, 500)
+
+            //  startActivity(intent)
         }
     }
 
