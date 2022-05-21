@@ -32,6 +32,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/pretendard_regular"
+            android:includeFontPadding="false"
             android:text="@string/item_friend_request_friend_name"
             android:textColor="@color/white_1"
             android:textSize="14sp"

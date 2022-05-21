@@ -5,7 +5,6 @@
     <style name="fragment_title_text">
         <item name="android:textColor">@color/white_1</item>
         <item name="android:textSize">28sp</item>
-        <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 

@@ -28,7 +28,6 @@
             android:orientation="horizontal"
             android:paddingStart="10dp"
             android:paddingBottom="10dp"
-            android:visibility="@{mainCardViewModel.isMyCard ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -55,32 +54,38 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ll_maincard_mypage_icon_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:orientation="horizontal"
-            android:visibility="@{mainCardViewModel.isMyCard ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/cl_maincard_alarm"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="gone">
+            app:layout_constraintTop_toTopOf="@id/cl_maincard_alarm"
+            tools:layout_editor_absoluteX="369dp"
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/iv_maincard_friend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:background="@drawable/ic_mypage_friend_checked" />
 
             <ImageView
                 android:id="@+id/iv_maincard_write"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_mypage_write" />
+                android:layout_marginStart="20dp"
+                android:background="@drawable/ic_mypage_write"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_maincard_friend"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_maincard_friend"
+                app:layout_constraintTop_toTopOf="@id/iv_maincard_friend" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tv_maincard_user_name"
@@ -113,6 +118,7 @@
             style="@style/fragment_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:fontFamily="@font/pretendard_bold"
             android:maxLength="12"
             android:text="@{mainCardViewModel.cardList.size()==0 ? @string/maincard_tv_empty_title : mainCardViewModel.cardList[mainCardViewModel.cardPosition].title}"
@@ -131,97 +137,138 @@
         <!--            app:layout_constraintTop_toBottomOf="@+id/ll_maincard_edit_layout">-->
 
         <!--        </androidx.core.widget.NestedScrollView>-->
-
-        <LinearLayout
-            android:id="@+id/ll_maincard_edit_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:visibility="@{mainCardViewModel.isMyCard ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@id/view_maincard_under_line"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/view_maincard_under_line">
-
-            <ImageView
-                android:id="@+id/iv_maincard_edit_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_arrow_left_arrow_right" />
-
-            <TextView
-                android:id="@+id/tv_maincard_edit"
-                style="@style/detail_card_text_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit" />
-
-        </LinearLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp_maincard_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@color/main_black"
-            android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.INVISIBLE : View.VISIBLE}"
-            app:layout_constraintTop_toBottomOf="@id/ll_maincard_edit_layout" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_maincard_empty_view"
+            android:id="@+id/ctl_all_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="56dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="29dp"
-            android:background="@drawable/bg_rectangle_main"
-            android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintDimensionRatio="248:347"
-            app:layout_constraintTop_toBottomOf="@id/ll_maincard_edit_layout">
+            android:layout_marginBottom="44dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_maincard_under_line">
 
-            <TextView
-                android:id="@+id/tv_maincard_empty_card_about"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_maincard_edit_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="162dp"
-                android:gravity="center"
-                android:text="@{mainCardViewModel.name+@string/maincard_tv_empty_card_about}"
-                android:textColor="@color/white_3"
-                android:textSize="16sp"
-                android:visibility="@{mainCardViewModel.isMyCard ? View.VISIBLE : View.INVISIBLE}"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/vp_maincard_list"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                tools:visibility="gone">
 
-            <TextView
-                android:id="@+id/tv_maincard_empty_card_other_about"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/iv_maincard_edit_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_arrow_left_arrow_right"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_maincard_edit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_maincard_edit"
+                    style="@style/detail_card_text_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_maincard_list"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="162dp"
-                android:gravity="center"
-                android:text="@string/maincard_tv_friend_empty_text"
-                android:textColor="@color/white_3"
-                android:textSize="16sp"
-                android:visibility="@{mainCardViewModel.isMyCard ? View.INVISIBLE : View.VISIBLE}"
+                android:background="@color/main_black"
+                android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintTop_toTopOf="@id/cl_maincard_empty_view"
+                tools:layout_editor_absoluteY="112dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_maincard_empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="56dp"
+                android:background="@drawable/bg_stroke_white_4_1dp_radius_10dp"
+                android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintDimensionRatio="248:374"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1">
+
+                <TextView
+                    android:id="@+id/tv_maincard_empty_card_about"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="162dp"
+                    android:gravity="center"
+                    android:text="@{mainCardViewModel.name+@string/maincard_tv_empty_card_about}"
+                    android:textColor="@color/white_3"
+                    android:textSize="16sp"
+                    android:visibility="@{mainCardViewModel.isMyCard ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_maincard_empty_card_other_about"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="162dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:gravity="center"
+                    android:text="@string/maincard_tv_friend_empty_text"
+                    android:textColor="@color/white_3"
+                    android:textSize="16sp"
+                    android:visibility="@{mainCardViewModel.isMyCard ? View.INVISIBLE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/iv_maincard_goto_cardpack_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:background="@{mainCardViewModel.relation.equals(`2.0`) ? @drawable/bg_maincard_gradient_radius_45 : @drawable/bg_maincard_white_4_radius_45}"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_maincard_page_count"
+            tools:background="@drawable/bg_maincard_white_4_radius_45">
+
+            <TextView
+                android:id="@+id/tv_maincard_goto_cardpack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="@string/maincard_tv_cardpack_text"
+                android:textColor="@color/white_4"
+                android:textSize="14sp"
+                android:visibility="@{mainCardViewModel.isMyCard ? View.INVISIBLE : View.VISIBLE}" />
+
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_maincard_page_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="7dp"
             android:layout_marginBottom="8dp"
-            android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.INVISIBLE : View.VISIBLE}"
-            app:layout_constraintTop_toBottomOf="@id/vp_maincard_list">
+            android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.INVISIBLE : View.VISIBLE }"
+            app:layout_constraintTop_toBottomOf="@id/ctl_all_container">
 
             <TextView
                 android:id="@+id/tv_maincard_page_count"
@@ -266,36 +313,6 @@
                 tools:text="7" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-            android:id="@+id/iv_maincard_goto_cardpack_background"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="120dp"
-            android:layout_marginVertical="8dp"
-            android:background="@{mainCardViewModel.relation.equals(`2.0`) ? @drawable/bg_maincard_gradient_radius_45 : @drawable/bg_maincard_white_4_radius_45}"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingVertical="8dp"
-            android:visibility="@{mainCardViewModel.isMyCard ? View.INVISIBLE: View.VISIBLE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_maincard_empty_view"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:background="@drawable/bg_maincard_white_4_radius_45">
-
-            <TextView
-                android:id="@+id/tv_maincard_goto_cardpack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_semibold"
-                android:includeFontPadding="false"
-                android:text="@string/maincard_tv_cardpack_text"
-                android:textColor="@color/white_4"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
         <!--        <ImageView-->
         <!--            android:id="@+id/iv_maincard_goto_cardpack_background"-->
         <!--            android:layout_width="match_parent"-->

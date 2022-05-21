@@ -56,6 +56,7 @@ class MainCardFragment :
 
     override fun onResume() {
         super.onResume()
+
         initData()
         checkUserId()
     }
@@ -89,12 +90,26 @@ class MainCardFragment :
     private fun checkUserId() {
         var id = -1
         if (arguments != null) {
+            with(binding) {
+                llMaincardEditLayout.visibility = View.INVISIBLE
+                clMaincardAlarm.visibility = View.INVISIBLE  //TODO 뷰갱신될때 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
+                llMaincardMypageIconContainer.visibility = View.VISIBLE  //TODO 뷰갱신될대 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
+                ivMaincardGotoCardpackBackground.visibility = View.VISIBLE
+            }
+
             val name = arguments?.getString("name")
             id = arguments?.getInt("id", -1) ?: -1
             mainCardViewModel.getMyPageUser(name!!)
             mainCardViewModel.setFriendNameAndId(name, id)
             setFriendIcon()
         } else {
+            with(binding) {
+                ivMaincardGotoCardpackBackground.visibility = View.INVISIBLE
+                llMaincardMypageIconContainer.visibility = View.INVISIBLE
+                clMaincardAlarm.visibility = View.VISIBLE
+                llMaincardEditLayout.visibility = View.VISIBLE
+            }
+
             mainCardViewModel.getMyPageUser()
         }
         mainCardViewModel.getMainCardList(id)

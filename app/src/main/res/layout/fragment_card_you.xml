@@ -33,7 +33,7 @@
                 android:layout_marginBottom="56dp"
                 android:background="@drawable/bg_stroke_white_4_1dp_radius_10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="248:382"
+                app:layout_constraintDimensionRatio="248:374"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
