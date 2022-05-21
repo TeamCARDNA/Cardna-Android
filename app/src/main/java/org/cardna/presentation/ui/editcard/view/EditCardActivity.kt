@@ -17,6 +17,7 @@ import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
 import org.cardna.presentation.util.*
 import timber.log.Timber
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class EditCardActivity :
@@ -49,7 +50,7 @@ class EditCardActivity :
         with(binding.rvRepresentcardeditContainer) {
             layoutManager = GridLayoutManager(this@EditCardActivity, 2)
             adapter = editCardAdapter
-            addItemDecoration(SpacesItemDecorationHorizontalCustom())
+            addItemDecoration(SpacesItemDecorationHorizontalDialog())
             itemTouchHelperListener(editCardAdapter, this)
         }
 

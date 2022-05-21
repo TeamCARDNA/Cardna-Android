@@ -16,7 +16,6 @@
             android:id="@+id/cl_rv_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_main_green_stoke_black_radius_8"
             app:layout_constraintEnd_toEndOf="parent"

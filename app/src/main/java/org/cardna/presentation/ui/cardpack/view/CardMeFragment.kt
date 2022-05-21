@@ -13,9 +13,8 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardPackMeRecyclerViewAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
-import org.cardna.presentation.util.SpacesItemDecoration
+import org.cardna.presentation.util.SpacesItemDecorationCardPack
 import timber.log.Timber
-import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout.fragment_card_me) {
@@ -56,7 +55,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
             rvCardme.adapter = cardMeAdapter
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             rvCardme.layoutManager = gridLayoutManager
-            rvCardme.addItemDecoration(SpacesItemDecoration()) // 화면 비율 조정
+            rvCardme.addItemDecoration(SpacesItemDecorationCardPack()) // 화면 비율 조정
         }
 
         // cardMeList 에 observer 등록

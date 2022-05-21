@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.roundToInt
 
-class SpacesItemDecoration() : RecyclerView.ItemDecoration() {
+class SpacesItemDecorationCardPack : RecyclerView.ItemDecoration() {
     fun Int.toPx() = (this * Resources.getSystem().displayMetrics.density).toInt()
     override fun getItemOffsets(
         outRect: Rect,
@@ -29,12 +29,40 @@ class SpacesItemDecoration() : RecyclerView.ItemDecoration() {
     }
     companion object {
         private const val BETWEEN_SPACE = 16
-        private const val BOTTOM_SPACE = 12
-        private const val BETWEEN_SPACE_MIDDLE = 6
+        private const val BOTTOM_SPACE = 16
+        private const val BETWEEN_SPACE_MIDDLE = 8
     }
 }
 
-class SpacesItemDecoration2(private val spaceRight: Int, private val spaceBottom: Int) :
+class SpacesItemDecorationHorizontalDialog : RecyclerView.ItemDecoration() {
+    fun Int.toPx() = (this * Resources.getSystem().displayMetrics.density).toInt()
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        val betweenSpacePx = BETWEEN_SPACE.toPx()
+        val bottomSpacePx = BOTTOM_SPACE.toPx()
+        val betweenMiddleSpacePx = BETWEEN_SPACE_MIDDLE.toPx()
+
+        if (parent.getChildAdapterPosition(view) % 2 == 0) {
+            outRect.left = betweenSpacePx
+            outRect.right = betweenMiddleSpacePx
+        } else {
+            outRect.right = betweenSpacePx
+            outRect.left =betweenMiddleSpacePx
+        }
+        outRect.bottom = bottomSpacePx
+    }
+    companion object {
+        private const val BETWEEN_SPACE = 16
+        private const val BOTTOM_SPACE = 7
+        private const val BETWEEN_SPACE_MIDDLE = 7
+    }
+}
+
+class SpacesItemDecorationHorizontalActivity(private val space: Int) :
     RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
@@ -42,47 +70,8 @@ class SpacesItemDecoration2(private val spaceRight: Int, private val spaceBottom
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        outRect.right = spaceRight
-        outRect.bottom = spaceBottom
-    }
-}
-
-class SpacesItemDecorationHorizontal :
-    RecyclerView.ItemDecoration() {
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        outRect.left = 6
-        outRect.right = 6
-        outRect.bottom = 12
-    }
-}
-
-class SpacesItemDecorationHorizontalCustom :
-    RecyclerView.ItemDecoration() {
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        outRect.left = 6
-        outRect.right = 6
-        outRect.bottom = 6
-        outRect.top = 6
-    }
-}
-
-class SpacesItemDecorationOnlyBottom(private val space: Int) : RecyclerView.ItemDecoration() {
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
+        outRect.left = space
+        outRect.right = space
         outRect.bottom = space
     }
 }
@@ -105,6 +94,7 @@ class MyPageItemVerticalDecoration : RecyclerView.ItemDecoration() {
         }
         outRect.bottom = bottomSpacePx
     }
+
     companion object {
         private const val BETWEEN_SPACE = 6
         private const val BOTTOM_SPACE = 12
