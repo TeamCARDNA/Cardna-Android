@@ -19,6 +19,7 @@ import org.cardna.databinding.ActivityMainCardBinding
 import org.cardna.databinding.DialogRelationBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
+import org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
@@ -48,6 +49,22 @@ class MainCardActivity :
 
     private fun setClickListener() {
         setCardYouWrite()
+        setCardPackActivity()
+    }
+
+    private fun setCardPackActivity() {
+        val name = intent.getStringExtra("name")
+        val id = intent.getIntExtra("id", -1)
+        mainCardViewModel.getMyPageUser(name!!)
+        mainCardViewModel.setFriendNameAndId(name, id)
+
+        binding.ivMaincardGotoCardpackBackground.setOnClickListener {
+            startActivity(
+                Intent(this, FriendCardPackActivity::class.java)
+                    .putExtra(BaseViewUtil.ID, mainCardViewModel.friendId.value)
+                    .putExtra(BaseViewUtil.NAME, mainCardViewModel.friendName.value)
+            )
+        }
     }
 
     override fun onResume() {

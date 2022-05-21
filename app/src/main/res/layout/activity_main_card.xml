@@ -111,14 +111,15 @@
             app:layout_constraintTop_toBottomOf="@+id/ll_maincard_edit_layout">
 
         </androidx.core.widget.NestedScrollView>
-
         <LinearLayout
             android:id="@+id/ll_maincard_edit_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:paddingHorizontal="16dp"
             android:orientation="horizontal"
-            android:visibility="gone"
+            android:paddingVertical="8dp"
+            android:visibility="invisible"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@id/view_maincard_under_line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/view_maincard_under_line">
@@ -144,11 +145,11 @@
             android:id="@+id/vp_maincard_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:background="@color/main_black"
+            android:layout_marginTop="14dp"
             android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.INVISIBLE : View.VISIBLE}"
-            app:layout_constraintTop_toTopOf="@id/cl_maincard_empty_view"
-            app:layout_constraintBottom_toBottomOf="@id/cl_maincard_empty_view"
+            app:layout_constraintTop_toBottomOf="@id/ll_maincard_edit_layout"
+            app:layout_constraintBottom_toTopOf="@id/cl_maincard_page_count"
             tools:layout_editor_absoluteX="0dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -156,11 +157,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="56dp"
-            android:paddingVertical="164dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintDimensionRatio="248:347"
             android:background="@drawable/bg_white_4_stroke_1_raduis_10"
             android:visibility="@{mainCardViewModel.cardList.size()==0 ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintTop_toBottomOf="@id/tv_maincard_title">
+            app:layout_constraintTop_toBottomOf="@id/ll_maincard_edit_layout">
 
             <TextView
                 android:id="@+id/tv_maincard_empty_card_about"
@@ -170,6 +171,7 @@
                 android:text="@string/maincard_tv_friend_empty_text"
                 android:textColor="@color/white_3"
                 android:textSize="16sp"
+                android:layout_marginVertical="162dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -236,11 +238,9 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingVertical="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="29dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vp_maincard_list"
+            app:layout_constraintTop_toBottomOf="@id/cl_maincard_empty_view"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:background="@drawable/bg_maincard_white_4_radius_45">
 
