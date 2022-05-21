@@ -11,9 +11,7 @@
         android:id="@+id/cl_rv_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_radius_8dp_stroke_real_black_2dp"
-        android:backgroundTint="@color/main_purple"
-        tools:backgroundTint="@color/main_purple">
+        android:background="@drawable/bg_main_purple_radius_8">
 
         <ImageView
             android:id="@+id/iv_cardpack_recyclerview"
@@ -34,12 +32,13 @@
             android:id="@+id/tv_cardpack_recyclerview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:includeFontPadding="false"
             android:theme="@style/cardpack_recyclerview_tv"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/iv_cardpack_recyclerview"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_cardpack_recyclerview"
             tools:text="댕댕이 짱 좋아" />
 
@@ -48,9 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:visibility="gone"
             android:checkMark="@drawable/ic_selector_detailcard_like"
             android:checked="true"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

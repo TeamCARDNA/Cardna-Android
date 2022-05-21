@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.editcard.view
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -49,7 +50,7 @@ class EditCardActivity :
         with(binding.rvRepresentcardeditContainer) {
             layoutManager = GridLayoutManager(this@EditCardActivity, 2)
             adapter = editCardAdapter
-            addItemDecoration(SpacesItemDecorationHorizontalActivity(6 * resources.displayMetrics.density.roundToInt()))
+            addItemDecoration(SpacesItemDecorationHorizontalDialog())
             itemTouchHelperListener(editCardAdapter, this)
         }
 
@@ -81,8 +82,11 @@ class EditCardActivity :
             val cardsList = RequestEditCardData(editCardAdapter.mutableList.map { it.id })
             Timber.d("list- put : $cardsList")
             editCardViewModel.putEditCard(cardsList)
-            if (editCardViewModel.isSuccess)
-                finish()
+            editCardViewModel.isSuccess.observe(this) {
+                if (it) {
+                    finish()
+                }
+            }
         }
     }
 

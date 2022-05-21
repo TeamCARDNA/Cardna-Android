@@ -63,6 +63,8 @@ fun Context.shortToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
+fun Context.getToast(msg: String): Toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT)
+
 fun Activity.setSrcWithGlide(imageUrl: String, imageView: ImageView) {
     Glide
         .with(this)

@@ -56,6 +56,7 @@
                 app:layout_constraintTop_toTopOf="@id/tl_representcardedit" />
 
             <LinearLayout
+                android:layout_marginTop="4dp"
                 android:id="@+id/ll_editcarddialog_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,12 +96,11 @@
                 android:id="@+id/rv_editcarddialog_container"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ll_editcarddialog_container"
-                app:layout_constraintVertical_bias="0.0"
-                tools:layout_editor_absoluteX="0dp" />
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

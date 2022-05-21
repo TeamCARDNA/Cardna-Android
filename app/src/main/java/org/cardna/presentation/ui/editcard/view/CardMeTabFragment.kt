@@ -9,10 +9,7 @@ import org.cardna.databinding.FragmentCardMeTabBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardDialogAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
-import org.cardna.presentation.util.SpacesItemDecoration
-import org.cardna.presentation.util.SpacesItemDecorationHorizontal
-import org.cardna.presentation.util.SpacesItemDecorationHorizontalDialog
-import kotlin.math.roundToInt
+import org.cardna.presentation.util.SpacesItemDecorationCardPack
 
 class CardMeTabFragment :
     BaseViewUtil.BaseFragment<FragmentCardMeTabBinding>(R.layout.fragment_card_me_tab) {
@@ -46,7 +43,7 @@ class CardMeTabFragment :
         with(binding.rvCardmetabContainer) {
             layoutManager = GridLayoutManager(requireActivity(), 2)
             adapter = editCardDialogAdapter
-            addItemDecoration(SpacesItemDecorationHorizontalDialog(6 * resources.displayMetrics.density.roundToInt()))
+            addItemDecoration(SpacesItemDecorationCardPack())
         }
 
         editCardViewModel.cardMeList.observe(viewLifecycleOwner) { it ->

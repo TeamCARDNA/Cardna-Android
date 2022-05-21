@@ -32,7 +32,7 @@
             android:id="@+id/tv_dialog_break_up_friend_title_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="7dp"
             android:fontFamily="@font/pretendard_regular"
             android:text="@string/dialog_break_up_friend_title_two"
             android:textColor="@color/white_2"

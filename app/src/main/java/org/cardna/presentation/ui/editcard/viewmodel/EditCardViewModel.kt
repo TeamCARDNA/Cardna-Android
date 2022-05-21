@@ -34,8 +34,11 @@ class EditCardViewModel @Inject constructor(
     private val _currentPosition = MutableLiveData<Int>()
     val currentPosition: LiveData<Int> = _currentPosition
 
-    private var _isSuccess = false
-    val isSuccess get() = _isSuccess
+    private val _isMainCardEmpty = MutableLiveData<Boolean>()
+    val isMainCardEmpty: LiveData<Boolean> = _isMainCardEmpty
+
+    private var _isSuccess = MutableLiveData<Boolean>()
+    val isSuccess: LiveData<Boolean> = _isSuccess
 
     fun setCurrentPosition(position: Int) {
         _currentPosition.value = position
@@ -47,6 +50,7 @@ class EditCardViewModel @Inject constructor(
                 cardRepository.getMainCard().data
             }.onSuccess {
                 _mainCardList.value = it.mainCardList
+                _isMainCardEmpty.value = it.mainCardList.isEmpty()
                 Timber.d("get_main_card_success")
             }.onFailure {
                 Timber.e("get_main_card_error")
@@ -60,7 +64,8 @@ class EditCardViewModel @Inject constructor(
                 cardRepository.putEditCard(cards).data.mainCardList
             }.onSuccess {
                 _mainCardList.value = it
-                _isSuccess = true
+                _isMainCardEmpty.value = it.isEmpty()
+                _isSuccess.value = true
             }.onFailure {
                 Timber.e("put_edit_card_error")
             }
@@ -83,6 +88,7 @@ class EditCardViewModel @Inject constructor(
 
     fun setChangeSelectedList(selectedList: MutableList<Int>) {
         _selectedCardList.value = selectedList //수정에서 삭제한 애들 남긴 선택된카드리스트갱신
+        _isMainCardEmpty.value = selectedList.isEmpty()
         Timber.d("selectedCardList : ${_selectedCardList.value}")
     }
 
@@ -104,5 +110,6 @@ class EditCardViewModel @Inject constructor(
 
     fun setChangeMainCardList(mainCardList: MutableList<MainCard>) {
         _mainCardList.value = mainCardList
+        _isMainCardEmpty.value = mainCardList.isEmpty()
     }
 }

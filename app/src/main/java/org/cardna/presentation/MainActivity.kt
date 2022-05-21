@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -28,10 +30,13 @@ import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.view.MyPageFragment
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.getToast
 import org.cardna.presentation.util.replace
+import org.cardna.presentation.util.shortToast
 import org.cardna.ui.cardpack.BottomDialogCardFragment
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class MainActivity :
@@ -47,22 +52,6 @@ class MainActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(
-            OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w(
-                        "BeMeApplication.TAG",
-                        "Fetching FCM registration token failed",
-                        task.exception
-                    )
-                    return@OnCompleteListener
-                } else {
-                    val token = task.result
-                    Log.d("BeMeApplication.TAGㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", token.toString())
-                }
-            }
-        )
     }
 
     override fun initView() {
@@ -75,22 +64,18 @@ class MainActivity :
         binding.bnvMain.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_bottom_maincard -> {
-                    supportFragmentManager.popBackStack()
                     replace(R.id.fcv_main, mainCardFragment)
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_bottom_cardpack -> {
-                    supportFragmentManager.popBackStack()
                     replace(R.id.fcv_main, CardPackFragment())
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_bottom_insight -> {
-                    supportFragmentManager.popBackStack()
                     replace(R.id.fcv_main, insightFragment)
                     return@setOnItemSelectedListener true
                 }
                 else -> {
-                    supportFragmentManager.popBackStack()
                     replace(R.id.fcv_main, myPageFragment)
                     return@setOnItemSelectedListener true
                 }
@@ -148,9 +133,9 @@ class MainActivity :
         if (dynamicLinkData != null) {
 
             if (dynamicLinkData.get("body").toString().contains("작성")) {
-              /*  startActivity(
-                    Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())
-                )*/
+                /*  startActivity(
+                      Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())
+                  )*/
                 startActivity(Intent(this, AlarmActivity::class.java).apply {
                 })
             } else if (dynamicLinkData.get("body").toString().contains("친구")) {
@@ -159,5 +144,10 @@ class MainActivity :
                 })
             }
         }
+    }
+
+    override fun onBackPressed() {
+        //     Amplitude.getInstance().logEvent("App Close")
+        super.onBackPressed()
     }
 }
