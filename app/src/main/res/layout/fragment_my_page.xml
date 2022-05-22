@@ -25,6 +25,7 @@
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctl_mypage_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -157,7 +158,7 @@
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <androidx.appcompat.widget.SearchView
-  android:id="@+id/et_mypage_name_search_background"
+                    android:id="@+id/et_mypage_name_search_background"
                     style="@style/search_view"
 
                     android:layout_width="0dp"

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -42,7 +43,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         setObserve()
         copyMyCodeClickListener()
         initData()
-        initRootClickEvent(binding.ctlMypageTop)
+        initRootClickEvent(binding.ctlMypageContainer)
         initRootClickEvent(binding.ctlMypageHeader)
     }
 
@@ -171,5 +172,12 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         val clipData = ClipData.newPlainText("TAG", message)
         clipBoardManger.setPrimaryClip(clipData)
         requireContext().shortToast("코드가 복사되었습니다")
+    }
+
+    private fun setHideKeyboard() {
+        binding.scMypage.setOnClickListener {
+            val keyboard = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            keyboard.hideSoftInputFromWindow(binding.etMypageNameSearchBackground.windowToken, 0)
+        }
     }
 }
