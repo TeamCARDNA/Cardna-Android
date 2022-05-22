@@ -53,6 +53,7 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
         val symbolId = intent.getIntExtra(BaseViewUtil.SYMBOL_ID, -1) // symbolId가 null일 때 -1로
         val cardImg = Uri.parse(intent.getStringExtra(BaseViewUtil.CARD_IMG)) // uri를 string으로 변환한 값을 받아 다시 uri로
         val cardTitle = intent.getStringExtra(BaseViewUtil.CARD_TITLE)
+        val isFromStore = intent.getBooleanExtra(BaseViewUtil.FROM_STORE_KEY, BaseViewUtil.FROM_STORE)
         // val mainCardId = intent.getIntExtra("INDUCE_CARD_ID", -1)
         //   val induceMakeMainCard = intent.getBooleanExtra(SetNameFinishedActivity.GO_TO_CARDCREAT_ACTIVITY_KEY, false)
 
@@ -75,7 +76,11 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
                 }
             }
         } else if (isCardMeOrYou == BaseViewUtil.CARD_YOU) { // 카드너 추가 완료 만들기
-            binding.tvCardcreateComplete.text = getString(R.string.cardcreate_complete_cardyou)
+            if (isFromStore) {
+                binding.tvCardcreateComplete.text = getString(R.string.cardcreate_complete_cardyou_fromstore)
+            } else {
+                binding.tvCardcreateComplete.text = getString(R.string.cardcreate_complete_cardyou)
+            }
             binding.clCardcreateComplete.setBackgroundResource(R.drawable.bg_cardyou)
 
             // 카드너일 경우,

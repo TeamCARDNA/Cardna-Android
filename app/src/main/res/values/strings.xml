@@ -126,6 +126,7 @@
     <!-- CardCreateCompleteActivity -->
     <string name="cardcreate_complete_cardme">카드나를 만들었어요!</string>
     <string name="cardcreate_complete_cardyou">카드너를 만들었어요!</string>
+    <string name="cardcreate_complete_cardyou_fromstore">카드너가 추가됐어요!</string>
 
     <!-- BottomDialogImageFragment -->
     <string name="bottom_image_complete">완료</string>
