@@ -3,11 +3,13 @@ package org.cardna.presentation.ui.login.view
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.viewModels
@@ -43,6 +45,7 @@ class SetNameActivity :
 
     private fun setClickListener() {
         initAlertDialog()
+        setHideKeyboard()
     }
 
     private fun setChangedListener() {
@@ -163,6 +166,14 @@ class SetNameActivity :
         val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         intent.putExtra("welcomeText", welcomeText)
         startActivity(intent, bundle)
+    }
+
+
+    private fun setHideKeyboard() {
+        binding.clSetnameContainer.setOnClickListener {
+            val keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            keyboard.hideSoftInputFromWindow(binding.etSignupFirstname.windowToken, 0)
+        }
     }
 
     companion object {

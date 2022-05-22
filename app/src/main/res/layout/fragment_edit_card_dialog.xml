@@ -47,7 +47,8 @@
                 style="@style/cardpack_bottomsheet_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="24dp"
                 android:fontFamily="@font/pretendard_bold"
                 android:text="완료"
                 app:layout_constraintBottom_toBottomOf="@id/tl_representcardedit"
@@ -55,10 +56,10 @@
                 app:layout_constraintTop_toTopOf="@id/tl_representcardedit" />
 
             <LinearLayout
+                android:layout_marginTop="4dp"
                 android:id="@+id/ll_editcarddialog_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/tl_representcardedit">
@@ -67,7 +68,6 @@
                     android:id="@+id/tv_representcardedit_card_list_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="2dp"
                     android:textColor="@color/white_3"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@id/tl_representcardedit"
@@ -78,7 +78,6 @@
                     android:id="@+id/tv_representcardedit_card_list_count_dot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="2dp"
                     android:text="@string/edit_card_slash"
                     android:textColor="@color/white_3"
                     android:textSize="12sp" />
@@ -87,7 +86,6 @@
                     android:id="@+id/tv_representcardedit_card_list_count_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
                     android:text="@string/edit_card_seven"
                     android:textColor="@color/white_3"
                     android:textSize="12sp" />
@@ -98,13 +96,11 @@
                 android:id="@+id/rv_editcarddialog_container"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ll_editcarddialog_container"
-                app:layout_constraintVertical_bias="0.0"
-                tools:layout_editor_absoluteX="0dp" />
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

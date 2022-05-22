@@ -10,6 +10,8 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/main_black</item>
 
+        <item name="android:colorEdgeEffect">@color/white_3</item>
+
         <!-- Status bar color. -->
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:statusBarColor">@android:color/black</item>
@@ -22,6 +24,5 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
 </resources>
 

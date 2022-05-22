@@ -3,6 +3,9 @@ package org.cardna.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.commit
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -19,11 +22,15 @@ import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.view.MyPageFragment
 import org.cardna.presentation.util.add
 import org.cardna.presentation.util.hide
+import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.getToast
 import org.cardna.presentation.util.replace
 import org.cardna.presentation.util.show
+import org.cardna.presentation.util.shortToast
 import org.cardna.ui.cardpack.BottomDialogCardFragment
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class MainActivity :
@@ -40,22 +47,6 @@ class MainActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(
-            OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w(
-                        "BeMeApplication.TAG",
-                        "Fetching FCM registration token failed",
-                        task.exception
-                    )
-                    return@OnCompleteListener
-                } else {
-                    val token = task.result
-                    Log.d("BeMeApplication.TAGㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", token.toString())
-                }
-            }
-        )
     }
 
     override fun initView() {
@@ -90,7 +81,6 @@ class MainActivity :
             }
         }
     }
-
 
     private fun setBottomNavigationSelectListener() {
         binding.bnvMain.itemIconTintList = null
@@ -163,5 +153,10 @@ class MainActivity :
                 })
             }
         }
+    }
+
+    override fun onBackPressed() {
+        //     Amplitude.getInstance().logEvent("App Close")
+        super.onBackPressed()
     }
 }

@@ -15,7 +15,7 @@
             android:id="@+id/ctl_cardyoustore_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="11dp"
             android:background="@drawable/bg_dark_gray_10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">

@@ -2,29 +2,26 @@ package org.cardna.presentation.ui.setting.view
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
-import org.cardna.R
 import org.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
-import land.sungbin.systemuicontroller.setSystemBarsColor
+import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.presentation.base.BaseViewUtil
-import org.cardna.presentation.ui.login.view.LoginActivity
 import org.cardna.presentation.ui.login.view.OnBoardingActivity
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
-import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.shortToast
 import org.cardna.presentation.util.showCustomDialog
 
 @AndroidEntryPoint
 class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBinding>(R.layout.activity_setting) {
     private val settingViewModel: SettingViewModel by viewModels()
+    private val cardnaMail = "https://docs.google.com/forms/d/e/1FAIpQLSd9KrWFdzWDEvYfq2ein6reL4ZMjqTq_JQFhODSwEBGwkv7kg/viewform"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.settingViewModel = settingViewModel
@@ -41,10 +38,10 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
     private fun setUserAccount() {
         with(binding) {
             if (CardNaRepository.userSocial == "kakao") {
-                ivAccountInfoSocialLogin.setImageResource(R.drawable.logo_kako)
+                ivAccountInfoSocialLogin.setImageResource(R.drawable.ic_logo_kako)
                 tvAccountInfoSocialLoginUser.text = "카카오"
             } else {
-                ivAccountInfoSocialLogin.setImageResource(R.drawable.logo_naver)
+                ivAccountInfoSocialLogin.setImageResource(R.drawable.ic_logo_naver)
                 tvAccountInfoSocialLoginUser.text = "네이버"
             }
         }
@@ -73,6 +70,11 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
 
     private fun setClickListener() {
         with(binding) {
+            tvSettingQuestionByEmail.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(cardnaMail))
+                startActivity(intent)
+            }
+
             tvSettingAppInfoVersion.setOnClickListener {
                 startActivity(Intent(this@SettingActivity, VersionInfoActivity::class.java))
             }

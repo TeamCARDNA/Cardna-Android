@@ -25,6 +25,7 @@
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctl_mypage_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -159,6 +160,7 @@
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/et_mypage_name_search_background"
                     style="@style/search_view"
+
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -175,7 +177,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -187,7 +188,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:overScrollMode="never"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:itemCount="6"

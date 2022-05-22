@@ -6,16 +6,15 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.FragmentCardYouBinding
-import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardPackYouRecyclerViewAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
-import org.cardna.presentation.util.SpacesItemDecoration
+import org.cardna.presentation.util.SpacesItemDecorationCardPack
 import timber.log.Timber
-import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class CardYouFragment :
@@ -76,8 +75,8 @@ class CardYouFragment :
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             rvCardyou.layoutManager = gridLayoutManager
             rvCardyou.addItemDecoration(
-                SpacesItemDecoration
-                    ((12 * resources.displayMetrics.density).roundToInt())
+                SpacesItemDecorationCardPack
+                    ()
             ) // 화면 비율 조정
         }
 

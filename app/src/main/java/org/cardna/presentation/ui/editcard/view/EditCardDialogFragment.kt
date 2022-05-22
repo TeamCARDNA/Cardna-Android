@@ -84,9 +84,10 @@ class EditCardDialogFragment :
                     val list = it.map { it.id }
                     Timber.d("init submit fragment $list")
                 }
-
             }
-            dismiss()
+            editCardViewModel.isSuccess.observe(viewLifecycleOwner) {
+                if (it) dismiss()
+            }
         }
     }
 

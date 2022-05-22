@@ -1,15 +1,19 @@
 package org.cardna.presentation.ui.cardpack.view
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -25,10 +29,9 @@ import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.databinding.ActivityCardCreateBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
+import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
-import org.cardna.presentation.util.MultiPartResolver
-import org.cardna.presentation.util.initRootClickEvent
-import org.cardna.presentation.util.shortToast
+import org.cardna.presentation.util.*
 import org.cardna.ui.cardpack.BottomDialogImageFragment
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -89,7 +92,6 @@ class CardCreateActivity :
             )
         ) // 내 카드나일 경우 null로 setting 되도록
 
-        // ?
         cardCreateViewModel.setUserName(intent.getStringExtra(BaseViewUtil.NAME) ?: CardNaRepository.kakaoUserfirstName) // 안넘겨주면 null ?
 
     }
@@ -111,9 +113,7 @@ class CardCreateActivity :
 
     // 일단 카드작성완료 tv 선택 불가능하도록, editText 글자 수에 따라 글자 수 업데이트 해주고, 버튼 선택가능하도록
     private fun setView() {
-        initRootClickEvent(binding.tvCardcreateTitle)
-        initRootClickEvent(binding.svCardcreateTop)
-
+        setHideKeyboard()
         binding.ivCardcreateGalleryImg.clipToOutline = true
         binding.tvCardcreateComplete.isClickable = false;  // 일단 카드 작성 완료 textView 클릭 안되도록
 
@@ -202,19 +202,24 @@ class CardCreateActivity :
     // 카드나 만들기 버튼 눌렀을 때,
     // 1. 뷰모델의 카드작성 서버통신 메서드 호출해서 서버에 data 전달
     // 2. cardCreateCompleteActivity 인텐트로 이동
-    private fun makeCardListener() {
 
+    private fun makeCardListener() {
         binding.tvCardcreateComplete.setOnClickListener {
+            binding.tvCardcreateComplete.isClickable = false
+            //    showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
             // 카드나 만들기 버튼을 눌렀을 때
             // 1. 서버로 title, content, symbolId, uri 전송
             // symbolId - 카드 이미지 심볼 id, 이미지가 있는 경우 null을 보내주면 됨
             // nullPointException 을 방지하기위한 분기처리
-            if (cardCreateViewModel.uri.value == null) {
-                cardCreateViewModel.makeCard(null)
-            } else {
-                cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
-                Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡmakeCardㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${cardCreateViewModel.uri.value}")
+            cardCreateViewModel.uri.observe(this) {
+                if (it == null) {
+                    cardCreateViewModel.makeCard(null)
+                } else {
+                    showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
+                    cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
+                }
             }
+
             // 2. cardCreateCompleteActivity 로 이동
             if (cardCreateViewModel.isCardMeOrYou!!) {
                 // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
@@ -233,17 +238,20 @@ class CardCreateActivity :
                 ) // 심볼 - null, 갤러리 - uri 값
                 intent.putExtra(BaseViewUtil.CARD_TITLE, cardCreateViewModel.etKeywordText.value)
 
+                binding.tvCardcreateComplete.isClickable = false
                 startActivity(intent)
+
             } else {
                 // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
-                val is_cardpack_or_maincard =   intent.getBooleanExtra(
-                    BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
-                    BaseViewUtil.FROM_MAINCARD
-                ) // 안넘겨주면, 타인 mainCard에서 온 걸로
                 val intent =
                     Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
-                intent.putExtra(BaseViewUtil.IS_CARDPACK_OR_MAINCARD, is_cardpack_or_maincard)
-                // 현재는 카드너 작성이므로 무슨 액티비티 통해서 왔는지만 전달해주면 됨
+                intent.putExtra(
+                    BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
+                    intent.getBooleanExtra(
+                        BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
+                        BaseViewUtil.FROM_MAINCARD
+                    )
+                )
                 startActivity(intent)
             }
         }
@@ -252,10 +260,11 @@ class CardCreateActivity :
     /** 카드추가 유도뷰일 때 클릭 이벤트 */
     private fun setCardInduceListener() {
         binding.tvCardcreateComplete.setOnClickListener {
-            // nullPointException 을 방지하기위한 분기처리
+            binding.tvCardcreateComplete.isClickable = false
             if (cardCreateViewModel.uri.value == null) {
                 cardCreateViewModel.makeCard(null)
             } else {
+                showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
                 cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
             }
 
@@ -293,6 +302,11 @@ class CardCreateActivity :
             intent.putExtra(
                 "INDUCE_CARD_ID", cardId
             )
+            binding.tvCardcreateComplete.isClickable = false
+            //    Handler(Looper.getMainLooper())
+            //        .postDelayed({
+
+
             startActivity(intent)
         }
     }
@@ -332,7 +346,6 @@ class CardCreateActivity :
                     cardCreateViewModel.setSymbolId(null) // 전에 symbol 선택 후, 다시 갤러리 이미지를 선택했을 경우, 다시 symbolId null로
                     cardCreateViewModel.setIfChooseImg(true)
                     Glide.with(this).load(cardCreateViewModel.uri.value).into(binding.ivCardcreateGalleryImg)
-
                     Timber.e("uri 값은  : ${cardCreateViewModel.uri.value}")
 
                     binding.ivCardcreateGalleryImg.visibility = View.VISIBLE // imageView는 보이도록
@@ -388,5 +401,13 @@ class CardCreateActivity :
         )
 
         return part  //이거 반환
+    }
+
+
+    private fun setHideKeyboard() {
+        binding.clCardcreateScroll.setOnClickListener {
+            val keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            keyboard.hideSoftInputFromWindow(binding.etCardcreateDetail.windowToken, 0)
+        }
     }
 }

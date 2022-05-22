@@ -12,37 +12,43 @@
         android:background="@color/real_black"
         tools:context="org.cardna.presentation.ui.login.onboardingfragment.SecondFragment">
 
-        <TextView
-            android:id="@+id/tv_second_title"
-            style="@style/onboarding_title"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="38dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/onboarding_cardyou_title"
-            android:textColor="@color/main_purple"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginVertical="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_second_about"
-            style="@style/onboarding_about"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/onboarding_cardyou_about"
-            app:layout_constraintStart_toStartOf="@id/tv_second_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_second_title" />
+            <TextView
+                android:id="@+id/tv_second_title"
+                style="@style/onboarding_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/onboarding_cardyou_title"
+                android:textColor="@color/main_purple"
+                app:layout_constraintStart_toStartOf="@+id/tv_second_about"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="38dp"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/img_onboarding_cardyou"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_second_about" />
+            <TextView
+                android:id="@+id/tv_second_about"
+                style="@style/onboarding_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/onboarding_cardyou_about"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@id/tv_second_title" />
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="38dp"
+                android:layout_marginTop="24dp"
+                android:src="@drawable/img_onboarding_cardyou"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_second_about" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

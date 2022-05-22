@@ -16,7 +16,7 @@
         android:id="@+id/ctl_friend_card_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="@color/main_black"
         tools:context=".ui.cardpack.FriendCardPackActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,6 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="27dp"
                 android:layout_marginTop="16dp"
+                android:textSize="18sp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:theme="@style/cardpack_bottomsheet_title"

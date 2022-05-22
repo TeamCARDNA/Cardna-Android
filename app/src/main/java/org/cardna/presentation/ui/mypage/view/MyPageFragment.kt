@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -42,7 +43,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         setObserve()
         copyMyCodeClickListener()
         initData()
-        initRootClickEvent(binding.ctlMypageTop)
+        initRootClickEvent(binding.ctlMypageContainer)
         initRootClickEvent(binding.ctlMypageHeader)
     }
 
@@ -82,10 +83,10 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
             it.getContentIfNotHandled()?.let { event ->
                 when (event) {
                     MyPageViewModel.SEARCH_QUERY -> myPageFriendAdapter.submitList(myPageViewModel.searchFriendNameResult.value)//진짜 검색해서 결과뜬 경우
-                    MyPageViewModel.EXIST_QUERY -> myPageFriendAdapter.submitList(myPageViewModel.friendList.value)//쿼리있는데 왔다가 온경우 ->업데이트 없어야함
+                    MyPageViewModel.EXIST_QUERY -> myPageFriendAdapter.submitList(myPageViewModel.friendList.value?.reversed())//쿼리있는데 왔다가 온경우 ->업데이트 없어야함
                     MyPageViewModel.DEFAULT_STATE ->
                         myPageViewModel.friendList.observe(viewLifecycleOwner) { friendList ->
-                            myPageFriendAdapter.submitList(friendList) //가장 처음엔 운래 친구리스트
+                            myPageFriendAdapter.submitList(friendList.reversed()) //가장 처음엔 운래 친구리스트
                         }
                 }
             }
@@ -110,7 +111,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
                         myPageViewModel.updateSearchNameQuery("")
                         myPageViewModel.isNonExistFriendName(false)
                         myPageViewModel.friendList.observe(viewLifecycleOwner) {
-                            myPageFriendAdapter.submitList(it)
+                            myPageFriendAdapter.submitList(it.reversed())
                         }
                     }
                     return false
@@ -171,5 +172,12 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         val clipData = ClipData.newPlainText("TAG", message)
         clipBoardManger.setPrimaryClip(clipData)
         requireContext().shortToast("코드가 복사되었습니다")
+    }
+
+    private fun setHideKeyboard() {
+        binding.scMypage.setOnClickListener {
+            val keyboard = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            keyboard.hideSoftInputFromWindow(binding.etMypageNameSearchBackground.windowToken, 0)
+        }
     }
 }

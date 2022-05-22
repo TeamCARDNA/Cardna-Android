@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.editcard.view
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,11 +15,9 @@ import org.cardna.data.remote.model.card.RequestEditCardData
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.editcard.adapter.EditCardAdapter
 import org.cardna.presentation.ui.editcard.viewmodel.EditCardViewModel
-import org.cardna.presentation.util.ItemTouchHelperCallback
-import org.cardna.presentation.util.StatusBarUtil
-import org.cardna.presentation.util.setGradientText
-import org.cardna.presentation.util.shortToast
+import org.cardna.presentation.util.*
 import timber.log.Timber
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class EditCardActivity :
@@ -51,11 +50,10 @@ class EditCardActivity :
         with(binding.rvRepresentcardeditContainer) {
             layoutManager = GridLayoutManager(this@EditCardActivity, 2)
             adapter = editCardAdapter
-
-            val itemTouchHelperCallback = ItemTouchHelperCallback(editCardAdapter)
-            val helper = ItemTouchHelper(itemTouchHelperCallback)
-            helper.attachToRecyclerView(this)
+            addItemDecoration(SpacesItemDecorationHorizontalDialog())
+            itemTouchHelperListener(editCardAdapter, this)
         }
+
         editCardViewModel.mainCardList.observe(this) {
             editCardAdapter.submitList(it)
         }
@@ -84,7 +82,11 @@ class EditCardActivity :
             val cardsList = RequestEditCardData(editCardAdapter.mutableList.map { it.id })
             Timber.d("list- put : $cardsList")
             editCardViewModel.putEditCard(cardsList)
-            finish()
+            editCardViewModel.isSuccess.observe(this) {
+                if (it) {
+                    finish()
+                }
+            }
         }
     }
 
