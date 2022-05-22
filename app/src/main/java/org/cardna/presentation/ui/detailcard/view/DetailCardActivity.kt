@@ -42,7 +42,11 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
 
     private fun initData() {
         val id = intent.getIntExtra(BaseViewUtil.CARD_ID, 0)
+        val isFromAlarm = intent.getBooleanExtra(BaseViewUtil.FROM_ALARM_KEY, false)
+        val isFromStore = intent.getBooleanExtra(BaseViewUtil.FROM_STORE_KEY, false)
         detailCardViewModel.setCardId(id)
+        detailCardViewModel.setFromAlarm(isFromAlarm)
+        detailCardViewModel.setFromStore(isFromStore)
     }
 
     @SuppressLint("ResourceType")
@@ -195,34 +199,26 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
 
     fun setCardAddClickListener() {
         detailCardViewModel.keepOrAddCard()
-/*        val isCardMeOrYou = intent.getBooleanExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_ME) // 안넘겨줄 경우, CARDME
-        val symbolId = intent.getIntExtra(BaseViewUtil.SYMBOL_ID, -1) // symbolId가 null일 때 -1로
-        val cardImg = Uri.parse(intent.getStringExtra(BaseViewUtil.CARD_IMG)) // uri를 string으로 변환한 값을 받아 다시 uri로
-        val cardTitle = intent.getStringExtra(BaseViewUtil.CARD_TITLE)*/
-        /*     startActivity(
-                 Intent(this, FriendCardPackActivity::class.java)
-                     .putExtra(BaseViewUtil.ID, mainCardViewModel.friendId.value)
-                     .putExtra(BaseViewUtil.NAME, mainCardViewModel.friendName.value)
-             )*/
-        val intent = Intent(this@DetailCardActivity, CardCreateCompleteActivity::class.java)
-            .putExtra(
-                BaseViewUtil.IS_CARD_ME_OR_YOU, //카드너
-                false
-            ) // 현재는 카드나 작성이므로 CARD_ME를 보내줌
-            /*   .putExtra(
-                   BaseViewUtil.SYMBOL_ID,  //심볼
-                   null
-               ) */// 심볼 - symbolId값, 갤러리 - null
-            .putExtra(
-                BaseViewUtil.CARD_IMG, //이미지
-                detailCardViewModel.cardImg.value
-            ) // 심볼 - null, 갤러리 - uri 값
-            .putExtra(BaseViewUtil.CARD_TITLE, detailCardViewModel.title.value)  //카드타이틀
-            .putExtra(BaseViewUtil.FROM_STORE_KEY, true)  //카드타이틀
-        startActivity(intent)
+        //보관함에서 가는경우
 
+        detailCardViewModel.isFromStore.observe(this) {
+            if (it) goToCardCreateActivity(BaseViewUtil.FROM_STORE_KEY)
+        }
 
+        detailCardViewModel.isFromAlarm.observe(this) {
+            if (it) goToCardCreateActivity(BaseViewUtil.FROM_ALARM_KEY)
+        }
+    }
 
+    fun goToCardCreateActivity(key: String) {
+        detailCardViewModel.isFromAlarm.observe(this) {
+            val intent = Intent(this@DetailCardActivity, CardCreateCompleteActivity::class.java)
+                .putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, false)
+                .putExtra(BaseViewUtil.CARD_IMG, detailCardViewModel.cardImg.value)
+                .putExtra(BaseViewUtil.CARD_TITLE, detailCardViewModel.title.value)  //카드타이틀
+                .putExtra(key, true)  //카드타이틀
+            startActivity(intent)
+        }
         finish()
     }
 
@@ -233,13 +229,6 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                 CARD_YOU -> showLottie(laDetailcardLottie, CARD_YOU, "lottie_cardyou.json")
             }
         }
-    }
-
-    private fun goPreviousActivityWithHandling() {
-        Handler(Looper.getMainLooper())
-            .postDelayed({
-                finish()
-            }, 2000)
     }
 
     companion object {

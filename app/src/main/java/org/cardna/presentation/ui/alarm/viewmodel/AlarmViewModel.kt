@@ -36,6 +36,9 @@ class AlarmViewModel @Inject constructor(
     private val _writeCardYou = MutableLiveData<List<ResponseGetAlarmData.Data.Alarm?>>()
     val writeCardYou: LiveData<List<ResponseGetAlarmData.Data.Alarm?>> = _writeCardYou
 
+    private val _currentCardId = MutableLiveData<Int>()
+    val currentCardId: LiveData<Int> = _currentCardId
+
     //엠티인지 처리
     private val _isFriendRequestEmpty = MutableLiveData(true)
     val isFriendRequestEmpty: LiveData<Boolean> = _isFriendRequestEmpty
@@ -63,10 +66,11 @@ class AlarmViewModel @Inject constructor(
                     CardNaRepository.alarmExistCount = request.requester.size + alarm.size
                     _friendRequest.value = request.requester
                     _writeCardYou.value = alarm
+
                     _isFriendRequestEmpty.value = request.count == 0
                     _isWriteCardYouEmpty.value = alarm.isEmpty()
                     _isAllAlarmEmpty.value = _isFriendRequestEmpty.value == true && _isWriteCardYouEmpty.value == true
-                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgeAllAlarmㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${request.requester.size}+${alarm.size}+${CardNaRepository.alarmExistCount}")
+          //          Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgeAllAlarmㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${request.requester.size}+${alarm.size}+${CardNaRepository.alarmExistCount}")
                 }
             }.onFailure {
                 Timber.e(it.toString())
@@ -92,6 +96,7 @@ class AlarmViewModel @Inject constructor(
     }
 
     fun getDeletedCardYouList(cardId: Int) {
+        _currentCardId.value=cardId
         viewModelScope.launch {
             runCatching {
                 deletedCardYouDao.getAllDeletedCardYou()
