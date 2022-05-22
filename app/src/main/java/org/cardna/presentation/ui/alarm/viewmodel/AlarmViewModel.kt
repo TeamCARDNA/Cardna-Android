@@ -30,7 +30,8 @@ class AlarmViewModel @Inject constructor(
     val foldStatus: LiveData<Boolean> = _foldStatus
 
     //리스트
-    private val _friendRequest = MutableLiveData<List<ResponseGetAlarmData.Data.Request.Requester?>>()
+    private val _friendRequest =
+        MutableLiveData<List<ResponseGetAlarmData.Data.Request.Requester?>>()
     val friendRequest: LiveData<List<ResponseGetAlarmData.Data.Request.Requester?>> = _friendRequest
 
     private val _writeCardYou = MutableLiveData<List<ResponseGetAlarmData.Data.Alarm?>>()
@@ -65,8 +66,12 @@ class AlarmViewModel @Inject constructor(
                     _writeCardYou.value = alarm
                     _isFriendRequestEmpty.value = request.count == 0
                     _isWriteCardYouEmpty.value = alarm.isEmpty()
-                    _isAllAlarmEmpty.value = _isFriendRequestEmpty.value == true && _isWriteCardYouEmpty.value == true
-                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgeAllAlarmㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${request.requester.size}+${alarm.size}+${CardNaRepository.alarmExistCount}")
+                    _isAllAlarmEmpty.value =
+                        _isFriendRequestEmpty.value == true && _isWriteCardYouEmpty.value == true
+                    Log.e(
+                        "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgeAllAlarmㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",
+                        "${request.requester.size}+${alarm.size}+${CardNaRepository.alarmExistCount}"
+                    )
                 }
             }.onFailure {
                 Timber.e(it.toString())
@@ -77,12 +82,18 @@ class AlarmViewModel @Inject constructor(
     fun acceptOrDenyFriend(friendId: Int, isAccept: Boolean) {
         viewModelScope.launch {
             runCatching {
-                friendRepository.postAcceptOrDenyFriend(RequestAcceptOrDenyFriendData(friendId, isAccept))
+                friendRepository.postAcceptOrDenyFriend(
+                    RequestAcceptOrDenyFriendData(
+                        friendId,
+                        isAccept
+                    )
+                )
             }.onSuccess {
-                if (it.data.status == "stranger") _isRequestDeny.value = true
+                if (it.data.status == "stranger")
+                    _isRequestDeny.value = true
                 Timber.e(it.status.toString())
             }.onFailure {
-                Timber.e(it.toString())
+                Timber.e("throwable : $it")
             }
         }
     }

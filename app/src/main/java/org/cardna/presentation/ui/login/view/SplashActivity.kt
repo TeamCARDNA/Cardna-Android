@@ -40,8 +40,9 @@ class SplashActivity :
 //            naverUserfirstName = ""
 //            naverUserToken = ""
 //            naverUserRefreshToken = ""
-
+//            userToken = ""
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡ맨처음값ㅡㅡㅡㅡㅡㅡㅡㅡㅡ$userToken+$kakaoUserfirstName")
+            Timber.e("kakaoUser : $kakaoUserfirstName")
         }
         StatusBarUtil.setStatusBar(this, R.color.black)
         setFullScreen()
@@ -91,9 +92,12 @@ class SplashActivity :
             //todo 카카오 자동로그인
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) {
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.카카오 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + !CardNaRepository.kakaoUserlogOut}")
-            CardNaRepository.userToken = CardNaRepository.kakaoUserToken
-            moveMain()
-
+            loginViewModel.getKakaoTokenIssuance()
+            Timber.d("KK message : ${loginViewModel.issuanceMessage}")
+            when (loginViewModel.issuanceMessage) {
+                "", REFRESH_SUCCESS, ACCESS_NOW -> moveMain()
+                else -> moveOnboarding()
+            }
 /*            firebaseToken, fcmToken 은 회원가입때 이미 넣어줬겠지?
             loginViewModel.getKakaoLogin()
             loginViewModel.getTokenIssuance()
@@ -117,6 +121,7 @@ class SplashActivity :
                         => 소셜 로그인 API 호출
                         => 발급 받은 naverUserToken, naverUserRefreshToken 저장
              */
+            Timber.e("33333333")
             loginViewModel.getNaverTokenIssuance()
 
             if (loginViewModel.issuanceMessage == "") { // 2. accessToken 만료, refresh 토큰 유효할 때 갱신 성공했을 것
@@ -155,9 +160,8 @@ class SplashActivity :
                 // Main으로 이동
                 moveMain()
             } else {
-
+                Timber.e("44444444")
             }
-
 
             //todo 카카오나 네이버 로그아웃 했을시
         } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {

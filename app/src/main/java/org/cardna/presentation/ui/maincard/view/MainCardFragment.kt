@@ -52,6 +52,16 @@ class MainCardFragment :
         initDialog()
         setClickListener()
         checkUserId()
+        setTextGradient()
+    }
+
+    private fun setTextGradient() {
+        mainCardViewModel.relation.observe(viewLifecycleOwner) {
+            if (it.toString() == MainCardActivity.FRIEND)
+                binding.tvMaincardGotoCardpack.apply {
+                    this.text = requireActivity().setGradientText(this.text.toString())
+                }
+        }
     }
 
     override fun onResume() {
@@ -69,13 +79,14 @@ class MainCardFragment :
     private fun initData() {
         setAlarmExist()
         mainCardViewModel.isAlarmExist.observe(viewLifecycleOwner) {
-            if (it == false && CardNaRepository.alarmExistCount < mainCardViewModel.updateAlarmCount.value!!) binding.icAlarmStatus.visibility = View.VISIBLE
+            if (it == false && CardNaRepository.alarmExistCount < mainCardViewModel.updateAlarmCount.value!!) binding.icAlarmStatus.visibility =
+                View.VISIBLE
             else binding.icAlarmStatus.visibility = View.INVISIBLE
 
         }
-
         binding.mainCardViewModel = mainCardViewModel
         setInitPagePosition()
+
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
     }
 
@@ -92,8 +103,10 @@ class MainCardFragment :
         if (arguments != null) {
             with(binding) {
                 llMaincardEditLayout.visibility = View.GONE
-                clMaincardAlarm.visibility = View.INVISIBLE  //TODO 뷰갱신될때 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
-                llMaincardMypageIconContainer.visibility = View.VISIBLE  //TODO 뷰갱신될대 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
+                clMaincardAlarm.visibility =
+                    View.INVISIBLE  //TODO 뷰갱신될때 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
+                llMaincardMypageIconContainer.visibility =
+                    View.VISIBLE  //TODO 뷰갱신될대 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
                 ivMaincardGotoCardpackBackground.visibility = View.VISIBLE
             }
 
@@ -119,14 +132,12 @@ class MainCardFragment :
         mainCardViewModel.relation.observe(viewLifecycleOwner) {
             with(binding.ivMaincardFriend) {
                 when (it.toString()) {
-                    UNKNOWN -> setBackgroundResource(R.drawable.ic_mypage_friend_unchecked)
-                    FRIEND -> {
+                    MainCardActivity.UNKNOWN -> setBackgroundResource(R.drawable.ic_mypage_friend_unchecked)
+                    MainCardActivity.FRIEND -> {
                         setBackgroundResource(R.drawable.ic_mypage_friend_checked)
-                        binding.tvMaincardGotoCardpack.apply {
-                            this.text = requireActivity().setGradientText(this.text.toString())
-                        }
                     }
-                    PROGRESSING -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
+                    MainCardActivity.REQUEST,
+                    MainCardActivity.RESPONSE -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
                 }
             }
         }
@@ -208,9 +219,10 @@ class MainCardFragment :
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
         val friendId = arguments?.getInt("id", 0) ?: -1
-
-        //relation 이거를 observe해야함
+        //relation 이거를 observe해야함 -> 내 상태
         val relation = mainCardViewModel.relation.value.toString()
+        val code = myPageViewModel.myPage.value?.code
+        Timber.d("code : $code")
         with(dialogBinding) {
             when (relation) {
                 MainCardActivity.UNKNOWN -> {
@@ -219,7 +231,7 @@ class MainCardFragment :
                 MainCardActivity.FRIEND -> {
                     clRelationDisconnect.visibility = View.VISIBLE
                 }
-                MainCardActivity.PROGRESSING -> {
+                MainCardActivity.RESPONSE, MainCardActivity.REQUEST -> {
                     clRelationProgressingCancel.visibility = View.VISIBLE
                 }
             }
@@ -296,10 +308,4 @@ class MainCardFragment :
         super.onDestroyView()
     }
 
-    companion object {
-        const val UNKNOWN = "1.0"
-        const val FRIEND = "2.0"
-        const val PROGRESSING = "3.0"
-        const val BACK_BTN_WAIT_TIME = 2000L
-    }
 }

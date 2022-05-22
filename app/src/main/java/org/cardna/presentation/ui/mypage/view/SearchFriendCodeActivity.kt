@@ -117,8 +117,10 @@ class SearchFriendCodeActivity :
         val intent = Intent(this, MainCardActivity::class.java)
         val friendId = myPageViewModel.friendId.value ?: -1
         val name = myPageViewModel.searchFriendCodeResult.value?.name
+        val code = myPageViewModel.searchCodeQuery.value
         intent.putExtra("friendId", friendId)
         intent.putExtra("name", name)
+        intent.putExtra("code", code)
         startActivity(intent)
     }
 
