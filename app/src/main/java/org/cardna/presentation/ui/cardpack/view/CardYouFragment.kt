@@ -26,13 +26,19 @@ class CardYouFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.cardPackViewModel = cardPackViewModel
         initView()
-//        initObserve()
     }
 
     override fun onResume() {
         super.onResume()
         cardPackViewModel.updateCardYouList()  // 카드너 카드들을 서버로부터 불러오기
     }
+
+    override fun onStart() {
+        super.onStart()
+        binding.rvCardyou.smoothScrollToPosition(0)
+        Timber.e("CardMeFragment onStart")
+    }
+
 
     override fun initView() {
         initCardYouRvAdapter() // 리사이클러뷰 및 어댑터 설정
@@ -41,21 +47,6 @@ class CardYouFragment :
         Timber.e("CardYou isCardYouEmpty : ${cardPackViewModel.isCardYouEmpty.value}")
         Timber.e("CardYou isCardMeEmpty : ${cardPackViewModel.isCardMeEmpty.value}")
     }
-
-    private fun initObserve() {
-        cardPackViewModel.isCardYouEmpty.observe(viewLifecycleOwner) { it ->
-            if (it) { // empty 라면
-                Timber.e("CardYou 비어있음")
-                binding.ctlCardyouEmpty.visibility = View.VISIBLE
-                binding.ctlCardyouNotEmpty.visibility = View.GONE
-            } else {
-                Timber.e("CardYou 안비어있음")
-                binding.ctlCardyouEmpty.visibility = View.GONE
-                binding.ctlCardyouNotEmpty.visibility = View.VISIBLE
-            }
-        }
-    }
-
 
     // Adapter 생성
     private fun initCardYouRvAdapter() { // CardPack

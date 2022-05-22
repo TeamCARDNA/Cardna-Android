@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.FragmentCardMeBinding
@@ -30,6 +31,11 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
 
     override fun onResume() {
         super.onResume()
+        Timber.e("CardMeFragment onResume")
+
+//        if(cardPackViewModel.cardMeRvPosition != null){
+//            binding.rvCardme.layoutManager?.onRestoreInstanceState(cardPackViewModel.cardMeRvPosition)
+//        }
         cardPackViewModel.updateCardMeList() // 카드나 카드들을 서버로부터 불러오기
     }
 
@@ -38,6 +44,40 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
         initCardMeRvAdapter() // 리사이클러뷰 및 어댑터 설정
         Timber.e("CardMe isCardMeEmpty : ${cardPackViewModel.isCardMeEmpty.value}")
     }
+
+    // test를 위한 라이프사이클 콜백 오버라이드 => 나중에 필요 없는 거는 삭제
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        Timber.e("CardMeFragment onViewStateRestored")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.rvCardme.smoothScrollToPosition(0)
+        Timber.e("CardMeFragment onStart")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Timber.e("CardMeFragment onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Timber.e("CardMeFragment onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.e("CardMeFragment onDestroy")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+//        saveCardMeRvState()
+    }
+
 
     // Adapter 생성
 
@@ -56,7 +96,11 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             rvCardme.layoutManager = gridLayoutManager
             rvCardme.addItemDecoration(SpacesItemDecorationCardPack()) // 화면 비율 조정
+
+            rvCardme.layoutManager?.onSaveInstanceState()
+            rvCardme.smoothScrollToPosition(0)
         }
+
 
         // cardMeList 에 observer 등록
         // onResume 될 때, cardMeList 를 업데이트 시키고 cardMeList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
@@ -75,4 +119,10 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
             startActivity(intent)
         }
     }
+
+    private fun saveCardMeRvState(){ // 언제 상태 저장할 것인가
+        val state = (binding.rvCardme.layoutManager as GridLayoutManager).onSaveInstanceState()
+        cardPackViewModel.setCardMeRvPosition(state!!)
+    }
+
 }
