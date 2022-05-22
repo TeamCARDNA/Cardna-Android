@@ -143,19 +143,23 @@
 
                 <TextView
                     android:id="@+id/tv_insight_open_area_user_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/pretendard_semibold"
                     android:includeFontPadding="false"
+                    android:maxLines="1"
                     android:text="@{insightViewModel.openAreaInsight.title ?? insightViewModel.myDefault}"
                     android:textColor="@color/real_black"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/ctl_insight_open_area_card"
-                    app:layout_constraintStart_toStartOf="@+id/iv_insight_open_area_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/iv_insight_open_area_image"
                     app:layout_constraintVertical_bias="0.0"
+                    tools:layout_editor_absoluteX="18dp"
                     tools:text="@string/insight_open_area_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

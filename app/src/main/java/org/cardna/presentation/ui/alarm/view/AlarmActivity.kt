@@ -56,6 +56,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         }
 
         alarmViewModel.writeCardYou.observe(this) { writeCardYou ->
+            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgeAllAlarmㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${writeCardYou}")
             writeCardYouAdapter.submitList(writeCardYou)
         }
 
@@ -82,16 +83,20 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
 
     private fun setWriteCardYouAdapter() {
         writeCardYouAdapter = WriteCardYouAdapter(this) { item ->
-            val intent = Intent(this, DetailCardActivity::class.java)
-                .putExtra(BaseViewUtil.CARD_ID, item.cardId)
-
-            alarmViewModel.getDeletedCardYouList(item.cardId ?: return@WriteCardYouAdapter)
-
+            alarmViewModel.getDeletedCardYouList(item.cardId!!)
             alarmViewModel.viewEvent.observe(this) {
                 it.getContentIfNotHandled()?.let { event ->
                     when (event) {
-                        AlarmViewModel.DELETED_CARD -> shortToast("삭제된 카드입니다")
-                        AlarmViewModel.EXISTED_CARD -> startActivity(intent)
+                        AlarmViewModel.DELETED_CARD -> {
+                            shortToast("삭제된 카드입니다")
+                        }
+                        AlarmViewModel.EXISTED_CARD -> {
+                            startActivity(
+                                Intent(this, DetailCardActivity::class.java)
+                                    .putExtra(BaseViewUtil.CARD_ID, alarmViewModel.currentCardId.value)
+                                    .putExtra(BaseViewUtil.FROM_ALARM_KEY, true)
+                            )
+                        }
                     }
                 }
             }
