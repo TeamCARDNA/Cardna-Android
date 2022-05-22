@@ -73,6 +73,7 @@ class LoginViewModel @Inject constructor(
                         userSocial = KAKAO
                         _isLogin.value = true
                         userToken = kakaoUserToken
+                        kakaoUserfirstName = it.data.name
                         kakaoUserlogOut = false
                     } else {
                         //탈퇴했거나 가입하지 않은 유저
@@ -114,6 +115,27 @@ class LoginViewModel @Inject constructor(
                 }
             }.onFailure {
                 Timber.e("error $it")
+            }
+        }
+    }
+
+    fun getKakaoTokenIssuance() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                authRepository.getTokenIssuance(
+                    CardNaRepository.kakaoUserToken,
+                    CardNaRepository.kakaoUserRefreshToken
+                )
+            }.onSuccess {
+                with(CardNaRepository) {
+                    kakaoUserToken = it.data.accessToken
+                    kakaoUserRefreshToken = it.data.refreshToken
+                    userToken = kakaoUserToken
+                    _issuanceMessage = it.message
+                }
+            }.onFailure {
+                Timber.d("재발급 실패 : ${it.message}")
+                _isLogin.value = false
             }
         }
     }

@@ -41,8 +41,10 @@ class MyPageViewModel @Inject constructor(
     private val _searchCodeQuery = MutableLiveData<String>()
     val searchCodeQuery: LiveData<String> = _searchCodeQuery
 
-    private val _searchFriendNameResult = MutableLiveData<List<ResponseMyPageData.Data.FriendList>>()
-    val searchFriendNameResult: LiveData<List<ResponseMyPageData.Data.FriendList>> = _searchFriendNameResult
+    private val _searchFriendNameResult =
+        MutableLiveData<List<ResponseMyPageData.Data.FriendList>>()
+    val searchFriendNameResult: LiveData<List<ResponseMyPageData.Data.FriendList>> =
+        _searchFriendNameResult
     private val _friendList = MutableLiveData<List<ResponseMyPageData.Data.FriendList>>()
     val friendList: LiveData<List<ResponseMyPageData.Data.FriendList>> = _friendList
 
@@ -50,7 +52,8 @@ class MyPageViewModel @Inject constructor(
     val isNonExistFriend: LiveData<Boolean> = _isNonExistFriendName
 
     private val _searchFriendCodeResult = MutableLiveData<ResponseSearchFriendCodeData.Data>()
-    val searchFriendCodeResult: LiveData<ResponseSearchFriendCodeData.Data> = _searchFriendCodeResult
+    val searchFriendCodeResult: LiveData<ResponseSearchFriendCodeData.Data> =
+        _searchFriendCodeResult
 
     private val _isNonExistFriendCode = MutableLiveData<Boolean>(false)
     val isNonExistFriendCode: LiveData<Boolean> = _isNonExistFriendCode
@@ -143,6 +146,9 @@ class MyPageViewModel @Inject constructor(
                     _isNonExistFriendCode.value = false
                     _friendRelationType.value = relationType
                     _friendId.value = id
+                    Timber.d("AAA : it.relationType ${it.relationType}")
+                    Timber.d("AAA : friendRelationType : ${_friendRelationType.value}")
+                    Timber.d("AAA : searchCodeQuery : ${_searchCodeQuery.value}")
                 }
             }.onFailure {
                 _isNonExistFriendCode.value = true
