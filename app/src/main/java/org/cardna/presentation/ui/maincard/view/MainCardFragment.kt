@@ -52,6 +52,16 @@ class MainCardFragment :
         initDialog()
         setClickListener()
         checkUserId()
+        setTextGradient()
+    }
+
+    private fun setTextGradient() {
+        mainCardViewModel.relation.observe(viewLifecycleOwner) {
+            if (it.toString() == MainCardActivity.FRIEND)
+                binding.tvMaincardGotoCardpack.apply {
+                    this.text = requireActivity().setGradientText(this.text.toString())
+                }
+        }
     }
 
     override fun onResume() {
@@ -122,14 +132,12 @@ class MainCardFragment :
         mainCardViewModel.relation.observe(viewLifecycleOwner) {
             with(binding.ivMaincardFriend) {
                 when (it.toString()) {
-                    UNKNOWN -> setBackgroundResource(R.drawable.ic_mypage_friend_unchecked)
-                    FRIEND -> {
+                    MainCardActivity.UNKNOWN -> setBackgroundResource(R.drawable.ic_mypage_friend_unchecked)
+                    MainCardActivity.FRIEND -> {
                         setBackgroundResource(R.drawable.ic_mypage_friend_checked)
-                        binding.tvMaincardGotoCardpack.apply {
-                            this.text = requireActivity().setGradientText(this.text.toString())
-                        }
                     }
-                    PROGRESSING -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
+                    MainCardActivity.REQUEST,
+                    MainCardActivity.RESPONSE -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
                 }
             }
         }
@@ -300,10 +308,4 @@ class MainCardFragment :
         super.onDestroyView()
     }
 
-    companion object {
-        const val UNKNOWN = "1.0"
-        const val FRIEND = "2.0"
-        const val PROGRESSING = "3.0"
-        const val BACK_BTN_WAIT_TIME = 2000L
-    }
 }
