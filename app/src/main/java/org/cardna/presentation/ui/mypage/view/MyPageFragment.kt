@@ -149,7 +149,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.fcv_main, mainCardFragment)
+                .add(R.id.fcv_main, mainCardFragment, "friendMainCard")
             transaction.commit()
         }
         binding.rvMypage.addItemDecoration(MyPageItemVerticalDecoration())
