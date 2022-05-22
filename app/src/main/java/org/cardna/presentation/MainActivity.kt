@@ -3,6 +3,7 @@ package org.cardna.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.commit
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,7 +17,10 @@ import org.cardna.presentation.ui.insight.view.InsightFragment
 import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
 import org.cardna.presentation.ui.maincard.view.MainCardFragment
 import org.cardna.presentation.ui.mypage.view.MyPageFragment
+import org.cardna.presentation.util.add
+import org.cardna.presentation.util.hide
 import org.cardna.presentation.util.replace
+import org.cardna.presentation.util.show
 import org.cardna.ui.cardpack.BottomDialogCardFragment
 import timber.log.Timber
 import javax.inject.Inject
@@ -28,6 +32,7 @@ class MainActivity :
     private val mainCardFragment: MainCardFragment by lazy { MainCardFragment() }
     private val insightFragment: InsightFragment by lazy { InsightFragment() }
     private val myPageFragment: MyPageFragment by lazy { MyPageFragment() }
+    private val cardPackFragment: CardPackFragment by lazy {CardPackFragment() }
 
     @Inject
     lateinit var cardRepository: CardRepository
@@ -86,6 +91,7 @@ class MainActivity :
         }
     }
 
+
     private fun setBottomNavigationSelectListener() {
         binding.bnvMain.itemIconTintList = null
         binding.bnvMain.selectedItemId = R.id.menu_bottom_maincard
@@ -97,8 +103,7 @@ class MainActivity :
         // 바텀싯 다이얼로그가 뜬 후, 카드나 or 카드너를 선택했을 때, 그거에 따라 어떤 액티비티를 띄워줘야 하는지를 명세한 Fragment 정의하고
 
         val itemClick : (Boolean) -> Unit  =
-            {
-                    it ->
+            {it ->
                 when (it) {
                     BaseViewUtil.CARD_ME -> {
                         // 카드나 작성 액티비티로 이동 => 카드나임을 알 수 있도록 intent로 정보전달

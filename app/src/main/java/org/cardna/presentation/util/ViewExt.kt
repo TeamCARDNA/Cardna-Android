@@ -31,12 +31,49 @@ import timber.log.Timber
 import kotlin.math.roundToInt
 
 
+fun AppCompatActivity.add(@IdRes frameId: Int, fragment: Fragment) {
+    supportFragmentManager
+        .beginTransaction()
+        .add(frameId, fragment, null)
+        .commit()
+}
+
+fun AppCompatActivity.add(@IdRes frameId: Int, fragment: Fragment, tag:String) {
+    supportFragmentManager
+        .beginTransaction()
+        .add(frameId, fragment, tag)
+        .commit()
+}
+
 fun AppCompatActivity.replace(@IdRes frameId: Int, fragment: Fragment) {
     supportFragmentManager
         .beginTransaction()
         .replace(frameId, fragment, null)
         .commit()
 }
+
+fun AppCompatActivity.replace(@IdRes frameId: Int, fragment: Fragment, tag:String) {
+    supportFragmentManager
+        .beginTransaction()
+        .replace(frameId, fragment, tag)
+        .commit()
+}
+
+fun AppCompatActivity.show(fragment: Fragment) {
+    supportFragmentManager
+        .beginTransaction()
+        .show(fragment)
+        .commit()
+}
+
+fun AppCompatActivity.hide(fragment: Fragment) {
+    supportFragmentManager
+        .beginTransaction()
+        .hide(fragment)
+        .commit()
+}
+
+
 
 fun Context.convertDPtoPX(dp: Int): Int {
     val density: Float = this.resources.displayMetrics.density

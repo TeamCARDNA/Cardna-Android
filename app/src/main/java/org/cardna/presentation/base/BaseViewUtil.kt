@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import org.cardna.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import timber.log.Timber
 
 sealed class BaseViewUtil {
     abstract class BaseAppCompatActivity<T : ViewDataBinding>(@LayoutRes val layoutRes: Int) :
