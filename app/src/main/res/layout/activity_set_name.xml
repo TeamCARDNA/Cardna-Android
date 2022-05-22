@@ -85,10 +85,11 @@
                 android:id="@+id/tv_signup_firstname_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
                 android:text="@{firstnameCount}"
                 android:textColor="@color/white_4"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/et_signup_firstname"
                 app:layout_constraintTop_toBottomOf="@id/et_signup_firstname"
                 tools:text="2/10" />
 

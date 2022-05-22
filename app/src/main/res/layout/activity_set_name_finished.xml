@@ -125,12 +125,12 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_gradient_green_purple_radius_5"
                 android:includeFontPadding="false"
-                android:paddingHorizontal="36dp"
                 android:paddingVertical="14dp"
                 android:text="@string/setnamefinished_btn_positive_text"
                 android:textColor="@color/dark_gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/btn_setnamefinished_negative" />
+                app:layout_constraintTop_toTopOf="@id/btn_setnamefinished_negative"
+                tools:visibility="visible" />
 
 
         </LinearLayout>

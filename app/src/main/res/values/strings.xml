@@ -151,7 +151,7 @@
 
     <!--    setNameActivity-->
     <string name="signup_tv_title">이름을 알려주세요!</string>
-    <string name="signup_tv_about">원할한 서비스 이용을 위해 실명으로 적어주세요 :)</string>
+    <string name="signup_tv_about">원활한 서비스 이용을 위해 실명으로 적어주세요 :)</string>
     <string name="signup_et_lastname">성</string>
     <string name="signup_et_firstname">이름</string>
     <string name="signup_btn_access">확인</string>

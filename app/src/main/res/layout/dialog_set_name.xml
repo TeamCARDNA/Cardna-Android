@@ -11,9 +11,8 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="285dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="38dp"
         android:background="@drawable/bg_darkgray_radius_16"
         android:paddingHorizontal="16dp"
         android:paddingBottom="20dp">
