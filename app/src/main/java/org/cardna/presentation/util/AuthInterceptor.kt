@@ -10,14 +10,14 @@ class AuthInterceptor : Interceptor {
         val requestBuilder = chain.request().newBuilder()
 
         //카카오로 소셜로그인시 인터셉트
-        //네이버로 소셜록인시 인터셉트
+        //네이버로 소셜로그인시 인터셉트
         //현재 유저 토큰 인터셉트
         with(CardNaRepository) {
             if (kakaoAccessToken.isNotEmpty()) {
                 kakaoAccessToken.let {
                     requestBuilder.addHeader("token", it)
                 }
-                Timber.e("ㅡㅡㅡㅡㅡㅡㅡ1kakaoAccessTokenㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${kakaoAccessToken}")
+                Timber.e("ㅡㅡㅡㅡㅡㅡㅡ1.kakaoAccessTokenㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${kakaoAccessToken}")
             } else if (naverAccessToken.isNotEmpty()) {
                 naverAccessToken.let {
                     requestBuilder.addHeader("token", it)
@@ -27,7 +27,7 @@ class AuthInterceptor : Interceptor {
                 userToken.let {
                     requestBuilder.addHeader("token", it)
                 }
-                Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.userTokenㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${userToken}")
+                Timber.e("ㅡㅡㅡㅡㅡㅡㅡ3.userTokenㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${userToken}")
                 return chain.proceed(requestBuilder.build())
             } else null
         }

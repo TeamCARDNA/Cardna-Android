@@ -6,10 +6,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.viewModels
+import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.oauth.NidOAuthLogin
+import org.cardna.databinding.ActivitySettingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
-import org.cardna.databinding.ActivitySettingBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.view.OnBoardingActivity
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
@@ -107,9 +109,11 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
                     kakaoUserToken = ""
                     kakaoUserRefreshToken = ""
                 } else {
+
                     naverUserlogOut = true
                     naverUserToken = ""
                     naverUserRefreshToken = ""
+                    NidOAuthLogin().logout()
                 }
             }
             dialog.dismiss()

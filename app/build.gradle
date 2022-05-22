@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
+    id 'kotlin-parcelize'
 }
 
 Properties properties = new Properties()
@@ -149,6 +150,7 @@ dependencies {
 
     // Amplitude
     implementation 'com.amplitude:android-sdk:2.23.2'
+
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

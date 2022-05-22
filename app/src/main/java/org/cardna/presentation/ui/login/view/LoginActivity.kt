@@ -81,14 +81,6 @@ class LoginActivity :
     }
 
     private fun setNaverLogin() {
-        NidLog.init()
-        NaverIdLoginSDK.initialize(
-            this,
-            BuildConfig.NAVER_API_CLIENT_ID,
-            BuildConfig.NAVER_API_CLIENT_SECRET,
-            BuildConfig.NAVER_API_APP_NAME
-        )
-
         val oauthLoginCallback = object : OAuthLoginCallback {
             override fun onError(errorCode: Int, message: String) {
                 onFailure(errorCode, message)

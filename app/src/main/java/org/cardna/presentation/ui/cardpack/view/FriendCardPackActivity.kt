@@ -12,6 +12,7 @@ import org.cardna.databinding.ActivityFriendCardPackBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import org.cardna.presentation.util.StatusBarUtil
+import timber.log.Timber
 
 @AndroidEntryPoint
 class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriendCardPackBinding>(R.layout.activity_friend_card_pack) {

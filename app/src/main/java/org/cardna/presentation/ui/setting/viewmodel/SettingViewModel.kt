@@ -142,7 +142,6 @@ class SettingViewModel @Inject constructor(
                     } else {
                         userSocial = ""
                         userUuid = ""
-
                         naverUserfirstName = ""
                         naverUserToken = ""
                         naverUserRefreshToken = ""

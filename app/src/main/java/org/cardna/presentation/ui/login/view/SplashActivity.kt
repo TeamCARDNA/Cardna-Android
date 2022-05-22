@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat.startActivity
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +44,6 @@ class SplashActivity :
 //            naverUserRefreshToken = ""
 //            userToken = ""
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡ맨처음값ㅡㅡㅡㅡㅡㅡㅡㅡㅡ$userToken+$kakaoUserfirstName")
-            Timber.e("kakaoUser : $kakaoUserfirstName")
         }
         StatusBarUtil.setStatusBar(this, R.color.black)
         setFullScreen()
@@ -106,6 +107,9 @@ class SplashActivity :
 
             //todo 네이버 자동로그인
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
+            Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.네이버 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
+
+
             // 토큰재발급 API 호출
             // 여기서 토큰 재발급 API 호출해서 accessToken, refreshToken 유효성 판단
             /*
@@ -121,49 +125,56 @@ class SplashActivity :
                         => 소셜 로그인 API 호출
                         => 발급 받은 naverUserToken, naverUserRefreshToken 저장
              */
-            Timber.e("33333333")
+            Timber.d("naver 자동로그인: ")
+
             loginViewModel.getNaverTokenIssuance()
 
-            if (loginViewModel.issuanceMessage == "") { // 2. accessToken 만료, refresh 토큰 유효할 때 갱신 성공했을 것
-                moveMain()
-            } else if (loginViewModel.issuanceMessage == "유효한 토큰입니다.") { // 1. accessToken 유효
-                moveMain()
-            } else if (loginViewModel.issuanceMessage == "모든 토큰이 만료되었습니다.") { // 3. 둘다 만료
-                val oauthLoginCallback = object : OAuthLoginCallback {
-                    override fun onSuccess() {
-                        // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
-                        Timber.d("naver onSuccess: ")
-                        loginViewModel.setNaverSocialUserToken(NaverIdLoginSDK.getAccessToken()!!)
+            loginViewModel.tokenStatusCode.observe(this){
+                if(it == 200){
+                    Timber.d("토큰 재발급 성공")
+                    moveMain()
+                } else if(it == 400){
+                    Timber.d("유효한 토큰입니다.")
+                    moveMain()
+                } else if (it == 401) { // 3. 둘다 만료
+                    Timber.d("모든 토큰이 만료되었습니다.")
+
+                    val oauthLoginCallback = object : OAuthLoginCallback {
+                        override fun onSuccess() {
+                            // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
+                            Timber.d("naver onSuccess: ")
+                            loginViewModel.setNaverSocialUserToken(NaverIdLoginSDK.getAccessToken()!!)
+                        }
+
+                        override fun onFailure(httpStatus: Int, message: String) {
+                            val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                            val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+                            Timber.d("naver ErrorCode : ${errorCode}")
+                            Timber.d("naver ErrorDescription : ${errorDescription}")
+                        }
+
+                        override fun onError(errorCode: Int, message: String) {
+                            onFailure(errorCode, message)
+                        }
                     }
 
-                    override fun onFailure(httpStatus: Int, message: String) {
-                        val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                        val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                        Timber.d("naver ErrorCode : ${errorCode}")
-                        Timber.d("naver ErrorDescription : ${errorDescription}")
-                    }
+                    // 네이버 소셜 로그인을 통해 naver accessToken 얻기
+                    NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
 
-                    override fun onError(errorCode: Int, message: String) {
-                        onFailure(errorCode, message)
-                    }
+                    // 소셜로그인 API를 호출하기 위해 헤더의 토큰을 naver 소셜 토큰으로 갈아끼움
+                    CardNaRepository.userToken = loginViewModel.naverSocialUserToken!!
+
+                    // 소셜 로그인 API 호출 => 발급 받은 naverUserToken, naverUserRefreshToken 저장, 헤더 갈아끼우기
+                    loginViewModel.getNaverLogin()
+
+                    // Main으로 이동
+                    moveMain()
+                } else {
+                    Timber.d("naver move main: ")
+                    moveMain()
                 }
-
-                // 네이버 소셜 로그인을 통해 naver accessToken 얻기
-                NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
-
-                // 소셜로그인 API를 호출하기 위해 헤더의 토큰을 naver 소셜 토큰으로 갈아끼움
-                CardNaRepository.userToken = loginViewModel.naverSocialUserToken!!
-
-                // 소셜 로그인 API 호출 => 발급 받은 naverUserToken, naverUserRefreshToken 저장, 헤더 갈아끼우기
-                loginViewModel.getNaverLogin()
-
-                // Main으로 이동
-                moveMain()
-            } else {
-                Timber.e("44444444")
             }
-
-            //todo 카카오나 네이버 로그아웃 했을시
+        //todo 카카오나 네이버 로그아웃 했을시
         } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {
             moveOnboarding()
         } else {
