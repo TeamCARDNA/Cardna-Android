@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import org.cardna.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import timber.log.Timber
 
 sealed class BaseViewUtil {
     abstract class BaseAppCompatActivity<T : ViewDataBinding>(@LayoutRes val layoutRes: Int) :
@@ -83,6 +84,9 @@ sealed class BaseViewUtil {
         const val SYMBOL_ID = "symbolId"
         const val CARD_IMG = "cardImg"
         const val CARD_TITLE = "cardTitle"
+
+        const val BOTTOM_CARD = "bottomCard"
+        const val BOTTOM_IMAGE = "bottomImage"
 
         const val IS_CARDPACK_OR_MAINCARD = "isCardPackOrMainCard"
         const val FROM_CARDPACK = true

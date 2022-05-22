@@ -15,6 +15,9 @@ import org.cardna.data.remote.model.auth.ResponseSocialLoginData
 import org.cardna.data.remote.model.auth.ResponseTokenIssuanceData
 import org.cardna.domain.repository.AuthRepository
 import org.cardna.domain.repository.CardRepository
+import org.cardna.presentation.ui.login.view.SetNameActivity.Companion.KAKAO
+import org.cardna.presentation.ui.login.view.SetNameActivity.Companion.NAVER
+import org.cardna.presentation.ui.login.view.SplashActivity.Companion.LOGIN_SUCCESS
 import org.cardna.presentation.util.shortToast
 import timber.log.Timber
 import javax.inject.Inject
@@ -47,6 +50,10 @@ class LoginViewModel @Inject constructor(
     private var _issuanceMessage = ""
     val issuanceMessage: String?
         get() = _issuanceMessage
+
+    // 토큰 재발급 메서드에 대한 message
+    private var _tokenStatusCode = MutableLiveData<Int>(0)
+    val tokenStatusCode : LiveData<Int> = _tokenStatusCode
 
 
     // 네이버 소셜 토큰
@@ -104,13 +111,14 @@ class LoginViewModel @Inject constructor(
                         userToken = it.data.accessToken
                         userSocial = NAVER
                         naverUserfirstName = it.data.name
+                        naverUserlogOut = false
                         _gotoSetName.value = false
                     } else { // 2. 회원가입
                         userSocial = it.data.social
                         userUuid = it.data.uuid
                         _gotoSetName.value = true
                     }
-                    Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ네이버로그이느ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ $it")
+                    Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ네이버로그인ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ $it")
                 }
             }.onFailure {
                 Timber.e("error $it")
@@ -127,14 +135,21 @@ class LoginViewModel @Inject constructor(
                     CardNaRepository.naverUserRefreshToken
                 )
             }.onSuccess {
+                Timber.d("재발급 메세지 : ${it.message}")
+                Timber.d("새로운 accessToken : ${it.data.accessToken}")
+                Timber.d("새로운 refreshToken : ${it.data.refreshToken}")
                 CardNaRepository.naverUserToken = it.data.accessToken
                 CardNaRepository.naverUserRefreshToken = it.data.refreshToken
                 CardNaRepository.userToken = it.data.accessToken // 헤더 토큰 갈아 끼우기
-
-                _issuanceMessage = it.message
+                _tokenStatusCode.value = it.status // 200 일것
+//                _issuanceMessage = it.message
             }.onFailure {
-                Timber.d("재발급 실패 : ${it.message}")
-                _isLogin.value = false
+                when (it) {
+                    is retrofit2.HttpException -> {
+                        _tokenStatusCode.value = it.code()
+                        Timber.d("onFailure 재발급 상태 코드 : ${it.code()}")
+                    }
+                }
             }
         }
     }
@@ -148,6 +163,8 @@ class LoginViewModel @Inject constructor(
                 if (singUpData.social == "naver") {
                     CardNaRepository.naverUserToken = it.data.accessToken
                     CardNaRepository.naverUserRefreshToken = it.data.refreshToken
+                    CardNaRepository.naverUserfirstName = it.data.name
+                    CardNaRepository.naverUserlogOut = false
                 } else { // kakao
                     CardNaRepository.kakaoUserToken = it.data.accessToken
                     CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
@@ -172,6 +189,6 @@ class LoginViewModel @Inject constructor(
     companion object {
         const val LOGIN_SUCCESS = "로그인 성공"
         const val KAKAO = "kakao"
-        const val NAVER = "naver"
+        const val  NAVER = "naver"
     }
 }

@@ -19,21 +19,28 @@ import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardPackTabLayoutAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
+import timber.log.Timber
 
 @AndroidEntryPoint
 class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.layout.fragment_card_pack) {
     private val cardPackViewModel: CardPackViewModel by activityViewModels()
     private lateinit var cardPackTabLayoutAdapter: CardPackTabLayoutAdapter // tabLayout 에 data 띄워주는 adapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Timber.e("bottomtest CardPackFragment onCreate")
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         initView()
+        Timber.e("bottomtest CardPackFragment OnViewCreated")
     }
 
     override fun onResume() {
         // 카드팩프래그먼트에서 카드를 눌러 카드 상세페이지로 가서 삭제한다음 왔을 때, 카드팩의 카드들이 업데이트 되어야 하므로 onResume 이 필요
         super.onResume()
+        Timber.e("bottomtest CardPackFragment onResume")
         if(cardPackViewModel.id.value == null) // 내 카드팩일때만 onResume 해주면 됨.
             cardPackViewModel.setTotalCardCnt()
         binding.vpCardpack.setCurrentItem(cardPackViewModel.tabPosition.value ?: 0, false)
@@ -122,7 +129,7 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
             cardPackViewModel.setTotalCardCnt() // 카드팩 총 개수 세팅
 
             // 카드추가버튼에 카드나 카드너 추가 바텀씻 올라오는 리스너 달기
-            binding.ivAddCard.setOnClickListener {
+            binding.ctlAddCardBg.setOnClickListener {
                 (activity as MainActivity).showBottomDialogCardFragment()
             }
 

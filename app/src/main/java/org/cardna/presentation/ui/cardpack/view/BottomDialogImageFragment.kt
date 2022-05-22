@@ -6,6 +6,8 @@ import androidx.fragment.app.activityViewModels
 import org.cardna.R
 import org.cardna.databinding.FragmentBottomDialogImageBinding
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.cardpack.view.BottomCardLamdaData
+import org.cardna.presentation.ui.cardpack.view.BottomImageLamdaData
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
 
@@ -14,19 +16,29 @@ import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
 // 둘의 차이 ? 는 아직 잘 모르겠고
 // 둘 분기처리는 삼항 연산자 이용해서 xml 상에서 처리해주기
 
-class BottomDialogImageFragment(val itemClick: () -> Unit)
+class BottomDialogImageFragment
     : BaseViewUtil.BaseBottomDialogFragment<FragmentBottomDialogImageBinding>(R.layout.fragment_bottom_dialog_image) {
     private val cardCreateViewModel: CardCreateViewModel by activityViewModels()
+
+    private lateinit var itemClick: () -> Unit
+    private lateinit var bottomImageLamdaData: BottomImageLamdaData
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        initLamda()
         setListener() // for symbol
         accessGallery() // for gallery
     }
 
     override fun initView() {
         binding.cardCreateViewModel = cardCreateViewModel
+    }
+
+    private fun initLamda(){
+        bottomImageLamdaData = arguments?.getParcelable(BaseViewUtil.BOTTOM_IMAGE)!!
+        itemClick = bottomImageLamdaData.BottomImageListener
     }
 
 

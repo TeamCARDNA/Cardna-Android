@@ -48,6 +48,26 @@ class CardCreateActivity :
 
     private val cardCreateViewModel: CardCreateViewModel by viewModels()
     private val multiPartResolver = MultiPartResolver(this)
+
+    val itemClick : () -> Unit = {
+        // image 선택 dialog 에서 심볼이 하나라도 선택이 되어서 완료 버튼을 누르면 dialog가 닫히면 실행되는 함수
+        // 바로 갤러리 접근을 누른다면 이것이 실행되지 않으므로 symbolId는 초기값인 null일 것
+        with(binding) {
+            // 각 심볼 이미지 띄워주기
+            ivCardcreateGalleryImg.setImageResource(cardCreateViewModel?.imgIndex!!) // bottomDialog 에서 설정해준 imgIndex 를 Iv에 띄워주기
+            ivCardcreateGalleryImg.visibility = View.VISIBLE
+            cardCreateViewModel?.setUri(null) // 갤러리이미지 선택 후, 다시 symbolId 선택할 수도 있으니 uri 는 null 로 해줘야함
+
+            // 이제 여기서 iv는 클릭 안되도록 하고, cl은 보이진 않지만 계속 클릭되도록 로직 수정
+
+            checkCompleteTvClickable() // 이미지 선택 되었으니 카드작성완료 tv 누를 수 있는지 다시 검사
+
+            ctlCardcreateImg.visibility =
+                View.INVISIBLE // visibility말고 background를 검정으로 바꾸면 계속 선택가능하지 않을까
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel()
@@ -138,24 +158,10 @@ class CardCreateActivity :
 
     private fun setChooseCardListener() {
         binding.ctlCardcreateImg.setOnClickListener {
-            // 이미지 선택 cl 클릭 시, 이러한 람다를 정의해서, bottomDialogImageFragment 를 생성한 후, 이를 show()
-            val bottomDialogImageFragment = BottomDialogImageFragment {
-                // image 선택 dialog 에서 심볼이 하나라도 선택이 되어서 완료 버튼을 누르면 dialog가 닫히면 실행되는 함수
-                // 바로 갤러리 접근을 누른다면 이것이 실행되지 않으므로 symbolId는 초기값인 null일 것
-
-                with(binding) {
-                    // 각 심볼 이미지 띄워주기
-                    ivCardcreateGalleryImg.setImageResource(cardCreateViewModel?.imgIndex!!) // bottomDialog 에서 설정해준 imgIndex 를 Iv에 띄워주기
-                    ivCardcreateGalleryImg.visibility = View.VISIBLE
-                    cardCreateViewModel?.setUri(null) // 갤러리이미지 선택 후, 다시 symbolId 선택할 수도 있으니 uri 는 null 로 해줘야함
-
-                    // 이제 여기서 iv는 클릭 안되도록 하고, cl은 보이진 않지만 계속 클릭되도록 로직 수정
-
-                    checkCompleteTvClickable() // 이미지 선택 되었으니 카드작성완료 tv 누를 수 있는지 다시 검사
-
-                    ctlCardcreateImg.visibility =
-                        View.INVISIBLE // visibility말고 background를 검정으로 바꾸면 계속 선택가능하지 않을까
-                }
+            // 이미지 선택 cl 클릭 시, bottomDialogImageFragment 를 생성한 후, 람다를 bundle로 넘겨줌. 이를 show()
+            val bottomDialogImageFragment = BottomDialogImageFragment()
+            bottomDialogImageFragment.arguments = Bundle().apply {
+                putParcelable(BaseViewUtil.BOTTOM_IMAGE, BottomImageLamdaData(itemClick))
             }
             bottomDialogImageFragment.show(supportFragmentManager, bottomDialogImageFragment.tag)
         }
@@ -163,14 +169,9 @@ class CardCreateActivity :
         // 첫번째 심볼이나 갤러리 이미지 선택 후, 이미지가 보이게 될 것. 그러면 이 이미지뷰를 눌러도 다시 이미지를 선택할 수 있도록
         // 리스너 달아주기
         binding.ivCardcreateGalleryImg.setOnClickListener {
-            val bottomDialogImageFragment = BottomDialogImageFragment { // 위와 동일
-                with(binding) {
-                    ivCardcreateGalleryImg.setImageResource(cardCreateViewModel?.imgIndex!!)
-                    ivCardcreateGalleryImg.visibility = View.VISIBLE
-                    checkCompleteTvClickable()
-                    ctlCardcreateImg.visibility =
-                        View.INVISIBLE
-                }
+            val bottomDialogImageFragment = BottomDialogImageFragment()
+            bottomDialogImageFragment.arguments = Bundle().apply {
+                putParcelable(BaseViewUtil.BOTTOM_IMAGE, BottomImageLamdaData(itemClick))
             }
             bottomDialogImageFragment.show(supportFragmentManager, bottomDialogImageFragment.tag)
         }

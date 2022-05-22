@@ -7,13 +7,16 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Environment.DIRECTORY_DCIM
 import android.os.Environment.DIRECTORY_PICTURES
 import android.provider.MediaStore
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.drawToBitmap
@@ -129,12 +132,14 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android API Level Q 이상
             Timber.d("Q 이상")
+
+
             this?.contentResolver?.also { resolver ->
 
                 val contentValues = ContentValues().apply {
                     put(MediaStore.MediaColumns.DISPLAY_NAME, System.currentTimeMillis().toString() + ".png")
-                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg") // 왜 여기는 jpg?
-                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                    put(MediaStore.MediaColumns.MIME_TYPE, "image/png") // 왜 여기는 jpg?
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/CARDNA")
                 }
 
                 // 6
@@ -151,13 +156,15 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
             val writePermission = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
             if(writePermission == PackageManager.PERMISSION_GRANTED) { // 권한 요청 받았을 때
+//                val externalStorage = getExternalFilesDir(DIRECTORY_PICTURES)!!.absolutePath
                 val externalStorage =
                     Environment.getExternalStorageDirectory().absolutePath // 외부저장소의 절대 경로 찾음
-                val dir = File(externalStorage)
+                val path = "$externalStorage/CARDNA"
+                val dir = File(path)
 
                 if (dir.exists().not()) { // 폴더 없으면 생성 ?
                     Timber.d("폴더 없음")
-                    dir.mkdirs()
+                    dir.mkdir()
                 }
 
                 try {
@@ -214,5 +221,4 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
         )
         return Uri.parse(path)
     }
-
 }

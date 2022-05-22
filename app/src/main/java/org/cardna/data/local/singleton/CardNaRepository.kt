@@ -110,6 +110,8 @@ object CardNaRepository {
         get() = authPreferences.getString(NAVER_URT_KEY, "") ?: ""
         set(value) = authPreferences.edit { it.putString(NAVER_URT_KEY, value) }
 
+
+    // 네이버 소셜 로그인시 토큰
     var naverAccessToken: String
         get() = authPreferences.getString(NAVER_ACCESS, "") ?: ""
         set(value) = authPreferences.edit { it.putString(NAVER_ACCESS, value) }
