@@ -6,7 +6,9 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.ColorInt
@@ -30,6 +32,7 @@ import org.cardna.presentation.util.setBeforeGradientText
 import org.cardna.presentation.util.setGradientText
 import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 class MainCardActivity :
@@ -86,6 +89,7 @@ class MainCardActivity :
 
     private fun setCardPackActivity() {
         val name = intent.getStringExtra("name")
+        val friendId = intent.getIntExtra("friendId", -1)
         val id = intent.getIntExtra("id", -1)
 
         mainCardViewModel.getMyPageUser(name!!)
@@ -151,7 +155,6 @@ class MainCardActivity :
                 REQUEST -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
             }
         }
-        Timber.d("AAA relation : $relation")
     }
 
     private fun initRelationDialog(
@@ -162,7 +165,7 @@ class MainCardActivity :
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
         val friendId = intent.getIntExtra("friendId", 0)
-        //여기서 검색뷰에서 code를 받아와야해
+
         //relation 이거를 observe해야함
         val relation = mainCardViewModel.relation.value.toString()
         // TODO: 요기
@@ -278,10 +281,11 @@ class MainCardActivity :
             val friendId = intent.getIntExtra("friendId", 0)
             val name = intent.getStringExtra("name")
             Intent(this, CardCreateActivity::class.java).apply {
-                putExtra("isCardMeOrYou", BaseViewUtil.CARD_YOU)
+                putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_YOU)
+                putExtra(BaseViewUtil.IS_CARDPACK_OR_MAINCARD, BaseViewUtil.FROM_MAINCARD)
+                putExtra(BaseViewUtil.IS_CODE_OR_FRIEND, BaseViewUtil.FROM_CODE)
                 putExtra("id", friendId)
                 putExtra("name", name)
-                putExtra("isCardPackOrMainCard", BaseViewUtil.CARD_YOU)
                 startActivity(this)
             }
         }
