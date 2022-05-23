@@ -153,31 +153,33 @@ class MainCardActivity :
                     btnRelationConfirm.setTextColor(R.color.white_1)
                 }
                 REQUEST -> {
-                    clRelationAcceptFriend.visibility = View.VISIBLE
-                    val title =
-                        intent.getStringExtra("name").plus(getString(R.string.dialog_apply_request))
-                    with(binding) {
-                        tvRelationAcceptFriendTitle.text = title
-                        btnRelationCancel.text = getString(R.string.dialog_apply_reject)
-                        btnRelationConfirm.apply {
-                            text = getString(R.string.dialog_apply_accept)
-                            setBackgroundResource(R.drawable.bg_gradient_green_purple_radius_5)
-                            setTextColor(R.color.dark_gray)
-                        }
-                    }
-                }
-                RESPONSE -> {
                     clRelationProgressingCancel.visibility = View.VISIBLE
                     btnRelationConfirm.setTextColor(R.color.white_1)
                 }
+                RESPONSE -> {
+                    clRelationAcceptFriend.visibility = View.VISIBLE
+                    val title =
+                        intent.getStringExtra("name").plus(getString(R.string.dialog_apply_request))
+                    tvRelationAcceptFriendTitle.text = title
+                    btnRelationCancel.text = getString(R.string.dialog_apply_reject)
+                    btnRelationConfirm.apply {
+                        text = getString(R.string.dialog_apply_accept)
+                        setBackgroundResource(R.drawable.bg_gradient_green_purple_radius_5)
+                        setTextColor(R.color.dark_gray)
+                    }
+                }
             }
             setCancelDialog(dialog, this)
-
             setConfirmDialog(dialog, this, friendId, relation)
         }
     }
 
-    private fun setCancelDialog(dialog: Dialog, dialogBinding: DialogRelationBinding) {
+    private fun setCancelDialog(
+        dialog: Dialog,
+        dialogBinding: DialogRelationBinding,
+//        friendId: Int,
+//        friendRelation: String
+    ) {
         dialogBinding.btnRelationCancel.setOnClickListener {
             dialogDismiss(dialog, dialogBinding)
         }
@@ -191,13 +193,12 @@ class MainCardActivity :
     ) {
         Timber.e("TTT friendId : $friendId")
         dialogBinding.btnRelationConfirm.setOnClickListener {
-            if (friendRelation == REQUEST) {
+            if (friendRelation == RESPONSE) {
                 alarmViewModel.acceptOrDenyFriend(friendId, true)
             } else {
                 mainCardViewModel.postFriendRequest(friendId)
                 mainCardViewModel.getMainCardList(friendId)
             }
-
             dialogDismiss(dialog, dialogBinding)
         }
     }
