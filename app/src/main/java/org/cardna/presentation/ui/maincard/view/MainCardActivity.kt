@@ -71,7 +71,6 @@ class MainCardActivity :
         with(binding) {
             tvMaincardGotoCardpack.apply {
                 isSelected = true
-                isSelected
                 this.text = setGradientText(this.text.toString())
             }
             ivMaincardGotoCardpackBackground.setBackgroundResource(R.drawable.bg_maincard_gradient_radius_45)
@@ -82,6 +81,8 @@ class MainCardActivity :
         with(binding) {
             tvMaincardGotoCardpack.apply {
                 isSelected = false
+                this.text = ""
+                this.text = getString(R.string.maincard_tv_cardpack_text)
             }
             ivMaincardGotoCardpackBackground.setBackgroundResource(R.drawable.bg_maincard_white_4_radius_45)
         }
@@ -89,7 +90,7 @@ class MainCardActivity :
 
     private fun setCardPackActivity() {
         val name = intent.getStringExtra("name")
-        val friendId = intent.getIntExtra("friendId", -1)
+//        val friendId = intent.getIntExtra("friendId", -1)
         val id = intent.getIntExtra("id", -1)
 
         mainCardViewModel.getMyPageUser(name!!)
