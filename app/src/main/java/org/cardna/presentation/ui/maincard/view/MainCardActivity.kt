@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.ColorInt
@@ -55,11 +56,12 @@ class MainCardActivity :
 
     private fun setCardPackActivity() {
         val name = intent.getStringExtra("name")
-        val id = intent.getIntExtra("id", -1)
+        val id = intent.getIntExtra("friendId", -1)
         mainCardViewModel.getMyPageUser(name!!)
         mainCardViewModel.setFriendNameAndId(name, id)
 
         binding.ivMaincardGotoCardpackBackground.setOnClickListener {
+            Log.e("ㅡㅡㅡㅡㅡㅡㅡstartActivityㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${ mainCardViewModel.friendId.value}")
             startActivity(
                 Intent(this, FriendCardPackActivity::class.java)
                     .putExtra(BaseViewUtil.ID, mainCardViewModel.friendId.value)
