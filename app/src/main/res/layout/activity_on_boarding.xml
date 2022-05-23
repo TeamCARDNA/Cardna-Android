@@ -32,6 +32,7 @@
             <TextView
                 android:id="@+id/tv_first_skip"
                 style="@style/onboarding_indicator_text"
+                android:textColor="@color/white_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/onboarding_skip"
