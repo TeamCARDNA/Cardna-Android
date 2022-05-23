@@ -30,12 +30,14 @@ class AlarmViewModel @Inject constructor(
     val foldStatus: LiveData<Boolean> = _foldStatus
 
     //리스트
-    private val _friendRequest =
-        MutableLiveData<List<ResponseGetAlarmData.Data.Request.Requester?>>()
+    private val _friendRequest = MutableLiveData<List<ResponseGetAlarmData.Data.Request.Requester?>>()
     val friendRequest: LiveData<List<ResponseGetAlarmData.Data.Request.Requester?>> = _friendRequest
 
     private val _writeCardYou = MutableLiveData<List<ResponseGetAlarmData.Data.Alarm?>>()
     val writeCardYou: LiveData<List<ResponseGetAlarmData.Data.Alarm?>> = _writeCardYou
+
+    private val _currentCardId = MutableLiveData<Int>()
+    val currentCardId: LiveData<Int> = _currentCardId
 
     //엠티인지 처리
     private val _isFriendRequestEmpty = MutableLiveData(true)
@@ -64,14 +66,11 @@ class AlarmViewModel @Inject constructor(
                     CardNaRepository.alarmExistCount = request.requester.size + alarm.size
                     _friendRequest.value = request.requester
                     _writeCardYou.value = alarm
+
                     _isFriendRequestEmpty.value = request.count == 0
                     _isWriteCardYouEmpty.value = alarm.isEmpty()
-                    _isAllAlarmEmpty.value =
-                        _isFriendRequestEmpty.value == true && _isWriteCardYouEmpty.value == true
-                    Log.e(
-                        "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgeAllAlarmㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",
-                        "${request.requester.size}+${alarm.size}+${CardNaRepository.alarmExistCount}"
-                    )
+                    _isAllAlarmEmpty.value = _isFriendRequestEmpty.value == true && _isWriteCardYouEmpty.value == true
+          //          Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgeAllAlarmㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${request.requester.size}+${alarm.size}+${CardNaRepository.alarmExistCount}")
                 }
             }.onFailure {
                 Timber.e(it.toString())
@@ -103,6 +102,7 @@ class AlarmViewModel @Inject constructor(
     }
 
     fun getDeletedCardYouList(cardId: Int) {
+        _currentCardId.value=cardId
         viewModelScope.launch {
             runCatching {
                 deletedCardYouDao.getAllDeletedCardYou()

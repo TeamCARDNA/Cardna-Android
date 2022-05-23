@@ -83,6 +83,7 @@ class CardYouStoreActivity :
     private fun gotoDetailCardActivity(data: ResponseCardYouStoreData.Data) {
         val intent = Intent(this, DetailCardActivity::class.java).let {
             it.putExtra(BaseViewUtil.CARD_ID, data.id)
+            it.putExtra(BaseViewUtil.FROM_STORE_KEY, true)
         }
         startActivity(intent)
     }

@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.cardpack.viewmodel
 
+import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +24,6 @@ class CardPackViewModel @Inject constructor(
     private val myPageRepository: MyPageRepository,
     private val likeRepository: LikeRepository,
 ) : ViewModel() { // FriendCardPackActivity 와 CardPack, CardYou, CardMeFragment 가 CardPackViewModel 사용
-
 
     // 어떤 id 의 사람의 카드팩 프래그먼트에 접근하는지
     private var _id = MutableLiveData<Int?>()
@@ -64,6 +64,14 @@ class CardPackViewModel @Inject constructor(
 
     private val _tabPosition = MutableLiveData<Int>()
     val tabPosition: LiveData<Int> = _tabPosition
+
+    private var _cardMeRvPosition : Parcelable? = null
+    val cardMeRvPosition: Parcelable?
+        get() = _cardMeRvPosition
+
+    fun setCardMeRvPosition(cardMeRvPosition : Parcelable){
+        _cardMeRvPosition = cardMeRvPosition
+    }
 
     fun setUserId(id: Int?) {
         _id.value = id

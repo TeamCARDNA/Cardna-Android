@@ -7,34 +7,30 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.Environment.DIRECTORY_DCIM
-import android.os.Environment.DIRECTORY_PICTURES
 import android.provider.MediaStore
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.drawToBitmap
-import org.cardna.databinding.ActivityCardShareBinding
+import androidx.core.content.FileProvider
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setSystemBarsColor
-import org.cardna.CardNaApplication
-import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
-import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.databinding.ActivityCardShareBinding
+import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.util.setSrcWithGlide
 import org.cardna.presentation.util.shortToast
 import timber.log.Timber
 import java.io.*
 
+
 @AndroidEntryPoint
-class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBinding>(R.layout.activity_card_share) {
+class CardShareActivity :
+    BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBinding>(R.layout.activity_card_share) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
@@ -50,31 +46,40 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
         binding.tvCardshareTitle.text = intent.getStringExtra(BaseViewUtil.CARD_TITLE)
 
         // 카드나, 카드너에 따라
-        if(intent.getStringExtra(BaseViewUtil.IS_CARD_ME_OR_YOU) == "me"){ // 카드나
+        if (intent.getStringExtra(BaseViewUtil.IS_CARD_ME_OR_YOU) == "me") { // 카드나
             // 배경색 설정
             binding.ctlCardShareImage.setBackgroundResource(R.drawable.bg_cardme)
 
             // ?? 님의 카드나 색, 내용 설정
             binding.tvCardmeOrYou.setTextColor(ContextCompat.getColor(this, R.color.main_green))
-            if(CardNaRepository.userSocial == "naver"){ // 네이버일 경우
-               binding.tvCardmeOrYou.text = resources.getString(R.string.cardshare_cardme, CardNaRepository.naverUserfirstName)
+            if (CardNaRepository.userSocial == "naver") { // 네이버일 경우
+                binding.tvCardmeOrYou.text = resources.getString(
+                    R.string.cardshare_cardme,
+                    CardNaRepository.naverUserfirstName
+                )
+            } else { // 카카오일 경우
+                binding.tvCardmeOrYou.text = resources.getString(
+                    R.string.cardshare_cardme,
+                    CardNaRepository.kakaoUserfirstName
+                )
             }
-            else{ // 카카오일 경우
-               binding.tvCardmeOrYou.text = resources.getString(R.string.cardshare_cardme, CardNaRepository.kakaoUserfirstName)
-            }
-        }
-        else{ // 카드너
+        } else { // 카드너
             binding.ctlCardShareImage.setBackgroundResource(R.drawable.bg_cardyou)
 
             // title 색 설정
             binding.tvCardmeOrYou.setTextColor(ContextCompat.getColor(this, R.color.main_purple))
 
             // ?? 님의 카드너
-            if(CardNaRepository.userSocial == "naver"){
-                binding.tvCardmeOrYou.text = resources.getString(R.string.cardshare_cardyou, CardNaRepository.naverUserfirstName)
-            }
-            else{
-                binding.tvCardmeOrYou.text = resources.getString(R.string.cardshare_cardyou, CardNaRepository.kakaoUserfirstName)
+            if (CardNaRepository.userSocial == "naver") {
+                binding.tvCardmeOrYou.text = resources.getString(
+                    R.string.cardshare_cardyou,
+                    CardNaRepository.naverUserfirstName
+                )
+            } else {
+                binding.tvCardmeOrYou.text = resources.getString(
+                    R.string.cardshare_cardyou,
+                    CardNaRepository.kakaoUserfirstName
+                )
             }
         }
     }
@@ -101,22 +106,52 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
             binding.ctlCardShare.visibility = View.GONE
             binding.ctlCardShareSave.visibility = View.GONE
 
-            //view->bitmap: 공유하고싶은 이미지 ctl view를 bitmap으로 변환 후
-            val bitmap = viewToBitmap(binding.ctlCardShareCapture)
+            val screenBitmap = viewToBitmap(binding.ctlCardShareCapture)
 
             binding.ctlCardShare.visibility = View.VISIBLE
             binding.ctlCardShareSave.visibility = View.VISIBLE
 
-            //bitmap->url
-            val uri: Uri? = getImageUri(this, bitmap)
+            val cachePath = File(applicationContext.cacheDir, "images")
 
-            //인텐트에 uri 넣어서 시작하기
-            val shareIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_STREAM, uri)
-                type = "image/jpeg"
+            if (cachePath.exists().not()) { // 폴더 없으면 생성
+                Timber.d("폴더 없음")
+                cachePath.mkdirs()
             }
-            startActivity(Intent.createChooser(shareIntent, ""))
+
+            val stream = FileOutputStream("$cachePath/image.png")
+            screenBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            stream.close()
+
+
+            val newFile = File(cachePath, "image.png")
+            val contentUri = FileProvider.getUriForFile(
+                applicationContext,
+                "org.cardna.fileprovider", newFile
+            )
+
+
+            val Sharing_intent = Intent(Intent.ACTION_SEND)
+            Sharing_intent.type = "image/png"
+            Sharing_intent.putExtra(Intent.EXTRA_STREAM, contentUri)
+            startActivity(Intent.createChooser(Sharing_intent, "Share image"))
+
+//            //view->bitmap: 공유하고싶은 이미지 ctl view를 bitmap으로 변환 후
+//            val bitmap = viewToBitmap(binding.ctlCardShareCapture)
+//
+//            binding.ctlCardShare.visibility = View.VISIBLE
+//            binding.ctlCardShareSave.visibility = View.VISIBLE
+//
+
+//            //bitmap->url
+//            val uri: Uri? = getImageUri(this, bitmap)
+//
+//            //인텐트에 uri 넣어서 시작하기
+//            val shareIntent: Intent = Intent().apply {
+//                action = Intent.ACTION_SEND
+//                putExtra(Intent.EXTRA_STREAM, uri)
+//                type = "image/jpeg"
+//            }
+//            startActivity(Intent.createChooser(shareIntent, "CARDNA"))
         }
     }
 
@@ -130,20 +165,24 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
 
         var fos: OutputStream? = null
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android API Level Q 이상
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // Android API Level Q 이상
             Timber.d("Q 이상")
 
 
             this?.contentResolver?.also { resolver ->
 
                 val contentValues = ContentValues().apply {
-                    put(MediaStore.MediaColumns.DISPLAY_NAME, System.currentTimeMillis().toString() + ".png")
+                    put(
+                        MediaStore.MediaColumns.DISPLAY_NAME,
+                        System.currentTimeMillis().toString() + ".png"
+                    )
                     put(MediaStore.MediaColumns.MIME_TYPE, "image/png") // 왜 여기는 jpg?
                     put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/CARDNA")
                 }
 
                 // 6
-                val imageUri: Uri? = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                val imageUri: Uri? =
+                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
 
                 // 7
                 fos = imageUri?.let { resolver.openOutputStream(it) }
@@ -153,9 +192,12 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
             Timber.d("Q 미만")
 
             // 일단 권한을 요청해야함. 아니면 permission denied error 남
-            val writePermission = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val writePermission = ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
 
-            if(writePermission == PackageManager.PERMISSION_GRANTED) { // 권한 요청 받았을 때
+            if (writePermission == PackageManager.PERMISSION_GRANTED) { // 권한 요청 받았을 때
 //                val externalStorage = getExternalFilesDir(DIRECTORY_PICTURES)!!.absolutePath
                 val externalStorage =
                     Environment.getExternalStorageDirectory().absolutePath // 외부저장소의 절대 경로 찾음
@@ -164,7 +206,7 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
 
                 if (dir.exists().not()) { // 폴더 없으면 생성 ?
                     Timber.d("폴더 없음")
-                    dir.mkdir()
+                    dir.mkdirs()
                 }
 
                 try {
@@ -180,8 +222,7 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-            }
-            else{
+            } else {
                 val requestExternalStorageCode = 1
 
                 val permissionStorage = arrayOf(
@@ -189,7 +230,11 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
                     android.Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
 
-                ActivityCompat.requestPermissions(this, permissionStorage, requestExternalStorageCode)
+                ActivityCompat.requestPermissions(
+                    this,
+                    permissionStorage,
+                    requestExternalStorageCode
+                )
             }
         }
 

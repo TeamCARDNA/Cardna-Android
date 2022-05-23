@@ -20,7 +20,6 @@ class CardCreateViewModel @Inject constructor(
     private val cardRepository: CardRepository,
 ) : ViewModel() { // CardCreateActivity, BottomDialogImageFragment 에서 공유
 
-
     private var _induceMakeMainCard = MutableLiveData<Boolean>(false)
     val induceMakeMainCard: LiveData<Boolean> = _induceMakeMainCard
 
@@ -126,7 +125,6 @@ class CardCreateViewModel @Inject constructor(
     fun setInduceMakeMainCard(induceMakeMainCard: Boolean) {
         _induceMakeMainCard.value = induceMakeMainCard
     }
-
 
     // 서버 통신 메서드
 

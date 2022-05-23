@@ -28,7 +28,8 @@
             android:padding="10dp"
             tools:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="invisible">
 
             <ImageView
                 android:id="@+id/ibtn_maincard_alarm"
@@ -63,7 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/cl_maincard_alarm"
             tools:layout_editor_absoluteX="369dp"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <ImageView
                 android:id="@+id/iv_maincard_friend"

@@ -77,32 +77,6 @@ class MainCardFragment :
         checkUserId()
     }
 
-    // test를 위한 라이프사이클 콜백 오버라이드
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        Timber.e("bottomtest MainCardFragment onViewStateRestored")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Timber.e("bottomtest MainCardFragment onStart")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Timber.e("bottomtest MainCardFragment onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Timber.e("bottomtest MainCardFragment onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Timber.e("bottomtest MainCardFragment onDestroy")
-    }
-
     private fun setAlarmExist() {
         mainCardViewModel.setAlarmExist()
     }
@@ -335,8 +309,8 @@ class MainCardFragment :
 
     //TODO 나 다빈인데 마이페이지랑 연관된 로직이 필요해서 적어뒀엉 지우지 마라조~
     override fun onDestroyView() {
-//        myPageViewModel.settingBtnIsValid(true)
-//        myPageViewModel.refreshFriendList()
+     myPageViewModel.settingBtnIsValid(true)
+   myPageViewModel.refreshFriendList()
         super.onDestroyView()
         Timber.e("bottomtest MainCardFragment onDestroyView")
     }
