@@ -259,13 +259,20 @@ class CardCreateActivity :
                     BaseViewUtil.FROM_MAINCARD
                 )
 
-                val intent =
+                val newIntent =
                     Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
 
-                intent.putExtra(
+                newIntent.putExtra(
                     BaseViewUtil.IS_CARDPACK_OR_MAINCARD, isCardPackOrMainCard
                 )
-                startActivity(intent)
+
+                newIntent.putExtra(
+                    BaseViewUtil.IS_CODE_OR_FRIEND, intent.getBooleanExtra(
+                        BaseViewUtil.IS_CODE_OR_FRIEND,
+                        BaseViewUtil.FROM_FRIEND  // 안넘겨줬다면 Friend로 부터, 즉 마이페이지에서 친구 클릭
+                    )
+                )
+                startActivity(newIntent)
             }
         }
     }
