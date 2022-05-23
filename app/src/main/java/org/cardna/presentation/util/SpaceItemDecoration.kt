@@ -29,8 +29,8 @@ class SpacesItemDecorationCardPack : RecyclerView.ItemDecoration() {
     }
     companion object {
         private const val BETWEEN_SPACE = 16
-        private const val BOTTOM_SPACE = 16
-        private const val BETWEEN_SPACE_MIDDLE = 8
+        private const val BOTTOM_SPACE = 14
+        private const val BETWEEN_SPACE_MIDDLE = 7
     }
 }
 

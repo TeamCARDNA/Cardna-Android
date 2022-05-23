@@ -297,8 +297,8 @@ class MainCardFragment :
 
     //TODO 나 다빈인데 마이페이지랑 연관된 로직이 필요해서 적어뒀엉 지우지 마라조~
     override fun onDestroyView() {
-//        myPageViewModel.settingBtnIsValid(true)
-//        myPageViewModel.refreshFriendList()
+     myPageViewModel.settingBtnIsValid(true)
+   myPageViewModel.refreshFriendList()
         super.onDestroyView()
         Timber.e("bottomtest MainCardFragment onDestroyView")
     }
