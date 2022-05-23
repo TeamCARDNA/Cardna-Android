@@ -163,9 +163,13 @@ class SetNameActivity :
 
     private fun startSetNameFinishedActivity(welcomeText: String) {
         val intent = Intent(this, SetNameFinishedActivity::class.java)
-        val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+//        val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         intent.putExtra("welcomeText", welcomeText)
-        startActivity(intent, bundle)
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+
+        finish()
     }
 
 

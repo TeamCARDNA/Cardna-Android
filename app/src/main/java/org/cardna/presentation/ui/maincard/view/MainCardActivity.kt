@@ -119,7 +119,7 @@ class MainCardActivity :
 
     private fun initData() {
         val friendId = intent.getIntExtra("friendId", -1)
-        val name = intent.getStringExtra("name").plus(getString(R.string.maincard_tv_username_tag))
+        val name = intent.getStringExtra("name")?:""
         binding.mainCardViewModel = mainCardViewModel
         mainCardViewModel.getMainCardList(friendId)
         mainCardViewModel.getMyPageUser(name)

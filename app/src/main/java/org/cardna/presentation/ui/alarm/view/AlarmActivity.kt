@@ -53,6 +53,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     private fun setObserve() {
         alarmViewModel.friendRequest.observe(this) { friendRequest ->
             friendRequestAdapter.submitList(friendRequest)
+            binding.tvAlarmCount.text=friendRequest.size.toString()
         }
 
         alarmViewModel.writeCardYou.observe(this) { writeCardYou ->
