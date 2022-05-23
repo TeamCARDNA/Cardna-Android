@@ -101,6 +101,10 @@ sealed class BaseViewUtil {
         const val CARD_ME = true
         const val CARD_YOU = false
 
+        const val IS_CODE_OR_FRIEND = "isCodeOrFriend"
+        const val FROM_CODE = true
+        const val FROM_FRIEND = false
+
         // BottomDialogImageFragment
         const val SYMBOL_0 = 1
         const val SYMBOL_1 = 2

@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -209,10 +210,11 @@ class MainCardActivity :
             val friendId = intent.getIntExtra("friendId", 0)
             val name = intent.getStringExtra("name")
             Intent(this, CardCreateActivity::class.java).apply {
-                putExtra("isCardMeOrYou", BaseViewUtil.CARD_YOU)
+                putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_YOU)
+                putExtra(BaseViewUtil.IS_CARDPACK_OR_MAINCARD, BaseViewUtil.FROM_MAINCARD)
+                putExtra(BaseViewUtil.IS_CODE_OR_FRIEND, BaseViewUtil.FROM_CODE)
                 putExtra("id", friendId)
                 putExtra("name", name)
-                putExtra("isCardPackOrMainCard", BaseViewUtil.CARD_YOU)
                 startActivity(this)
             }
         }
