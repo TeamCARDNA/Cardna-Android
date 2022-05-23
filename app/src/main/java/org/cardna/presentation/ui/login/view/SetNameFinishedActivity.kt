@@ -117,6 +117,12 @@ class SetNameFinishedActivity :
         }
     }
 
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
     companion object {
         const val GO_TO_CARDCREAT_ACTIVITY_KEY = "GO_TO_CARDCREAT_ACTIVITY_KEY"
         const val GO_TO_CARDCREAT_ACTIVITY = "GO_TO_CARDCREAT_ACTIVITY"

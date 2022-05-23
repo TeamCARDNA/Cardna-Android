@@ -166,6 +166,7 @@ class SetNameActivity :
         val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         intent.putExtra("welcomeText", welcomeText)
         startActivity(intent, bundle)
+        finish()
     }
 
 
