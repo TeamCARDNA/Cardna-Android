@@ -116,7 +116,7 @@ class CardShareActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCardShareBi
                 putExtra(Intent.EXTRA_STREAM, uri)
                 type = "image/jpeg"
             }
-            startActivity(Intent.createChooser(shareIntent, ""))
+            startActivity(Intent.createChooser(shareIntent, "CARDNA"))
         }
     }
 

@@ -67,32 +67,6 @@ class MainCardFragment :
         checkUserId()
     }
 
-    // test를 위한 라이프사이클 콜백 오버라이드
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        Timber.e("bottomtest MainCardFragment onViewStateRestored")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Timber.e("bottomtest MainCardFragment onStart")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Timber.e("bottomtest MainCardFragment onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Timber.e("bottomtest MainCardFragment onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Timber.e("bottomtest MainCardFragment onDestroy")
-    }
-
     private fun setAlarmExist() {
         mainCardViewModel.setAlarmExist()
     }
