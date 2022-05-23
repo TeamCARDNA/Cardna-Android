@@ -23,6 +23,7 @@ import org.cardna.databinding.ActivityCardCreateCompleteBinding
 import org.cardna.domain.repository.CardRepository
 import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
 import org.cardna.presentation.util.LinearGradientSpan
 import org.cardna.presentation.util.StatusBarUtil
@@ -106,15 +107,26 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
                 // MainActivity 로 갈 때, CardCreateActivity pop 하고 가기
                 // 현재 A -> B -> C인데, C -> A로 가도록 intent 써서
             }, LOTTIE_VIEW_TIME) // 이는 CardCreateActivity 가 얼마나 띄워주고 다시 main 으로 갈 건지에 대한 시간, 로티가 뜨는 시간은 아님
-        } else if (isCardMeOrYou == BaseViewUtil.CARD_YOU) { // 카드너일 경우, 카드너보관함으로 돌아가줘아 함.
+        } else if (isCardMeOrYou == BaseViewUtil.CARD_YOU) { // 카드너일 경우, 카드너보관함액티비티으로, 알림뷰액티비티 돌아가줘아 함.
             handler.postDelayed(
                 {
-                    // 카드너추가 액티비티에서 왔다면 OtherWriteActivity 로 돌아가야 한다. 근데 이때 OtherWriteActivity 로 전달해줄 정보는 없고
-                    // OtherWriteActivity 에서 서버 통신 다시 하도록 => onResume 메서드 작성해주기
+                    // 카드너보관함에서 왔다면 CardYouStoreActivity 로 돌아가야 한다.
+                    // CardYouStoreActivity 에서 서버 통신 다시 하도록 => onResume 메서드 작성해주기
                     var intent = Intent(this, CardYouStoreActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
-                    // 카드너보관함 액티비티인 CardYouStoreActivity 로 갈 때, CardCreateActivity pop 하고 가기
+                    // 카드너보관함 액티비티인 CardYouStoreActivity 로 갈 때, DetailCardActivity pop 하고 가기
+                    // 현재 A -> B -> C인데, C -> A로 가도록 intent 써서
+                }, LOTTIE_VIEW_TIME
+            )
+        } else{ // 알림뷰액티비티에서 왔다면
+            handler.postDelayed(
+                {
+
+                    var intent = Intent(this, AlarmActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                    // 카드너보관함 액티비티인 CardYouStoreActivity 로 갈 때, DetailCardActivity pop 하고 가기
                     // 현재 A -> B -> C인데, C -> A로 가도록 intent 써서
                 }, LOTTIE_VIEW_TIME
             )

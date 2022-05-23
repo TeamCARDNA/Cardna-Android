@@ -17,6 +17,7 @@ import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.shortToast
 import timber.log.Timber
 
+
 class OtherCardCreateCompleteActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityOtherCardCreateCompleteBinding>(R.layout.activity_other_card_create_complete) {
 
@@ -44,6 +45,7 @@ class OtherCardCreateCompleteActivity :
     private fun setLottie(isCardPackOrMainCard: Boolean){
         val handler = Handler(Looper.getMainLooper())
         if(isCardPackOrMainCard){  // 친구의 cardPack 에서 왔으면 FriendCardPackActivity 로 돌아가도록
+            Timber.e("from cardpack")
             handler.postDelayed({
                 var intent = Intent(this, FriendCardPackActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)

@@ -49,7 +49,7 @@ class CardCreateActivity :
     private val cardCreateViewModel: CardCreateViewModel by viewModels()
     private val multiPartResolver = MultiPartResolver(this)
 
-    val itemClick : () -> Unit = {
+    val itemClick: () -> Unit = {
         // image 선택 dialog 에서 심볼이 하나라도 선택이 되어서 완료 버튼을 누르면 dialog가 닫히면 실행되는 함수
         // 바로 갤러리 접근을 누른다면 이것이 실행되지 않으므로 symbolId는 초기값인 null일 것
         with(binding) {
@@ -76,14 +76,15 @@ class CardCreateActivity :
 
     private fun initViewModel() {  // viewModel 초기화, Intent 로 전달받은 data 들 viewModel 프로퍼티에 대입
         binding.cardCreateViewModel = cardCreateViewModel
+        val isCardMeOrYou = intent.getBooleanExtra(
+            BaseViewUtil.IS_CARD_ME_OR_YOU,
+            BaseViewUtil.CARD_YOU
+        )
         cardCreateViewModel.setIsCardMeOrYou(
             // 1. MainActivity 의 내 카드팩 프래그먼트에서 넘어왔다면 => CARD_ME로 넘겨줬을 것임
             // 2-1. MainActivity 의 친구 mainCardFragment 에서 넘어왔다면 아무것도 안넘겨줬을 것 => default 값 CARD_YOU 로 처리
             // 2-2. FriendCardPackActivity 에서 넘어왔다면 => CARD_YOU 로 넘겨줬을 것
-            intent.getBooleanExtra(
-                BaseViewUtil.IS_CARD_ME_OR_YOU,
-                BaseViewUtil.CARD_YOU
-            )
+            isCardMeOrYou
         )
         cardCreateViewModel.setUserId(
             intent.getIntExtra(
@@ -92,8 +93,9 @@ class CardCreateActivity :
             )
         ) // 내 카드나일 경우 null로 setting 되도록
 
-        cardCreateViewModel.setUserName(intent.getStringExtra(BaseViewUtil.NAME) ?: CardNaRepository.kakaoUserfirstName) // 안넘겨주면 null ?
-
+        cardCreateViewModel.setUserName(
+            intent.getStringExtra(BaseViewUtil.NAME) ?: CardNaRepository.kakaoUserfirstName
+        ) // 안넘겨주면 null ?
     }
 
     override fun initView() {
@@ -215,8 +217,16 @@ class CardCreateActivity :
                 if (it == null) {
                     cardCreateViewModel.makeCard(null)
                 } else {
-                    showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
-                    cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
+                    showLoddingLottie(
+                        binding.laLoadingLottie,
+                        DetailCardActivity.CARD_ME,
+                        "lottie_loading.json"
+                    )
+                    cardCreateViewModel.makeCard(
+                        multiPartResolver.createImgMultiPart(
+                            cardCreateViewModel.uri.value!!
+                        )
+                    )
                 }
             }
 
@@ -243,14 +253,17 @@ class CardCreateActivity :
 
             } else {
                 // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
+
+                val isCardPackOrMainCard = intent.getBooleanExtra(
+                    BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
+                    BaseViewUtil.FROM_MAINCARD
+                )
+
                 val intent =
                     Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
+
                 intent.putExtra(
-                    BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
-                    intent.getBooleanExtra(
-                        BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
-                        BaseViewUtil.FROM_MAINCARD
-                    )
+                    BaseViewUtil.IS_CARDPACK_OR_MAINCARD, isCardPackOrMainCard
                 )
                 startActivity(intent)
             }
@@ -264,8 +277,16 @@ class CardCreateActivity :
             if (cardCreateViewModel.uri.value == null) {
                 cardCreateViewModel.makeCard(null)
             } else {
-                showLoddingLottie(binding.laLoadingLottie, DetailCardActivity.CARD_ME, "lottie_loading.json")
-                cardCreateViewModel.makeCard(multiPartResolver.createImgMultiPart(cardCreateViewModel.uri.value!!))
+                showLoddingLottie(
+                    binding.laLoadingLottie,
+                    DetailCardActivity.CARD_ME,
+                    "lottie_loading.json"
+                )
+                cardCreateViewModel.makeCard(
+                    multiPartResolver.createImgMultiPart(
+                        cardCreateViewModel.uri.value!!
+                    )
+                )
             }
 
             cardCreateViewModel.makeInduceCardSuccess.observe(this) { makeInduceCardSuccess ->
@@ -345,7 +366,8 @@ class CardCreateActivity :
                     cardCreateViewModel.setUri(uri)  // Intent를 반환 -> Intent에서 Uri로 get하기
                     cardCreateViewModel.setSymbolId(null) // 전에 symbol 선택 후, 다시 갤러리 이미지를 선택했을 경우, 다시 symbolId null로
                     cardCreateViewModel.setIfChooseImg(true)
-                    Glide.with(this).load(cardCreateViewModel.uri.value).into(binding.ivCardcreateGalleryImg)
+                    Glide.with(this).load(cardCreateViewModel.uri.value)
+                        .into(binding.ivCardcreateGalleryImg)
                     Timber.e("uri 값은  : ${cardCreateViewModel.uri.value}")
 
                     binding.ivCardcreateGalleryImg.visibility = View.VISIBLE // imageView는 보이도록
