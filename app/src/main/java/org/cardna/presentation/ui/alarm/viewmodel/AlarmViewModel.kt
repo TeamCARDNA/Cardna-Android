@@ -91,9 +91,9 @@ class AlarmViewModel @Inject constructor(
             }.onSuccess {
                 if (it.data.status == "stranger")
                     _isRequestDeny.value = true
-                Timber.e(it.status.toString())
+                Timber.e("EEE : ${it.status.toString()}")
             }.onFailure {
-                Timber.e("throwable : $it")
+                Timber.e("EEE throwable : $it")
             }
         }
     }

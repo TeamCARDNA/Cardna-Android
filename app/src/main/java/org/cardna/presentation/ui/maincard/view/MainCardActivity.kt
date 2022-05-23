@@ -30,7 +30,6 @@ import org.cardna.presentation.util.setGradientText
 import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
 
-
 @AndroidEntryPoint
 class MainCardActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityMainCardBinding>(R.layout.activity_main_card) {
@@ -190,7 +189,7 @@ class MainCardActivity :
         friendId: Int,
         friendRelation: String
     ) {
-        Timber.e("TTT : $friendId")
+        Timber.e("TTT friendId : $friendId")
         dialogBinding.btnRelationConfirm.setOnClickListener {
             if (friendRelation == REQUEST) {
                 alarmViewModel.acceptOrDenyFriend(friendId, true)
