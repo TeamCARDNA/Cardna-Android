@@ -59,15 +59,15 @@ class LoginActivity :
         with(binding) {
             tvLoginPolicyUseOfTerm.setOnClickListener {
                 val intent = setPrivacyPolicyActivity(
-                    getString(R.string.policy_text_title),
-                    getString(R.string.policy_text)
+                    getString(R.string.privacy_text_title),
+                    getString(R.string.privacy_text)
                 )
                 startActivity(intent)
             }
             tvLoginPolicyPrivate.setOnClickListener {
                 val intent = setPrivacyPolicyActivity(
-                    getString(R.string.privacy_text_title),
-                    getString(R.string.privacy_text)
+                    getString(R.string.policy_text_title),
+                    getString(R.string.policy_text)
                 )
                 startActivity(intent)
             }
