@@ -41,7 +41,7 @@ fun AppCompatActivity.add(@IdRes frameId: Int, fragment: Fragment) {
         .commit()
 }
 
-fun AppCompatActivity.add(@IdRes frameId: Int, fragment: Fragment, tag:String) {
+fun AppCompatActivity.add(@IdRes frameId: Int, fragment: Fragment, tag: String) {
     supportFragmentManager
         .beginTransaction()
         .add(frameId, fragment, tag)
@@ -55,7 +55,7 @@ fun AppCompatActivity.replace(@IdRes frameId: Int, fragment: Fragment) {
         .commit()
 }
 
-fun AppCompatActivity.replace(@IdRes frameId: Int, fragment: Fragment, tag:String) {
+fun AppCompatActivity.replace(@IdRes frameId: Int, fragment: Fragment, tag: String) {
     supportFragmentManager
         .beginTransaction()
         .replace(frameId, fragment, tag)
@@ -75,7 +75,6 @@ fun AppCompatActivity.hide(fragment: Fragment) {
         .hide(fragment)
         .commit()
 }
-
 
 
 fun Context.convertDPtoPX(dp: Int): Int {
@@ -189,6 +188,15 @@ fun Context.setGradientText(
     val spannable = inputText.toSpannable()
     spannable[0..inputText.length] =
         LinearGradientSpan(inputText, inputText, green, purple)
+    return spannable
+}
+
+fun Context.setBeforeGradientText(
+    inputText: String,
+    color: Int
+): Spannable {
+    val spannable = inputText.toSpannable()
+    spannable[0..inputText.length] = LinearGradientSpan(inputText, inputText, color, color)
     return spannable
 }
 

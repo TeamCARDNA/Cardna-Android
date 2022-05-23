@@ -301,8 +301,7 @@
                 android:includeFontPadding="false"
                 android:text="@string/maincard_tv_cardpack_text"
                 android:textColor="@color/white_4"
-                android:textSize="14sp"
-                android:visibility="@{mainCardViewModel.isMyCard ? View.INVISIBLE : View.VISIBLE}" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 

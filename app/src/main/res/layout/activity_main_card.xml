@@ -236,8 +236,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_semibold"
                 android:includeFontPadding="false"
+                android:textColor="@color/selector_go_to_cardpack_text"
                 android:text="@string/maincard_tv_cardpack_text"
-                android:textColor="@color/white_4"
                 android:textSize="14sp" />
 
         </LinearLayout>

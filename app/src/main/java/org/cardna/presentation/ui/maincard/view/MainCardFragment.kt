@@ -237,7 +237,6 @@ class MainCardFragment :
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
         val friendId = arguments?.getInt("id", 0) ?: -1
-        //relation 이거를 observe해야함 -> 내 상태
         val relation = mainCardViewModel.relation.value.toString()
         val code = myPageViewModel.myPage.value?.code
         Timber.d("code : $code")
@@ -253,6 +252,8 @@ class MainCardFragment :
                     clRelationProgressingCancel.visibility = View.VISIBLE
                 }
             }
+            //enable : true -> white , enable : false -> dark_gray
+            btnRelationConfirm.isSelected = relation != MainCardActivity.RESPONSE
             setConfirmDialog(dialog, dialogBinding, friendId)
             setCancelDialog(dialog, dialogBinding)
         }
