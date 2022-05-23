@@ -68,6 +68,11 @@ class DetailCardViewModel @Inject constructor(
 
     val myDefault = MutableLiveData("")
 
+    private val _isFromAlarm = MutableLiveData<Boolean>()
+    val isFromAlarm: LiveData<Boolean> = _isFromAlarm
+
+    private val _isFromStore = MutableLiveData<Boolean>()
+    val isFromStore: LiveData<Boolean> = _isFromStore
 
     /* 저장소 : storage true true
     * 내가 카드나 : me true false
@@ -162,5 +167,13 @@ class DetailCardViewModel @Inject constructor(
                 Timber.e(it.toString())
             }
         }
+    }
+
+    fun setFromAlarm(isFromAlarm: Boolean) {
+        _isFromAlarm.value = isFromAlarm
+    }
+
+    fun setFromStore(isFromStore: Boolean) {
+        _isFromStore.value = isFromStore
     }
 }

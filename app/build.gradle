@@ -129,6 +129,9 @@ dependencies {
     // SavedState
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion"
 
+    // recyclerView
+    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha03"
+
     // Circleimageview
     implementation "de.hdodenhof:circleimageview:$circleimageviewVersion" //Circle ImageView
 

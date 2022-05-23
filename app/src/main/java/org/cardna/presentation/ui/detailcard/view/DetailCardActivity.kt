@@ -3,6 +3,7 @@ package org.cardna.presentation.ui.detailcard.view
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,6 +16,8 @@ import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
 import org.cardna.databinding.ActivityDetailCardBinding
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.cardpack.view.CardCreateCompleteActivity
+import org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity
 import org.cardna.presentation.ui.detailcard.viewmodel.DetailCardViewModel
 import org.cardna.presentation.util.*
 
@@ -32,14 +35,18 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
 
     override fun initView() {
         this.setStatusBarTransparent()
-        this.setSystemBarsColor(Color.TRANSPARENT,false)
+        this.setSystemBarsColor(Color.TRANSPARENT, false)
         initData()
         setObserve()
     }
 
     private fun initData() {
         val id = intent.getIntExtra(BaseViewUtil.CARD_ID, 0)
+        val isFromAlarm = intent.getBooleanExtra(BaseViewUtil.FROM_ALARM_KEY, false)
+        val isFromStore = intent.getBooleanExtra(BaseViewUtil.FROM_STORE_KEY, false)
         detailCardViewModel.setCardId(id)
+        detailCardViewModel.setFromAlarm(isFromAlarm)
+        detailCardViewModel.setFromStore(isFromStore)
     }
 
     @SuppressLint("ResourceType")
@@ -192,6 +199,26 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
 
     fun setCardAddClickListener() {
         detailCardViewModel.keepOrAddCard()
+        //보관함에서 가는경우
+
+        detailCardViewModel.isFromStore.observe(this) {
+            if (it) goToCardCreateActivity(BaseViewUtil.FROM_STORE_KEY)
+        }
+
+        detailCardViewModel.isFromAlarm.observe(this) {
+            if (it) goToCardCreateActivity(BaseViewUtil.FROM_ALARM_KEY)
+        }
+    }
+
+    fun goToCardCreateActivity(key: String) {
+        detailCardViewModel.isFromAlarm.observe(this) {
+            val intent = Intent(this@DetailCardActivity, CardCreateCompleteActivity::class.java)
+                .putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, false)
+                .putExtra(BaseViewUtil.CARD_IMG, detailCardViewModel.cardImg.value)
+                .putExtra(BaseViewUtil.CARD_TITLE, detailCardViewModel.title.value)  //카드타이틀
+                .putExtra(key, true)  //카드타이틀
+            startActivity(intent)
+        }
         finish()
     }
 
@@ -202,13 +229,6 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                 CARD_YOU -> showLottie(laDetailcardLottie, CARD_YOU, "lottie_cardyou.json")
             }
         }
-    }
-
-    private fun goPreviousActivityWithHandling() {
-        Handler(Looper.getMainLooper())
-            .postDelayed({
-                finish()
-            }, 2000)
     }
 
     companion object {

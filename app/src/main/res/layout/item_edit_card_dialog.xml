@@ -49,14 +49,17 @@
 
         <TextView
             android:id="@+id/tv_editcarddialog_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="9dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/real_black"
             android:theme="@style/cardpack_recyclerview_tv"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_cardpack_recyclerview"
             tools:text="댕댕이 짱 좋아" />

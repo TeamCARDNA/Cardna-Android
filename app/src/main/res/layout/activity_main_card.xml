@@ -23,9 +23,9 @@
             android:id="@+id/ll_maincard_mypage_icon_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:orientation="horizontal"
-            android:layout_marginTop="20dp"
             android:paddingStart="10dp"
             android:paddingBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -220,6 +220,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
             android:background="@{mainCardViewModel.relation.equals(`2.0`) ? @drawable/bg_maincard_gradient_radius_45 : @drawable/bg_maincard_white_4_radius_45}"
+            android:clickable="@{mainCardViewModel.relation.equals(`2.0`) ? true : false}"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="24dp"
@@ -235,10 +236,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_semibold"
                 android:includeFontPadding="false"
+                android:textColor="@color/selector_go_to_cardpack_text"
                 android:text="@string/maincard_tv_cardpack_text"
-                android:textColor="@color/white_4"
-                android:textSize="14sp"
-                android:visibility="@{mainCardViewModel.isMyCard ? View.INVISIBLE : View.VISIBLE}" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 

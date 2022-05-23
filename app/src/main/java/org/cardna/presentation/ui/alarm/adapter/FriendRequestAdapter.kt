@@ -14,6 +14,7 @@ import org.cardna.data.remote.model.alarm.ResponseGetAlarmData
 import org.cardna.databinding.ItemAlarmFriendRequestBinding
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
+import timber.log.Timber
 
 class FriendRequestAdapter(
     private val activity: Activity,
@@ -27,13 +28,14 @@ class FriendRequestAdapter(
 
         fun onBind(data: ResponseGetAlarmData.Data.Request.Requester) {
             binding.apply {
-
+                Timber.e("AAA alarmViewModel : ${data.id}")
                 tvItemAlarmFriendRequestFriendName.text = data.name
                 tvItemAlarmFriendRequestDate.text = data.date
                 Glide.with(activity)
                     .load(data.profileImage)
                     .circleCrop()
                     .into(ivItemAlarmFriendRequestProfile)
+
 
                 //친구 메인뷰로 이동
                 root.setOnClickListener {

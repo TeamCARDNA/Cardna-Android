@@ -89,6 +89,10 @@ sealed class BaseViewUtil {
         const val BOTTOM_IMAGE = "bottomImage"
 
         const val IS_CARDPACK_OR_MAINCARD = "isCardPackOrMainCard"
+        const val FROM_STORE_KEY = "FROM_STORE"
+        const val FROM_ALARM_KEY = "FROM_ALARM_KEY"
+        const val FROM_STORE = false
+        const val FROM_ALARM = false
         const val FROM_CARDPACK = true
         const val FROM_MAINCARD = false
 

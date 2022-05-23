@@ -51,8 +51,9 @@ class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriend
     }
 
     private fun makeCardYou() { // xml 파일에서 iv_make_card_you 눌렀을 때 onClick 설정해주었음.
-        binding.ivMakeCardYou.setOnClickListener {
+        binding.ctlMakeCardYou.setOnClickListener {
             val intent = Intent(this, CardCreateActivity::class.java).apply {
+                Timber.e("친구 카드너 작성 여기는")
                 putExtra(BaseViewUtil.ID, cardPackViewModel.id.value)
                 putExtra(BaseViewUtil.NAME, cardPackViewModel.name)
                 putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_YOU) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할
