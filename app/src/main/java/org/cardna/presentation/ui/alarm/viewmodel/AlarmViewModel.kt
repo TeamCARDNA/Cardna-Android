@@ -81,12 +81,18 @@ class AlarmViewModel @Inject constructor(
     fun acceptOrDenyFriend(friendId: Int, isAccept: Boolean) {
         viewModelScope.launch {
             runCatching {
-                friendRepository.postAcceptOrDenyFriend(RequestAcceptOrDenyFriendData(friendId, isAccept))
+                friendRepository.postAcceptOrDenyFriend(
+                    RequestAcceptOrDenyFriendData(
+                        friendId,
+                        isAccept
+                    )
+                )
             }.onSuccess {
-                if (it.data.status == "stranger") _isRequestDeny.value = true
-                Timber.e(it.status.toString())
+                if (it.data.status == "stranger")
+                    _isRequestDeny.value = true
+                Timber.e("EEE : ${it.status.toString()}")
             }.onFailure {
-                Timber.e(it.toString())
+                Timber.e("EEE throwable : $it")
             }
         }
     }

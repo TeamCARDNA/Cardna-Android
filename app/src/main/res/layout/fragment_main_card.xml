@@ -23,14 +23,11 @@
             android:id="@+id/cl_maincard_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="invisible">
+            tools:visibility="gone">
 
             <ImageView
                 android:id="@+id/ibtn_maincard_alarm"
@@ -59,21 +56,23 @@
             android:id="@+id/ll_maincard_mypage_icon_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/cl_maincard_alarm"
+            android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/cl_maincard_alarm"
+            app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="369dp"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/iv_maincard_friend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/ic_mypage_friend_checked"
+                android:padding="10dp"
+                app:layout_constraintEnd_toStartOf="@id/iv_maincard_write"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:background="@drawable/ic_mypage_friend_checked" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_maincard_write"
@@ -284,7 +283,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            android:background="@{mainCardViewModel.relation.equals(`2.0`) ? @drawable/bg_maincard_gradient_radius_45 : @drawable/bg_maincard_white_4_radius_45}"
+            android:background="@drawable/bg_maincard_gradient_radius_45"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="24dp"
@@ -302,8 +301,7 @@
                 android:includeFontPadding="false"
                 android:text="@string/maincard_tv_cardpack_text"
                 android:textColor="@color/white_4"
-                android:textSize="14sp"
-                android:visibility="@{mainCardViewModel.isMyCard ? View.INVISIBLE : View.VISIBLE}" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 

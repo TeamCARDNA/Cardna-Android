@@ -45,6 +45,7 @@ class MainCardFragment :
         super.onCreate(savedInstanceState)
         Timber.e("bottomtest MainCardFragment onCreate")
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Timber.e("bottomtest MainCardFragment onViewCreated")
@@ -57,12 +58,44 @@ class MainCardFragment :
         initDialog()
         setClickListener()
         checkUserId()
+        setGradientSetting()
+    }
+
+    //click listener
+    private fun setClickListener() {
+        setEditCardActivity()
+        setAlarmActivity()
+        setCardYouWrite()
+        setGotoFriendCardPack()
+    }
+
+    private fun setContainerColor(relation: String) {
+        if (relation == MainCardActivity.FRIEND) {
+            setGradientSetting()
+        } else {
+            setGrayBlackSetting()
+        }
+    }
+
+    private fun setGradientSetting() {
+        with(binding) {
+            tvMaincardGotoCardpack.apply {
+                this.text = requireActivity().setGradientText(this.text.toString())
+            }
+            ivMaincardGotoCardpackBackground.setBackgroundResource(R.drawable.bg_maincard_gradient_radius_45)
+        }
+    }
+
+    private fun setGrayBlackSetting() {
+        with(binding) {
+            tvMaincardGotoCardpack.setTextColor(R.color.white_4)
+            ivMaincardGotoCardpackBackground.setBackgroundResource(R.drawable.bg_maincard_white_4_radius_45)
+        }
     }
 
     override fun onResume() {
         Timber.e("bottomtest MainCardFragment onResume")
         super.onResume()
-
         initData()
         checkUserId()
     }
@@ -75,22 +108,15 @@ class MainCardFragment :
     private fun initData() {
         setAlarmExist()
         mainCardViewModel.isAlarmExist.observe(viewLifecycleOwner) {
-            if (it == false && CardNaRepository.alarmExistCount < mainCardViewModel.updateAlarmCount.value!!) binding.icAlarmStatus.visibility = View.VISIBLE
+            if (it == false && CardNaRepository.alarmExistCount < mainCardViewModel.updateAlarmCount.value!!) binding.icAlarmStatus.visibility =
+                View.VISIBLE
             else binding.icAlarmStatus.visibility = View.INVISIBLE
 
         }
-
         binding.mainCardViewModel = mainCardViewModel
         setInitPagePosition()
-        binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
-    }
 
-    //click listener
-    private fun setClickListener() {
-        setEditCardActivity()
-        setAlarmActivity()
-        setCardYouWrite()
-        setGotoFriendCardPack()
+        binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
     }
 
     private fun checkUserId() {
@@ -98,8 +124,10 @@ class MainCardFragment :
         if (arguments != null) {
             with(binding) {
                 llMaincardEditLayout.visibility = View.GONE
-                clMaincardAlarm.visibility = View.INVISIBLE  //TODO 뷰갱신될때 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
-                llMaincardMypageIconContainer.visibility = View.VISIBLE  //TODO 뷰갱신될대 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
+                clMaincardAlarm.visibility =
+                    View.INVISIBLE  //TODO 뷰갱신될때 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
+                llMaincardMypageIconContainer.visibility =
+                    View.VISIBLE  //TODO 뷰갱신될대 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
                 ivMaincardGotoCardpackBackground.visibility = View.VISIBLE
             }
 
@@ -107,7 +135,6 @@ class MainCardFragment :
             id = arguments?.getInt("id", -1) ?: -1
             mainCardViewModel.getMyPageUser(name!!)
             mainCardViewModel.setFriendNameAndId(name, id)
-            setFriendIcon()
         } else {
             with(binding) {
                 ivMaincardGotoCardpackBackground.visibility = View.INVISIBLE
@@ -121,19 +148,15 @@ class MainCardFragment :
         mainCardViewModel.getMainCardList(id)
     }
 
-    private fun setFriendIcon() {
-        mainCardViewModel.relation.observe(viewLifecycleOwner) {
-            with(binding.ivMaincardFriend) {
-                when (it.toString()) {
-                    UNKNOWN -> setBackgroundResource(R.drawable.ic_mypage_friend_unchecked)
-                    FRIEND -> {
-                        setBackgroundResource(R.drawable.ic_mypage_friend_checked)
-                        binding.tvMaincardGotoCardpack.apply {
-                            this.text = requireActivity().setGradientText(this.text.toString())
-                        }
-                    }
-                    PROGRESSING -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
+    private fun setFriendIcon(relation: String) {
+        with(binding.ivMaincardFriend) {
+            when (relation) {
+                MainCardActivity.UNKNOWN -> setBackgroundResource(R.drawable.ic_mypage_friend_unchecked)
+                MainCardActivity.FRIEND -> {
+                    setBackgroundResource(R.drawable.ic_mypage_friend_checked)
                 }
+                MainCardActivity.REQUEST,
+                MainCardActivity.RESPONSE -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
             }
         }
     }
@@ -214,9 +237,9 @@ class MainCardFragment :
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
         val friendId = arguments?.getInt("id", 0) ?: -1
-
-        //relation 이거를 observe해야함
         val relation = mainCardViewModel.relation.value.toString()
+        val code = myPageViewModel.myPage.value?.code
+        Timber.d("code : $code")
         with(dialogBinding) {
             when (relation) {
                 MainCardActivity.UNKNOWN -> {
@@ -225,10 +248,12 @@ class MainCardFragment :
                 MainCardActivity.FRIEND -> {
                     clRelationDisconnect.visibility = View.VISIBLE
                 }
-                MainCardActivity.PROGRESSING -> {
+                MainCardActivity.RESPONSE, MainCardActivity.REQUEST -> {
                     clRelationProgressingCancel.visibility = View.VISIBLE
                 }
             }
+            //enable : true -> white , enable : false -> dark_gray
+            btnRelationConfirm.isSelected = relation != MainCardActivity.RESPONSE
             setConfirmDialog(dialog, dialogBinding, friendId)
             setCancelDialog(dialog, dialogBinding)
         }
@@ -252,12 +277,16 @@ class MainCardFragment :
         }
     }
 
-
     private fun dialogDismiss(dialog: Dialog, relationDialog: DialogRelationBinding) {
         with(relationDialog) {
             clRelationAddFriend.visibility = View.INVISIBLE
             clRelationDisconnect.visibility = View.INVISIBLE
             clRelationProgressingCancel.visibility = View.INVISIBLE
+        }
+        mainCardViewModel.relation.observe(viewLifecycleOwner) {
+            val relation = it.toString()
+            setFriendIcon(relation)
+            setContainerColor(relation)
         }
         dialog.dismiss()
     }
@@ -297,16 +326,10 @@ class MainCardFragment :
 
     //TODO 나 다빈인데 마이페이지랑 연관된 로직이 필요해서 적어뒀엉 지우지 마라조~
     override fun onDestroyView() {
-     myPageViewModel.settingBtnIsValid(true)
-   myPageViewModel.refreshFriendList()
+        myPageViewModel.settingBtnIsValid(true)
+        myPageViewModel.refreshFriendList()
         super.onDestroyView()
         Timber.e("bottomtest MainCardFragment onDestroyView")
     }
 
-    companion object {
-        const val UNKNOWN = "1.0"
-        const val FRIEND = "2.0"
-        const val PROGRESSING = "3.0"
-        const val BACK_BTN_WAIT_TIME = 2000L
-    }
 }

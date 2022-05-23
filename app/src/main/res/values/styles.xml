@@ -222,8 +222,8 @@
     <style name="relation_dialog_btn_text">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item>
-        <item name="android:textColor">@color/white_1</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/white_1</item>
     </style>
 
     <style name="relation_dialog_about">

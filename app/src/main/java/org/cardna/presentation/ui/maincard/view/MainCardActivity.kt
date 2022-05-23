@@ -20,12 +20,15 @@ import org.cardna.R
 import org.cardna.databinding.ActivityMainCardBinding
 import org.cardna.databinding.DialogRelationBinding
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.alarm.viewmodel.AlarmViewModel
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
+import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.setBeforeGradientText
 import org.cardna.presentation.util.setGradientText
 import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
@@ -35,6 +38,8 @@ import timber.log.Timber
 class MainCardActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivityMainCardBinding>(R.layout.activity_main_card) {
     private val mainCardViewModel: MainCardViewModel by viewModels()
+    private val myPageViewModel: MyPageViewModel by viewModels()
+    private val alarmViewModel: AlarmViewModel by viewModels()
     private lateinit var mainCardAdapter: MainCardAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,14 +59,42 @@ class MainCardActivity :
         setCardPackActivity()
     }
 
+    private fun setContainerColor(relation: String) {
+        if (relation == FRIEND) {
+            setGradientSetting()
+        } else {
+            setGrayBlackSetting()
+        }
+    }
+
+    private fun setGradientSetting() {
+        with(binding) {
+            tvMaincardGotoCardpack.apply {
+                isSelected = true
+                isSelected
+                this.text = setGradientText(this.text.toString())
+            }
+            ivMaincardGotoCardpackBackground.setBackgroundResource(R.drawable.bg_maincard_gradient_radius_45)
+        }
+    }
+
+    private fun setGrayBlackSetting() {
+        with(binding) {
+            tvMaincardGotoCardpack.apply {
+                isSelected = false
+            }
+            ivMaincardGotoCardpackBackground.setBackgroundResource(R.drawable.bg_maincard_white_4_radius_45)
+        }
+    }
+
     private fun setCardPackActivity() {
         val name = intent.getStringExtra("name")
-        val id = intent.getIntExtra("friendId", -1)
+        val friendId = intent.getIntExtra("friendId", -1)
+        val id = intent.getIntExtra("id", -1)
+
         mainCardViewModel.getMyPageUser(name!!)
         mainCardViewModel.setFriendNameAndId(name, id)
-
         binding.ivMaincardGotoCardpackBackground.setOnClickListener {
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡstartActivityㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${ mainCardViewModel.friendId.value}")
             startActivity(
                 Intent(this, FriendCardPackActivity::class.java)
                     .putExtra(BaseViewUtil.ID, mainCardViewModel.friendId.value)
@@ -75,6 +108,14 @@ class MainCardActivity :
         initData()
     }
 
+    private fun relationObserve() {
+        mainCardViewModel.relation.observe(this) {
+            val relation = it.toString()
+            setContainerColor(relation)
+            friendRelationCheck(relation)
+        }
+    }
+
     private fun initData() {
         val friendId = intent.getIntExtra("friendId", -1)
         val name = intent.getStringExtra("name").plus(getString(R.string.maincard_tv_username_tag))
@@ -83,15 +124,7 @@ class MainCardActivity :
         mainCardViewModel.getMyPageUser(name)
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
         binding.tvMaincardUserName.text = name
-
-        mainCardViewModel.relation.observe(this) {
-            if (it.toString() == "2.0") {
-                Timber.d("if-color")
-                binding.tvMaincardGotoCardpack.apply {
-                    this.text = setGradientText(this.text.toString())
-                }
-            }
-        }
+        relationObserve()
         setInitPagePosition()
     }
 
@@ -100,6 +133,8 @@ class MainCardActivity :
             clRelationAddFriend.visibility = View.INVISIBLE
             clRelationDisconnect.visibility = View.INVISIBLE
             clRelationProgressingCancel.visibility = View.INVISIBLE
+            clRelationAcceptFriend.visibility = View.INVISIBLE
+            btnRelationConfirm.setBackgroundResource(R.drawable.bg_white3_radius_5)
         }
         dialog.dismiss()
     }
@@ -107,20 +142,17 @@ class MainCardActivity :
     private fun initDialog() {
         val dialog = Dialog(this)
         val relationDialog = DialogRelationBinding.inflate(dialog.layoutInflater)
-        friendRelationCheck()
         binding.ivMaincardFriend.setOnClickListener {
             initRelationDialog(dialog, relationDialog)
         }
     }
 
-    private fun friendRelationCheck() {
-        mainCardViewModel.relation.observe(this) { relation ->
-            binding.ivMaincardFriend.apply {
-                when (relation.toString()) {
-                    UNKNOWN -> setBackgroundResource(R.drawable.ic_mypage_friend_unchecked)
-                    FRIEND -> setBackgroundResource(R.drawable.ic_mypage_friend_checked)
-                    PROGRESSING -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
-                }
+    private fun friendRelationCheck(relation: String) {
+        binding.ivMaincardFriend.apply {
+            when (relation) {
+                UNKNOWN, RESPONSE -> setBackgroundResource(R.drawable.ic_mypage_friend_unchecked)
+                FRIEND -> setBackgroundResource(R.drawable.ic_mypage_friend_checked)
+                REQUEST -> setBackgroundResource(R.drawable.ic_mypage_friend_ing)
             }
         }
     }
@@ -136,6 +168,11 @@ class MainCardActivity :
 
         //relation 이거를 observe해야함
         val relation = mainCardViewModel.relation.value.toString()
+        // TODO: 요기
+        val code = intent.getStringExtra("code").toString()
+        myPageViewModel.updateSearchCodeQuery(code)
+        myPageViewModel.searchCodePost()
+
         with(dialogBinding) {
             when (relation) {
                 UNKNOWN -> {
@@ -144,16 +181,34 @@ class MainCardActivity :
                 FRIEND -> {
                     clRelationDisconnect.visibility = View.VISIBLE
                 }
-                PROGRESSING -> {
+                REQUEST -> {
                     clRelationProgressingCancel.visibility = View.VISIBLE
                 }
+                RESPONSE -> {
+                    clRelationAcceptFriend.visibility = View.VISIBLE
+                    val title =
+                        intent.getStringExtra("name").plus(getString(R.string.dialog_apply_request))
+                    tvRelationAcceptFriendTitle.text = title
+                    btnRelationCancel.text = getString(R.string.dialog_apply_reject)
+                    btnRelationConfirm.apply {
+                        text = getString(R.string.dialog_apply_accept)
+                        setBackgroundResource(R.drawable.bg_gradient_green_purple_radius_5)
+                    }
+                }
             }
+            //enable : true -> white , enable : false -> dark_gray
+            btnRelationConfirm.isSelected = relation != RESPONSE
             setCancelDialog(dialog, this)
-            setConfirmDialog(dialog, this, friendId)
+            setConfirmDialog(dialog, this, friendId, relation)
         }
     }
 
-    private fun setCancelDialog(dialog: Dialog, dialogBinding: DialogRelationBinding) {
+    private fun setCancelDialog(
+        dialog: Dialog,
+        dialogBinding: DialogRelationBinding,
+//        friendId: Int,
+//        friendRelation: String
+    ) {
         dialogBinding.btnRelationCancel.setOnClickListener {
             dialogDismiss(dialog, dialogBinding)
         }
@@ -162,11 +217,25 @@ class MainCardActivity :
     private fun setConfirmDialog(
         dialog: Dialog,
         dialogBinding: DialogRelationBinding,
-        friendId: Int
+        friendId: Int,
+        friendRelation: String
     ) {
+        Timber.e("TTT friendId : $friendId")
         dialogBinding.btnRelationConfirm.setOnClickListener {
-            mainCardViewModel.postFriendRequest(friendId)
-            mainCardViewModel.getMainCardList(friendId)
+            if (friendRelation == RESPONSE) {
+                //친추 받았을때
+                alarmViewModel.acceptOrDenyFriend(friendId, true)
+                mainCardViewModel.setRelation(FRIEND)
+                Timber.d("success : ${mainCardViewModel.relation.value}")
+            } else {
+                if (friendRelation == UNKNOWN)
+                    mainCardViewModel.setRelation(REQUEST)
+                else {
+                    mainCardViewModel.setRelation(UNKNOWN)
+                }
+                mainCardViewModel.postFriendRequest(friendId)
+                mainCardViewModel.getMainCardList(friendId)
+            }
             dialogDismiss(dialog, dialogBinding)
         }
     }
@@ -222,10 +291,11 @@ class MainCardActivity :
         }
     }
 
-
     companion object {
         const val UNKNOWN = "1.0"
         const val FRIEND = "2.0"
-        const val PROGRESSING = "3.0"
+        const val REQUEST = "3.0"
+        const val RESPONSE = "4.0"
+
     }
 }

@@ -30,19 +30,20 @@ class SetNameFinishedActivity :
     }
 
     override fun initView() {
-        getScreenHeight()
+//        getScreenHeight()
         setClickListener()
+        setUpAnim(R.anim.anim_translate_up_2560height,1300L)
         setTextView()
     }
 
-    private fun getScreenHeight() {
-        val screenHeight = CardNaApplication.pixelRatio.screenHeight
-        if (screenHeight > 2872 || screenHeight < 2560) {
-            setUpAnim(R.anim.anim_translate_up_2560height, 1300L)
-        } else if (screenHeight in 2560..2872) {
-            setUpAnim(R.anim.anim_translate_up_2872height, 1300L)
-        }
-    }
+//    private fun getScreenHeight() {
+//        val screenHeight = CardNaApplication.pixelRatio.screenHeight
+//        if (screenHeight > 2872 || screenHeight < 2560) {
+//            setUpAnim(R.anim.anim_translate_up_2560height, 1300L)
+//        } else if (screenHeight in 2560..2872) {
+//            setUpAnim(R.anim.anim_translate_up_2872height, 1300L)
+//        }
+//    }
 
     private fun setUpAnim(animId: Int, delayMillis: Long) {
         val animation = AnimationUtils.loadAnimation(this, animId)

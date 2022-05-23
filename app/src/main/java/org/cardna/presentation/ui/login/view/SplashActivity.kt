@@ -42,7 +42,7 @@ class SplashActivity :
 //            naverUserfirstName = ""
 //            naverUserToken = ""
 //            naverUserRefreshToken = ""
-
+//            userToken = ""
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡ맨처음값ㅡㅡㅡㅡㅡㅡㅡㅡㅡ$userToken+$kakaoUserfirstName")
         }
         StatusBarUtil.setStatusBar(this, R.color.black)
@@ -93,9 +93,12 @@ class SplashActivity :
             //todo 카카오 자동로그인
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) {
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.카카오 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + !CardNaRepository.kakaoUserlogOut}")
-            CardNaRepository.userToken = CardNaRepository.kakaoUserToken
-            moveMain()
-
+            loginViewModel.getKakaoTokenIssuance()
+            Timber.d("KK message : ${loginViewModel.issuanceMessage}")
+            when (loginViewModel.issuanceMessage) {
+                "", REFRESH_SUCCESS, ACCESS_NOW -> moveMain()
+                else -> moveOnboarding()
+            }
 /*            firebaseToken, fcmToken 은 회원가입때 이미 넣어줬겠지?
             loginViewModel.getKakaoLogin()
             loginViewModel.getTokenIssuance()
