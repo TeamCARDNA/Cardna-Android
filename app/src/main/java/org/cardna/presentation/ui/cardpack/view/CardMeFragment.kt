@@ -54,7 +54,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
 
     override fun onStart() {
         super.onStart()
-        binding.rvCardme.smoothScrollToPosition(0)
+//        binding.rvCardme.smoothScrollToPosition(0) // 이거 적용 시 카드 상세 들어갔다 나와도 맨위로 가서 일단 주석처리
         Timber.e("CardMeFragment onStart")
     }
 

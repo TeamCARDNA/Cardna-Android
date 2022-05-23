@@ -35,7 +35,7 @@ class CardYouFragment :
 
     override fun onStart() {
         super.onStart()
-        binding.rvCardyou.smoothScrollToPosition(0)
+//        binding.rvCardyou.smoothScrollToPosition(0)
         Timber.e("CardMeFragment onStart")
     }
 
