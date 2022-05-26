@@ -19,12 +19,17 @@ import javax.inject.Inject
 class CardCreateViewModel @Inject constructor(
     private val cardRepository: CardRepository,
 ) : ViewModel() { // CardCreateActivity, BottomDialogImageFragment 에서 공유
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private var _induceMakeMainCard = MutableLiveData<Boolean>(false)
     val induceMakeMainCard: LiveData<Boolean> = _induceMakeMainCard
 
     private var _makeInduceCardSuccess = MutableLiveData<Boolean>(false)
     val makeInduceCardSuccess: LiveData<Boolean> = _makeInduceCardSuccess
+
+    private var _makeCardSuccess = MutableLiveData<Boolean>(false)
+    val makeCardSuccess: LiveData<Boolean> = _makeCardSuccess
 
     private var _induceCardId = MutableLiveData<Int>(0)
     val induceCardId: LiveData<Int> = _induceCardId
@@ -144,7 +149,7 @@ class CardCreateViewModel @Inject constructor(
                             Timber.e("카드나 작성 성공 : ${it.data}")
                             _induceCardId.value = it.data.id
                             _makeInduceCardSuccess.value = true
-                            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ카드나ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.id.toString())
+                            _makeCardSuccess.value = true
                         }
                         .onFailure { Timber.e("카드나 작성 실패 : ${it.message}") }
                 }
@@ -155,7 +160,7 @@ class CardCreateViewModel @Inject constructor(
                             Timber.e("카드나 작성 성공 : ${it.message}")
                             _induceCardId.value = it.data.id
                             _makeInduceCardSuccess.value = true
-                            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ카드나ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.data.id.toString())
+                            _makeCardSuccess.value = true
                         }
                         .onFailure {
                             Timber.e("카드나 작성 실패 : ${it.message}")
@@ -164,7 +169,7 @@ class CardCreateViewModel @Inject constructor(
                 }
             }
         } else { // 카드너 작성 => friendId 포함
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡ친구뷰모델","${id}+${symbolId}")
+            Log.e("ㅡㅡㅡㅡㅡㅡㅡ친구뷰모델", "${id}+${symbolId}")
             if (id == -1) return
             val body = RequestCreateCardYouData(
                 etKeywordText.value!!,
@@ -177,13 +182,15 @@ class CardCreateViewModel @Inject constructor(
 
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, null) }
-                        .onSuccess { Timber.e("카드너 작성 성공 : ${it.message}") }
+                        .onSuccess { Timber.e("카드너 작성 성공 : ${it.message}")
+                            _makeCardSuccess.value = true}
                         .onFailure { Timber.e("카드너 작성 실패 : ${it.message}") }
                 }
             } else { // 이미지 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, makeUriToFile) }
-                        .onSuccess { Timber.e("카드너 작성 성공 : ${it.message}") }
+                        .onSuccess { Timber.e("카드너 작성 성공 : ${it.message}")
+                            _makeCardSuccess.value = true}
                         .onFailure {
                             Timber.e("카드너 작성 실패 : ${it.message}")
                             it.printStackTrace()
@@ -191,5 +198,10 @@ class CardCreateViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setLoadingState(isLoading: Boolean) {
+        Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡ바꿈ㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "스테이트바꿈+${isLoading}")
+        _isLoading.value = isLoading
     }
 }

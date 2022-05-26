@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
@@ -53,7 +54,11 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     private fun setObserve() {
         detailCardViewModel.detailCard.observe(this) { detailCard ->
             cardType = detailCard.type
-            setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
+            Glide
+                .with(this)
+                .load(detailCard.cardImg)
+                .centerCrop()
+                .into(binding.ivDetailcardImage)
 
             with(binding) {
                 when (cardType) {

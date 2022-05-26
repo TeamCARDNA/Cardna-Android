@@ -76,7 +76,8 @@
                 android:textColor="@color/white_1"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="가나나나나나나나나나나나나나나나나나나나나" />
 
             <TextView
                 android:id="@+id/tv_item_alarm_friend_request_sentence"
@@ -84,14 +85,15 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:fontFamily="@font/pretendard_regular"
-                android:maxLength="1"
+                android:maxLines="1"
                 android:text="@string/item_friend_request_accept_text"
                 android:textColor="@color/white_1"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_item_alarm_friend_request_accept_friend_name"
-                app:layout_constraintTop_toTopOf="@id/tv_item_alarm_friend_request_accept_friend_name" />
+                app:layout_constraintTop_toTopOf="@id/tv_item_alarm_friend_request_accept_friend_name"
+                tools:text="님과 친구가 되었어요" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
