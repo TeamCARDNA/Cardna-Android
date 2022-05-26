@@ -201,7 +201,6 @@ class CardCreateViewModel @Inject constructor(
     }
 
     fun setLoadingState(isLoading: Boolean) {
-        Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡ바꿈ㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "스테이트바꿈+${isLoading}")
         _isLoading.value = isLoading
     }
 }

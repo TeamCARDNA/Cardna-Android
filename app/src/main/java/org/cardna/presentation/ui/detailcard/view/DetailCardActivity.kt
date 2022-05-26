@@ -54,6 +54,8 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     private fun setObserve() {
         detailCardViewModel.detailCard.observe(this) { detailCard ->
             cardType = detailCard.type
+
+            detailCardViewModel.setLoadingState(false)
             Glide
                 .with(this)
                 .load(detailCard.cardImg)
@@ -246,7 +248,6 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
             }
         }
     }
-
 
 
     companion object {

@@ -28,6 +28,9 @@ class DetailCardViewModel @Inject constructor(
     private val deletedCardYouDao: DeletedCardYouDao
 ) : BaseViewModel() {
 
+    private val _isLoading = MutableLiveData(true)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     private var cardId = savedStateHandle.get<Int>(BaseViewUtil.CARD_ID)
 
     private val _detailCard = MutableLiveData<ResponseDetailCardData.Data>()
@@ -192,5 +195,9 @@ class DetailCardViewModel @Inject constructor(
 
     fun setFromStore(isFromStore: Boolean) {
         _isFromStore.value = isFromStore
+    }
+
+    fun setLoadingState(isLoading: Boolean) {
+        _isLoading.value = isLoading
     }
 }
