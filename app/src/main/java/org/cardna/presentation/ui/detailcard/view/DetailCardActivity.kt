@@ -89,6 +89,15 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                 }
             }
         }
+
+        detailCardViewModel.isReportUserSuccess.observe(this) {
+            shortToast("신고가 접수되었습니다")
+            finish()
+        }
+
+        detailCardViewModel.isUserReportDialogShow.observe(this) {
+            onBackPressed()
+        }
     }
 
     private fun showEditPopUp() {
@@ -150,6 +159,8 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         val reasonThreeBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_reason_three)
         val reasonFourBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_reason_four)
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_cancel)
+
+        detailCardViewModel.isUserReportDialogShow()
 
         reasonOneBtn.setOnClickListener {
             detailCardViewModel.reportUser(REPORT_REASON_ONE)
@@ -230,6 +241,8 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
             }
         }
     }
+
+
 
     companion object {
         const val CARD_ME = "me"

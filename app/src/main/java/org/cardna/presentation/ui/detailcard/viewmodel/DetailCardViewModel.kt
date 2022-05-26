@@ -12,8 +12,10 @@ import org.cardna.data.remote.model.user.RequestPostReportUserData
 import org.cardna.domain.repository.CardRepository
 import org.cardna.domain.repository.LikeRepository
 import org.cardna.domain.repository.UserRepository
+import org.cardna.presentation.base.BaseViewModel
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
+import org.cardna.presentation.util.SingleLiveEvent
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -24,7 +26,7 @@ class DetailCardViewModel @Inject constructor(
     private val likeRepository: LikeRepository,
     private val userRepository: UserRepository,
     private val deletedCardYouDao: DeletedCardYouDao
-) : ViewModel() {
+) : BaseViewModel() {
 
     private var cardId = savedStateHandle.get<Int>(BaseViewUtil.CARD_ID)
 
@@ -73,6 +75,12 @@ class DetailCardViewModel @Inject constructor(
 
     private val _isFromStore = MutableLiveData<Boolean>()
     val isFromStore: LiveData<Boolean> = _isFromStore
+
+    private val _isReportUserSuccess = SingleLiveEvent<Any>()
+    val isReportUserSuccess: LiveData<Any> = _isReportUserSuccess
+
+    private val _isUserReportDialogShow = SingleLiveEvent<Any>()
+    val isUserReportDialogShow: LiveData<Any> = _isUserReportDialogShow
 
     /* 저장소 : storage true true
     * 내가 카드나 : me true false
@@ -134,7 +142,6 @@ class DetailCardViewModel @Inject constructor(
                 cardRepository.deleteCard(cardId)
             }.onSuccess {
                 Timber.d(it.message)
-                Log.d("ㅡㅡㅡㅡㅡㅡ삭제되고 룸에저장ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${cardId}")
                 deletedCardYouDao.insertDeletedCardYou(DeletedCardYouData(cardId))
             }.onFailure {
                 Timber.e(it.toString())
@@ -155,13 +162,23 @@ class DetailCardViewModel @Inject constructor(
         }
     }
 
+    private fun isReportUserSuccess() {
+        _isReportUserSuccess.call()
+    }
+
+    fun isUserReportDialogShow() {
+        _isUserReportDialogShow.call()
+    }
+
     fun reportUser(reportReason: String) {
         val cardId = cardId ?: return
         val writerId = _writerId.value ?: return
         viewModelScope.launch {
             runCatching {
+                deletedCardYouDao.insertDeletedCardYou(DeletedCardYouData(cardId))
                 userRepository.postReportUser(RequestPostReportUserData(writerId, cardId, reportReason))
             }.onSuccess {
+                isReportUserSuccess()
                 Timber.d(it.message)
             }.onFailure {
                 Timber.e(it.toString())

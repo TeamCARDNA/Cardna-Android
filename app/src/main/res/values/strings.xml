@@ -54,14 +54,14 @@
     <!--  Secession  -->
     <string name="secession_title">탈퇴하실 건가요?</string>
     <string name="secession_btn">탈퇴하기</string>
-    <string name="secession_title_sentence">탈퇴 이유를 알려주세요ㅠㅠ</string>
+    <string name="secession_title_sentence">탈퇴 이유를 알려주세요</string>
     <string name="secession_reason_one">삭제하고 싶은 콘텐츠가 있어요</string>
     <string name="secession_reason_two">개인정보 보호에 문제가 있어요</string>
     <string name="secession_reason_three">새 계정을 만들고 싶어요</string>
     <string name="secession_reason_four">오류가 많아요</string>
     <string name="secession_reason_five">기능이 마음에 들지 않아요</string>
     <string name="secession_reason_six">기타</string>
-    <string name="secession_warning">나의 데이터는 삭제되어 복구할 수 없어요.\n하지만 내가 남에게 써준 카드너는 남아있게 됩니다.</string>
+    <string name="secession_warning">내가 써준 카드너를 제외한 모든 데이터가 삭제됩니다.\n삭제 된 데이터는 복구할 수 없습니다.</string>
 
     <!--  Alarm Item Friend Request  -->
     <string name="item_friend_request_title">친구 요청</string>
