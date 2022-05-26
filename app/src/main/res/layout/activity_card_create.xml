@@ -256,9 +256,13 @@
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/la_loading_lottie"
+                    playLoadingLottie="@{cardCreateViewModel.isLoading}"
                     android:layout_width="match_parent"
+                    app:lottie_fileName="lottie_loading.json"
+                    app:lottie_loop="false"
+                    app:lottie_progress="4"
+                    android:visibility="@{cardCreateViewModel.isLoading? View.VISIBLE : View.GONE}"
                     android:layout_height="wrap_content"
-      android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/ctl_cardcreate_img"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"

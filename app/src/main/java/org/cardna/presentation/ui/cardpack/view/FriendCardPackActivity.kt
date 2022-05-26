@@ -54,6 +54,7 @@ class FriendCardPackActivity : BaseViewUtil.BaseAppCompatActivity<ActivityFriend
         binding.ctlMakeCardYou.setOnClickListener {
             val intent = Intent(this, CardCreateActivity::class.java).apply {
                 Timber.e("친구 카드너 작성 여기는")
+                Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡ친구 카드너 작성 여기는ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", intent.getIntExtra(BaseViewUtil.ID, 0).toString() + intent.getStringExtra(BaseViewUtil.NAME).toString())
                 putExtra(BaseViewUtil.ID, cardPackViewModel.id.value)
                 putExtra(BaseViewUtil.NAME, cardPackViewModel.name)
                 putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_YOU) // 내 카드나 작성 or 친구 카드너 작성 인지도 넘겨줘야할

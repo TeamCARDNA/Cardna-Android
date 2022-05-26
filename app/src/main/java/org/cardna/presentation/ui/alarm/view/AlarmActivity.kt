@@ -53,7 +53,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
     private fun setObserve() {
         alarmViewModel.friendRequest.observe(this) { friendRequest ->
             friendRequestAdapter.submitList(friendRequest)
-            binding.tvAlarmCount.text=friendRequest.size.toString()
+            binding.tvAlarmCount.text = friendRequest.size.toString()
         }
 
         alarmViewModel.writeCardYou.observe(this) { writeCardYou ->
@@ -84,22 +84,30 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
 
     private fun setWriteCardYouAdapter() {
         writeCardYouAdapter = WriteCardYouAdapter(this) { item ->
-            alarmViewModel.getDeletedCardYouList(item.cardId!!)
-            alarmViewModel.viewEvent.observe(this) {
-                it.getContentIfNotHandled()?.let { event ->
-                    when (event) {
-                        AlarmViewModel.DELETED_CARD -> {
-                            shortToast("삭제된 카드입니다")
-                        }
-                        AlarmViewModel.EXISTED_CARD -> {
-                            startActivity(
-                                Intent(this, DetailCardActivity::class.java)
-                                    .putExtra(BaseViewUtil.CARD_ID, alarmViewModel.currentCardId.value)
-                                    .putExtra(BaseViewUtil.FROM_ALARM_KEY, true)
-                            )
+            if (!item.content.contains("수락")) {
+                alarmViewModel.getDeletedCardYouList(item.cardId!!)
+                alarmViewModel.viewEvent.observe(this) {
+                    it.getContentIfNotHandled()?.let { event ->
+                        when (event) {
+                            AlarmViewModel.DELETED_CARD -> {
+                                shortToast("삭제된 카드입니다")
+                            }
+                            AlarmViewModel.EXISTED_CARD -> {
+                                startActivity(
+                                    Intent(this, DetailCardActivity::class.java)
+                                        .putExtra(BaseViewUtil.CARD_ID, alarmViewModel.currentCardId.value)
+                                        .putExtra(BaseViewUtil.FROM_ALARM_KEY, true)
+                                )
+                            }
                         }
                     }
                 }
+            } else {
+                startActivity(
+                    Intent(this, MainCardActivity::class.java)
+                        .putExtra("friendId", item.friendId)
+                        .putExtra("name", item.name)
+                )
             }
         }
 

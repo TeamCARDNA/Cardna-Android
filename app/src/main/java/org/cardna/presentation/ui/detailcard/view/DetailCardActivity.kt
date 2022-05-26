@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
@@ -53,7 +54,13 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     private fun setObserve() {
         detailCardViewModel.detailCard.observe(this) { detailCard ->
             cardType = detailCard.type
-            setSrcWithGlide(detailCard.cardImg, binding.ivDetailcardImage)
+
+            detailCardViewModel.setLoadingState(false)
+            Glide
+                .with(this)
+                .load(detailCard.cardImg)
+                .centerCrop()
+                .into(binding.ivDetailcardImage)
 
             with(binding) {
                 when (cardType) {
@@ -88,6 +95,15 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                     isClickable = false
                 }
             }
+        }
+
+        detailCardViewModel.isReportUserSuccess.observe(this) {
+            shortToast("신고가 접수되었습니다")
+            finish()
+        }
+
+        detailCardViewModel.isUserReportDialogShow.observe(this) {
+            onBackPressed()
         }
     }
 
@@ -150,6 +166,8 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         val reasonThreeBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_reason_three)
         val reasonFourBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_reason_four)
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_dialog_report_cancel)
+
+        detailCardViewModel.isUserReportDialogShow()
 
         reasonOneBtn.setOnClickListener {
             detailCardViewModel.reportUser(REPORT_REASON_ONE)
@@ -230,6 +248,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
             }
         }
     }
+
 
     companion object {
         const val CARD_ME = "me"

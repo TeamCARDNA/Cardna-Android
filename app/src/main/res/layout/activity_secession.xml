@@ -41,25 +41,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_seccession_title_sentence"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/secession_title_sentence"
-                android:textColor="@color/white_3"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@id/tv_seccession_title"
-                app:layout_constraintTop_toBottomOf="@id/tv_seccession_title" />
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctl_secession_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                app:layout_constraintStart_toStartOf="@+id/tv_seccession_title_sentence"
-                app:layout_constraintTop_toBottomOf="@+id/tv_seccession_title_sentence">
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_seccession_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_seccession_title">
 
                 <CheckedTextView
                     android:id="@+id/ctv_secession_one"
@@ -69,14 +57,19 @@
                     android:layout_height="wrap_content"
                     android:checkMark="@drawable/ic_selector_secession_checkbox"
                     android:checked="false"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/tv_secession_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="3dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@string/secession_reason_one"
                     android:textColor="@color/white_1"
@@ -91,7 +84,7 @@
                 android:id="@+id/ctl_secession_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="31dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@+id/ctl_secession_one"
                 app:layout_constraintTop_toBottomOf="@+id/ctl_secession_one">
 
@@ -103,6 +96,10 @@
                     android:layout_height="wrap_content"
                     android:checkMark="@drawable/ic_selector_secession_checkbox"
                     android:checked="false"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,7 +107,7 @@
                     android:id="@+id/tv_secession_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="3dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@string/secession_reason_two"
                     android:textColor="@color/white_1"
@@ -125,7 +122,7 @@
                 android:id="@+id/ctl_secession_three"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="31dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@+id/ctl_secession_two"
                 app:layout_constraintTop_toBottomOf="@+id/ctl_secession_two">
 
@@ -137,6 +134,10 @@
                     android:layout_height="wrap_content"
                     android:checkMark="@drawable/ic_selector_secession_checkbox"
                     android:checked="false"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -144,7 +145,7 @@
                     android:id="@+id/tv_secession_three"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="3dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@string/secession_reason_three"
                     android:textColor="@color/white_1"
@@ -159,7 +160,7 @@
                 android:id="@+id/ctl_secession_four"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="31dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@+id/ctl_secession_three"
                 app:layout_constraintTop_toBottomOf="@+id/ctl_secession_three">
 
@@ -171,6 +172,10 @@
                     android:layout_height="wrap_content"
                     android:checkMark="@drawable/ic_selector_secession_checkbox"
                     android:checked="false"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -178,7 +183,7 @@
                     android:id="@+id/tv_secession_four"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="3dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@string/secession_reason_four"
                     android:textColor="@color/white_1"
@@ -193,7 +198,7 @@
                 android:id="@+id/ctl_secession_five"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="31dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@+id/ctl_secession_four"
                 app:layout_constraintTop_toBottomOf="@+id/ctl_secession_four">
 
@@ -205,6 +210,10 @@
                     android:layout_height="wrap_content"
                     android:checkMark="@drawable/ic_selector_secession_checkbox"
                     android:checked="false"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -212,7 +221,7 @@
                     android:id="@+id/tv_secession_five"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="3dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@string/secession_reason_five"
                     android:textColor="@color/white_1"
@@ -227,7 +236,7 @@
                 android:id="@+id/ctl_secession_six"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="31dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@+id/ctl_secession_five"
                 app:layout_constraintTop_toBottomOf="@+id/ctl_secession_five">
 
@@ -239,6 +248,9 @@
                     android:layout_height="wrap_content"
                     android:checkMark="@drawable/ic_selector_secession_checkbox"
                     android:checked="false"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -246,7 +258,7 @@
                     android:id="@+id/tv_secession_six"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="3dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@string/secession_reason_six"
                     android:textColor="@color/white_1"
@@ -261,29 +273,31 @@
 
         <EditText
             android:id="@+id/et_secession_reason"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="35dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/bg_stroke_white_4dp"
-            android:ems="1"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="top"
             android:includeFontPadding="false"
+            android:lineSpacingExtra="4dp"
             android:maxLength="115"
             android:padding="10dp"
             android:textColor="@color/white_1"
             android:textSize="14sp"
             android:visibility="@{settingViewModel.secessionReasonSixCheck ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@+id/tv_secession_warning"
+            app:layout_constraintEnd_toEndOf="@+id/button_secession"
+            app:layout_constraintStart_toStartOf="@+id/ctl_secssion_top"
             app:layout_constraintTop_toBottomOf="@+id/ctl_secssion_top"
-            tools:layout_editor_absoluteX="48dp" />
+            tools:text="가나다라사거ㅏㅓ가가fsfsfsfsfsfsfsfsfsfsfsfsfsf가가가가가가가가가가가가가나다라마가가가가가가가가가가가가가가가가가나다라마가가가가가가가가가가가가가가가가가나다라마가가가가가가가가가가가가가가가가가나다라마가가가가가가가가가가가가가가가가가나가가가가가가가가" />
 
         <TextView
             android:id="@+id/tv_secession_warning"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/pretendard_regular"
@@ -291,7 +305,9 @@
             android:text="@string/secession_warning"
             android:textColor="@color/white_4"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/button_secession" />
+            app:layout_constraintBottom_toTopOf="@+id/button_secession"
+            app:layout_constraintEnd_toEndOf="@+id/button_secession"
+            app:layout_constraintStart_toStartOf="@+id/button_secession" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_secession"
