@@ -45,6 +45,7 @@ fun setImageResource(view: ImageView, resId: String) {
     if(resId.isNotEmpty())
     Glide.with(view.context)
         .load(resId)
+        .centerCrop()
         .into(view)
 }
 

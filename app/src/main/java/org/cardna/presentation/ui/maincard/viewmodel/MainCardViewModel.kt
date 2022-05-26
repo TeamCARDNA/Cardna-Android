@@ -28,6 +28,9 @@ class MainCardViewModel @Inject constructor(
     private val alarmRepository: AlarmRepository
 ) : ViewModel() {
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     private val _isMyCard = MutableLiveData<Boolean>()
     val isMyCard: LiveData<Boolean> = _isMyCard
 
@@ -61,7 +64,7 @@ class MainCardViewModel @Inject constructor(
     private val _isAlarmExist = MutableLiveData<Boolean>()
     val isAlarmExist: LiveData<Boolean> = _isAlarmExist
 
-    private val   _setFriendInfoSucccess = MutableLiveData<Boolean>()
+    private val _setFriendInfoSucccess = MutableLiveData<Boolean>()
     val setFriendInfoSucccess: LiveData<Boolean> = _setFriendInfoSucccess
 
     private val _updateAlarmCount = MutableLiveData<Int>(0)
@@ -73,7 +76,7 @@ class MainCardViewModel @Inject constructor(
                 alarmRepository.getAlarm()
             }.onSuccess {
                 it.data.apply {
-                    _updateAlarmCount.value= request.requester.size + alarm.size
+                    _updateAlarmCount.value = request.requester.size + alarm.size
                     _isAlarmExist.value = CardNaRepository.alarmExistCount == request.requester.size + alarm.size
                     Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡsetAlarmExistㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${request.requester.size}+${alarm.size}+${CardNaRepository.alarmExistCount}")
                 }
@@ -90,7 +93,7 @@ class MainCardViewModel @Inject constructor(
     fun setFriendNameAndId(name: String, id: Int) {
         _friendId.value = id
         _friendName.value = name
-        _setFriendInfoSucccess.value=true
+        _setFriendInfoSucccess.value = true
     }
 
     fun getMainCardList(id: Int? = -1) {
@@ -102,9 +105,10 @@ class MainCardViewModel @Inject constructor(
                     id?.let { cardRepository.getOtherMainCard(it).data }
             }.onSuccess { it ->
                 if (it != null) {
+                    _isLoading.value = false
                     _isMyCard.value = it.isMyCard
                     _cardList.value = it.mainCardList
-                    _cardTileList.value = it.mainCardList.map{if(it.title.length>=12) it.title.substring(0..10)+"..."  else it.title}
+                    _cardTileList.value = it.mainCardList.map { if (it.title.length >= 12) it.title.substring(0..10) + "..." else it.title }
                     _isBlocked.value = it.isBlocked
                     _relation.value = "${it.relation}"
                     it.mainCardList.map {
@@ -149,5 +153,9 @@ class MainCardViewModel @Inject constructor(
 
     fun saveInitCardPosition(cardPosition: Int) {
         _cardPosition.value = cardPosition
+    }
+
+    fun setLoadingState(isLoading: Boolean) {
+        _isLoading.value = isLoading
     }
 }
