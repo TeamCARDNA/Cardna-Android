@@ -37,6 +37,9 @@ class MainCardViewModel @Inject constructor(
     private val _cardList = MutableLiveData<List<MainCard>>()
     val cardList: LiveData<List<MainCard>> = _cardList
 
+    private val _cardTileList = MutableLiveData<List<String>>()
+    val cardTileList: LiveData<List<String>> = _cardTileList
+
     private val _cardId = MutableLiveData<Int>()
     val cardId: LiveData<Int> = _cardId
 
@@ -57,6 +60,9 @@ class MainCardViewModel @Inject constructor(
 
     private val _isAlarmExist = MutableLiveData<Boolean>()
     val isAlarmExist: LiveData<Boolean> = _isAlarmExist
+
+    private val   _setFriendInfoSucccess = MutableLiveData<Boolean>()
+    val setFriendInfoSucccess: LiveData<Boolean> = _setFriendInfoSucccess
 
     private val _updateAlarmCount = MutableLiveData<Int>(0)
     val updateAlarmCount: LiveData<Int> = _updateAlarmCount
@@ -84,6 +90,7 @@ class MainCardViewModel @Inject constructor(
     fun setFriendNameAndId(name: String, id: Int) {
         _friendId.value = id
         _friendName.value = name
+        _setFriendInfoSucccess.value=true
     }
 
     fun getMainCardList(id: Int? = -1) {
@@ -93,10 +100,11 @@ class MainCardViewModel @Inject constructor(
                     cardRepository.getMainCard().data
                 else
                     id?.let { cardRepository.getOtherMainCard(it).data }
-            }.onSuccess {
+            }.onSuccess { it ->
                 if (it != null) {
                     _isMyCard.value = it.isMyCard
                     _cardList.value = it.mainCardList
+                    _cardTileList.value = it.mainCardList.map{if(it.title.length>=12) it.title.substring(0..10)+"..."  else it.title}
                     _isBlocked.value = it.isBlocked
                     _relation.value = "${it.relation}"
                     it.mainCardList.map {

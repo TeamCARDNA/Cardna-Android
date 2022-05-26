@@ -102,7 +102,6 @@ class SearchFriendCodeActivity :
         val confirmBtn = dialog.findViewById<Button>(R.id.tv_dialog_break_up_friend_title_confirm)
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_dialog_break_up_friend_title_cancle)
 
-        //TODO 로그아웃 확인 누르면 서버 통신
         confirmBtn.setOnClickListener {
             myPageViewModel.breakUpFriend()
             dialog.dismiss()
@@ -117,10 +116,8 @@ class SearchFriendCodeActivity :
         val intent = Intent(this, MainCardActivity::class.java)
         val friendId = myPageViewModel.friendId.value ?: -1
         val name = myPageViewModel.searchFriendCodeResult.value?.name
-        val code = myPageViewModel.searchCodeQuery.value
         intent.putExtra("friendId", friendId)
         intent.putExtra("name", name)
-        intent.putExtra("code", code)
         startActivity(intent)
     }
 

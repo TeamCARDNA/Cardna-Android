@@ -96,6 +96,9 @@ class CardCreateActivity :
         cardCreateViewModel.setUserName(
             intent.getStringExtra(BaseViewUtil.NAME) ?: CardNaRepository.kakaoUserfirstName
         ) // 안넘겨주면 null ?
+
+        Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡ친구 카드작성 넘겨받음ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",
+            intent.getIntExtra(BaseViewUtil.ID, 0).toString() + intent.getStringExtra(BaseViewUtil.NAME).toString())
     }
 
     override fun initView() {

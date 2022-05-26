@@ -164,6 +164,7 @@ class CardCreateViewModel @Inject constructor(
                 }
             }
         } else { // 카드너 작성 => friendId 포함
+            Log.e("ㅡㅡㅡㅡㅡㅡㅡ친구뷰모델","${id}+${symbolId}")
             if (id == -1) return
             val body = RequestCreateCardYouData(
                 etKeywordText.value!!,

@@ -18,6 +18,7 @@
         <ImageView
             android:id="@+id/iv_item_alarm_friend_request_profile"
             android:layout_width="68dp"
+
             android:layout_height="68dp"
             android:layout_marginBottom="28dp"
             android:src="@drawable/img_item_friend_request_dummy"
@@ -27,15 +28,20 @@
 
         <TextView
             android:id="@+id/tv_item_alarm_friend_request_friend_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="14dp"
+            android:ellipsize="end"
             android:fontFamily="@font/pretendard_regular"
             android:includeFontPadding="false"
-            android:text="@string/item_friend_request_friend_name"
+            android:maxLines="1"
+            android:text="김수안무거북이와두루미님이 친구를 요청했어요요"
             android:textColor="@color/white_1"
             android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_item_alarm_friend_request_date"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/iv_item_alarm_friend_request_profile"
             app:layout_constraintTop_toTopOf="@id/iv_item_alarm_friend_request_profile" />
 
@@ -52,10 +58,12 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctl_item_alarm_friend_request_accept"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_item_alarm_friend_request_friend_name"
             app:layout_constraintTop_toBottomOf="@id/tv_item_alarm_friend_request_friend_name">
 
@@ -72,13 +80,16 @@
 
             <TextView
                 android:id="@+id/tv_item_alarm_friend_request_sentence"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:fontFamily="@font/pretendard_regular"
+                android:maxLength="1"
                 android:text="@string/item_friend_request_accept_text"
                 android:textColor="@color/white_1"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_item_alarm_friend_request_accept_friend_name"
                 app:layout_constraintTop_toTopOf="@id/tv_item_alarm_friend_request_accept_friend_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -90,7 +101,8 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_item_alarm_friend_request_profile"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tv_item_alarm_friend_request_friend_name">
+            app:layout_constraintStart_toStartOf="@+id/tv_item_alarm_friend_request_friend_name"
+            tools:visibility="gone">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mb_item_alarm_friend_request_refuse"
@@ -120,15 +132,6 @@
                 app:layout_constraintStart_toEndOf="@id/mb_item_alarm_friend_request_refuse" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!--   <View
-               android:id="@+id/view_item_alarm_friend_request_div"
-               android:layout_width="match_parent"
-               android:layout_height="1dp"
-               android:layout_marginTop="30dp"
-               android:background="@color/white_5"
-               app:layout_constraintBottom_toBottomOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/iv_item_alarm_friend_request_profile" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
