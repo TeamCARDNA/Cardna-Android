@@ -2,9 +2,12 @@ package org.cardna.presentation
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils.replace
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.commit
 import com.google.android.gms.tasks.OnCompleteListener
@@ -41,6 +44,80 @@ class MainActivity :
     private val myPageFragment: MyPageFragment by lazy { MyPageFragment() }
     private val cardPackFragment: CardPackFragment by lazy {CardPackFragment() }
 
+
+    private val TAG_MAIN = "mainCard"
+    private val TAG_CARDPACK = "cardPack"
+    private val TAG_INSIGHT = "insight"
+    private val TAG_MYPAGE = "myPage"
+    private val TAG_FRIEND_MAINCARD = "friendMainCard"
+
+    //프래그먼트 컨트롤 함수
+    fun setFragment(tag: String, fragment: Fragment){
+        val manager = supportFragmentManager
+        val ft = manager.beginTransaction()
+
+        //트랜잭션에 tag로 전달된 fragment가 없을 경우 add
+        if(manager.findFragmentByTag(tag) == null){
+            ft.add(R.id.fcv_main, fragment, tag)
+        }
+
+        //작업이 수월하도록 manager에 add되어있는 fragment들을 변수로 할당해둠
+        val mainCard = manager.findFragmentByTag(TAG_MAIN)
+        val cardPack = manager.findFragmentByTag(TAG_CARDPACK)
+        val insight = manager.findFragmentByTag(TAG_INSIGHT)
+        val myPage = manager.findFragmentByTag(TAG_MYPAGE)
+        val friendMainCard = manager.findFragmentByTag(TAG_FRIEND_MAINCARD)
+
+        //모든 프래그먼트 hide
+        if(mainCard !=null){
+            ft.hide(mainCard)
+        }
+        if(cardPack!=null){
+            ft.hide(cardPack)
+        }
+        if(insight!=null){
+            ft.hide(insight)
+        }
+        if(myPage!=null){
+            ft.hide(myPage)
+        }
+        if(friendMainCard!=null){
+            ft.hide(friendMainCard)
+        }
+
+        //선택한 항목에 따라 그에 맞는 프래그먼트만 show
+        if(tag == TAG_MAIN){
+            if(mainCard!=null){
+                ft.show(mainCard)
+            }
+        }
+        else if(tag == TAG_CARDPACK){
+            if(cardPack!=null){
+                ft.show(cardPack)
+            }
+        }
+        else if(tag == TAG_INSIGHT){
+            if(insight!=null){
+                ft.show(insight)
+            }
+        }
+        else if(tag == TAG_MYPAGE){
+            if(myPage!=null){
+                ft.show(myPage)
+            }
+        }
+        else if(tag == TAG_FRIEND_MAINCARD){
+            if(friendMainCard!=null){
+                ft.show(friendMainCard)
+            }
+        }
+
+        //마무리
+//        ft.commitAllowingStateLoss()
+        ft.commit()
+    }
+
+
     @Inject
     lateinit var cardRepository: CardRepository
 
@@ -52,8 +129,48 @@ class MainActivity :
     override fun initView() {
         initGetIntent()
         initBottomNavigation()
+//        initBottomNavigationInsta()
         setBottomNavigationSelectListener()
     }
+
+    private fun initBottomNavigationInsta() {
+//        setFragment(TAG_CARDPACK,CardPackFragment())
+//        setFragment(TAG_MYPAGE,MyPageFragment())
+//        setFragment(TAG_INSIGHT,InsightFragment())
+        setFragment(TAG_MAIN,MainCardFragment())
+
+
+        binding.bnvMain.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_bottom_maincard -> {
+                    supportFragmentManager.popBackStack()
+                    setFragment(TAG_MAIN, MainCardFragment())
+                    return@setOnItemSelectedListener true
+                }
+                R.id.menu_bottom_cardpack -> {
+                    supportFragmentManager.popBackStack()
+                    setFragment(TAG_CARDPACK, CardPackFragment())
+                    return@setOnItemSelectedListener true
+                }
+                R.id.menu_bottom_insight -> {
+                    supportFragmentManager.popBackStack()
+                    setFragment(TAG_INSIGHT, InsightFragment())
+                    return@setOnItemSelectedListener true
+                }
+                else -> {
+                    supportFragmentManager.popBackStack()
+                    setFragment(TAG_MYPAGE, MyPageFragment())
+
+//                    val friendMainCard = supportFragmentManager.findFragmentByTag(TAG_FRIEND_MAINCARD)
+//                    if(friendMainCard!=null){
+//                        supportFragmentManager.beginTransaction().show(friendMainCard).commit()
+//                    }
+                    return@setOnItemSelectedListener true
+                }
+            }
+        }
+    }
+
 
     private fun initBottomNavigation() {
         binding.bnvMain.setOnItemSelectedListener {

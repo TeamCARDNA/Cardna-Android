@@ -12,6 +12,8 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
+import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResult
@@ -110,6 +112,7 @@ class CardCreateActivity :
         setObserver()
         setView() // editText 글자 수에 따라 글자 수 업데이트, 버튼 선택가능하도록
         setChooseCardListener() // 이미지 ctl 눌렀을 때 bottomDialog 띄우도록
+        setEnterKeyEnabled()
     }
 
 
@@ -177,6 +180,21 @@ class CardCreateActivity :
             }
             bottomDialogImageFragment.show(supportFragmentManager, bottomDialogImageFragment.tag)
         }
+    }
+
+    private fun setEnterKeyEnabled() {
+        binding.etCardcreateDetail.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+                Timber.e("Enter key 입력")
+
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.etCardcreateDetail.windowToken, 0)
+
+                //Perform Code
+                return@OnKeyListener true
+            }
+            false
+        })
     }
 
 
