@@ -28,7 +28,6 @@ class FriendRequestAdapter(
 
         fun onBind(data: ResponseGetAlarmData.Data.Request.Requester) {
             binding.apply {
-                Timber.e("AAA alarmViewModel : ${data.id}")
                 tvItemAlarmFriendRequestFriendName.text = data.name
                 tvItemAlarmFriendRequestDate.text = data.date
                 Glide.with(activity)
@@ -53,11 +52,6 @@ class FriendRequestAdapter(
                 mbItemAlarmFriendRequestRefuse.setOnClickListener {
                     alarmViewModel.acceptOrDenyFriend(data.id, false)
                 }
-      /*          if (loadStatus) {
-                    viewItemAlarmFriendRequestDiv.visibility = View.INVISIBLE
-                } else {
-                    viewItemAlarmFriendRequestDiv.visibility = View.VISIBLE
-                }*/
             }
         }
     }

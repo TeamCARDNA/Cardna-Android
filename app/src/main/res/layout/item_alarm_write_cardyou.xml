@@ -29,18 +29,22 @@
 
         <TextView
             android:id="@+id/tv_item_alarm_write_cardyou_sentence"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:layout_marginEnd="14dp"
             android:layout_marginBottom="6dp"
+            android:ellipsize="end"
             android:fontFamily="@font/pretendard_semibold"
             android:includeFontPadding="false"
+            android:maxLines="1"
             android:text="@string/item_write_cardyou_sentence"
             android:textColor="@color/white_1"
             android:textSize="18sp"
-            tools:text="김수안무거북이와두루님이 카드너를 적어줬어요"
             app:layout_constraintBottom_toTopOf="@+id/tv_item_alarm_write_cardyou_friend_name"
-            app:layout_constraintStart_toEndOf="@+id/iv_item_alarm_write_cardyou" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_item_alarm_write_cardyou"
+            tools:text="김수안무거북이와두루님이 카드너를 적어줬어요" />
 
         <TextView
             android:id="@+id/tv_item_alarm_write_cardyou_friend_name"

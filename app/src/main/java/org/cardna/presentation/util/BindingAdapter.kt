@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModel
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import org.cardna.presentation.ui.mypage.view.SearchFriendCodeActivity
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
@@ -44,6 +45,16 @@ fun setImageResource(view: ImageView, resId: String) {
     if(resId.isNotEmpty())
     Glide.with(view.context)
         .load(resId)
+        .centerCrop()
         .into(view)
+}
+
+@BindingAdapter("playLoadingLottie")
+fun playLoadingLottie(lottie: LottieAnimationView, play: Boolean) {
+    if (play) {
+        lottie.playAnimation()
+    } else {
+        lottie.cancelAnimation()
+    }
 }
 

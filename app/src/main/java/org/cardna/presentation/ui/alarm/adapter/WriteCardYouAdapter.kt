@@ -33,7 +33,6 @@ class WriteCardYouAdapter(
                 tvItemAlarmWriteCardyouFriendName.text = data.name
 
 
-                Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgeAllAlarmㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${data.date}+${data.content}+${data.name}")
                 Glide.with(activity)
                     .load(data.profileImage)
                     .circleCrop()

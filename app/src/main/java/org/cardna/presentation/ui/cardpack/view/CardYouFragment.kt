@@ -2,6 +2,7 @@ package org.cardna.presentation.ui.cardpack.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -88,8 +89,9 @@ class CardYouFragment :
 
         // 2. 친구 카드너 엠티뷰 => 카드너 작성
         binding.ctlFriendEmptyMakeCardyou.setOnClickListener {
+            Log.e("ㅡㅡㅡㅡㅡㅡ버튼ㅡㅡㅡㅡㅡㅡ","${cardPackViewModel.id.value}+${cardPackViewModel.name}")
             val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
-                putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_YOU) // 내 카드나 작성이므로
+                putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_YOU)
                 putExtra(BaseViewUtil.ID, cardPackViewModel.id.value)
                 putExtra(BaseViewUtil.NAME, cardPackViewModel.name)
                 putExtra(BaseViewUtil.IS_CARDPACK_OR_MAINCARD, BaseViewUtil.FROM_CARDPACK) // 카드팩에서 왔음을 알려줌

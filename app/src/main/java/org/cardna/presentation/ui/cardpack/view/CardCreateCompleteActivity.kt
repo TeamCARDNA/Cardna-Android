@@ -241,4 +241,6 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
         const val LOTTIE_TEXT_TIME = 1400L
         const val LOTTIE_BTN_TIME = 2400L
     }
+
+
 }

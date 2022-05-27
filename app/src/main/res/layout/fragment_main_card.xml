@@ -19,6 +19,7 @@
         android:layout_height="match_parent"
         android:background="@color/main_black">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_maincard_alarm"
             android:layout_width="wrap_content"
@@ -90,15 +91,18 @@
         <TextView
             android:id="@+id/tv_maincard_user_name"
             style="@style/fragment_title_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
+            android:ellipsize="end"
             android:fontFamily="@font/pretendard_extralight"
+            android:maxLines="1"
             android:text="@{mainCardViewModel.name!=`null` ? mainCardViewModel.name+@string/maincard_tv_username_tag : ` `}"
+            app:layout_constraintEnd_toStartOf="@+id/ll_maincard_mypage_icon_container"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/mypage_name" />
+            tools:text="가나다다다다다다다다다다다다다다다" />
 
         <View
             android:id="@+id/view_maincard_under_line"
@@ -110,8 +114,7 @@
             app:layout_constraintEnd_toEndOf="@id/tv_maincard_title"
             app:layout_constraintStart_toStartOf="@id/tv_maincard_title"
             app:layout_constraintTop_toTopOf="@+id/tv_maincard_title"
-            tools:background="@color/main_purple_60"
-            tools:layout_width="360dp" />
+            tools:background="@color/main_purple_60" />
 
         <TextView
             android:id="@+id/tv_maincard_title"
@@ -119,14 +122,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/pretendard_bold"
-            android:maxLength="12"
-            android:text="@{mainCardViewModel.cardList.size()==0 ? @string/maincard_tv_empty_title : mainCardViewModel.cardList[mainCardViewModel.cardPosition].title}"
+            android:text="@{mainCardViewModel.cardList.size()==0 ? @string/maincard_tv_empty_title : mainCardViewModel.cardTileList[mainCardViewModel.cardPosition]}"
             android:textColor="@color/white_1"
             android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@id/tv_maincard_user_name"
             app:layout_constraintTop_toBottomOf="@id/tv_maincard_user_name"
-            tools:text="@string/maincard_tv_title" />
+            tools:text="가가가가가가가가가가가가가가가가가가가가가" />
 
         <!--        <androidx.core.widget.NestedScrollView-->
         <!--            android:id="@+id/nestedScrollView"-->
@@ -144,7 +149,6 @@
             android:layout_marginBottom="42dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_maincard_under_line">
-            네이버#9955
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp_maincard_list"
@@ -275,7 +279,17 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/la_loading_lottie"
+                playLoadingLottie="@{mainCardViewModel.isLoading}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{mainCardViewModel.isLoading? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_fileName="lottie_loading.json"
+                app:lottie_loop="false"
+                app:lottie_progress="4" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

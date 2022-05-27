@@ -141,6 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/cardpack_friend_empty_cardme"
+                        android:visibility="@{(cardPackViewModel.cardMeList.isEmpty()) ? View.VISIBLE : View.GONE}"
                         android:theme="@style/cardpack_empty_textView"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

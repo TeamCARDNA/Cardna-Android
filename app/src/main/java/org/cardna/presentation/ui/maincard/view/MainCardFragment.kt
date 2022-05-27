@@ -122,6 +122,8 @@ class MainCardFragment :
     private fun checkUserId() {
         var id = -1
         if (arguments != null) {
+            mainCardViewModel.setLoadingState(true)
+
             with(binding) {
                 llMaincardEditLayout.visibility = View.GONE
                 clMaincardAlarm.visibility =

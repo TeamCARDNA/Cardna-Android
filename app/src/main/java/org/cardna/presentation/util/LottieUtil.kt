@@ -46,7 +46,7 @@ fun showLoddingLottie(view: LottieAnimationView, type: String, json: String) {
     lottie.setAnimation(json)
 
 
-    view.visibility = View.VISIBLE
+  //  view.visibility = View.VISIBLE
     lottie.loop(false)
     lottie.playAnimation()
     lottie.repeatCount = 5

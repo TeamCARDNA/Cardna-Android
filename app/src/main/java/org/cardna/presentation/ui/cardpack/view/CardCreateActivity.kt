@@ -20,8 +20,13 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -33,13 +38,14 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
-import org.cardna.presentation.util.*
+import org.cardna.presentation.util.MultiPartResolver
+import org.cardna.presentation.util.shortToast
+import org.cardna.presentation.util.showLoddingLottie
 import org.cardna.ui.cardpack.BottomDialogImageFragment
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
-import java.util.*
 
 // 1. 내 카드팩에서 카드나 작성
 // 2. 친구 대표카드 or 친구 카드팩에서 카드너 작성
@@ -235,62 +241,65 @@ class CardCreateActivity :
                 if (it == null) {
                     cardCreateViewModel.makeCard(null)
                 } else {
-                    showLoddingLottie(
-                        binding.laLoadingLottie,
-                        DetailCardActivity.CARD_ME,
-                        "lottie_loading.json"
-                    )
-                    cardCreateViewModel.makeCard(
-                        multiPartResolver.createImgMultiPart(
-                            cardCreateViewModel.uri.value!!
-                        )
-                    )
+                    cardCreateViewModel.setLoadingState(true)
+                    lifecycleScope.launch {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            cardCreateViewModel.makeCard(
+                                multiPartResolver.createImgMultiPart(
+                                    cardCreateViewModel.uri.value!!
+                                )
+                            )
+                        }
+                    }
                 }
             }
 
-            // 2. cardCreateCompleteActivity 로 이동
-            if (cardCreateViewModel.isCardMeOrYou!!) {
-                // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
-                val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
-                intent.putExtra(
-                    BaseViewUtil.IS_CARD_ME_OR_YOU,
-                    cardCreateViewModel.isCardMeOrYou
-                ) // 현재는 카드나 작성이므로 CARD_ME를 보내줌
-                intent.putExtra(
-                    BaseViewUtil.SYMBOL_ID,
-                    cardCreateViewModel.symbolId
-                ) // 심볼 - symbolId값, 갤러리 - null
-                intent.putExtra(
-                    BaseViewUtil.CARD_IMG,
-                    cardCreateViewModel.uri.value.toString()
-                ) // 심볼 - null, 갤러리 - uri 값
-                intent.putExtra(BaseViewUtil.CARD_TITLE, cardCreateViewModel.etKeywordText.value)
+            cardCreateViewModel.makeCardSuccess.observe(this) { makeCardSuccess ->
+                if (makeCardSuccess)
+                // 2. cardCreateCompleteActivity 로 이동
+                    if (cardCreateViewModel.isCardMeOrYou!!) {
+                        // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
+                        val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
+                        intent.putExtra(
+                            BaseViewUtil.IS_CARD_ME_OR_YOU,
+                            cardCreateViewModel.isCardMeOrYou
+                        ) // 현재는 카드나 작성이므로 CARD_ME를 보내줌
+                        intent.putExtra(
+                            BaseViewUtil.SYMBOL_ID,
+                            cardCreateViewModel.symbolId
+                        ) // 심볼 - symbolId값, 갤러리 - null
+                        intent.putExtra(
+                            BaseViewUtil.CARD_IMG,
+                            cardCreateViewModel.uri.value.toString()
+                        ) // 심볼 - null, 갤러리 - uri 값
+                        intent.putExtra(BaseViewUtil.CARD_TITLE, cardCreateViewModel.etKeywordText.value)
 
-                binding.tvCardcreateComplete.isClickable = false
-                startActivity(intent)
+                        binding.tvCardcreateComplete.isClickable = false
+                        startActivity(intent)
 
-            } else {
-                // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
+                    } else {
+                        // 2-2. 친구 카드너 작성 => OtherCardCreateCompleteActivity 로 이동
 
-                val isCardPackOrMainCard = intent.getBooleanExtra(
-                    BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
-                    BaseViewUtil.FROM_MAINCARD
-                )
+                        val isCardPackOrMainCard = intent.getBooleanExtra(
+                            BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
+                            BaseViewUtil.FROM_MAINCARD
+                        )
 
-                val newIntent =
-                    Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
+                        val newIntent =
+                            Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
 
-                newIntent.putExtra(
-                    BaseViewUtil.IS_CARDPACK_OR_MAINCARD, isCardPackOrMainCard
-                )
+                        newIntent.putExtra(
+                            BaseViewUtil.IS_CARDPACK_OR_MAINCARD, isCardPackOrMainCard
+                        )
 
-                newIntent.putExtra(
-                    BaseViewUtil.IS_CODE_OR_FRIEND, intent.getBooleanExtra(
-                        BaseViewUtil.IS_CODE_OR_FRIEND,
-                        BaseViewUtil.FROM_FRIEND  // 안넘겨줬다면 Friend로 부터, 즉 마이페이지에서 친구 클릭
-                    )
-                )
-                startActivity(newIntent)
+                        newIntent.putExtra(
+                            BaseViewUtil.IS_CODE_OR_FRIEND, intent.getBooleanExtra(
+                                BaseViewUtil.IS_CODE_OR_FRIEND,
+                                BaseViewUtil.FROM_FRIEND  // 안넘겨줬다면 Friend로 부터, 즉 마이페이지에서 친구 클릭
+                            )
+                        )
+                        startActivity(newIntent)
+                    }
             }
         }
     }
@@ -298,20 +307,19 @@ class CardCreateActivity :
     /** 카드추가 유도뷰일 때 클릭 이벤트 */
     private fun setCardInduceListener() {
         binding.tvCardcreateComplete.setOnClickListener {
-            binding.tvCardcreateComplete.isClickable = false
             if (cardCreateViewModel.uri.value == null) {
                 cardCreateViewModel.makeCard(null)
             } else {
-                showLoddingLottie(
-                    binding.laLoadingLottie,
-                    DetailCardActivity.CARD_ME,
-                    "lottie_loading.json"
-                )
-                cardCreateViewModel.makeCard(
-                    multiPartResolver.createImgMultiPart(
-                        cardCreateViewModel.uri.value!!
-                    )
-                )
+                cardCreateViewModel.setLoadingState(true)
+                lifecycleScope.launch {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        cardCreateViewModel.makeCard(
+                            multiPartResolver.createImgMultiPart(
+                                cardCreateViewModel.uri.value!!
+                            )
+                        )
+                    }
+                }
             }
 
             cardCreateViewModel.makeInduceCardSuccess.observe(this) { makeInduceCardSuccess ->
@@ -322,6 +330,7 @@ class CardCreateActivity :
             }
         }
     }
+
 
     fun makeCardInduceListener(cardId: Int) {
         if (cardCreateViewModel.isCardMeOrYou!!) {

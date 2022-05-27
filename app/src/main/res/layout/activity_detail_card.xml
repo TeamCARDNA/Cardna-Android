@@ -33,6 +33,18 @@
             app:layout_constraintDimensionRatio="360:378"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/la_loading_lottie"
+            playLoadingLottie="@{detailCardViewModel.isLoading}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{detailCardViewModel.isLoading? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_detailcard_image"
+            app:layout_constraintTop_toTopOf="@+id/iv_detailcard_image"
+            app:lottie_fileName="lottie_loading.json"
+            app:lottie_loop="false"
+            app:lottie_progress="4" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctl_detailcard_like"
             android:layout_width="wrap_content"

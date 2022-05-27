@@ -14,7 +14,7 @@
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_cardna_logo"
-        android:label="CARDNA"
+        android:label="카드나"
         android:roundIcon="@mipmap/ic_cardna_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cardna"
@@ -94,6 +94,7 @@
         <activity
             android:name=".presentation.ui.cardpack.view.CardCreateActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustUnspecified|adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.ui.detailcard.view.CardShareActivity"
@@ -110,6 +111,7 @@
         <activity
             android:name=".presentation.ui.setting.view.SecessionActivity"
             android:exported="true"
+            android:windowSoftInputMode="adjustUnspecified|adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.ui.setting.view.ServiceOperationActivity"
