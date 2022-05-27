@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white_1_5"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="360:378"
             app:layout_constraintTop_toTopOf="parent" />
 

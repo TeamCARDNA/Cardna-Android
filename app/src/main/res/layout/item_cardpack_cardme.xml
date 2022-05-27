@@ -30,7 +30,7 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_main_black"
             android:padding="1dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="142:203"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
