@@ -14,6 +14,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResult
@@ -189,6 +190,8 @@ class CardCreateActivity :
     }
 
     private fun setEnterKeyEnabled() {
+
+        // 카드 작성 editText 엔터키 입력 시
         binding.etCardcreateDetail.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
                 Timber.e("Enter key 입력")
@@ -201,6 +204,15 @@ class CardCreateActivity :
             }
             false
         })
+
+
+        binding.etCardcreateDetail.setOnTouchListener { view, event ->
+            view.parent.requestDisallowInterceptTouchEvent(true)
+            if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                view.parent.requestDisallowInterceptTouchEvent(false)
+            }
+            return@setOnTouchListener false
+        }
     }
 
 
