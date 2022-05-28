@@ -220,6 +220,8 @@ class CardCreateActivity :
             imm.showSoftInput(binding.etCardcreateKeyword, 0)
             Timber.e("포커스 이동")
         }
+
+
     }
 
 
