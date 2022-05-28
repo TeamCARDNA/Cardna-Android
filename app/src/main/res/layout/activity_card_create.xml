@@ -228,7 +228,7 @@
                     android:maxHeight="168dp"
                     android:minHeight="168dp"
                     android:maxLength="200"
-                    
+
                     android:inputType="textMultiLine"
                     android:scrollHorizontally="false"
                     android:scrollbars = "vertical"

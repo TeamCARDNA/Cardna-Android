@@ -213,6 +213,13 @@ class CardCreateActivity :
             }
             return@setOnTouchListener false
         }
+
+        binding.tvCardcreateTitle.setOnClickListener {
+            binding.etCardcreateKeyword.requestFocus()
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(binding.etCardcreateKeyword, 0)
+            Timber.e("포커스 이동")
+        }
     }
 
 
