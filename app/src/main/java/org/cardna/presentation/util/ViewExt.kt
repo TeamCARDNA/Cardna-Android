@@ -89,7 +89,7 @@ fun Context.showCustomDialog(@IdRes layout: Int): Dialog {
     dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     dialog.setContentView(layout)
     dialog.setContentView(layout)
-    dialog.setCancelable(false)
+    dialog.setCancelable(true)
     dialog.getWindow()!!.setGravity(Gravity.CENTER)
     dialog.show()
     return dialog

@@ -55,8 +55,8 @@ class MyPageViewModel @Inject constructor(
     val searchFriendCodeResult: LiveData<ResponseSearchFriendCodeData.Data> =
         _searchFriendCodeResult
 
-    private val _isNonExistFriendCode = MutableLiveData<Boolean>(false)
-    val isNonExistFriendCode: LiveData<Boolean> = _isNonExistFriendCode
+    private val _isNonExistFriendCode = MutableLiveData<Boolean?>(null)
+    val isNonExistFriendCode: LiveData<Boolean?> = _isNonExistFriendCode
 
     private val _friendRelationType = MutableLiveData<Int>()
     val friendRelationType: LiveData<Int> = _friendRelationType
@@ -135,6 +135,10 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
+    fun setSearchCodeDefault(){
+        _isNonExistFriendCode.value=null
+    }
+
     fun searchCodePost() {
         val query = _searchCodeQuery.value ?: return
         viewModelScope.launch {
@@ -146,9 +150,6 @@ class MyPageViewModel @Inject constructor(
                     _isNonExistFriendCode.value = false
                     _friendRelationType.value = relationType
                     _friendId.value = id
-                    Timber.d("AAA : it.relationType ${it.relationType}")
-                    Timber.d("AAA : friendRelationType : ${_friendRelationType.value}")
-                    Timber.d("AAA : searchCodeQuery : ${_searchCodeQuery.value}")
                 }
             }.onFailure {
                 _isNonExistFriendCode.value = true

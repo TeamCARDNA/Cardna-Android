@@ -99,7 +99,7 @@ class SetNameActivity :
                 positiveClickListener(btnAlertPositive, dialog, firstname, lastname)
             }
 
-            dialog.setCancelable(false)
+            dialog.setCancelable(true)
             dialog.show()
         }
     }
