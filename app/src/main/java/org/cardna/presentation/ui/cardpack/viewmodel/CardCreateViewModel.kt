@@ -152,7 +152,7 @@ class CardCreateViewModel @Inject constructor(
                             _makeInduceCardSuccess.value = true
                             _makeCardSuccess.value = true
 
-                            Amplitude.getInstance().logEvent("CardnaWritingFinish from CardnaWriting")
+                         //   Amplitude.getInstance().logEvent("CardnaWritingFinish from CardnaWriting")
                         }
                         .onFailure { Timber.e("카드나 작성 실패 : ${it.message}") }
                 }
