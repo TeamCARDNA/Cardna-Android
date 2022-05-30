@@ -22,6 +22,7 @@ import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.alarm.view.AlarmActivity
 import org.cardna.presentation.ui.cardpack.view.CardCreateActivity
 import org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity
+import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.editcard.view.EditCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
@@ -40,6 +41,7 @@ class MainCardFragment :
     private lateinit var mainCardAdapter: MainCardAdapter
     private val mainCardViewModel: MainCardViewModel by activityViewModels()
     private val myPageViewModel: MyPageViewModel by activityViewModels()
+    private val cardpackViewModel: CardPackViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,9 +115,10 @@ class MainCardFragment :
             else binding.icAlarmStatus.visibility = View.INVISIBLE
 
         }
+        cardpackViewModel.setTotalCardCnt()
         binding.mainCardViewModel = mainCardViewModel
+        binding.cardpackViewModel = cardpackViewModel
         setInitPagePosition()
-
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
     }
 
