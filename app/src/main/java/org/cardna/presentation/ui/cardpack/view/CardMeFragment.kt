@@ -7,6 +7,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.FragmentCardMeBinding
@@ -105,7 +106,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
         // cardMeList 에 observer 등록
         // onResume 될 때, cardMeList 를 업데이트 시키고 cardMeList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
         cardPackViewModel.cardMeList.observe(viewLifecycleOwner) { it ->
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",it.toString())
+            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", it.toString())
             it?.let { cardMeAdapter.submitList(it) }
         }
     }
@@ -113,6 +114,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
     private fun initEmptyViewListener() {
         binding.ctlBgAddCardme.setOnClickListener {
             // CardCreateActivity 로 이동
+            Amplitude.getInstance().logEvent("CardnaWriting from CardpackEmptys")
             val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
                 putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_ME) // 내 카드나 작성이므로
             }
@@ -120,7 +122,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
         }
     }
 
-    private fun saveCardMeRvState(){ // 언제 상태 저장할 것인가
+    private fun saveCardMeRvState() { // 언제 상태 저장할 것인가
         val state = (binding.rvCardme.layoutManager as GridLayoutManager).onSaveInstanceState()
         cardPackViewModel.setCardMeRvPosition(state!!)
     }
