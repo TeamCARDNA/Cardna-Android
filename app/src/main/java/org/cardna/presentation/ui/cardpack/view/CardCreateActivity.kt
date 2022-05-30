@@ -119,7 +119,7 @@ class CardCreateActivity :
         setObserver()
         setView() // editText 글자 수에 따라 글자 수 업데이트, 버튼 선택가능하도록
         setChooseCardListener() // 이미지 ctl 눌렀을 때 bottomDialog 띄우도록
-        setEnterKeyEnabled()
+        setEnterKeyEnabled() // 줄바꿈 불가능하도록
     }
 
 
@@ -196,6 +196,7 @@ class CardCreateActivity :
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
                 Timber.e("Enter key 입력")
 
+                // 키보드 숨기기
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.etCardcreateDetail.windowToken, 0)
 
@@ -205,7 +206,7 @@ class CardCreateActivity :
             false
         })
 
-
+        // editText 스크롤 가능하도록
         binding.etCardcreateDetail.setOnTouchListener { view, event ->
             view.parent.requestDisallowInterceptTouchEvent(true)
             if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
@@ -214,14 +215,13 @@ class CardCreateActivity :
             return@setOnTouchListener false
         }
 
+        // textView 눌렀을 때도 editText 로 포커스 이동
         binding.tvCardcreateTitle.setOnClickListener {
             binding.etCardcreateKeyword.requestFocus()
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(binding.etCardcreateKeyword, 0)
             Timber.e("포커스 이동")
         }
-
-
     }
 
 

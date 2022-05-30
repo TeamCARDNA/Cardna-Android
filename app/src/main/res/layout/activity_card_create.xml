@@ -163,6 +163,7 @@
                         android:lineSpacingExtra="-0.22sp"
                         android:maxLength="14"
                         android:maxLines="1"
+                        android:nextFocusDown="@id/et_cardcreate_detail"
                         android:padding="0dp"
                         android:paddingStart="0dp"
                         android:singleLine="true"
