@@ -301,7 +301,7 @@ class MainCardFragment :
         if (isBlock == true) {
             dialog.setContentView(dialogBinding.root)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.setCancelable(false)
+            dialog.setCancelable(true)
             dialog.show()
         }
     }
