@@ -3,6 +3,7 @@ package org.cardna.presentation.ui.cardpack.viewmodel
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.*
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -150,6 +151,8 @@ class CardCreateViewModel @Inject constructor(
                             _induceCardId.value = it.data.id
                             _makeInduceCardSuccess.value = true
                             _makeCardSuccess.value = true
+
+                         //   Amplitude.getInstance().logEvent("CardnaWritingFinish from CardnaWriting")
                         }
                         .onFailure { Timber.e("카드나 작성 실패 : ${it.message}") }
                 }

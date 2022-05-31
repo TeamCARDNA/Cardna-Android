@@ -46,6 +46,9 @@ class SearchFriendCodeActivity :
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(newText: String?): Boolean {
+                    if (newText == "") {
+                        myPageViewModel.setSearchCodeDefault()
+                    }
                     myPageViewModel.updateSearchCodeQuery(newText.toString())
                     clearFocus()
                     return false
