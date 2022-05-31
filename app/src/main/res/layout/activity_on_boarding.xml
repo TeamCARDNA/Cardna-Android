@@ -24,8 +24,8 @@
             android:id="@+id/cl_onboarding_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="12dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -34,6 +34,7 @@
                 style="@style/onboarding_indicator_text"
                 android:textColor="@color/white_3"
                 android:layout_width="wrap_content"
+                android:padding="12dp"
                 android:layout_height="match_parent"
                 android:text="@string/onboarding_skip"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -60,6 +61,7 @@
                 style="@style/onboarding_indicator_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:padding="12dp"
                 android:layout_gravity="end"
                 android:text="@string/onboarding_next"
                 app:layout_constraintEnd_toEndOf="parent" />
