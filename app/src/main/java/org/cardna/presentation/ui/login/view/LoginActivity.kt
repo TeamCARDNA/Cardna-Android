@@ -2,25 +2,16 @@ package org.cardna.presentation.ui.login.view
 
 // import com.google.android.gms.tasks.OnCompleteListener
 
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
-import android.graphics.Color
-import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
 //import com.google.android.gms.tasks.OnCompleteListener
 //import com.google.firebase.messaging.FirebaseMessaging
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.viewModels
 import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
-import com.navercorp.nid.log.NidLog
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
-import land.sungbin.systemuicontroller.setSystemBarsColor
-import org.cardna.BuildConfig
 import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.databinding.ActivityLoginBinding
@@ -28,8 +19,6 @@ import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
 import org.cardna.presentation.ui.setting.view.PrivacyPolicyActivity
-import org.cardna.presentation.util.StatusBarUtil
-import org.cardna.presentation.util.getErrorLog
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -46,30 +35,27 @@ class LoginActivity :
         setClickListener()
     }
 
-    private fun setPrivacyPolicyActivity(title: String, text: String): Intent {
-        val intent = Intent(this, PrivacyPolicyActivity::class.java)
-        intent.apply {
+    private fun setPrivacyPolicyActivity(title: String, about: String) {
+        Intent(this@LoginActivity, PrivacyPolicyActivity::class.java).apply {
             putExtra("title", title)
-            putExtra("text", text)
+            putExtra("about", about)
+            startActivity(this)
         }
-        return intent
     }
 
     private fun setClickListener() {
         with(binding) {
-            tvLoginPolicyUseOfTerm.setOnClickListener {
-                val intent = setPrivacyPolicyActivity(
+            tvLoginPolicyPrivate.setOnClickListener {
+                setPrivacyPolicyActivity(
                     getString(R.string.privacy_text_title),
                     getString(R.string.privacy_text)
                 )
-                startActivity(intent)
             }
-            tvLoginPolicyPrivate.setOnClickListener {
-                val intent = setPrivacyPolicyActivity(
+            tvLoginPolicyUseOfTerm.setOnClickListener {
+                setPrivacyPolicyActivity(
                     getString(R.string.policy_text_title),
                     getString(R.string.policy_text)
                 )
-                startActivity(intent)
             }
             btnLoginKakao.setOnClickListener {
                 setKakaoBtnListener()
