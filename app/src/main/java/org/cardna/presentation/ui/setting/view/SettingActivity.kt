@@ -126,8 +126,8 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
         }
     }
 
-    private fun moveToOnBoardingActivity() {
-        startActivity(Intent(this, OnBoardingActivity::class.java).apply {
+    private fun moveToLoginActivity() {
+        startActivity(Intent(this, LoginActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })

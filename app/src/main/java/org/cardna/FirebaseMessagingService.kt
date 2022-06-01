@@ -26,12 +26,20 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         Timber.e("From: " + remoteMessage.data)
 
         //푸시알림 ON OFF && CardNaApplication.isBackground
-        if (remoteMessage.data.isNotEmpty() && CardNaApplication.isBackground && CardNaRepository.pushAlarmOn) {
+        if (remoteMessage.data.isNotEmpty() && CardNaRepository.pushAlarmOn) {
             Timber.e("${CardNaRepository.pushAlarmOn}")
             sendNotiNotification(remoteMessage)
         } else {
             Timber.d("pushAlarm", "Forground상태이거나 data가 비어있습니다. 메시지를 수신하지 못했습니다.")
         }
+
+
+        val badgeIntent = Intent("android.intent.action.BADGE_COUNT_UPDATE")
+        badgeIntent.putExtra("badge_count", 0)
+        badgeIntent.putExtra("badge_count_package_name", packageName)
+        badgeIntent.putExtra("badge_count_class_name", MainActivity::class.java)
+        sendBroadcast(badgeIntent)
+
     }
 
     private fun sendNotiNotification(remoteMessage: RemoteMessage) {
@@ -77,6 +85,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             channel.setShowBadge(true)
             notificationManager.createNotificationChannel(channel)
         }
+
         notificationManager.notify(uniId, notificationBuilder.build())
     }
 }
