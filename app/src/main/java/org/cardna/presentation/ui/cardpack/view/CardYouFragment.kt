@@ -7,6 +7,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.FragmentCardYouBinding
@@ -31,6 +32,7 @@ class CardYouFragment :
 
     override fun onResume() {
         super.onResume()
+        Amplitude.getInstance().logEvent("CardPack_Cardner ")
         cardPackViewModel.updateCardYouList()  // 카드너 카드들을 서버로부터 불러오기
     }
 
@@ -81,6 +83,7 @@ class CardYouFragment :
     private fun initEmptyViewListener() {
         // 1. 내 카드너 엠티뷰 => 카드너 추가
         binding.ctlBgAddCardyou.setOnClickListener {
+            Amplitude.getInstance().logEvent("CardPack_Empty_PlusCardner")
             // 카드너 보관함 액티비티로 이동
             val intent = Intent(requireActivity(), CardYouStoreActivity::class.java)
             // 아무것도 안넘겨줘도 됨

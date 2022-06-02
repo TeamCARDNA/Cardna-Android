@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.amplitude.api.Amplitude
 import com.bumptech.glide.Glide
 import org.cardna.R
 import org.cardna.data.remote.model.card.MainCard
@@ -49,6 +50,9 @@ class EditCardAdapter(
                 //대표카드 삭제->아이템 포지션 전달
                 ivRepresentcardeditlistDelete.setOnClickListener {
                     setNewList(adapterPosition)
+                }
+                root.setOnClickListener {
+                    Amplitude.getInstance().logEvent("MainCardEdit_Cardpack_Choice")
                 }
             }
         }

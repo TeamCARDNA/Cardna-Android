@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.amplitude.api.Amplitude
 import org.cardna.R
 import org.cardna.databinding.ActivityEditCardBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -66,6 +67,7 @@ class EditCardActivity :
 
     private fun startBottomSheetDialog() {
         binding.fabRepresentcardedit.setOnClickListener {
+            Amplitude.getInstance().logEvent("MainCardEdit_Cardpack")
             val bottomSheetDialog =
                 EditCardDialogFragment()
             editCardViewModel.mainCardList.observe(this) {
@@ -79,6 +81,7 @@ class EditCardActivity :
 
     private fun putEditCard() {
         binding.tvTvRepresentcardeditFinish.setOnClickListener {
+            Amplitude.getInstance().logEvent("MainCardEdit_Finish ")
             val cardsList = RequestEditCardData(editCardAdapter.mutableList.map { it.id })
             Timber.d("list- put : $cardsList")
             editCardViewModel.putEditCard(cardsList)

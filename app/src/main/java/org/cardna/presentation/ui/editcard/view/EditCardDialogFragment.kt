@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import com.amplitude.api.Amplitude
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
@@ -76,6 +77,7 @@ class EditCardDialogFragment :
 
     private fun putMainCardList() {
         binding.tvRepresentcardeditFinish.setOnClickListener {
+            Amplitude.getInstance().logEvent("MainCardEdit_Cardpack_Finish ")
             with(editCardViewModel) {
                 selectedCardList.observe(viewLifecycleOwner) { list ->
                     putEditCard(RequestEditCardData(list))

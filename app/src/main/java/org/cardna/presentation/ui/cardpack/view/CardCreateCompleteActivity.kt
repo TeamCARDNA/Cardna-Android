@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils
 import androidx.core.text.set
 import androidx.core.text.toSpannable
 import androidx.lifecycle.lifecycleScope
+import com.amplitude.api.Amplitude
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -193,6 +194,7 @@ class CardCreateCompleteActivity : BaseViewUtil.BaseAppCompatActivity<ActivityCa
             })
         }
         binding.btnSetmakemaincardPositive.setOnClickListener {
+            Amplitude.getInstance().logEvent("Membership_MainCard_Yes")
             //메인으로 인텐트+대표카드로 만들기
             lifecycleScope.launch {
                 try {

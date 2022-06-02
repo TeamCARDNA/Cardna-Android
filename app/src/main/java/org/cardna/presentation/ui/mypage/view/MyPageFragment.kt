@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.FragmentMyPageBinding
@@ -35,6 +36,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     override fun initView() {
+        Amplitude.getInstance().logEvent("My")
         binding.etMypageNameSearchBackground.clearFocus()
         setSearchFriendNameResultObserve()
         setStickyScroll()
@@ -74,6 +76,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     fun setSearchCodeClickListener() {
+        Amplitude.getInstance().logEvent("My_SearchFriend")
         startActivity(Intent(requireContext(), SearchFriendCodeActivity::class.java))
     }
 
@@ -139,6 +142,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     private fun setMyPageFriendAdapter() {
         myPageFriendAdapter = MyPageFriendAdapter(requireActivity(), myPageViewModel) { item ->
+            Amplitude.getInstance().logEvent("My_Friend ")
             val bundle = Bundle().apply {
                 putInt(BaseViewUtil.ID, item.id)  //친구 아이디
                 putString("name", item.name)
@@ -163,6 +167,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
 
     private fun copyMyCodeClickListener() {
         binding.ivMypageCode.setOnClickListener {
+            Amplitude.getInstance().logEvent("My_CodeCopy")
             createClipData(binding.tvMypageCode.text.toString())
         }
     }

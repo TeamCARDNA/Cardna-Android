@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
+import com.amplitude.api.Amplitude
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
@@ -39,6 +40,9 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
 
 
     private fun setEtcContentListener() {
+        binding.ctlEtc.setOnClickListener {
+            binding.etSecessionReason.isFocusableInTouchMode = true
+        }
         with(binding.etSecessionReason) {
             doAfterTextChanged {
                 if (it.isNullOrEmpty()) settingViewModel.setEtcContent("", it.isNullOrEmpty())
@@ -54,6 +58,7 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
     private fun setDeleteUserObserve() {
         settingViewModel.isDeleteUserSuccess.observe(this) {
             if (it) {
+                Amplitude.getInstance().logEvent("My_MembershipWithdrawal")
                 shortToast("탈퇴가 완료되었습니다")
 
                 // 네이버에서 계정 탈퇴 시

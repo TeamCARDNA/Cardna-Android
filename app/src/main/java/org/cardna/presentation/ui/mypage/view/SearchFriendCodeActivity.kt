@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
@@ -30,6 +31,7 @@ class SearchFriendCodeActivity :
     }
 
     override fun initView() {
+        Amplitude.getInstance().logEvent("My_SearchFriend_Code")
         setInputField()
         setObserve()
         initRootClickEvent(binding.ctlMypageCodeSearchContainer)
@@ -116,6 +118,7 @@ class SearchFriendCodeActivity :
     }
 
     fun setGoToFriendMainCardClickListener() {
+        Amplitude.getInstance().logEvent("My_SearchFriend_Profile")
         val intent = Intent(this, MainCardActivity::class.java)
         val friendId = myPageViewModel.friendId.value ?: -1
         val name = myPageViewModel.searchFriendCodeResult.value?.name

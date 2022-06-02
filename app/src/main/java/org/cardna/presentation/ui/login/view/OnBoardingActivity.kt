@@ -3,6 +3,7 @@ package org.cardna.presentation.ui.login.view
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
@@ -51,6 +52,7 @@ class OnBoardingActivity :
     private fun setClickListener() {
         with(binding) {
             tvFirstSkip.setOnClickListener {
+                Amplitude.getInstance().logEvent("Onboarding_Skip")
                 setLoginActivity()
             }
             tvFirstNext.setOnClickListener {
@@ -58,6 +60,7 @@ class OnBoardingActivity :
                 if (position == fragmentList.size - 1) {
                     setLoginActivity()
                 } else {
+                    Amplitude.getInstance().logEvent("Onboarding_Next")
                     vpOnboardingContainer.setCurrentItem(position + 1, true)
                 }
             }

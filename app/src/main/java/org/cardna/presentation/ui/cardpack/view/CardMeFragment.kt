@@ -114,7 +114,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
     private fun initEmptyViewListener() {
         binding.ctlBgAddCardme.setOnClickListener {
             // CardCreateActivity 로 이동
-        //    Amplitude.getInstance().logEvent("CardnaWriting from CardpackEmptys")
+   Amplitude.getInstance().logEvent("CardPack_Empty_WritingCardna")
             val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
                 putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_ME) // 내 카드나 작성이므로
             }

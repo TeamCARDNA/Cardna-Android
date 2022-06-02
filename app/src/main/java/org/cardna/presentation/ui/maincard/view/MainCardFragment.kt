@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
@@ -55,6 +56,7 @@ class MainCardFragment :
     }
 
     override fun initView() {
+        Amplitude.getInstance().logEvent("MainCard")
         initData()
         initAdapter()
         initDialog()
@@ -209,6 +211,7 @@ class MainCardFragment :
 
     private fun setEditCardActivity() {
         binding.llMaincardEditLayout.setOnClickListener {
+            Amplitude.getInstance().logEvent("MainCardEdit")
             val intent = Intent(requireActivity(), EditCardActivity::class.java)
             startActivity(intent)
         }
@@ -216,6 +219,7 @@ class MainCardFragment :
 
     private fun setAlarmActivity() {
         binding.clMaincardAlarm.setOnClickListener {
+            Amplitude.getInstance().logEvent("Alarm_ from_MainCard")
             val intent = Intent(requireActivity(), AlarmActivity::class.java)
             startActivity(intent)
         }

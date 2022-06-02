@@ -16,6 +16,7 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
@@ -89,6 +90,10 @@ class CardShareActivity :
 
         // 저장하기 버튼 누르면
         binding.ctlCardShareSave.setOnClickListener {
+            if (intent.getStringExtra(BaseViewUtil.IS_CARD_ME_OR_YOU) == "me") {
+            Amplitude.getInstance().logEvent("CardPack_Cardna_Share_Save")}
+            else{     Amplitude.getInstance().logEvent("CardPack_Cardner_Share_Save")}
+
             // 카드 이미지 저장전, 저장하기 공유하기 글자 잠깐 없애기
             binding.ctlCardShare.visibility = View.GONE
             binding.ctlCardShareSave.visibility = View.GONE
@@ -103,6 +108,9 @@ class CardShareActivity :
 
         // 공유하기 버튼 누르면
         binding.ctlCardShare.setOnClickListener {
+            if (intent.getStringExtra(BaseViewUtil.IS_CARD_ME_OR_YOU) == "me") {
+                Amplitude.getInstance().logEvent("CardPack_Cardna_Share_SNSShare")}
+            else{     Amplitude.getInstance().logEvent("CardPack_Cardner_Share_SNSShare")}
             binding.ctlCardShare.visibility = View.GONE
             binding.ctlCardShareSave.visibility = View.GONE
 

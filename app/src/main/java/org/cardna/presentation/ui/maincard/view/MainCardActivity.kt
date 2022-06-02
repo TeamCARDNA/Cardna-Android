@@ -13,6 +13,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.ColorInt
 import androidx.viewpager2.widget.ViewPager2
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setNavigationBarColor
 import land.sungbin.systemuicontroller.setSystemBarsColor
@@ -236,9 +237,11 @@ class MainCardActivity :
                 mainCardViewModel.setRelation(FRIEND)
                 Timber.d("success : ${mainCardViewModel.relation.value}")
             } else {
-                if (friendRelation == UNKNOWN)
-                    mainCardViewModel.setRelation(REQUEST)
+                if (friendRelation == UNKNOWN){
+                    Amplitude.getInstance().logEvent("FriendMain_AddFriend")
+                    mainCardViewModel.setRelation(REQUEST)}
                 else {
+                    Amplitude.getInstance().logEvent("FriendMain_CancelFriend")
                     mainCardViewModel.setRelation(UNKNOWN)
                 }
                 mainCardViewModel.postFriendRequest(friendId)
@@ -286,6 +289,7 @@ class MainCardActivity :
     @SuppressLint("ClickableViewAccessibility")
     private fun setCardYouWrite() {
         binding.ivMaincardWrite.setOnClickListener {
+            Amplitude.getInstance().logEvent("FriendMain_WritingCardner")
             val friendId = intent.getIntExtra("friendId", 0)
             val name = intent.getStringExtra("name")
             Intent(this, CardCreateActivity::class.java).apply {
