@@ -71,20 +71,6 @@ class SplashActivity :
         }
     }
 
-    private fun autoKakaoLoginCheck() {
-        loginViewModel.message.observe(this) { message ->
-            Timber.d("message : $message")
-            when (message) {
-                ACCESS_NOW, REFRESH_SUCCESS -> {
-                    moveMain()
-                }
-                else -> {
-                    moveOnboarding()
-                }
-            }
-        }
-    }
-
     private fun setNextActivity() {
         //todo  회원가입
         if (CardNaRepository.kakaoUserfirstName.isEmpty() && CardNaRepository.naverUserfirstName.isEmpty()) {
@@ -94,17 +80,13 @@ class SplashActivity :
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) {
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.카카오 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + !CardNaRepository.kakaoUserlogOut}")
             loginViewModel.getKakaoTokenIssuance()
-            Timber.d("KK message : ${loginViewModel.issuanceMessage}")
-            when (loginViewModel.issuanceMessage) {
-                "", REFRESH_SUCCESS, ACCESS_NOW -> moveMain()
-                else -> moveOnboarding()
+            Timber.d("KK message : ${loginViewModel.tokenStatusCode.value}")
+            loginViewModel.tokenStatusCode.observe(this) {
+                when (it) {
+                    REFRESH_SUCCESS, ACCESS_NOW -> moveMain()
+                    else -> moveOnboarding()
+                }
             }
-/*            firebaseToken, fcmToken 은 회원가입때 이미 넣어줬겠지?
-            loginViewModel.getKakaoLogin()
-            loginViewModel.getTokenIssuance()
-            CardNaRepository.userToken = CardNaRepository.kakaoUserToken
-            autoKakaoLoginCheck()*/
-
             //todo 네이버 자동로그인
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.네이버 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
@@ -129,11 +111,11 @@ class SplashActivity :
 
             loginViewModel.getNaverTokenIssuance()
 
-            loginViewModel.tokenStatusCode.observe(this){
-                if(it == 200){
+            loginViewModel.tokenStatusCode.observe(this) {
+                if (it == 200) {
                     Timber.d("토큰 재발급 성공")
                     moveMain()
-                } else if(it == 400){
+                } else if (it == 400) {
                     Timber.d("유효한 토큰입니다.")
                     moveMain()
                 } else if (it == 401) { // 3. 둘다 만료
@@ -174,7 +156,7 @@ class SplashActivity :
                     moveMain()
                 }
             }
-        //todo 카카오나 네이버 로그아웃 했을시
+            //todo 카카오나 네이버 로그아웃 했을시
         } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {
             moveOnboarding()
         } else {
@@ -206,8 +188,8 @@ class SplashActivity :
     }
 
     companion object {
-        const val REFRESH_SUCCESS = "토큰 재발급 성공"
-        const val ACCESS_NOW = "유효한 토큰입니다."
-        const val LOGIN_SUCCESS = "로그인 성공"
+        const val REFRESH_SUCCESS = 200
+        const val ACCESS_NOW = 400
+        const val NEED_LOGIN = 401
     }
 }
