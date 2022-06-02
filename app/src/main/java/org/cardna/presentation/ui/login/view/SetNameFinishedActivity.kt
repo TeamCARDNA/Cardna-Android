@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.animation.AnimationUtils
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.CardNaApplication
@@ -31,6 +32,7 @@ class SetNameFinishedActivity :
 
     override fun initView() {
 //        getScreenHeight()
+        Amplitude.getInstance().logEvent("Cardna_Membership")
         setClickListener()
         setUpAnim(R.anim.anim_translate_up_2560height,1300L)
         setTextView()
@@ -109,6 +111,7 @@ class SetNameFinishedActivity :
 
     private fun positiveButtonClickListener() {
         binding.btnSetnamefinishedPositive.setOnClickListener {
+            Amplitude.getInstance().logEvent("Membership_AddCardna_Yes")
             startActivity(Intent(this, MainActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

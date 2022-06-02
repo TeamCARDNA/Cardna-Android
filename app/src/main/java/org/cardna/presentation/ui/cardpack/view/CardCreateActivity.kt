@@ -21,6 +21,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.amplitude.api.Amplitude
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -112,6 +113,7 @@ class CardCreateActivity :
             cardCreateViewModel.setIsCardMeOrYou(true) //카드나 작성으로 되어야함
             cardCreateViewModel.setInduceMakeMainCard(true) //유도뷰 분기처리를 위함
             setCardInduceListener()
+            Amplitude.getInstance().logEvent("Membership_WritingCardna_Finish")
         } ?: makeCardListener()
 
         this.setSystemBarsColor(Color.BLACK, false)
@@ -307,6 +309,7 @@ class CardCreateActivity :
     /** 카드추가 유도뷰일 때 클릭 이벤트 */
     private fun setCardInduceListener() {
         binding.tvCardcreateComplete.setOnClickListener {
+            Amplitude.getInstance().logEvent("Membership_WritingCardna_Finish")
             if (cardCreateViewModel.uri.value == null) {
                 cardCreateViewModel.makeCard(null)
             } else {

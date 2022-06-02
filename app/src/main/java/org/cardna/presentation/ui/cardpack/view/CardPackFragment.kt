@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.amplitude.api.Amplitude
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setNavigationBarColor
@@ -32,6 +33,7 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Amplitude.getInstance().logEvent("CardPack")
         initViewModel()
         initView()
         Timber.e("bottomtest CardPackFragment OnViewCreated")

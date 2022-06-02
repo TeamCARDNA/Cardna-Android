@@ -78,7 +78,6 @@ class MainCardViewModel @Inject constructor(
                 it.data.apply {
                     _updateAlarmCount.value = request.requester.size + alarm.size
                     _isAlarmExist.value = CardNaRepository.alarmExistCount == request.requester.size + alarm.size
-                    Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡsetAlarmExistㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${request.requester.size}+${alarm.size}+${CardNaRepository.alarmExistCount}")
                 }
             }.onFailure {
                 Timber.e(it.toString())

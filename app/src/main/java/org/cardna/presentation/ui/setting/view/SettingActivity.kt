@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.viewModels
+import com.amplitude.api.Amplitude
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
 import org.cardna.databinding.ActivitySettingBinding
@@ -117,6 +118,7 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
                     NidOAuthLogin().logout()
                 }
             }
+            Amplitude.getInstance().logEvent("My_Logout ")
             dialog.dismiss()
             shortToast("로그아웃 되었습니다")
             moveToLoginActivity()

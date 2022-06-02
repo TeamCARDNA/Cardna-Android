@@ -271,29 +271,44 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <EditText
-            android:id="@+id/et_secession_reason"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctl_etc"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="35dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="14dp"
             android:background="@drawable/bg_stroke_white_4dp"
-            android:fontFamily="@font/pretendard_regular"
-            android:gravity="top"
-            android:includeFontPadding="false"
-            android:lineSpacingExtra="4dp"
-            android:maxLength="115"
-            android:padding="10dp"
-            android:textColor="@color/white_1"
-            android:textSize="14sp"
             android:visibility="@{settingViewModel.secessionReasonSixCheck ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@+id/tv_secession_warning"
             app:layout_constraintEnd_toEndOf="@+id/button_secession"
             app:layout_constraintStart_toStartOf="@+id/ctl_secssion_top"
-            app:layout_constraintTop_toBottomOf="@+id/ctl_secssion_top"
-            tools:text="가나다라사거ㅏㅓ가가fsfsfsfsfsfsfsfsfsfsfsfsfsf가가가가가가가가가가가가가나다라마가가가가가가가가가가가가가가가가가나다라마가가가가가가가가가가가가가가가가가나다라마가가가가가가가가가가가가가가가가가나다라마가가가가가가가가가가가가가가가가가나가가가가가가가가" />
+            app:layout_constraintTop_toBottomOf="@+id/ctl_secssion_top">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/et_secession_reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:gravity="top"
+                    android:background="@null"
+                    android:minHeight="100dp"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="4dp"
+                    android:padding="10dp"
+                    android:textColor="@color/white_1"
+                    android:textSize="14sp"
+                    android:visibility="@{settingViewModel.secessionReasonSixCheck ? View.VISIBLE : View.GONE}" />
+            </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tv_secession_warning"

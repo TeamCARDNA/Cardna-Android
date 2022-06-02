@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
+import com.amplitude.api.Amplitude
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setSystemBarsColor
@@ -65,6 +66,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
             with(binding) {
                 when (cardType) {
                     CARD_ME -> {
+                        Amplitude.getInstance().logEvent("CardPack_Cardna_DetailPage")
                         ctlDetailcardFriend.visibility = View.GONE
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_maingreen_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setImageResource(R.drawable.ic_detail_card_me_trash)
@@ -73,12 +75,14 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                         }
                     }
                     CARD_YOU -> {
+                        Amplitude.getInstance().logEvent("CardPack_Cardner_DetailPage")
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_mainpurple_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setOnClickListener {
                             showEditPopUp()
                         }
                     }
                     STORAGE -> {
+                        Amplitude.getInstance().logEvent("CardPack_PlusCardner_DetailPage")
                         tvDetailcardTitle.setBackgroundResource(R.drawable.bg_white_1_5_stroke_real_black_2dp)
                         ibtnDetailcardEdit.setOnClickListener {
                             showEditPopUp()
@@ -114,6 +118,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
                     val popup = showCustomPopUp(this, R.array.detail_cardyou_popup, baseContext)
                     popup.setOnItemClickListener { _, view, _, _ ->
                         if ((view as TextView).text == "보관") {
+                            Amplitude.getInstance().logEvent("CardPack_Cardner_Storage")
                             detailCardViewModel.keepOrAddCard()
                             popup.dismiss()
                             finish()
@@ -152,6 +157,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
             setHandler(dialog)
         }
         deleteBtn.setOnClickListener {
+            Amplitude.getInstance().logEvent("CardPack_Cardna_Delete")
             detailCardViewModel.deleteCard()
             dialog.dismiss()
             finish()
@@ -216,6 +222,7 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
     }
 
     fun setCardAddClickListener() {
+        Amplitude.getInstance().logEvent("CardPack_PlusCardner_AddCard")
         detailCardViewModel.keepOrAddCard()
         //보관함에서 가는경우
 

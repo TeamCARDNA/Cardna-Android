@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
@@ -57,6 +58,8 @@ class CardYouStoreActivity :
 
     private fun codeCopyBtnListener() {
         binding.llCardyoustoreCopyBtn.setOnClickListener {
+
+            Amplitude.getInstance().logEvent("CardPack_PlusCardner_CodeCopy")
             cardPackViewModel.isMyCode.observe(this) {
                 copyText(this@CardYouStoreActivity, it)
             }
