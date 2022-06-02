@@ -17,7 +17,6 @@ import org.cardna.domain.repository.AuthRepository
 import org.cardna.domain.repository.CardRepository
 import org.cardna.presentation.ui.login.view.SetNameActivity.Companion.KAKAO
 import org.cardna.presentation.ui.login.view.SetNameActivity.Companion.NAVER
-import org.cardna.presentation.ui.login.view.SplashActivity.Companion.LOGIN_SUCCESS
 import org.cardna.presentation.util.shortToast
 import timber.log.Timber
 import javax.inject.Inject
@@ -53,7 +52,7 @@ class LoginViewModel @Inject constructor(
 
     // 토큰 재발급 메서드에 대한 message
     private var _tokenStatusCode = MutableLiveData<Int>(0)
-    val tokenStatusCode : LiveData<Int> = _tokenStatusCode
+    val tokenStatusCode: LiveData<Int> = _tokenStatusCode
 
 
     // 네이버 소셜 토큰
@@ -139,11 +138,15 @@ class LoginViewModel @Inject constructor(
                     kakaoUserToken = it.data.accessToken
                     kakaoUserRefreshToken = it.data.refreshToken
                     userToken = kakaoUserToken
-                    _issuanceMessage = it.message
+                    _tokenStatusCode.value = it.status
                 }
             }.onFailure {
-                Timber.d("재발급 실패 : ${it.message}")
-                _isLogin.value = false
+                when (it) {
+                    is retrofit2.HttpException -> {
+                        _tokenStatusCode.value = it.code()
+                        Timber.d("onFailure 재발급 상태 코드 : ${it.code()}")
+                    }
+                }
             }
         }
     }
@@ -164,7 +167,6 @@ class LoginViewModel @Inject constructor(
                 CardNaRepository.naverUserRefreshToken = it.data.refreshToken
                 CardNaRepository.userToken = it.data.accessToken // 헤더 토큰 갈아 끼우기
                 _tokenStatusCode.value = it.status // 200 일것
-//                _issuanceMessage = it.message
             }.onFailure {
                 when (it) {
                     is retrofit2.HttpException -> {
@@ -211,6 +213,6 @@ class LoginViewModel @Inject constructor(
     companion object {
         const val LOGIN_SUCCESS = "로그인 성공"
         const val KAKAO = "kakao"
-        const val  NAVER = "naver"
+        const val NAVER = "naver"
     }
 }
