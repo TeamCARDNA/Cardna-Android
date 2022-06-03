@@ -1,6 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <gradient
-        android:startColor="@color/dark_gray"
-        android:endColor="@color/dark_gray"/>
+    <!--커서의 색깔-->
+    <solid android:color="@color/white_1"/>
+    <!--커서의 굵기-->
+    <size android:width="2dp" />
 </shape>
