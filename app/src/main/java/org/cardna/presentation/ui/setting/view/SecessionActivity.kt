@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
+import com.amplitude.api.Amplitude
+import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
@@ -40,6 +42,9 @@ class SecessionActivity :
 
 
     private fun setEtcContentListener() {
+        binding.ctlEtc.setOnClickListener {
+            binding.etSecessionReason.isFocusableInTouchMode = true
+        }
         with(binding.etSecessionReason) {
             doAfterTextChanged {
                 if (it.isNullOrEmpty()) settingViewModel.setEtcContent("", it.isNullOrEmpty())
@@ -79,6 +84,7 @@ class SecessionActivity :
         // 자체 서버 회원탈퇴 성공 시, 토스트 메시지 출력 후 온보딩으로 이동
         settingViewModel.isDeleteUserSuccess.observe(this) {
             if (it) {
+                Amplitude.getInstance().logEvent("My_MembershipWithdrawal")
                 shortToast("탈퇴가 완료되었습니다 :)")
                 Timber.e("최종 회원탈퇴 성공")
                 moveOnBoardingActivity()

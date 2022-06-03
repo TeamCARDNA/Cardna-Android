@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.commit
+import com.amplitude.api.Amplitude
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
@@ -257,7 +258,7 @@ class MainActivity :
 
         /** 푸시알림에서 오는 경우*/
         if (dynamicLinkData != null) {
-
+            Amplitude.getInstance().logEvent("Alarm_from_PushAlarm")
             if (dynamicLinkData.get("body").toString().contains("작성")) {
                 /*  startActivity(
                       Intent(this, DetailCardActivity::class.java).putExtra(BaseViewUtil.CARD_ID, dynamicLinkData.get("uniId").toString().toInt())

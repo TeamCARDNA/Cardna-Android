@@ -3,6 +3,7 @@ package org.cardna.presentation.ui.mypage.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.amplitude.api.Amplitude
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.remote.model.friend.RequestApplyOrCancleFriendData
@@ -192,6 +193,7 @@ class MyPageViewModel @Inject constructor(
 
     //몰라1->요청3
     fun applyFriend() {
+        Amplitude.getInstance().logEvent("My_SearchFriend_AddFriend")
         _friendRelationType.value = SearchFriendCodeActivity.RELATION_THREE
         applyOrCancelFriend()
     }

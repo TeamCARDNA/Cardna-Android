@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import com.amplitude.api.Amplitude
 import org.cardna.R
 import org.cardna.databinding.FragmentBlindAreaBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,7 @@ class BlindAreaFragment : BaseViewUtil.BaseFragment<FragmentBlindAreaBinding>(R.
     }
 
     override fun initView() {
+        Amplitude.getInstance().logEvent("Insight_BlindArea")
 
     }
 
@@ -31,6 +33,7 @@ class BlindAreaFragment : BaseViewUtil.BaseFragment<FragmentBlindAreaBinding>(R.
     }
 
     fun setCardClickListener() {
+        Amplitude.getInstance().logEvent("Insight_BlindArea_DetailPage")
         val intent = Intent(requireContext(), DetailCardActivity::class.java).let {
             it.putExtra(BaseViewUtil.CARD_ID, insightViewModel.blindAreaCardId.value)
         }
