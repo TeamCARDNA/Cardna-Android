@@ -142,7 +142,7 @@ class MainCardActivity :
             clRelationDisconnect.visibility = View.INVISIBLE
             clRelationProgressingCancel.visibility = View.INVISIBLE
             clRelationAcceptFriend.visibility = View.INVISIBLE
-            btnRelationConfirm.setBackgroundResource(R.drawable.bg_white3_radius_5)
+            btnRelationConfirm.setBackgroundResource(R.drawable.bg_white_4_5dp)
         }
         dialog.dismiss()
     }
