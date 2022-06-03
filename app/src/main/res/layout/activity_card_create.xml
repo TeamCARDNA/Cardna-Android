@@ -170,7 +170,6 @@
                         android:text="@={cardCreateViewModel._etKeywordText}"
                         android:textColor="@color/white_1"
                         android:textColorHint="@color/white_3"
-                        android:textCursorDrawable="@drawable/bg_cursor_color"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -239,7 +238,6 @@
                     android:text="@={cardCreateViewModel._etDetailText}"
                     android:textColor="@color/white_1"
                     android:textColorHint="@color/white_3"
-                    android:textCursorDrawable="@drawable/bg_cursor_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/cl_cardcreate_line"
                     app:layout_constraintTop_toBottomOf="@id/tv_cardcreate_detail"

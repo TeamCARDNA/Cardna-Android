@@ -132,13 +132,6 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })
     }
-
-    private fun moveToLoginActivity() {
-        startActivity(Intent(this, LoginActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        })
-    }
 }
 
 
