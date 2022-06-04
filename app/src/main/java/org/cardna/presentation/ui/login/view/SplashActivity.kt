@@ -73,11 +73,11 @@ class SplashActivity :
     }
 
     private fun setNextActivity() {
-        //todo  회원가입
+        // 회원가입
         if (CardNaRepository.kakaoUserfirstName.isEmpty() && CardNaRepository.naverUserfirstName.isEmpty()) {
             Timber.e("ㅡㅡㅡㅡ1.회원가입안함ㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + CardNaRepository.naverUserfirstName}")
             moveOnboarding()
-            //todo 카카오 자동로그인
+            // 카카오 자동로그인
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) {
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.카카오 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + !CardNaRepository.kakaoUserlogOut}")
             loginViewModel.getKakaoTokenIssuance()
@@ -88,7 +88,7 @@ class SplashActivity :
                     else -> moveOnboarding()
                 }
             }
-            //todo 네이버 자동로그인
+            // 네이버 자동로그인
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.네이버 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
 
@@ -125,7 +125,7 @@ class SplashActivity :
                     moveOnboarding()
                 }
             }
-            //todo 카카오나 네이버 로그아웃 했을시
+            // 카카오나 네이버 로그아웃 했을시
         } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {
             moveOnboarding()
         } else {
