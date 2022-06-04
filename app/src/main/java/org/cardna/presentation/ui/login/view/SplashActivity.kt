@@ -113,16 +113,15 @@ class SplashActivity :
             loginViewModel.getNaverTokenIssuance()
 
             loginViewModel.tokenStatusCode.observe(this) {
+                Timber.d("tokentest 상태 코드 : ${it}")
                 if (it == 200) { // 1. 액세스 토큰만 만료 -> 재발급 성공
-                    shortToast("토큰 재발급 성공")
-                    Timber.d("토큰 재발급 성공")
+                    Timber.d("tokentest 재발급 성공")
                     moveMain()
                 } else if (it == 400) { // 2. 유효한 토큰
-                    Timber.d("유효한 토큰입니다.")
+                    Timber.d("tokentest 유효한 토큰입니다.")
                     moveMain()
                 } else { // 3. 둘다 만료
-                    shortToast("모든 토큰 필요")
-                    Timber.d("모든 토큰이 만료되었습니다.")
+                    Timber.d("tokentest 모든 토큰이 만료되었습니다.")
                     moveOnboarding()
                 }
             }

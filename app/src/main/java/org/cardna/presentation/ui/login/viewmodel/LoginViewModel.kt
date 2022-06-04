@@ -51,7 +51,7 @@ class LoginViewModel @Inject constructor(
         get() = _issuanceMessage
 
     // 토큰 재발급 메서드에 대한 message
-    private var _tokenStatusCode = MutableLiveData<Int>(0)
+    private var _tokenStatusCode = MutableLiveData<Int>()
     val tokenStatusCode: LiveData<Int> = _tokenStatusCode
 
 
