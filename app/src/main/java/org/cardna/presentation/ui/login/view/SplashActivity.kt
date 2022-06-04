@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.login.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,11 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat.startActivity
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,9 +36,18 @@ class SplashActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>(R.layout.activity_splash) {
     private val loginViewModel: LoginViewModel by viewModels()
 
+    private lateinit var appUpdateManager: AppUpdateManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
+
+        // 강제 업데이트 로직을 여기다 둬야 할 듯.
+        // initView 호출 후 로티가 띄워지고, 다음 플로우로 이동하기 전, 업데이트 있는지 판단
+        checkAppUpdate()
+
+        // 토큰 재발급을 통해 다음 플로우 결정
+        setNextActivity()
     }
 
     override fun initView() {
@@ -48,7 +63,67 @@ class SplashActivity :
         }
         StatusBarUtil.setStatusBar(this, R.color.black)
         setFullScreen()
-        setNextActivity()
+    }
+
+    private fun checkAppUpdate() {
+        appUpdateManager = AppUpdateManagerFactory.create(this)
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+
+        // Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+            ) { // 업데이트 가 있는 경우
+                Timber.e("인앱업데이트 있음")
+                appUpdateManager.startUpdateFlowForResult(
+                    appUpdateInfo,
+                    AppUpdateType.IMMEDIATE,
+                    this,
+                    MY_REQUEST_CODE
+                )
+            } else { // 업데이트가 없는 경우
+                Timber.e("인앱업데이트 no update")
+            }
+        }
+    }
+
+
+    // 인앱 immediate update 팝업으로 인텐트 이동 했다가 백버튼이나 x버튼 눌러서 다시 스플래쉬로 돌아왔을 때
+    // 업데이트가 안되어있다면, 다시 업데이트 실행
+
+    // 업데이트 시작 전, 취소 ?
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Timber.e("인앱업데이트 onActivityResult")
+        if (requestCode == MY_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) { // 업데이트 실패 또는 취소 ?
+                // 다시 인앱 즉시 업데이트 팝업창 실행
+                checkAppUpdate()
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
+    // 업데이트가 중단 된 경우, 앱이 다시 foreground로 돌아왔을 때, 업데이트가 진행중이면 다시 업데이트 재개
+
+    // 업데이트 중간에 뒤로가거나 백그라운드로 가거나 하면 다시 업데이트 화면으로 강제로 이동하도록?
+    override fun onResume() {
+        Timber.e("인앱업데이트 onResume")
+        super.onResume()
+
+        appUpdateManager
+            .appUpdateInfo
+            .addOnSuccessListener { appUpdateInfo ->
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                    // If an in-app update is already running, resume the update.
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateInfo,
+                        IMMEDIATE,
+                        this,
+                        MY_REQUEST_CODE
+                    )
+                }
+            }
     }
 
 
@@ -90,9 +165,6 @@ class SplashActivity :
             }
             // 네이버 자동로그인
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
-            Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.네이버 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-
-
             // 토큰재발급 API 호출
             // 여기서 토큰 재발급 API 호출해서 accessToken, refreshToken 유효성 판단
             /*
@@ -160,5 +232,7 @@ class SplashActivity :
         const val REFRESH_SUCCESS = 200
         const val ACCESS_NOW = 400
         const val NEED_LOGIN = 401
+
+        const val MY_REQUEST_CODE = 1229
     }
 }
