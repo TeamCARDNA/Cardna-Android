@@ -282,7 +282,7 @@
             android:background="@drawable/bg_stroke_white_4dp"
             android:visibility="@{settingViewModel.secessionReasonSixCheck ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@+id/tv_secession_warning"
-            app:layout_constraintEnd_toEndOf="@+id/button_secession"
+            app:layout_constraintEnd_toEndOf="@+id/btn_session"
             app:layout_constraintStart_toStartOf="@+id/ctl_secssion_top"
             app:layout_constraintTop_toBottomOf="@+id/ctl_secssion_top">
 
@@ -320,12 +320,12 @@
             android:text="@string/secession_warning"
             android:textColor="@color/white_4"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/button_secession"
-            app:layout_constraintEnd_toEndOf="@+id/button_secession"
-            app:layout_constraintStart_toStartOf="@+id/button_secession" />
+            app:layout_constraintBottom_toTopOf="@+id/btn_session"
+            app:layout_constraintEnd_toEndOf="@+id/btn_session"
+            app:layout_constraintStart_toStartOf="@+id/btn_session" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_secession"
+            android:id="@+id/btn_session"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_marginHorizontal="16dp"
@@ -333,7 +333,6 @@
             android:background="@{settingViewModel.isSecessionReasonValid ? @drawable/bg_mainpurple_maingreen_gradient_10dp : @drawable/bg_white_3_10dp}"
             android:enabled="@{settingViewModel.isSecessionReasonValid}"
             android:fontFamily="@font/pretendard_semibold"
-            android:onClick="@{() -> settingViewModel.deleteUser()}"
             android:text="@string/secession_btn"
             android:textColor="@{settingViewModel.isSecessionReasonValid ?  @color/main_black : @color/white_2}"
             android:textSize="20sp"

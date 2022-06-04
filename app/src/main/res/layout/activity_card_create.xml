@@ -163,13 +163,16 @@
                         android:lineSpacingExtra="-0.22sp"
                         android:maxLength="14"
                         android:maxLines="1"
+
+                        android:textCursorDrawable="@drawable/bg_cursor_color"
+                        android:nextFocusDown="@id/et_cardcreate_detail"
+
                         android:padding="0dp"
                         android:paddingStart="0dp"
                         android:singleLine="true"
                         android:text="@={cardCreateViewModel._etKeywordText}"
                         android:textColor="@color/white_1"
                         android:textColorHint="@color/white_3"
-                        android:textCursorDrawable="@drawable/bg_cursor_color"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -211,7 +214,6 @@
                     app:layout_constraintStart_toStartOf="@+id/cl_cardcreate_line"
                     app:layout_constraintTop_toBottomOf="@+id/tv_cardcreate_cnt_keyword" />
 
-
                 <EditText
                     android:id="@+id/et_cardcreate_detail"
                     style="@style/edittext_style"
@@ -228,15 +230,18 @@
                     android:lineSpacingExtra="4dp"
                     android:maxHeight="168dp"
                     android:minHeight="168dp"
-
                     android:maxLength="200"
+
                     android:inputType="textMultiLine"
                     android:scrollHorizontally="false"
+                    android:scrollbars = "vertical"
+                    android:overScrollMode="always"
+                    android:scrollbarStyle="insideInset"
+                    android:textCursorDrawable="@drawable/bg_cursor_color"
 
                     android:text="@={cardCreateViewModel._etDetailText}"
                     android:textColor="@color/white_1"
                     android:textColorHint="@color/white_3"
-                    android:textCursorDrawable="@drawable/bg_cursor_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/cl_cardcreate_line"
                     app:layout_constraintTop_toBottomOf="@id/tv_cardcreate_detail"

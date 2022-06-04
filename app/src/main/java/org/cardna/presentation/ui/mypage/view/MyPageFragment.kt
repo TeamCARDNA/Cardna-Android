@@ -156,6 +156,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
                 .add(R.id.fcv_main, mainCardFragment, "friendMainCard")
             transaction.commit()
         }
+
         binding.rvMypage.addItemDecoration(MyPageItemVerticalDecoration())
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         with(binding) {

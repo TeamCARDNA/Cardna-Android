@@ -3,7 +3,6 @@ package org.cardna.presentation.ui.setting.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
@@ -11,11 +10,13 @@ import androidx.core.widget.doAfterTextChanged
 import com.amplitude.api.Amplitude
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
-import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
+import org.cardna.data.local.singleton.CardNaRepository
+import org.cardna.data.local.singleton.CardNaRepository.userSocial
 import org.cardna.databinding.ActivitySecessionBinding
 import org.cardna.presentation.base.BaseViewUtil
+import org.cardna.presentation.ui.login.view.LoginActivity
 import org.cardna.presentation.ui.login.view.OnBoardingActivity
 import org.cardna.presentation.ui.setting.viewmodel.SettingViewModel
 import org.cardna.presentation.util.KeyboardVisibilityUtils
@@ -23,7 +24,8 @@ import org.cardna.presentation.util.shortToast
 import timber.log.Timber
 
 @AndroidEntryPoint
-class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBinding>(R.layout.activity_secession) {
+class SecessionActivity :
+    BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBinding>(R.layout.activity_secession) {
     private val settingViewModel: SettingViewModel by viewModels()
     private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,38 +58,52 @@ class SecessionActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySecessionBi
     }
 
     private fun setDeleteUserObserve() {
+        binding.btnSession.setOnClickListener {
+            if (userSocial == "kakao") {
+                settingViewModel.deleteUser()
+            } else {  // naver 일 시, 회원탈퇴 버튼 누르면, 네이버 자체 회원탈퇴 실행
+                settingViewModel.deleteNaverUser(this)
+            }
+        }
+
+        // 네이버 자체 회원탈퇴
+        settingViewModel.isDeleteNaverServerUserSuccess.observe(this) {
+            if (it) { // 성공 시, 자체 서버 회원탈퇴 실행
+                settingViewModel.deleteUser()
+            } else { // 실패 시,
+                // 로그아웃 시 진행되는 작업들을 해주고, loginActivity 로 가서 재로그인 할 수 있도록
+                shortToast("네트워크 신호가 약해 회원탈퇴에 실패했습니다. 재로그인이 필요합니다 :(")
+                CardNaRepository.naverUserlogOut = true
+                CardNaRepository.naverUserToken = ""
+                CardNaRepository.naverUserRefreshToken = ""
+//                NidOAuthLogin().logout()
+                moveOnLoginActivity()
+            }
+        }
+
+        // 자체 서버 회원탈퇴 성공 시, 토스트 메시지 출력 후 온보딩으로 이동
         settingViewModel.isDeleteUserSuccess.observe(this) {
             if (it) {
                 Amplitude.getInstance().logEvent("My_MembershipWithdrawal")
-                shortToast("탈퇴가 완료되었습니다")
-
-                // 네이버에서 계정 탈퇴 시
-                NidOAuthLogin().callDeleteTokenApi(this, object : OAuthLoginCallback {
-                    override fun onSuccess() {
-                        Timber.d("naver 회원탈퇴 성공")
-                        //서버에서 토큰 삭제에 성공한 상태입니다.
-                    }
-                    override fun onFailure(httpStatus: Int, message: String) {
-                        // 서버에서 토큰 삭제에 실패했어도 클라이언트에 있는 토큰은 삭제되어 로그아웃된 상태입니다.
-                        // 클라이언트에 토큰 정보가 없기 때문에 추가로 처리할 수 있는 작업은 없습니다.
-                        Timber.d("naver 회원탈퇴 실패")
-                        Log.d("naver", "errorCode: ${NaverIdLoginSDK.getLastErrorCode().code}")
-                        Log.d("naver", "errorDesc: ${NaverIdLoginSDK.getLastErrorDescription()}")
-                    }
-                    override fun onError(errorCode: Int, message: String) {
-                        Timber.d("naver 회원탈퇴 에러")
-                        // 서버에서 토큰 삭제에 실패했어도 클라이언트에 있는 토큰은 삭제되어 로그아웃된 상태입니다.
-                        // 클라이언트에 토큰 정보가 없기 때문에 추가로 처리할 수 있는 작업은 없습니다.
-                        onFailure(errorCode, message)
-                    }
-                })
+                shortToast("탈퇴가 완료되었습니다 :)")
+                Timber.e("최종 회원탈퇴 성공")
                 moveOnBoardingActivity()
+            } else {  // 이 경우에는 어떤 처리를 해줘야 할까 ?
+                shortToast("탈퇴에 실패하였습니다. :(")
+                Timber.e("최종 회원탈퇴 실패")
             }
         }
     }
 
     private fun moveOnBoardingActivity() {
         startActivity(Intent(this, OnBoardingActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
+    }
+
+    private fun moveOnLoginActivity() {
+        startActivity(Intent(this, LoginActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })
