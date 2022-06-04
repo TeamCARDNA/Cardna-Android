@@ -21,6 +21,7 @@ import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.shortToast
 import timber.log.Timber
 
 
@@ -112,48 +113,17 @@ class SplashActivity :
             loginViewModel.getNaverTokenIssuance()
 
             loginViewModel.tokenStatusCode.observe(this) {
-                if (it == 200) {
+                if (it == 200) { // 1. 액세스 토큰만 만료 -> 재발급 성공
+                    shortToast("토큰 재발급 성공")
                     Timber.d("토큰 재발급 성공")
                     moveMain()
-                } else if (it == 400) {
+                } else if (it == 400) { // 2. 유효한 토큰
                     Timber.d("유효한 토큰입니다.")
                     moveMain()
-                } else if (it == 401) { // 3. 둘다 만료
+                } else { // 3. 둘다 만료
+                    shortToast("모든 토큰 필요")
                     Timber.d("모든 토큰이 만료되었습니다.")
-
-                    val oauthLoginCallback = object : OAuthLoginCallback {
-                        override fun onSuccess() {
-                            // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
-                            Timber.d("naver onSuccess: ")
-                            loginViewModel.setNaverSocialUserToken(NaverIdLoginSDK.getAccessToken()!!)
-                        }
-
-                        override fun onFailure(httpStatus: Int, message: String) {
-                            val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                            val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                            Timber.d("naver ErrorCode : ${errorCode}")
-                            Timber.d("naver ErrorDescription : ${errorDescription}")
-                        }
-
-                        override fun onError(errorCode: Int, message: String) {
-                            onFailure(errorCode, message)
-                        }
-                    }
-
-                    // 네이버 소셜 로그인을 통해 naver accessToken 얻기
-                    NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
-
-                    // 소셜로그인 API를 호출하기 위해 헤더의 토큰을 naver 소셜 토큰으로 갈아끼움
-                    CardNaRepository.userToken = loginViewModel.naverSocialUserToken!!
-
-                    // 소셜 로그인 API 호출 => 발급 받은 naverUserToken, naverUserRefreshToken 저장, 헤더 갈아끼우기
-                    loginViewModel.getNaverLogin()
-
-                    // Main으로 이동
-                    moveMain()
-                } else {
-                    Timber.d("naver move main: ")
-                    moveMain()
+                    moveOnboarding()
                 }
             }
             //todo 카카오나 네이버 로그아웃 했을시
