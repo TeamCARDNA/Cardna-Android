@@ -30,8 +30,12 @@ class SearchFriendCodeActivity :
         initView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        initView()
+    }
+
     override fun initView() {
-        Amplitude.getInstance().logEvent("My_SearchFriend_Code")
         setInputField()
         setObserve()
         initRootClickEvent(binding.ctlMypageCodeSearchContainer)
