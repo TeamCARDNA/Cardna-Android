@@ -15,10 +15,12 @@
         android:paddingHorizontal="28dp"
         tools:context=".ui.login.SignActivity">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardna_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login_naver"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -56,124 +58,109 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_login_logo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_login_naver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/ic_bt_login_naver"
-            android:includeFontPadding="false"
-            android:textColor="@color/main_black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login_kakao"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_login_kakao"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginBottom="120dp"
-            android:background="@drawable/bg_kakao"
-            android:fontFamily="@font/pretendard_semibold"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/btn_login_naver"
-            app:layout_constraintStart_toStartOf="@id/btn_login_naver" />
-
-        <ImageView
-            android:id="@+id/iv_kakao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/kakao_login_original"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_login_kakao"
-            app:layout_constraintStart_toStartOf="@+id/btn_login_kakao"
-            app:layout_constraintTop_toTopOf="@+id/btn_login_kakao" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="18dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:text="카카오 로그인"
-            android:textColor="@color/main_black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_kakao"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_kakao"
-            app:layout_constraintTop_toTopOf="@+id/iv_kakao" />
-
-        <TextView
-            android:id="@+id/tv_login_policy"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:includeFontPadding="false"
-            android:text="가입 시,"
-            android:textColor="@color/white_3"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="@+id/btn_login_kakao"
-            app:layout_constraintStart_toStartOf="@+id/btn_login_kakao"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login_kakao" />
-
-        <TextView
-            android:id="@+id/tv_login_policy_two"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:includeFontPadding="false"
-            android:text="@string/login_policy"
-            android:textColor="@color/white_3"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="@+id/tv_login_policy"
-            app:layout_constraintStart_toStartOf="@+id/tv_login_policy"
-            app:layout_constraintTop_toBottomOf="@+id/tv_login_policy"
-            tools:text="@string/login_policy" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ll_login_policy_text_container"
-            android:layout_width="wrap_content"
+            android:id="@+id/constraintLayout4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/tv_login_policy"
-            app:layout_constraintTop_toBottomOf="@+id/tv_login_policy_two">
+            android:layout_marginBottom="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/cardna_logo"
+            app:layout_constraintStart_toStartOf="@+id/cardna_logo">
 
-            <TextView
-                android:id="@+id/tv_login_policy_use_of_term"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_login_naver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/login_policy_term_of_use"
-                android:textColor="@color/main_green"
-                android:textSize="13sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/ic_bt_login_naver"
+                android:includeFontPadding="false"
+                android:textColor="@color/main_black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_login_kakao"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
+            <ImageView
+                android:id="@id/btn_login_kakao"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/img_login_kakao"
+                app:layout_constraintEnd_toEndOf="@id/btn_login_naver"
+                app:layout_constraintStart_toStartOf="@id/btn_login_naver"
+                app:layout_constraintTop_toBottomOf="@id/btn_login_naver" />
 
             <TextView
-                android:id="@+id/login_and"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_login_policy"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/login_gwa"
+                android:layout_marginTop="32dp"
+                android:includeFontPadding="false"
+                android:text="가입 시,"
                 android:textColor="@color/white_3"
                 android:textSize="13sp"
-                app:layout_constraintStart_toEndOf="@+id/tv_login_policy_use_of_term"
-                app:layout_constraintTop_toTopOf="@+id/tv_login_policy_use_of_term" />
+                app:layout_constraintEnd_toEndOf="@+id/btn_login_kakao"
+                app:layout_constraintStart_toStartOf="@+id/btn_login_kakao"
+                app:layout_constraintTop_toBottomOf="@id/btn_login_kakao"
+                tools:layout_editor_absoluteY="245dp" />
 
             <TextView
-                android:id="@+id/tv_login_policy_private"
+                android:id="@+id/tv_login_policy_two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:includeFontPadding="false"
+                android:text="@string/login_policy"
+                android:textColor="@color/white_3"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_login_policy"
+                app:layout_constraintStart_toStartOf="@+id/tv_login_policy"
+                app:layout_constraintTop_toBottomOf="@+id/tv_login_policy"
+                tools:text="@string/login_policy" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_login_policy_text_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:text="@string/login_private_policy"
-                android:textColor="@color/main_green"
-                android:textSize="13sp"
-                app:layout_constraintStart_toEndOf="@+id/login_and"
-                app:layout_constraintTop_toTopOf="@+id/tv_login_policy_use_of_term" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@+id/tv_login_policy"
+                app:layout_constraintTop_toBottomOf="@+id/tv_login_policy_two">
 
+                <TextView
+                    android:id="@+id/tv_login_policy_use_of_term"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_policy_term_of_use"
+                    android:textColor="@color/main_green"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/login_and"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_gwa"
+                    android:textColor="@color/white_3"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/tv_login_policy_use_of_term"
+                    app:layout_constraintTop_toTopOf="@+id/tv_login_policy_use_of_term" />
+
+                <TextView
+                    android:id="@+id/tv_login_policy_private"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="@string/login_private_policy"
+                    android:textColor="@color/main_green"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/login_and"
+                    app:layout_constraintTop_toTopOf="@+id/tv_login_policy_use_of_term" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
