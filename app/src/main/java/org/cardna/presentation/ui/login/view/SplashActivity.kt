@@ -35,6 +35,9 @@ class SplashActivity :
     }
 
     override fun initView() {
+        loginViewModel.setTotalCardCnt()
+
+
         with(CardNaRepository) {
 //            kakaoUserfirstName = ""
 //            kakaoUserToken = ""

@@ -34,7 +34,7 @@ class MainCardViewModel @Inject constructor(
     private val _isMyCard = MutableLiveData<Boolean>()
     val isMyCard: LiveData<Boolean> = _isMyCard
 
-    private val _name = MutableLiveData<String>()
+    private val _name = MutableLiveData<String>(" ")
     val name: LiveData<String> = _name
 
     private val _cardList = MutableLiveData<List<MainCard>>()

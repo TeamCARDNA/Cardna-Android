@@ -13,8 +13,8 @@
             type="org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel" />
 
         <variable
-            name="cardpackViewModel"
-            type="org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel" />
+            name="loginViewModel"
+            type="org.cardna.presentation.ui.login.viewmodel.LoginViewModel" />
 
     </data>
 
@@ -54,7 +54,7 @@
                 android:src="@drawable/ic_icon_alert"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="@id/ibtn_maincard_alarm"/>
+                app:layout_constraintTop_toTopOf="@id/ibtn_maincard_alarm" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -212,7 +212,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{cardpackViewModel.totalCardCnt==0 ? View.INVISIBLE : View.VISIBLE}"
+                    android:visibility="@{loginViewModel.totalCardCnt==0 ? View.INVISIBLE : View.VISIBLE, default=invisible}"
                     app:layout_constraintBottom_toBottomOf="@+id/cl_maincard_empty_view"
                     app:layout_constraintEnd_toEndOf="@+id/cl_maincard_empty_view"
                     app:layout_constraintStart_toStartOf="@+id/cl_maincard_empty_view"
@@ -248,9 +248,10 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/maincard_cardpack_total_zero"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{cardpackViewModel.totalCardCnt!=0 ? View.INVISIBLE : View.VISIBLE}"
+                    android:visibility="@{loginViewModel.totalCardCnt!=0 ? View.INVISIBLE : View.VISIBLE, default=visible}"
                     app:layout_constraintBottom_toBottomOf="@+id/cl_maincard_empty_view"
                     app:layout_constraintEnd_toEndOf="@+id/cl_maincard_empty_view"
                     app:layout_constraintStart_toStartOf="@+id/cl_maincard_empty_view"
@@ -283,8 +284,8 @@
                         android:id="@+id/tv_maincard_real_empty2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:layout_marginTop="5dp"
+                        android:gravity="center"
                         android:text="@string/maincard_tv_real_empty2"
                         android:textColor="@color/white_3"
                         android:textSize="16sp"
@@ -295,13 +296,13 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/friend_card_empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="@+id/cl_maincard_empty_view"
                     app:layout_constraintEnd_toEndOf="@+id/cl_maincard_empty_view"
                     app:layout_constraintStart_toStartOf="@+id/cl_maincard_empty_view"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="@{mainCardViewModel.isMyCard ? View.INVISIBLE : View.VISIBLE}"
                     tools:visibility="invisible">
 
                     <TextView
@@ -342,8 +343,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:lottie_fileName="lottie_loading.json"
-                app:lottie_loop="true"
-     />
+                app:lottie_loop="true" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

@@ -114,6 +114,7 @@ class MyPageViewModel @Inject constructor(
 
     fun updateSearchCodeQuery(code: String) {
         _searchCodeQuery.value = code
+        Amplitude.getInstance().logEvent("My_SearchFriend_Code")
     }
 
     fun getUserMyPage() {
