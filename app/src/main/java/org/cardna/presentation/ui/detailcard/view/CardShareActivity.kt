@@ -184,7 +184,7 @@ class CardShareActivity :
                         MediaStore.MediaColumns.DISPLAY_NAME,
                         System.currentTimeMillis().toString() + ".png"
                     )
-                    put(MediaStore.MediaColumns.MIME_TYPE, "image/png") // 왜 여기는 jpg?
+                    put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
                     put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/CARDNA")
                 }
 
