@@ -10,6 +10,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.content.ContextCompat.startActivity
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -29,6 +30,7 @@ import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
 import org.cardna.presentation.util.StatusBarUtil
 import org.cardna.presentation.util.shortToast
 import timber.log.Timber
+import kotlin.math.absoluteValue
 
 
 @AndroidEntryPoint
@@ -45,7 +47,9 @@ class SplashActivity :
         // 강제 업데이트 로직을 여기다 둬야 할 듯.
         // initView 호출 후 로티가 띄워지고, 다음 플로우로 이동하기 전, 업데이트 있는지 판단
         checkAppUpdate()
-        }
+
+//        setNextActivity()
+    }
 
     override fun initView() {
         with(CardNaRepository) {
@@ -63,11 +67,18 @@ class SplashActivity :
     }
 
     private fun checkAppUpdate() {
+        Timber.e("인앱업데이트 1")
         appUpdateManager = AppUpdateManagerFactory.create(this)
+
+        Timber.e("인앱업데이트 2")
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
+        Timber.e("인앱업데이트 3")
         // Checks that the platform will allow the specified type of update.
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+
+            Timber.e("인앱업데이트 4")
+
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                 && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
             ) { // 업데이트 가 있는 경우
@@ -76,21 +87,29 @@ class SplashActivity :
                 val nowVersionCode = BuildConfig.VERSION_CODE // 현재 versionCode
                 val newVersionCode = appUpdateInfo.availableVersionCode() // 업데이트 버전의 versionCode
 
-                if((newVersionCode - nowVersionCode) >= 5){ // 강제 업데이트 할 정도로 큰 업데이트라면
+                if ((newVersionCode - nowVersionCode) >= 5) { // 강제 업데이트 할 정도로 큰 업데이트라면
+                    Timber.e("인앱업데이트 있는데 강제 업데이트")
                     appUpdateManager.startUpdateFlowForResult( // 강제 업데이트 실행
                         appUpdateInfo,
                         AppUpdateType.IMMEDIATE,
                         this,
                         MY_REQUEST_CODE
                     )
-                }
-                else{ //그게 아니라면
+                } else { //그게 아니라면
                     // 선택적 업데이트이므로 아무 실행도 하지 않고, 다음 플로우로 앱 진행
+                    Timber.e("인앱업데이트 있는데 강제 업데이트 아님")
+                    setNextActivity()
                 }
             } else { // 업데이트가 없는 경우
-                Timber.e("인앱업데이트 no update")
+                Timber.e("인앱업데이트 없음")
                 // 아무 실행도 하지 않고, 다음 플로우로 앱 진행
+                setNextActivity()
             }
+        }
+
+        appUpdateInfoTask.addOnFailureListener {
+            Timber.e("인앱업데이트 Fail")
+            setNextActivity()
         }
     }
 
