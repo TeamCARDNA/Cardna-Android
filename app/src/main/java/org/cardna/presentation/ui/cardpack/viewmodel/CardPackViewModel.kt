@@ -35,7 +35,7 @@ class CardPackViewModel @Inject constructor(
         get() = _name
 
     // 그 사람의 카드팩의 총 카드 개수 => CardPackFragment 의 textView 에 바인딩
-    private val _totalCardCnt = MutableLiveData<Int>(0)
+    private val _totalCardCnt = MutableLiveData<Int>()
     val totalCardCnt: LiveData<Int>
         get() = _totalCardCnt
 

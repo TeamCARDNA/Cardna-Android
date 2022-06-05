@@ -23,8 +23,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val cardRepository: CardRepository
 ) : ViewModel() {
+
+    // 그 사람의 카드팩의 총 카드 개수 => CardPackFragment 의 textView 에 바인딩
+    private val _totalCardCnt = MutableLiveData<Int>()
+    val totalCardCnt: LiveData<Int>
+        get() = _totalCardCnt
+
 
     private val _tokenList = MutableLiveData<IssuanceTokenList>()
     val tokenList: LiveData<IssuanceTokenList> = _tokenList
@@ -54,6 +61,19 @@ class LoginViewModel @Inject constructor(
     private var _tokenStatusCode = MutableLiveData<Int>()
     val tokenStatusCode: LiveData<Int> = _tokenStatusCode
 
+
+    fun setTotalCardCnt() { // 본인 카드팩 접근시에만 필요
+        viewModelScope.launch {
+            runCatching {
+                cardRepository.getCardAll().data
+            }.onSuccess {
+                _totalCardCnt.value = it.totalCardCnt
+                Timber.e("CardPack: setTotalCnt")
+            }.onFailure {
+                Timber.e(it.toString())
+            }
+        }
+    }
 
     // 네이버 소셜 토큰
     private var _naverSocialUserToken = ""
@@ -135,6 +155,7 @@ class LoginViewModel @Inject constructor(
                 )
             }.onSuccess {
                 with(CardNaRepository) {
+                    Timber.d("KKK 재발급 상태 코드 : ${it.status}")
                     kakaoUserToken = it.data.accessToken
                     kakaoUserRefreshToken = it.data.refreshToken
                     userToken = kakaoUserToken
@@ -144,7 +165,7 @@ class LoginViewModel @Inject constructor(
                 when (it) {
                     is retrofit2.HttpException -> {
                         _tokenStatusCode.value = it.code()
-                        Timber.d("onFailure 재발급 상태 코드 : ${it.code()}")
+                        Timber.d("KKK 재발급 상태 코드 : ${it.code()}")
                     }
                 }
             }

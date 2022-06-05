@@ -52,6 +52,9 @@ class SplashActivity :
     }
 
     override fun initView() {
+        loginViewModel.setTotalCardCnt()
+
+
         with(CardNaRepository) {
 //            kakaoUserfirstName = ""
 //            kakaoUserToken = ""
@@ -186,7 +189,10 @@ class SplashActivity :
             loginViewModel.tokenStatusCode.observe(this) {
                 when (it) {
                     REFRESH_SUCCESS, ACCESS_NOW -> moveMain()
-                    else -> moveOnboarding()
+                    else -> {
+                        Timber.d("KKK $it")
+                        moveOnboarding()
+                    }
                 }
             }
             // 네이버 자동로그인

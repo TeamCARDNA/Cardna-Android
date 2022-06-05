@@ -13,12 +13,13 @@
         android:background="@color/main_black"
         tools:context="org.cardna.presentation.ui.login.view.SetNameFinishedActivity">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ctl_setnamefinished"
+            android:id="@+id/ctl_setnamefinished_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="20dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/ll_setnamefinished_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -35,58 +36,47 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="지우님 반가워요!" />
 
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ctl_setnamefinished_message"
+            <TextView
+                android:id="@+id/tv_setnamefinished_message1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="@+id/tv_setnamefinished_title"
-                app:layout_constraintStart_toStartOf="@+id/tv_setnamefinished_title"
-                app:layout_constraintTop_toBottomOf="@+id/tv_setnamefinished_title">
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:textColor="@color/white_1"
+                android:textSize="42sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_setnamefinished_title"
+                tools:text="@string/setnamefinished_tv_message1" />
 
-                <TextView
-                    android:id="@+id/tv_setnamefinished_message1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pretendard_semibold"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/white_1"
-                    android:textSize="42sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/setnamefinished_tv_message1" />
+            <TextView
+                android:id="@+id/tv_setnamefinished_message2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:textColor="@color/white_1"
+                android:textSize="42sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_setnamefinished_message1"
+                app:layout_constraintStart_toStartOf="@+id/tv_setnamefinished_message1"
+                app:layout_constraintTop_toBottomOf="@id/tv_setnamefinished_message1"
+                tools:text="@string/setnamefinished_tv_message2" />
 
-                <TextView
-                    android:id="@+id/tv_setnamefinished_message2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/pretendard_semibold"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/white_1"
-                    android:textSize="42sp"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_setnamefinished_message1"
-                    app:layout_constraintStart_toStartOf="@+id/tv_setnamefinished_message1"
-                    app:layout_constraintTop_toBottomOf="@id/tv_setnamefinished_message1"
-                    tools:text="@string/setnamefinished_tv_message2" />
-
-                <TextView
-                    android:id="@+id/tv_setnamefinished_message3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/pretendard_semibold"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/white_1"
-                    android:textSize="42sp"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_setnamefinished_message1"
-                    app:layout_constraintStart_toStartOf="@+id/tv_setnamefinished_message1"
-                    app:layout_constraintTop_toBottomOf="@id/tv_setnamefinished_message2"
-                    tools:text="@string/setnamefinished_tv_message3" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_setnamefinished_message3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:textColor="@color/white_1"
+                android:textSize="42sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_setnamefinished_message1"
+                app:layout_constraintStart_toStartOf="@+id/tv_setnamefinished_message1"
+                app:layout_constraintTop_toBottomOf="@id/tv_setnamefinished_message2"
+                tools:text="@string/setnamefinished_tv_message3" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -96,7 +86,7 @@
             android:layout_marginHorizontal="40dp"
             android:layout_marginBottom="64dp"
             android:orientation="horizontal"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -131,8 +121,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/btn_setnamefinished_negative"
                 tools:visibility="visible" />
-
-
         </LinearLayout>
 
 
