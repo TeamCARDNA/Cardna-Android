@@ -108,9 +108,9 @@ sealed class BaseViewUtil {
         // BottomDialogImageFragment
         const val SYMBOL_0 = 1
         const val SYMBOL_1 = 2
-        const val SYMBOL_2 = 3
-        const val SYMBOL_3 = 4
-        const val SYMBOL_4 = 5
+        const val SYMBOL_2 = 5
+        const val SYMBOL_3 = 3
+        const val SYMBOL_4 = 4
         const val GALLERY = 6
     }
 }

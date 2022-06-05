@@ -1,5 +1,6 @@
 package org.cardna.presentation.ui.login.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,11 +10,17 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.content.ContextCompat.startActivity
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
-import org.cardna.BuildConfig.*
+import org.cardna.BuildConfig
 import org.cardna.R
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.databinding.ActivitySplashBinding
@@ -21,7 +28,9 @@ import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
 import org.cardna.presentation.util.StatusBarUtil
+import org.cardna.presentation.util.shortToast
 import timber.log.Timber
+import kotlin.math.absoluteValue
 
 
 @AndroidEntryPoint
@@ -29,9 +38,17 @@ class SplashActivity :
     BaseViewUtil.BaseAppCompatActivity<ActivitySplashBinding>(R.layout.activity_splash) {
     private val loginViewModel: LoginViewModel by viewModels()
 
+    private lateinit var appUpdateManager: AppUpdateManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
+
+        // 강제 업데이트 로직을 여기다 둬야 할 듯.
+        // initView 호출 후 로티가 띄워지고, 다음 플로우로 이동하기 전, 업데이트 있는지 판단
+        checkAppUpdate()
+
+//        setNextActivity()
     }
 
     override fun initView() {
@@ -50,7 +67,92 @@ class SplashActivity :
         }
         StatusBarUtil.setStatusBar(this, R.color.black)
         setFullScreen()
-        setNextActivity()
+    }
+
+    private fun checkAppUpdate() {
+        Timber.e("인앱업데이트 1")
+        appUpdateManager = AppUpdateManagerFactory.create(this)
+
+        Timber.e("인앱업데이트 2")
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+
+        Timber.e("인앱업데이트 3")
+        // Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+
+            Timber.e("인앱업데이트 4")
+
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+            ) { // 업데이트 가 있는 경우
+                Timber.e("인앱업데이트 있음")
+
+                val nowVersionCode = BuildConfig.VERSION_CODE // 현재 versionCode
+                val newVersionCode = appUpdateInfo.availableVersionCode() // 업데이트 버전의 versionCode
+
+                if ((newVersionCode - nowVersionCode) >= 5) { // 강제 업데이트 할 정도로 큰 업데이트라면
+                    Timber.e("인앱업데이트 있는데 강제 업데이트")
+                    appUpdateManager.startUpdateFlowForResult( // 강제 업데이트 실행
+                        appUpdateInfo,
+                        AppUpdateType.IMMEDIATE,
+                        this,
+                        MY_REQUEST_CODE
+                    )
+                } else { //그게 아니라면
+                    // 선택적 업데이트이므로 아무 실행도 하지 않고, 다음 플로우로 앱 진행
+                    Timber.e("인앱업데이트 있는데 강제 업데이트 아님")
+                    setNextActivity()
+                }
+            } else { // 업데이트가 없는 경우
+                Timber.e("인앱업데이트 없음")
+                // 아무 실행도 하지 않고, 다음 플로우로 앱 진행
+                setNextActivity()
+            }
+        }
+
+        appUpdateInfoTask.addOnFailureListener {
+            Timber.e("인앱업데이트 Fail")
+            setNextActivity()
+        }
+    }
+
+
+    // 인앱 immediate update 팝업으로 인텐트 이동 했다가 백버튼이나 x버튼 눌러서 다시 스플래쉬로 돌아왔을 때
+    // 업데이트가 안되어있다면, 다시 업데이트 실행
+
+    // 업데이트 시작 전, 취소 ?
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Timber.e("인앱업데이트 onActivityResult")
+        if (requestCode == MY_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) { // 업데이트 실패 또는 취소 ?
+                // 다시 인앱 즉시 업데이트 팝업창 실행
+                checkAppUpdate()
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
+    // 업데이트가 중단 된 경우, 앱이 다시 foreground로 돌아왔을 때, 업데이트가 진행중이면 다시 업데이트 재개
+
+    // 업데이트 중간에 뒤로가거나 백그라운드로 가거나 하면 다시 업데이트 화면으로 강제로 이동하도록?
+    override fun onResume() {
+        Timber.e("인앱업데이트 onResume")
+        super.onResume()
+
+        appUpdateManager
+            .appUpdateInfo
+            .addOnSuccessListener { appUpdateInfo ->
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                    // If an in-app update is already running, resume the update.
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateInfo,
+                        IMMEDIATE,
+                        this,
+                        MY_REQUEST_CODE
+                    )
+                }
+            }
     }
 
 
@@ -75,11 +177,11 @@ class SplashActivity :
     }
 
     private fun setNextActivity() {
-        //todo  회원가입
+        // 회원가입
         if (CardNaRepository.kakaoUserfirstName.isEmpty() && CardNaRepository.naverUserfirstName.isEmpty()) {
             Timber.e("ㅡㅡㅡㅡ1.회원가입안함ㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + CardNaRepository.naverUserfirstName}")
             moveOnboarding()
-            //todo 카카오 자동로그인
+            // 카카오 자동로그인
         } else if (CardNaRepository.kakaoUserfirstName.isNotEmpty() && !CardNaRepository.kakaoUserlogOut) {
             Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.카카오 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ${CardNaRepository.kakaoUserfirstName + !CardNaRepository.kakaoUserlogOut}")
             loginViewModel.getKakaoTokenIssuance()
@@ -93,11 +195,8 @@ class SplashActivity :
                     }
                 }
             }
-            //todo 네이버 자동로그인
+            // 네이버 자동로그인
         } else if (CardNaRepository.naverUserfirstName.isNotEmpty() && !CardNaRepository.naverUserlogOut) {
-            Timber.e("ㅡㅡㅡㅡㅡㅡㅡ2.네이버 회원가입함ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-
-
             // 토큰재발급 API 호출
             // 여기서 토큰 재발급 API 호출해서 accessToken, refreshToken 유효성 판단
             /*
@@ -118,51 +217,19 @@ class SplashActivity :
             loginViewModel.getNaverTokenIssuance()
 
             loginViewModel.tokenStatusCode.observe(this) {
-                if (it == 200) {
-                    Timber.d("토큰 재발급 성공")
+                Timber.d("tokentest 상태 코드 : ${it}")
+                if (it == 200) { // 1. 액세스 토큰만 만료 -> 재발급 성공
+                    Timber.d("tokentest 재발급 성공")
                     moveMain()
-                } else if (it == 400) {
-                    Timber.d("유효한 토큰입니다.")
+                } else if (it == 400) { // 2. 유효한 토큰
+                    Timber.d("tokentest 유효한 토큰입니다.")
                     moveMain()
-                } else if (it == 401) { // 3. 둘다 만료
-                    Timber.d("모든 토큰이 만료되었습니다.")
-
-                    val oauthLoginCallback = object : OAuthLoginCallback {
-                        override fun onSuccess() {
-                            // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
-                            Timber.d("naver onSuccess: ")
-                            loginViewModel.setNaverSocialUserToken(NaverIdLoginSDK.getAccessToken()!!)
-                        }
-
-                        override fun onFailure(httpStatus: Int, message: String) {
-                            val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                            val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                            Timber.d("naver ErrorCode : ${errorCode}")
-                            Timber.d("naver ErrorDescription : ${errorDescription}")
-                        }
-
-                        override fun onError(errorCode: Int, message: String) {
-                            onFailure(errorCode, message)
-                        }
-                    }
-
-                    // 네이버 소셜 로그인을 통해 naver accessToken 얻기
-                    NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
-
-                    // 소셜로그인 API를 호출하기 위해 헤더의 토큰을 naver 소셜 토큰으로 갈아끼움
-                    CardNaRepository.userToken = loginViewModel.naverSocialUserToken!!
-
-                    // 소셜 로그인 API 호출 => 발급 받은 naverUserToken, naverUserRefreshToken 저장, 헤더 갈아끼우기
-                    loginViewModel.getNaverLogin()
-
-                    // Main으로 이동
-                    moveMain()
-                } else {
-                    Timber.d("naver move main: ")
-                    moveMain()
+                } else { // 3. 둘다 만료
+                    Timber.d("tokentest 모든 토큰이 만료되었습니다.")
+                    moveOnboarding()
                 }
             }
-            //todo 카카오나 네이버 로그아웃 했을시
+            // 카카오나 네이버 로그아웃 했을시
         } else if (CardNaRepository.kakaoUserlogOut || CardNaRepository.naverUserlogOut) {
             moveOnboarding()
         } else {
@@ -196,5 +263,8 @@ class SplashActivity :
     companion object {
         const val REFRESH_SUCCESS = 200
         const val ACCESS_NOW = 400
+        const val NEED_LOGIN = 401
+
+        const val MY_REQUEST_CODE = 1229
     }
 }
