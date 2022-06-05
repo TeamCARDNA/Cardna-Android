@@ -153,10 +153,10 @@ class SetNameActivity :
 
     private fun initAnimation(name: String) {
         val welcomeText = "${name}님 반가워요!"
-        val gradientText = setGradientText(welcomeText)
-        binding.tvSetnameUsername.text = gradientText
-        binding.tvSetnameUsername.visibility = View.VISIBLE
-        binding.clSetnameContainer.visibility = View.GONE
+//        val gradientText = setGradientText(welcomeText)
+//        binding.tvSetnameUsername.text = gradientText
+//        binding.tvSetnameUsername.visibility = View.VISIBLE
+//        binding.clSetnameContainer.visibility = View.GONE
 
         startSetNameFinishedActivity(welcomeText)
     }
