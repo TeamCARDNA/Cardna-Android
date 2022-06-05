@@ -34,7 +34,7 @@ class SetNameFinishedActivity :
 //        getScreenHeight()
         Amplitude.getInstance().logEvent("Cardna_Membership")
         setClickListener()
-        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim() }, 1300L)
+        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim() }, 670L)
 
 //        setUpAnim(R.anim.anim_translate_up_2560height, 1300L)
     }
