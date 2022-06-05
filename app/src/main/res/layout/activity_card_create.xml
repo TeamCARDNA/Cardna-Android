@@ -164,7 +164,6 @@
                         android:maxLength="14"
                         android:maxLines="1"
 
-                        android:textCursorDrawable="@drawable/bg_cursor_color"
                         android:nextFocusDown="@id/et_cardcreate_detail"
 
                         android:padding="0dp"
@@ -237,7 +236,6 @@
                     android:scrollbars = "vertical"
                     android:overScrollMode="always"
                     android:scrollbarStyle="insideInset"
-                    android:textCursorDrawable="@drawable/bg_cursor_color"
 
                     android:text="@={cardCreateViewModel._etDetailText}"
                     android:textColor="@color/white_1"
