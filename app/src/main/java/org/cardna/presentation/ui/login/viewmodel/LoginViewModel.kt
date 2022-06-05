@@ -51,7 +51,7 @@ class LoginViewModel @Inject constructor(
         get() = _issuanceMessage
 
     // 토큰 재발급 메서드에 대한 message
-    private var _tokenStatusCode = MutableLiveData<Int>(0)
+    private var _tokenStatusCode = MutableLiveData<Int>()
     val tokenStatusCode: LiveData<Int> = _tokenStatusCode
 
 
@@ -135,6 +135,7 @@ class LoginViewModel @Inject constructor(
                 )
             }.onSuccess {
                 with(CardNaRepository) {
+                    Timber.d("KKK 재발급 상태 코드 : ${it.status}")
                     kakaoUserToken = it.data.accessToken
                     kakaoUserRefreshToken = it.data.refreshToken
                     userToken = kakaoUserToken
@@ -144,7 +145,7 @@ class LoginViewModel @Inject constructor(
                 when (it) {
                     is retrofit2.HttpException -> {
                         _tokenStatusCode.value = it.code()
-                        Timber.d("onFailure 재발급 상태 코드 : ${it.code()}")
+                        Timber.d("KKK 재발급 상태 코드 : ${it.code()}")
                     }
                 }
             }

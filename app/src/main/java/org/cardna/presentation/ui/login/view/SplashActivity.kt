@@ -84,7 +84,10 @@ class SplashActivity :
             loginViewModel.tokenStatusCode.observe(this) {
                 when (it) {
                     REFRESH_SUCCESS, ACCESS_NOW -> moveMain()
-                    else -> moveOnboarding()
+                    else -> {
+                        Timber.d("KKK $it")
+                        moveOnboarding()
+                    }
                 }
             }
             //todo 네이버 자동로그인
@@ -190,6 +193,5 @@ class SplashActivity :
     companion object {
         const val REFRESH_SUCCESS = 200
         const val ACCESS_NOW = 400
-        const val NEED_LOGIN = 401
     }
 }
