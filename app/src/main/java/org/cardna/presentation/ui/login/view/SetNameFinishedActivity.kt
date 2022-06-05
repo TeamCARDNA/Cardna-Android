@@ -34,8 +34,9 @@ class SetNameFinishedActivity :
 //        getScreenHeight()
         Amplitude.getInstance().logEvent("Cardna_Membership")
         setClickListener()
-        setUpAnim(R.anim.anim_translate_up_2560height,1300L)
-        setTextView()
+        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim() }, 670L)
+
+//        setUpAnim(R.anim.anim_translate_up_2560height, 1300L)
     }
 
 //    private fun getScreenHeight() {
@@ -48,12 +49,14 @@ class SetNameFinishedActivity :
 //    }
 
     private fun setUpAnim(animId: Int, delayMillis: Long) {
-        val animation = AnimationUtils.loadAnimation(this, animId)
-        binding.ctlSetnamefinished.startAnimation(animation)
-        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim() }, delayMillis)
+//        val animation = AnimationUtils.loadAnimation(this, animId)
+//        binding.ctlSetnamefinished.startAnimation(animation)
+//        setFadeAnim()
+//        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim() }, delayMillis)
     }
 
     private fun setFadeAnim() {
+        setTextView()
         with(binding.ctlSetnamefinishedMessage) {
             visibility = View.VISIBLE
             val fadeIn = AnimationUtils.loadAnimation(this@SetNameFinishedActivity, R.anim.fade_in)
@@ -84,7 +87,6 @@ class SetNameFinishedActivity :
 
     private fun setTextView() {
         val welcomeText = intent.getStringExtra("welcomeText") ?: "반가워요"
-
         with(binding) {
             tvSetnamefinishedTitle.text = setGradientText(welcomeText)
             tvSetnamefinishedMessage1.text =
