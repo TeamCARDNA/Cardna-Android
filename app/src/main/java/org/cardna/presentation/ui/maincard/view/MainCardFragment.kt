@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isInvisible
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.amplitude.api.Amplitude
@@ -26,6 +27,7 @@ import org.cardna.presentation.ui.cardpack.view.FriendCardPackActivity
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.editcard.view.EditCardActivity
+import org.cardna.presentation.ui.login.viewmodel.LoginViewModel
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
@@ -42,8 +44,7 @@ class MainCardFragment :
     private lateinit var mainCardAdapter: MainCardAdapter
     private val mainCardViewModel: MainCardViewModel by activityViewModels()
     private val myPageViewModel: MyPageViewModel by activityViewModels()
-    private val cardpackViewModel: CardPackViewModel by activityViewModels()
-
+    private val loginViewModel: LoginViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.e("bottomtest MainCardFragment onCreate")
@@ -64,6 +65,7 @@ class MainCardFragment :
         checkUserId()
         setGradientSetting()
     }
+
 
     //click listener
     private fun setClickListener() {
@@ -117,9 +119,9 @@ class MainCardFragment :
             else binding.icAlarmStatus.visibility = View.INVISIBLE
 
         }
-        cardpackViewModel.setTotalCardCnt()
+        loginViewModel.setTotalCardCnt()
         binding.mainCardViewModel = mainCardViewModel
-        binding.cardpackViewModel = cardpackViewModel
+        binding.loginViewModel=loginViewModel
         setInitPagePosition()
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
     }
@@ -130,12 +132,16 @@ class MainCardFragment :
             mainCardViewModel.setLoadingState(true)
 
             with(binding) {
+                friendCardEmpty.visibility=View.VISIBLE
                 llMaincardEditLayout.visibility = View.GONE
                 clMaincardAlarm.visibility =
                     View.INVISIBLE  //TODO 뷰갱신될때 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
                 llMaincardMypageIconContainer.visibility =
                     View.VISIBLE  //TODO 뷰갱신될대 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
                 ivMaincardGotoCardpackBackground.visibility = View.VISIBLE
+
+
+                //친구꺼 볼때
             }
 
             val name = arguments?.getString("name")
@@ -143,7 +149,9 @@ class MainCardFragment :
             mainCardViewModel.getMyPageUser(name!!)
             mainCardViewModel.setFriendNameAndId(name, id)
         } else {
+            //내가 내화면
             with(binding) {
+                friendCardEmpty.visibility=View.INVISIBLE
                 ivMaincardGotoCardpackBackground.visibility = View.INVISIBLE
                 llMaincardMypageIconContainer.visibility = View.INVISIBLE
                 clMaincardAlarm.visibility = View.VISIBLE
