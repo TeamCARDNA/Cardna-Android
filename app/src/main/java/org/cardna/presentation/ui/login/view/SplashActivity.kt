@@ -70,18 +70,11 @@ class SplashActivity :
     }
 
     private fun checkAppUpdate() {
-        Timber.e("인앱업데이트 1")
         appUpdateManager = AppUpdateManagerFactory.create(this)
-
-        Timber.e("인앱업데이트 2")
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
-        Timber.e("인앱업데이트 3")
         // Checks that the platform will allow the specified type of update.
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-
-            Timber.e("인앱업데이트 4")
-
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                 && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
             ) { // 업데이트 가 있는 경우
@@ -122,10 +115,10 @@ class SplashActivity :
 
     // 업데이트 시작 전, 취소 ?
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Timber.e("인앱업데이트 onActivityResult")
         if (requestCode == MY_REQUEST_CODE) {
             if (resultCode != RESULT_OK) { // 업데이트 실패 또는 취소 ?
                 // 다시 인앱 즉시 업데이트 팝업창 실행
+                Timber.e("인앱업데이트 onActivityResult")
                 checkAppUpdate()
             }
         }
