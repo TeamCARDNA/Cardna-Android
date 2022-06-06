@@ -173,21 +173,39 @@ class CardCreateActivity :
     private fun setChooseCardListener() {
         binding.ctlCardcreateImg.setOnClickListener {
             // 이미지 선택 cl 클릭 시, bottomDialogImageFragment 를 생성한 후, 람다를 bundle로 넘겨줌. 이를 show()
+
+            binding.ctlCardcreateImg.isClickable = false
+
             val bottomDialogImageFragment = BottomDialogImageFragment()
             bottomDialogImageFragment.arguments = Bundle().apply {
                 putParcelable(BaseViewUtil.BOTTOM_IMAGE, BottomImageLamdaData(itemClick))
             }
             bottomDialogImageFragment.show(supportFragmentManager, bottomDialogImageFragment.tag)
+
+
+            val handler = Handler(Looper.getMainLooper())
+            handler.postDelayed({
+                binding.ctlCardcreateImg.isClickable = true
+            }, 1000) // 1초 딜레이 후 다시 클릭 가능하도록
         }
 
         // 첫번째 심볼이나 갤러리 이미지 선택 후, 이미지가 보이게 될 것. 그러면 이 이미지뷰를 눌러도 다시 이미지를 선택할 수 있도록
         // 리스너 달아주기
         binding.ivCardcreateGalleryImg.setOnClickListener {
+
+            binding.ivCardcreateGalleryImg.isClickable = false
+
             val bottomDialogImageFragment = BottomDialogImageFragment()
             bottomDialogImageFragment.arguments = Bundle().apply {
                 putParcelable(BaseViewUtil.BOTTOM_IMAGE, BottomImageLamdaData(itemClick))
             }
             bottomDialogImageFragment.show(supportFragmentManager, bottomDialogImageFragment.tag)
+
+
+            val handler = Handler(Looper.getMainLooper())
+            handler.postDelayed({
+                binding.ivCardcreateGalleryImg.isClickable = true
+            }, 1000) // 1초 딜레이 후 다시 클릭 가능하도록
         }
     }
 
@@ -282,7 +300,8 @@ class CardCreateActivity :
                 // 2. cardCreateCompleteActivity 로 이동
                     if (cardCreateViewModel.isCardMeOrYou!!) {
                         // 2-1. 내 카드나 작성 => CardCreateCompleteActivity 로 보내줘야 함.
-                        val intent = Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
+                        val intent =
+                            Intent(this@CardCreateActivity, CardCreateCompleteActivity::class.java)
                         intent.putExtra(
                             BaseViewUtil.IS_CARD_ME_OR_YOU,
                             cardCreateViewModel.isCardMeOrYou
@@ -295,7 +314,10 @@ class CardCreateActivity :
                             BaseViewUtil.CARD_IMG,
                             cardCreateViewModel.uri.value.toString()
                         ) // 심볼 - null, 갤러리 - uri 값
-                        intent.putExtra(BaseViewUtil.CARD_TITLE, cardCreateViewModel.etKeywordText.value)
+                        intent.putExtra(
+                            BaseViewUtil.CARD_TITLE,
+                            cardCreateViewModel.etKeywordText.value
+                        )
 
                         binding.tvCardcreateComplete.isClickable = false
                         startActivity(intent)
@@ -309,7 +331,10 @@ class CardCreateActivity :
                         )
 
                         val newIntent =
-                            Intent(this@CardCreateActivity, OtherCardCreateCompleteActivity::class.java)
+                            Intent(
+                                this@CardCreateActivity,
+                                OtherCardCreateCompleteActivity::class.java
+                            )
 
                         newIntent.putExtra(
                             BaseViewUtil.IS_CARDPACK_OR_MAINCARD, isCardPackOrMainCard

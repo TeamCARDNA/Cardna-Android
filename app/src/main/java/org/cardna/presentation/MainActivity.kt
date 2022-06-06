@@ -209,7 +209,6 @@ class MainActivity :
 // 즉, MainActivity 에서 BottomSheetDialog 를 띄워주는 메서드
     fun showBottomDialogCardFragment() {
         // 바텀싯 다이얼로그가 뜬 후, 카드나 or 카드너를 선택했을 때, 그거에 따라 어떤 액티비티를 띄워줘야 하는지를 명세한 Fragment 정의하고
-
         val itemClick : (Boolean) -> Unit  =
             {it ->
                 when (it) {
@@ -238,7 +237,9 @@ class MainActivity :
             )
         }
 
-        bottomDialogCardFragment.show(supportFragmentManager, bottomDialogCardFragment.tag)
+        if(supportFragmentManager.findFragmentByTag(bottomDialogCardFragment.tag) == null) {
+            bottomDialogCardFragment.show(supportFragmentManager, bottomDialogCardFragment.tag)
+        }
     }
 
 
