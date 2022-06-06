@@ -1,7 +1,9 @@
 package org.cardna.presentation.ui.cardpack.view
 
-import android.graphics.Color
+import android.R
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -11,9 +13,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.amplitude.api.Amplitude
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import land.sungbin.systemuicontroller.setNavigationBarColor
-import land.sungbin.systemuicontroller.setSystemBarsColor
-import org.cardna.R
 import org.cardna.databinding.CardpackCustomTablayoutBinding
 import org.cardna.databinding.FragmentCardPackBinding
 import org.cardna.presentation.MainActivity
@@ -22,8 +21,10 @@ import org.cardna.presentation.ui.cardpack.adapter.CardPackTabLayoutAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import timber.log.Timber
 
+
 @AndroidEntryPoint
-class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.layout.fragment_card_pack) {
+class CardPackFragment :
+    BaseViewUtil.BaseFragment<FragmentCardPackBinding>(org.cardna.R.layout.fragment_card_pack) {
     private val cardPackViewModel: CardPackViewModel by activityViewModels()
     private lateinit var cardPackTabLayoutAdapter: CardPackTabLayoutAdapter // tabLayout 에 data 띄워주는 adapter
 
@@ -31,6 +32,7 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
         super.onCreate(savedInstanceState)
         Timber.e("bottomtest CardPackFragment onCreate")
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Amplitude.getInstance().logEvent("CardPack")
@@ -43,7 +45,7 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
         // 카드팩프래그먼트에서 카드를 눌러 카드 상세페이지로 가서 삭제한다음 왔을 때, 카드팩의 카드들이 업데이트 되어야 하므로 onResume 이 필요
         super.onResume()
         Timber.e("bottomtest CardPackFragment onResume")
-        if(cardPackViewModel.id.value == null) // 내 카드팩일때만 onResume 해주면 됨.
+        if (cardPackViewModel.id.value == null) // 내 카드팩일때만 onResume 해주면 됨.
             cardPackViewModel.setTotalCardCnt()
         binding.vpCardpack.setCurrentItem(cardPackViewModel.tabPosition.value ?: 0, false)
     }
@@ -99,7 +101,7 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
     private fun createTabLayout(tabName: String): View { // 각 탭 레이아웃에 탭의 뷰 디자인 하는 메서드
         val tabBinding: CardpackCustomTablayoutBinding = DataBindingUtil.inflate(
             LayoutInflater.from(requireContext()),
-            R.layout.cardpack_custom_tablayout,
+            org.cardna.R.layout.cardpack_custom_tablayout,
             null,
             false
         )
@@ -109,15 +111,15 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
                 "카드나" -> {
                     tvCardmeTab.text = tabName
                     isCardme = true
-                    ivCardpackTab.setImageResource(R.drawable.ic_selector_cardpack_tab_cardme)
-                    viewCardpackLine.setBackgroundResource(R.drawable.ic_selector_cardpack_tab_cardme_line)
+                    ivCardpackTab.setImageResource(org.cardna.R.drawable.ic_selector_cardpack_tab_cardme)
+                    viewCardpackLine.setBackgroundResource(org.cardna.R.drawable.ic_selector_cardpack_tab_cardme_line)
                 }
 
                 "카드너" -> {
                     tvCardyouTab.text = tabName
                     isCardme = false
-                    ivCardpackTab.setImageResource(R.drawable.ic_selector_cardpack_tab_cardyou)
-                    viewCardpackLine.setBackgroundResource(R.drawable.ic_selector_cardpack_tab_cardyou_line)
+                    ivCardpackTab.setImageResource(org.cardna.R.drawable.ic_selector_cardpack_tab_cardyou)
+                    viewCardpackLine.setBackgroundResource(org.cardna.R.drawable.ic_selector_cardpack_tab_cardyou_line)
                 }
             }
         }
@@ -132,12 +134,20 @@ class CardPackFragment : BaseViewUtil.BaseFragment<FragmentCardPackBinding>(R.la
 
             // 카드추가버튼에 카드나 카드너 추가 바텀씻 올라오는 리스너 달기
             binding.ctlAddCardBg.setOnClickListener {
+                binding.ctlAddCardBg.isClickable = false
                 (activity as MainActivity).showBottomDialogCardFragment()
+
+                val handler = Handler(Looper.getMainLooper())
+                handler.postDelayed({
+                        binding.ctlAddCardBg.isClickable = true
+                    },1000
+                ) // 1초 딜레이 후 다시 클릭 가능하도록
             }
 
             // 나머지 분기처리는 xml 상에서 삼항연산자 이용
         }
     }
+
     private fun setInitPagePosition() {
         binding.vpCardpack.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
