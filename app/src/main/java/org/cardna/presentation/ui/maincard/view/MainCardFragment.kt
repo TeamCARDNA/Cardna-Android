@@ -121,7 +121,7 @@ class MainCardFragment :
         }
         loginViewModel.setTotalCardCnt()
         binding.mainCardViewModel = mainCardViewModel
-        binding.loginViewModel=loginViewModel
+        binding.loginViewModel = loginViewModel
         setInitPagePosition()
         binding.vpMaincardList.setCurrentItem(mainCardViewModel.cardPosition.value ?: 0, false)
     }
@@ -132,7 +132,7 @@ class MainCardFragment :
             mainCardViewModel.setLoadingState(true)
 
             with(binding) {
-                friendCardEmpty.visibility=View.VISIBLE
+                friendCardEmpty.visibility = View.VISIBLE
                 llMaincardEditLayout.visibility = View.GONE
                 clMaincardAlarm.visibility =
                     View.INVISIBLE  //TODO 뷰갱신될때 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
@@ -151,7 +151,7 @@ class MainCardFragment :
         } else {
             //내가 내화면
             with(binding) {
-                friendCardEmpty.visibility=View.INVISIBLE
+                friendCardEmpty.visibility = View.INVISIBLE
                 ivMaincardGotoCardpackBackground.visibility = View.INVISIBLE
                 llMaincardMypageIconContainer.visibility = View.INVISIBLE
                 clMaincardAlarm.visibility = View.VISIBLE

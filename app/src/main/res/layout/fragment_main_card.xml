@@ -251,7 +251,7 @@
                     android:id="@+id/maincard_cardpack_total_zero"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{loginViewModel.totalCardCnt!=0 ? View.INVISIBLE : View.VISIBLE, default=visible}"
+                    android:visibility="@{loginViewModel.totalCardCnt==0  &amp;&amp; mainCardViewModel.isMyCard ? View.VISIBLE : View.INVISIBLE, default=visible}"
                     app:layout_constraintBottom_toBottomOf="@+id/cl_maincard_empty_view"
                     app:layout_constraintEnd_toEndOf="@+id/cl_maincard_empty_view"
                     app:layout_constraintStart_toStartOf="@+id/cl_maincard_empty_view"
