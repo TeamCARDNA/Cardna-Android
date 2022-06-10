@@ -105,10 +105,6 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
             shortToast("신고가 접수되었습니다")
             finish()
         }
-
-        detailCardViewModel.isUserReportDialogShow.observe(this) {
-            onBackPressed()
-        }
     }
 
     private fun showEditPopUp() {
