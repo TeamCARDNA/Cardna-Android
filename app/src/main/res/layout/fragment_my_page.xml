@@ -159,7 +159,7 @@
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/et_mypage_name_search_background"
-                    android:theme="@style/search_view"
+
                     style="@style/search_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
