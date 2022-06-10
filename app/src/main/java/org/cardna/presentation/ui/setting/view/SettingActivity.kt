@@ -21,9 +21,12 @@ import org.cardna.presentation.util.shortToast
 import org.cardna.presentation.util.showCustomDialog
 
 @AndroidEntryPoint
-class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBinding>(R.layout.activity_setting) {
+class SettingActivity :
+    BaseViewUtil.BaseAppCompatActivity<ActivitySettingBinding>(R.layout.activity_setting) {
     private val settingViewModel: SettingViewModel by viewModels()
-    private val cardnaMail = "https://docs.google.com/forms/d/e/1FAIpQLSd9KrWFdzWDEvYfq2ein6reL4ZMjqTq_JQFhODSwEBGwkv7kg/viewform"
+    private val cardnaMail =
+        "https://docs.google.com/forms/d/e/1FAIpQLSd9KrWFdzWDEvYfq2ein6reL4ZMjqTq_JQFhODSwEBGwkv7kg/viewform"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.settingViewModel = settingViewModel
@@ -84,7 +87,11 @@ class SettingActivity : BaseViewUtil.BaseAppCompatActivity<ActivitySettingBindin
                 startActivity(Intent(this@SettingActivity, DeveloperInfoActivity::class.java))
             }
             tvSettingAppInfoPrivacyPolicy.setOnClickListener {
-                startActivity(Intent(this@SettingActivity, PrivacyPolicyActivity::class.java))
+                Intent(this@SettingActivity, PrivacyPolicyActivity::class.java).apply {
+                    putExtra("title", getString(R.string.privacy_text_title))
+                    putExtra("about", getString(R.string.privacy_text))
+                    startActivity(this)
+                }
             }
             tvSettingAppInfoServiceOperationPolicy.setOnClickListener {
                 startActivity(Intent(this@SettingActivity, ServiceOperationActivity::class.java))
