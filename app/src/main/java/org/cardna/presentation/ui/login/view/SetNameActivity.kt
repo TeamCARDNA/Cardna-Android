@@ -119,6 +119,7 @@ class SetNameActivity :
         button.setOnClickListener {
             // 이름 등록 및 회원가입 API 호출
             with(CardNaRepository) {
+                Timber.e("네이버 로그인 setName 완료")
                 loginViewModel.postSignUp(
                     RequestSignUpData(userSocial, userUuid, lastname, firstname, fireBaseToken)
                 )
