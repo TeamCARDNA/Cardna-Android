@@ -40,7 +40,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         Amplitude.getInstance().logEvent("My")
         binding.etMypageNameSearchBackground.clearFocus()
         setSearchFriendNameResultObserve()
-        setStickyScroll()
         setMyPageFriendAdapter()
         setInputField()
         setObserve()
@@ -63,12 +62,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         } else {
             myPageViewModel.getUserMyPage()
             myPageViewModel.setQueryState(MyPageViewModel.DEFAULT_STATE)
-        }
-    }
-
-    private fun setStickyScroll() {
-        binding.scMypage.run {
-            header = binding.ctlMypageHeader
         }
     }
 
