@@ -67,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:textSize="14dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="@{myPageViewModel.searchFriendCodeResult.name}"
                 android:textColor="@color/white_1"
@@ -163,7 +164,7 @@
                     android:fontFamily="@font/pretendard_semibold"
                     android:text="@string/mypage_search_code_friend"
                     android:textColor="@color/white_3"
-                    android:textSize="12sp" />
+                    android:textSize="12dp" />
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -183,7 +184,7 @@
                 android:paddingEnd="12dp"
                 android:text="친구 수락 대기 중"
                 android:textColor="@color/white_3"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 android:visibility="@{myPageViewModel.friendRelationType==4 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/ctl_mypage_code_search"
                 app:layout_constraintEnd_toEndOf="@+id/tv_mypage_code_search_friend_name"
