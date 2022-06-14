@@ -18,7 +18,7 @@ android {
         applicationId "org.cardna"
         minSdk 26
         targetSdk 31
-        versionCode 1
+        versionCode 41
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

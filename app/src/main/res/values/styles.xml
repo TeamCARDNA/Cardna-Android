@@ -4,7 +4,7 @@
     <!--  Fragment Title  -->
     <style name="fragment_title_text">
         <item name="android:textColor">@color/white_1</item>
-        <item name="android:textSize">28sp</item>
+        <item name="android:textSize">28dp</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
@@ -222,21 +222,21 @@
     </style>
 
     <style name="relation_dialog_title">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">16dp</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item>
         <item name="android:textColor">@color/white_1</item>
         <item name="android:textAlignment">center</item>
     </style>
 
     <style name="relation_dialog_btn_text">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/white_1</item>
     </style>
 
     <style name="relation_dialog_about">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
         <item name="android:textColor">@color/white_2</item>
         <item name="android:textAlignment">center</item>
@@ -258,7 +258,7 @@
     </style>
 
     <style name="onboarding_about">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="fontFamily">@font/pretendard_regular</item>
         <item name="lineHeight">21dp</item>
         <item name="android:textColor">@color/white_1</item>

@@ -164,7 +164,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="@string/dialog_relation_confirm"
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 

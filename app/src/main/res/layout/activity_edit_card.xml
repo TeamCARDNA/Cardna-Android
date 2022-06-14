@@ -179,7 +179,7 @@
             android:includeFontPadding="false"
             android:text="@string/edit_card_float_button_message"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:visibility="@{editCardViewModel.isMainCardEmpty? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_editcard_bubble"
             app:layout_constraintEnd_toEndOf="@+id/iv_editcard_bubble"

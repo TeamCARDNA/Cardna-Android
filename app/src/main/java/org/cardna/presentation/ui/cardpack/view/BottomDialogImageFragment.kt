@@ -45,7 +45,18 @@ class BottomDialogImageFragment
     // 이미지 선택하는 dialog 에서 갤러리 접근 버튼 눌렀을 때를 위해 리스너 달기
     // 버튼을 눌렀을 때, CardCreateActivity 의 checkPermission 메서드 실행
     private fun accessGallery() { // 갤러리에 접근하고 dialog 는 사라짐 => dialog 에서 완료 버튼 누를 일이 없음.
+
+        binding.imgBtnCardcreateGallery.setOnClickListener {
+            (activity as CardCreateActivity).checkPermission()
+            dialog?.dismiss()
+        }
+
         binding.btnCardcreateGallery.setOnClickListener {
+            (activity as CardCreateActivity).checkPermission()
+            dialog?.dismiss()
+        }
+
+        binding.clCardpackGallery.setOnClickListener {
             (activity as CardCreateActivity).checkPermission()
             dialog?.dismiss()
         }
