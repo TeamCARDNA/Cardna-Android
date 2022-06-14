@@ -124,8 +124,10 @@ class LoginViewModel @Inject constructor(
                 authRepository.getNaverLogin()
             }.onSuccess {
                 with(CardNaRepository) {
+                    Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ네이버로그인ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ $it")
                     naverAccessToken = ""  //todo 인터셉트바꾸기 위함
                     if (it.message == LOGIN_SUCCESS) { // 1. 재로그인
+                        Timber.e("네이버 로그인 재로그인")
                         naverUserToken = it.data.accessToken
                         naverUserRefreshToken = it.data.refreshToken
                         userToken = it.data.accessToken
@@ -134,11 +136,11 @@ class LoginViewModel @Inject constructor(
                         naverUserlogOut = false
                         _gotoSetName.value = false
                     } else { // 2. 회원가입
+                        Timber.e("네이버 로그인 회원가입")
                         userSocial = it.data.social
                         userUuid = it.data.uuid
                         _gotoSetName.value = true
                     }
-                    Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ네이버로그인ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ $it")
                 }
             }.onFailure {
                 Timber.e("error $it")
@@ -206,10 +208,12 @@ class LoginViewModel @Inject constructor(
             }.onSuccess {
                 _isLogin.value = true
                 if (singUpData.social == "naver") {
+                    Timber.e("네이버 로그인 이름 등록 및 회원가입 API 성공")
                     CardNaRepository.naverUserToken = it.data.accessToken
                     CardNaRepository.naverUserRefreshToken = it.data.refreshToken
                     CardNaRepository.naverUserfirstName = it.data.name
                     CardNaRepository.naverUserlogOut = false
+                    CardNaRepository.userToken = it.data.accessToken
                 } else { // kakao
                     CardNaRepository.kakaoUserToken = it.data.accessToken
                     CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken

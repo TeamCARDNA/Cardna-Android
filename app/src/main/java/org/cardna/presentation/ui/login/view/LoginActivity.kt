@@ -84,8 +84,14 @@ class LoginActivity :
                 with(loginViewModel) {
                     getNaverLogin()
                     gotoSetName.observe(this@LoginActivity) { gotoSetName ->
-                        if (gotoSetName) startSetNameActivity()
-                        else startMainActivity()
+                        if (gotoSetName) {
+                            startSetNameActivity()
+                            Timber.e("네이버 로그인 setName으로")
+                        }
+                        else {
+                            startMainActivity()
+                            Timber.e("네이버 로그인 Main으로")
+                        }
 
                         finish()
                     }
