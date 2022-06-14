@@ -17,11 +17,12 @@
             type="org.cardna.presentation.ui.mypage.view.MyPageFragment" />
     </data>
 
-    <org.cardna.presentation.ui.mypage.view.StickyScrollView
+    <com.amar.library.ui.StickyScrollView
         android:id="@+id/sc_mypage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_black"
+        app:stickyHeader="@id/ctl_mypage_header"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -178,6 +179,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rv_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="@{myPageViewModel.isNonExistFriend==true ? View.GONE : View.VISIBLE}"
@@ -199,6 +201,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </org.cardna.presentation.ui.mypage.view.StickyScrollView>
+    </com.amar.library.ui.StickyScrollView>
 
 </layout>
