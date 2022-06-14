@@ -3,6 +3,7 @@ package org.cardna.presentation.ui.mypage.adapter
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
 
 class MyPageFriendAdapter(
     private val activity: Activity,
+    private val viewLifecycleOwner: LifecycleOwner,
     private val myPageViewModel: MyPageViewModel,
     private val clickListener: ((ResponseMyPageData.Data.FriendList) -> Unit),
 ) : ListAdapter<ResponseMyPageData.Data.FriendList, MyPageFriendAdapter.MyPageFriendViewHolder>(FriendComparator()) {
@@ -30,9 +32,14 @@ class MyPageFriendAdapter(
                     .circleCrop()
                     .into(ivFriendUserimg)
 
-                clRvItem.setOnClickListener {
-                    clickListener(data)
-                    myPageViewModel.settingBtnIsValid(false)
+                myPageViewModel.settingBtnIsValid.observe(viewLifecycleOwner) {
+                    clRvItem.isClickable=it
+                    if (it) {
+                        clRvItem.setOnClickListener {
+                            clickListener(data)
+                            myPageViewModel.settingBtnIsValid(false)
+                        }
+                    }
                 }
             }
         }
