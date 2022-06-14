@@ -38,6 +38,7 @@ import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
 import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
 import org.cardna.presentation.util.MultiPartResolver
 import org.cardna.presentation.util.shortToast
+import org.cardna.ui.cardpack.BottomDialogImageFragment
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
