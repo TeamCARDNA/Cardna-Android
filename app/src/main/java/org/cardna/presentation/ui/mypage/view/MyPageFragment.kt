@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
@@ -141,7 +142,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun setMyPageFriendAdapter() {
-        myPageFriendAdapter = MyPageFriendAdapter(requireActivity(), myPageViewModel) { item ->
+        myPageFriendAdapter = MyPageFriendAdapter(requireActivity(), viewLifecycleOwner, myPageViewModel) { item ->
             Amplitude.getInstance().logEvent("My_Friend ")
             val bundle = Bundle().apply {
                 putInt(BaseViewUtil.ID, item.id)  //친구 아이디
