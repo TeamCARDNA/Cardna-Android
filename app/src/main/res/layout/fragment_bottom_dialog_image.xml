@@ -139,7 +139,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_cardpack_image">
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/img_btn_cardcreate_gallery"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="24dp"
@@ -166,9 +166,9 @@
                     android:text="@string/bottom_image_from_gallery"
                     android:textColor="@color/white_1"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageButton"
-                    app:layout_constraintStart_toEndOf="@+id/imageButton"
-                    app:layout_constraintTop_toTopOf="@+id/imageButton" />
+                    app:layout_constraintBottom_toBottomOf="@+id/img_btn_cardcreate_gallery"
+                    app:layout_constraintStart_toEndOf="@+id/img_btn_cardcreate_gallery"
+                    app:layout_constraintTop_toTopOf="@+id/img_btn_cardcreate_gallery" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

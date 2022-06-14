@@ -11,9 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
-import android.util.Log
 import android.view.KeyEvent
-import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -27,7 +25,6 @@ import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import land.sungbin.systemuicontroller.setSystemBarsColor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -38,12 +35,9 @@ import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.databinding.ActivityCardCreateBinding
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.viewmodel.CardCreateViewModel
-import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.login.view.SetNameFinishedActivity
 import org.cardna.presentation.util.MultiPartResolver
 import org.cardna.presentation.util.shortToast
-import org.cardna.presentation.util.showLoddingLottie
-import org.cardna.ui.cardpack.BottomDialogImageFragment
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
