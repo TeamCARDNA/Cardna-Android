@@ -79,7 +79,7 @@ class CardYouStoreActivity :
 
     private fun setCardYouStoreListObserve() {
         cardPackViewModel.cardYouStoreList.observe(this) {
-            cardYouStoreAdapter.submitList(it.reversed())
+            cardYouStoreAdapter.submitList(it)
         }
     }
 
