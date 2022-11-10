@@ -51,7 +51,6 @@ class SetNameActivity :
     private fun setChangedListener() {
         editTextChanged(binding.etSignupFirstname)
         editTextChanged(binding.etSignupLastname)
-
         firstnameCountChanged()
     }
 
@@ -117,9 +116,7 @@ class SetNameActivity :
         lastname: String
     ) {
         button.setOnClickListener {
-            // 이름 등록 및 회원가입 API 호출
             with(CardNaRepository) {
-                Timber.e("네이버 로그인 setName 완료")
                 loginViewModel.postSignUp(
                     RequestSignUpData(userSocial, userUuid, lastname, firstname, fireBaseToken)
                 )
@@ -154,17 +151,11 @@ class SetNameActivity :
 
     private fun initAnimation(name: String) {
         val welcomeText = "${name}님 반가워요!"
-//        val gradientText = setGradientText(welcomeText)
-//        binding.tvSetnameUsername.text = gradientText
-//        binding.tvSetnameUsername.visibility = View.VISIBLE
-//        binding.clSetnameContainer.visibility = View.GONE
-
         startSetNameFinishedActivity(welcomeText)
     }
 
     private fun startSetNameFinishedActivity(welcomeText: String) {
         val intent = Intent(this, SetNameFinishedActivity::class.java)
-//        val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         intent.putExtra("welcomeText", welcomeText)
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -172,7 +163,6 @@ class SetNameActivity :
 
         finish()
     }
-
 
     private fun setHideKeyboard() {
         binding.clSetnameContainer.setOnClickListener {

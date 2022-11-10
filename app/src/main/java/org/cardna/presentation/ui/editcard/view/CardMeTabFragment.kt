@@ -50,12 +50,6 @@ class CardMeTabFragment :
             it.map { it.isMe = true }
             editCardDialogAdapter.apply { submitList(it) }
         }
-
-
-    }
-
-    private fun selectedCardMeItem() {
-
     }
 }
 

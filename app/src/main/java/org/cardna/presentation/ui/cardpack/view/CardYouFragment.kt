@@ -2,7 +2,6 @@ package org.cardna.presentation.ui.cardpack.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -16,7 +15,6 @@ import org.cardna.presentation.ui.cardpack.adapter.CardPackYouRecyclerViewAdapte
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
 import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.util.SpacesItemDecorationCardPack
-import timber.log.Timber
 
 @AndroidEntryPoint
 class CardYouFragment :
@@ -33,35 +31,24 @@ class CardYouFragment :
     override fun onResume() {
         super.onResume()
         Amplitude.getInstance().logEvent("CardPack_Cardner ")
-        cardPackViewModel.updateCardYouList()  // 카드너 카드들을 서버로부터 불러오기
+        cardPackViewModel.updateCardYouList()
     }
-
-    override fun onStart() {
-        super.onStart()
-//        binding.rvCardyou.smoothScrollToPosition(0)
-        Timber.e("CardMeFragment onStart")
-    }
-
 
     override fun initView() {
         initCardYouRvAdapter() // 리사이클러뷰 및 어댑터 설정
         initEmptyViewListener()
-        Timber.e("CardYou : ${cardPackViewModel.id}")
-        Timber.e("CardYou isCardYouEmpty : ${cardPackViewModel.isCardYouEmpty.value}")
-        Timber.e("CardYou isCardMeEmpty : ${cardPackViewModel.isCardMeEmpty.value}")
     }
 
-    // Adapter 생성
-    private fun initCardYouRvAdapter() { // CardPack
+    private fun initCardYouRvAdapter() {
         var cardYouAdapter =
-            CardPackYouRecyclerViewAdapter(cardPackViewModel, viewLifecycleOwner) { // 어댑터 일단 CardPackMeRecyclerViewAdapter로 공유
-                // 1. 각 리사이클러뷰 아이템에 달아줄 람다 전달
+            CardPackYouRecyclerViewAdapter(
+                cardPackViewModel,
+                viewLifecycleOwner
+            ) {
                 Intent(requireContext(), DetailCardActivity::class.java).apply {
-                    putExtra(BaseViewUtil.CARD_ID, it.id) // 리사이클러뷰의 아이템 중 카드 선택시 그 카드의 id를 전달
+                    putExtra(BaseViewUtil.CARD_ID, it.id)
                     startActivity(this)
                 }
-
-                // 2. 타인의 카드나일 때는, 공감버튼에 달아줄 리스너 하나 더 전달해줘야 한다.
             }
 
         with(binding) {
@@ -69,35 +56,31 @@ class CardYouFragment :
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             rvCardyou.layoutManager = gridLayoutManager
             rvCardyou.addItemDecoration(
-                SpacesItemDecorationCardPack
-                    ()
-            ) // 화면 비율 조정
+                SpacesItemDecorationCardPack()
+            )
         }
 
-        // onResume 될 때, cardYouList 를 업데이트 시키고 cardYouList 가 변경되면, 이를 observe 해서 알아서 리사이클러뷰를 갱신해주도록
         cardPackViewModel.cardYouList.observe(viewLifecycleOwner, Observer { it ->
             it?.let { cardYouAdapter.submitList(it) }
         })
     }
 
     private fun initEmptyViewListener() {
-        // 1. 내 카드너 엠티뷰 => 카드너 추가
         binding.ctlBgAddCardyou.setOnClickListener {
             Amplitude.getInstance().logEvent("CardPack_Empty_PlusCardner")
-            // 카드너 보관함 액티비티로 이동
             val intent = Intent(requireActivity(), CardYouStoreActivity::class.java)
-            // 아무것도 안넘겨줘도 됨
             startActivity(intent)
         }
 
-        // 2. 친구 카드너 엠티뷰 => 카드너 작성
         binding.ctlFriendEmptyMakeCardyou.setOnClickListener {
-            Log.e("ㅡㅡㅡㅡㅡㅡ버튼ㅡㅡㅡㅡㅡㅡ","${cardPackViewModel.id.value}+${cardPackViewModel.name}")
             val intent = Intent(requireActivity(), CardCreateActivity::class.java).apply {
                 putExtra(BaseViewUtil.IS_CARD_ME_OR_YOU, BaseViewUtil.CARD_YOU)
                 putExtra(BaseViewUtil.ID, cardPackViewModel.id.value)
                 putExtra(BaseViewUtil.NAME, cardPackViewModel.name)
-                putExtra(BaseViewUtil.IS_CARDPACK_OR_MAINCARD, BaseViewUtil.FROM_CARDPACK) // 카드팩에서 왔음을 알려줌
+                putExtra(
+                    BaseViewUtil.IS_CARDPACK_OR_MAINCARD,
+                    BaseViewUtil.FROM_CARDPACK
+                )
             }
             startActivity(intent)
         }

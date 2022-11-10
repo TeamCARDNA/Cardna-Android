@@ -57,7 +57,6 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
         }
 
         alarmViewModel.writeCardYou.observe(this) { writeCardYou ->
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgeAllAlarmㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${writeCardYou}")
             writeCardYouAdapter.submitList(writeCardYou)
         }
 

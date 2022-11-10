@@ -62,5 +62,4 @@ class MainCardAdapter(private val clickListener: () -> Unit) :
             return oldItem.id == newItem.id
         }
     }
-
 }

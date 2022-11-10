@@ -44,7 +44,6 @@ class EditCardActivity :
         editCardViewModel.getMainCard()
     }
 
-    //대표카드 리사이클러뷰 어댑터
     private fun initAdapter() {
         editCardAdapter = EditCardAdapter(editCardViewModel)
 
@@ -93,7 +92,6 @@ class EditCardActivity :
         }
     }
 
-    // text Gradient
     private fun setTextGradient() {
         val text = binding.tvRepresentcardeditColorTitle.text.toString()
         binding.tvRepresentcardeditColorTitle.text = setGradientText(text)

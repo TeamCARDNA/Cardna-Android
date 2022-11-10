@@ -30,19 +30,15 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         initNaverLogin()
         CardNaRepository.init(this)
         getDeviceToken()
-   //     Amplitude.getInstance().logEvent("APP OPEN")
     }
 
-    //todo 소셜로그인에 필요한 디바이스 토큰을 얻는다
     private fun getDeviceToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 return@OnCompleteListener
             }
             val token = task.result
-            //todo 여기서 사용자 토큰 저장
             CardNaRepository.fireBaseToken = token.toString()
-            Timber.d("fcm token ${CardNaRepository.fireBaseToken}")
         })
     }
 
@@ -78,7 +74,6 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         Amplitude.getInstance().initialize(this, "00c76df54b75da7bd287245491b78c37").enableForegroundTracking(this)
     }
 
-    //백&온그라운드 분기
     override fun onActivityCreated(p0: Activity, p1: Bundle?) {
     }
 

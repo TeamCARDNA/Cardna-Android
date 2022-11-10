@@ -6,17 +6,13 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
-import androidx.annotation.ColorInt
 import androidx.viewpager2.widget.ViewPager2
 import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
-import land.sungbin.systemuicontroller.setNavigationBarColor
-import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
 import org.cardna.databinding.ActivityMainCardBinding
 import org.cardna.databinding.DialogRelationBinding
@@ -28,8 +24,6 @@ import org.cardna.presentation.ui.detailcard.view.DetailCardActivity
 import org.cardna.presentation.ui.maincard.adapter.MainCardAdapter
 import org.cardna.presentation.ui.maincard.viewmodel.MainCardViewModel
 import org.cardna.presentation.ui.mypage.viewmodel.MyPageViewModel
-import org.cardna.presentation.util.StatusBarUtil
-import org.cardna.presentation.util.setBeforeGradientText
 import org.cardna.presentation.util.setGradientText
 import org.cardna.presentation.util.viewPagerAnimation
 import timber.log.Timber
@@ -48,7 +42,6 @@ class MainCardActivity :
         initView()
     }
 
-    //메인 프레그먼트 마이페이지 -> 타인꺼보는 것과 똑같은 구조 -> 내가 내껄 볼일은 없음
     override fun initView() {
         initAdapter()
         initData()
@@ -62,17 +55,14 @@ class MainCardActivity :
     }
 
     private fun initData() {
-        //todo 친구 코드액티비티에서 받아서 저장하고 초기 데이터 뿌림
         val friendId = intent.getIntExtra("friendId", -1)
         val name = intent.getStringExtra("name") ?: ""
-     Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ친구정보세팅ㅡㅡㅡㅡ+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","${friendId}+${name}")
-        if(friendId!=-1) mainCardViewModel.setFriendNameAndId(name, friendId)
+        if (friendId != -1) mainCardViewModel.setFriendNameAndId(name, friendId)
 
         mainCardViewModel.setFriendInfoSucccess.observe(this) {
             if (it) {
                 mainCardViewModel.getMainCardList(mainCardViewModel.friendId.value)
                 mainCardViewModel.getMainCardList(mainCardViewModel.friendId.value)
-                Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ친구정보옵저브해서 뿌림ㅡㅡㅡㅡ+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","${mainCardViewModel.friendId.value}+${mainCardViewModel.friendId.value}")
             }
         }
 
@@ -118,9 +108,7 @@ class MainCardActivity :
     }
 
     private fun setCardPackActivity() {
-        //todo 친구 카드팩 액티비티로 가는 경우임
         binding.ivMaincardGotoCardpackBackground.setOnClickListener {
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ친구카드팩에 가져가는 정보ㅡㅡㅡㅡ+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ","${mainCardViewModel.friendId.value}+${mainCardViewModel.friendId.value}")
             startActivity(
                 Intent(this, FriendCardPackActivity::class.java)
                     .putExtra(BaseViewUtil.ID, mainCardViewModel.friendId.value)
@@ -175,9 +163,7 @@ class MainCardActivity :
         dialog.show()
         val friendId = intent.getIntExtra("friendId", 0)
 
-        //relation 이거를 observe해야함
         val relation = mainCardViewModel.relation.value.toString()
-        // TODO: 요기
         val code = intent.getStringExtra("code").toString()
         myPageViewModel.updateSearchCodeQuery(code)
         myPageViewModel.searchCodePost()
@@ -205,7 +191,6 @@ class MainCardActivity :
                     }
                 }
             }
-            //enable : true -> white , enable : false -> dark_gray
             btnRelationConfirm.isSelected = relation != RESPONSE
             setCancelDialog(dialog, this)
             setConfirmDialog(dialog, this, friendId, relation)
@@ -215,8 +200,6 @@ class MainCardActivity :
     private fun setCancelDialog(
         dialog: Dialog,
         dialogBinding: DialogRelationBinding,
-//        friendId: Int,
-//        friendRelation: String
     ) {
         dialogBinding.btnRelationCancel.setOnClickListener {
             dialogDismiss(dialog, dialogBinding)
@@ -229,18 +212,16 @@ class MainCardActivity :
         friendId: Int,
         friendRelation: String
     ) {
-        Timber.e("TTT friendId : $friendId")
         dialogBinding.btnRelationConfirm.setOnClickListener {
             if (friendRelation == RESPONSE) {
                 //친추 받았을때
                 alarmViewModel.acceptOrDenyFriend(friendId, true)
                 mainCardViewModel.setRelation(FRIEND)
-                Timber.d("success : ${mainCardViewModel.relation.value}")
             } else {
-                if (friendRelation == UNKNOWN){
+                if (friendRelation == UNKNOWN) {
                     Amplitude.getInstance().logEvent("FriendMain_AddFriend")
-                    mainCardViewModel.setRelation(REQUEST)}
-                else {
+                    mainCardViewModel.setRelation(REQUEST)
+                } else {
                     Amplitude.getInstance().logEvent("FriendMain_CancelFriend")
                     mainCardViewModel.setRelation(UNKNOWN)
                 }
@@ -262,7 +243,6 @@ class MainCardActivity :
     }
 
     private fun initAdapter() {
-        Timber.d("init adapter")
         mainCardAdapter = MainCardAdapter() {
             setDetailActivity()
         }
@@ -308,6 +288,5 @@ class MainCardActivity :
         const val FRIEND = "2.0"
         const val REQUEST = "3.0"
         const val RESPONSE = "4.0"
-
     }
 }

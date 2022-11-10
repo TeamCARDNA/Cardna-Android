@@ -252,7 +252,6 @@ class DetailCardActivity : BaseViewUtil.BaseAppCompatActivity<ActivityDetailCard
         }
     }
 
-
     companion object {
         const val CARD_ME = "me"
         const val CARD_YOU = "you"

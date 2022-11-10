@@ -60,48 +60,8 @@ class EditCardDialogAdapter(
                             View.INVISIBLE
                         }
                     }
-                    Timber.d("click : ${data.id}")
                 }
             }
-
-//            itemView.setOnClickListener {
-//                binding.tvRepresentcardCount.apply {
-//                    editCardViewModel.selectedCardList.observe(lifecycleOwner) { list ->
-//                        visibility = if (visibility == View.INVISIBLE && list.size < 7) {
-//                            editCardViewModel.setAddCard(data.id)
-//                            text = list.size.toString()
-//                            View.VISIBLE
-//                        } else {
-//                            if (visibility == View.VISIBLE) {
-//                                editCardViewModel.setDeleteCard(data.id)
-//                            }
-//                            View.INVISIBLE
-//                        }
-//                    }
-//
-//                }
-//            }
-
-//            binding.tvRepresentcardCount.apply {
-//                editCardViewModel.selectedCardList.observe(lifecycleOwner) { selectedCardList ->
-//                    itemView.setOnClickListener {
-//                        visibility =
-//                                //선택안된애면 선택&&7개미만일때만
-//                            if (visibility == View.INVISIBLE && selectedCardList.size < 7) {
-//                                //선택안된애면 선택해서 추가
-//                                editCardViewModel.setAddCard(data.id)
-//                                //가장 마지막에 추가되는거니까 리스트의 마지막 사이즈
-//                                text = selectedCardList.size.toString()
-//                                View.VISIBLE
-//                            } else {
-//                                if (visibility == View.VISIBLE) { //이미 선택된 애면 선택해제
-//                                    editCardViewModel.setDeleteCard(data.id)
-//                                }
-//                                View.INVISIBLE
-//                            }
-//                    }
-//                }
-//            }
         }
     }
 
@@ -136,5 +96,4 @@ class EditCardDialogAdapter(
             R.drawable.bg_main_purple_radius_8
         }
     }
-
 }

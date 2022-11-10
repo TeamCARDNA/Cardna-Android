@@ -50,7 +50,5 @@ class CardYouTabFragment :
             it.map { it.isMe = false }
             editCardDialogAdapter.apply { submitList(it) }
         }
-
-
     }
 }
