@@ -74,7 +74,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         startActivity(Intent(requireContext(), SearchFriendCodeActivity::class.java))
     }
 
-    //TODO 쿼리 상태 쨰려서 뷰 업데이트
     private fun setSearchFriendNameResultObserve() {
         myPageViewModel.viewEvent.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { event ->
@@ -118,17 +117,14 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
     }
 
     private fun setObserve() {
-        //내 정보
         myPageViewModel.myPage.observe(viewLifecycleOwner) { myPage ->
             requireActivity().setSrcWithGlide(myPage.userImg, binding.ivMypageUserimg)
         }
 
-        //클릭 가능 여부
         myPageViewModel.settingBtnIsValid.observe(viewLifecycleOwner) {
             binding.ivMypageSetting.isClickable = it
         }
 
-        //친구 리프레시
         myPageViewModel.refreshFriendList.observe(viewLifecycleOwner) {
             setInitSearchResultStatus()
         }
@@ -138,7 +134,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
         myPageFriendAdapter = MyPageFriendAdapter(requireActivity(), viewLifecycleOwner, myPageViewModel) { item ->
             Amplitude.getInstance().logEvent("My_Friend ")
             val bundle = Bundle().apply {
-                putInt(BaseViewUtil.ID, item.id)  //친구 아이디
+                putInt(BaseViewUtil.ID, item.id)
                 putString("name", item.name)
                 putString("sentence", item.sentence)
             }
@@ -157,7 +153,6 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
             rvMypage.layoutManager = gridLayoutManager
             rvMypage.adapter = myPageFriendAdapter
         }
-
     }
 
     private fun copyMyCodeClickListener() {

@@ -81,7 +81,6 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    //viewEvent관련
     private fun setSearchFriendNameResult(state: String) = viewEvent(state)
 
     fun searchNamePost() {
@@ -103,14 +102,6 @@ class MyPageViewModel @Inject constructor(
     fun isNonExistFriendName(exist: Boolean) {
         _isNonExistFriendName.value = exist
     }
-
-
-    companion object {
-        const val SEARCH_QUERY = "SEARCH_QUERY"
-        const val EXIST_QUERY = "EXIST_QUERY"
-        const val DEFAULT_STATE = "DEFAULT_STATE"
-    }
-
 
     fun updateSearchCodeQuery(code: String) {
         _searchCodeQuery.value = code
@@ -180,24 +171,25 @@ class MyPageViewModel @Inject constructor(
         _refreshFriendList.call()
     }
 
-    //친구2->손절1
     fun breakUpFriend() {
         _friendRelationType.value = SearchFriendCodeActivity.RELATION_ONE
         applyOrCancelFriend()
     }
 
-    //요청3->요청취소1
     fun cancelFriendRequest() {
         _friendRelationType.value = SearchFriendCodeActivity.RELATION_ONE
         applyOrCancelFriend()
     }
 
-    //몰라1->요청3
     fun applyFriend() {
         Amplitude.getInstance().logEvent("My_SearchFriend_AddFriend")
         _friendRelationType.value = SearchFriendCodeActivity.RELATION_THREE
         applyOrCancelFriend()
     }
 
-
+    companion object {
+        const val SEARCH_QUERY = "SEARCH_QUERY"
+        const val EXIST_QUERY = "EXIST_QUERY"
+        const val DEFAULT_STATE = "DEFAULT_STATE"
+    }
 }

@@ -99,7 +99,7 @@ class EditCardViewModel @Inject constructor(
     }
 
     fun setAddCard(id: Int) {
-        _selectedCardList.value?.add(id) //id추가
+        _selectedCardList.value?.add(id)
         Timber.d("추가")
         _selectedCardList.value = _selectedCardList.value
     }

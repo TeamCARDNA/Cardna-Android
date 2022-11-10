@@ -75,7 +75,7 @@ class CardPackViewModel @Inject constructor(
 
     fun setUserId(id: Int?) {
         _id.value = id
-    } // 타인의 프래그먼트 생성시, 그 프래그먼트 코드 단에서 getArguments 로 받아온 newId를 setUserId(newId) 이런형식으로 설정 ?
+    }
 
     fun setUserName(name: String?) {
         _name = name
@@ -87,7 +87,6 @@ class CardPackViewModel @Inject constructor(
                 cardRepository.getCardAll().data
             }.onSuccess {
                 _totalCardCnt.value = it.totalCardCnt
-                Timber.e("CardPack: setTotalCnt")
             }.onFailure {
                 Timber.e(it.toString())
             }
@@ -95,7 +94,7 @@ class CardPackViewModel @Inject constructor(
     }
 
     fun updateCardMeList() {
-        if (_id.value == null) { // 본인의 카드나 접근
+        if (_id.value == null) {
             viewModelScope.launch {
                 runCatching {
                     cardRepository.getCardMe().data
@@ -109,7 +108,7 @@ class CardPackViewModel @Inject constructor(
                     Timber.e(it.toString())
                 }
             }
-        } else { // 타인의 카드나 접근
+        } else {
             viewModelScope.launch {
                 runCatching {
                     cardRepository.getOtherCardMe(_id.value ?: return@launch).data
@@ -125,9 +124,8 @@ class CardPackViewModel @Inject constructor(
         }
     }
 
-
     fun updateCardYouList() {
-        if (_id.value == null) { // 본인의 카드너 접근
+        if (_id.value == null) {
             viewModelScope.launch {
                 runCatching {
                     cardRepository.getCardYou().data
@@ -140,7 +138,7 @@ class CardPackViewModel @Inject constructor(
                     Timber.e(it.toString())
                 }
             }
-        } else { // 타인의 카드너 접근
+        } else {
             viewModelScope.launch {
                 runCatching {
                     cardRepository.getOtherCardYou(_id.value ?: return@launch).data

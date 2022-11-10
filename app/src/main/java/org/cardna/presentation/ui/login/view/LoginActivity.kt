@@ -1,9 +1,6 @@
 package org.cardna.presentation.ui.login.view
 
-// import com.google.android.gms.tasks.OnCompleteListener
 
-//import com.google.android.gms.tasks.OnCompleteListener
-//import com.google.firebase.messaging.FirebaseMessaging
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -92,7 +89,6 @@ class LoginActivity :
                             startMainActivity()
                             Timber.e("네이버 로그인 Main으로")
                         }
-
                         finish()
                     }
                 }
@@ -101,7 +97,6 @@ class LoginActivity :
         NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
     }
 
-    //todo 카카오 로그인
     private fun setKakaoBtnListener() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {

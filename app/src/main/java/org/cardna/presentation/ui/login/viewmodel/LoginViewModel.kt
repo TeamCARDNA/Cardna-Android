@@ -1,23 +1,16 @@
 package org.cardna.presentation.ui.login.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.cardna.data.local.singleton.CardNaRepository
 import org.cardna.data.remote.model.auth.IssuanceTokenList
 import org.cardna.data.remote.model.auth.RequestSignUpData
-import org.cardna.data.remote.model.auth.ResponseSocialLoginData
-import org.cardna.data.remote.model.auth.ResponseTokenIssuanceData
 import org.cardna.domain.repository.AuthRepository
 import org.cardna.domain.repository.CardRepository
-import org.cardna.presentation.ui.login.view.SetNameActivity.Companion.KAKAO
-import org.cardna.presentation.ui.login.view.SetNameActivity.Companion.NAVER
-import org.cardna.presentation.util.shortToast
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,7 +20,6 @@ class LoginViewModel @Inject constructor(
     private val cardRepository: CardRepository
 ) : ViewModel() {
 
-    // 그 사람의 카드팩의 총 카드 개수 => CardPackFragment 의 textView 에 바인딩
     private val _totalCardCnt = MutableLiveData<Int>()
     val totalCardCnt: LiveData<Int>
         get() = _totalCardCnt
@@ -51,18 +43,15 @@ class LoginViewModel @Inject constructor(
     private val _gotoSetName = MutableLiveData<Boolean>()
     val gotoSetName: LiveData<Boolean> = _gotoSetName
 
-
-    // 토큰 재발급 메서드에 대한 message
     private var _issuanceMessage = ""
     val issuanceMessage: String?
         get() = _issuanceMessage
 
-    // 토큰 재발급 메서드에 대한 message
     private var _tokenStatusCode = MutableLiveData<Int>()
     val tokenStatusCode: LiveData<Int> = _tokenStatusCode
 
 
-    fun setTotalCardCnt() { // 본인 카드팩 접근시에만 필요
+    fun setTotalCardCnt() {
         viewModelScope.launch {
             runCatching {
                 cardRepository.getCardAll().data
@@ -75,12 +64,10 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    // 네이버 소셜 토큰
     private var _naverSocialUserToken = ""
     val naverSocialUserToken: String?
         get() = _naverSocialUserToken
 
-    // 네이버 소셜 토큰 set 메서드
     fun setNaverSocialUserToken(newNaverSocialUserToken: String) {
         _naverSocialUserToken = newNaverSocialUserToken
     }
@@ -91,8 +78,7 @@ class LoginViewModel @Inject constructor(
                 authRepository.getKakaoLogin()
             }.onSuccess {
                 with(CardNaRepository) {
-                    //로그인 성공
-                    kakaoAccessToken = ""  //todo 인터셉트바꾸기 위함
+                    kakaoAccessToken = ""
                     if (it.message == LOGIN_SUCCESS) {
                         kakaoUserToken = it.data.accessToken
                         kakaoUserRefreshToken = it.data.refreshToken
@@ -108,9 +94,7 @@ class LoginViewModel @Inject constructor(
                         _isLogin.value = false
                     }
                 }
-                Timber.d("login success : ${it.data}")
             }.onFailure {
-                //비회원 or 토큰이 올바르지 않은 경우
                 _isLogin.value = false
                 CardNaRepository.userSocial = KAKAO
                 Timber.e("error $it")
@@ -118,16 +102,14 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun getNaverLogin() { // 소셜로그인 API => 1. 토큰 만료되어 재로그인 or 2. 신규유저 회원가입
+    fun getNaverLogin() {
         viewModelScope.launch {
             kotlin.runCatching {
                 authRepository.getNaverLogin()
             }.onSuccess {
                 with(CardNaRepository) {
-                    Timber.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ네이버로그인ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ $it")
-                    naverAccessToken = ""  //todo 인터셉트바꾸기 위함
+                    naverAccessToken = ""
                     if (it.message == LOGIN_SUCCESS) { // 1. 재로그인
-                        Timber.e("네이버 로그인 재로그인")
                         naverUserToken = it.data.accessToken
                         naverUserRefreshToken = it.data.refreshToken
                         userToken = it.data.accessToken
@@ -135,8 +117,7 @@ class LoginViewModel @Inject constructor(
                         naverUserfirstName = it.data.name
                         naverUserlogOut = false
                         _gotoSetName.value = false
-                    } else { // 2. 회원가입
-                        Timber.e("네이버 로그인 회원가입")
+                    } else {
                         userSocial = it.data.social
                         userUuid = it.data.uuid
                         _gotoSetName.value = true
@@ -157,7 +138,6 @@ class LoginViewModel @Inject constructor(
                 )
             }.onSuccess {
                 with(CardNaRepository) {
-                    Timber.d("KKK 재발급 상태 코드 : ${it.status}")
                     kakaoUserToken = it.data.accessToken
                     kakaoUserRefreshToken = it.data.refreshToken
                     userToken = kakaoUserToken
@@ -167,54 +147,47 @@ class LoginViewModel @Inject constructor(
                 when (it) {
                     is retrofit2.HttpException -> {
                         _tokenStatusCode.value = it.code()
-                        Timber.d("KKK 재발급 상태 코드 : ${it.code()}")
                     }
                 }
             }
         }
     }
 
-    fun getNaverTokenIssuance() { // 토큰 재발급(API) 네이버
+    fun getNaverTokenIssuance() {
         viewModelScope.launch {
             kotlin.runCatching {
-                // API 메서드 body 안에 header 를 accessToken 이랑 refreshToken 추가하면 되므로 requestData 필요 없음
                 authRepository.getTokenIssuance(
                     CardNaRepository.naverUserToken,
                     CardNaRepository.naverUserRefreshToken
                 )
             }.onSuccess {
-                Timber.d("재발급 메세지 : ${it.message}")
-                Timber.d("새로운 accessToken : ${it.data.accessToken}")
-                Timber.d("새로운 refreshToken : ${it.data.refreshToken}")
                 CardNaRepository.naverUserToken = it.data.accessToken
                 CardNaRepository.naverUserRefreshToken = it.data.refreshToken
-                CardNaRepository.userToken = it.data.accessToken // 헤더 토큰 갈아 끼우기
-                _tokenStatusCode.value = it.status // 200 일것
+                CardNaRepository.userToken = it.data.accessToken
+                _tokenStatusCode.value = it.status
             }.onFailure {
                 when (it) {
                     is retrofit2.HttpException -> {
                         _tokenStatusCode.value = it.code()
-                        Timber.d("onFailure 재발급 상태 코드 : ${it.code()}")
                     }
                 }
             }
         }
     }
 
-    fun postSignUp(singUpData: RequestSignUpData) { // 이름 등록 및 회원가입 API
+    fun postSignUp(singUpData: RequestSignUpData) {
         viewModelScope.launch {
             kotlin.runCatching {
                 authRepository.postSignUp(singUpData)
             }.onSuccess {
                 _isLogin.value = true
                 if (singUpData.social == "naver") {
-                    Timber.e("네이버 로그인 이름 등록 및 회원가입 API 성공")
                     CardNaRepository.naverUserToken = it.data.accessToken
                     CardNaRepository.naverUserRefreshToken = it.data.refreshToken
                     CardNaRepository.naverUserfirstName = it.data.name
                     CardNaRepository.naverUserlogOut = false
                     CardNaRepository.userToken = it.data.accessToken
-                } else { // kakao
+                } else {
                     CardNaRepository.kakaoUserToken = it.data.accessToken
                     CardNaRepository.kakaoUserRefreshToken = it.data.refreshToken
                     CardNaRepository.kakaoUserfirstName = singUpData.firstName

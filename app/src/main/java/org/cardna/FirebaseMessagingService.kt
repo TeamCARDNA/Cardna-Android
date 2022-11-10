@@ -33,19 +33,16 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             Timber.d("pushAlarm", "Forground상태이거나 data가 비어있습니다. 메시지를 수신하지 못했습니다.")
         }
 
-
         val badgeIntent = Intent("android.intent.action.BADGE_COUNT_UPDATE")
         badgeIntent.putExtra("badge_count", 0)
         badgeIntent.putExtra("badge_count_package_name", packageName)
         badgeIntent.putExtra("badge_count_class_name", MainActivity::class.java)
         sendBroadcast(badgeIntent)
-
     }
 
     private fun sendNotiNotification(remoteMessage: RemoteMessage) {
         val uniId = remoteMessage.sentTime.toInt()
 
-        //intent생성
         val intent = Intent(this, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -70,7 +67,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                 .setContentText(remoteMessage.data["body"].toString())
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
-                .setSound(null) //소리
+                .setSound(null)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) //잠금
 
         val notificationManager =

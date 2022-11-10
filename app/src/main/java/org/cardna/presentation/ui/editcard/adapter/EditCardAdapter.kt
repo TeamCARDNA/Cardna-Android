@@ -59,17 +59,15 @@ class EditCardAdapter(
     }
 
     private fun setNewList(adapterPosition: Int) {
-        val newList = currentList.toMutableList()  //현재 리스트 복사한다음에
-        newList.removeAt(adapterPosition) //지우려고 선택한 아이템을 현재 리스트에서 지우고
-        //삭제할거하고 남은 대표카드 수정에 있는 카드의 id만 남겨서 뷰모델한테 전달
+        val newList = currentList.toMutableList()
+        newList.removeAt(adapterPosition)
         editCardViewModel.setChangeSelectedList(newList.map { it.id } as MutableList<Int>)
-        submitList(newList) //삭제한거 제거한 newlist를 리사이클러뷰에 다시 뿌림
+        submitList(newList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemEditCardBinding.inflate(layoutInflater, parent, false)
-
         return ViewHolder(binding)
     }
 

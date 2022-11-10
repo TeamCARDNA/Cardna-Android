@@ -35,7 +35,6 @@ class CardCreateViewModel @Inject constructor(
     private var _induceCardId = MutableLiveData<Int>(0)
     val induceCardId: LiveData<Int> = _induceCardId
 
-    // 프로퍼티
     private var _id: Int? = null // 나의 카드나 작성일 경우 null, 친구의 카드너 작성일 경우 친구의 id값
     val id: Int?
         get() = _id
@@ -48,8 +47,6 @@ class CardCreateViewModel @Inject constructor(
     val isCardMeOrYou: Boolean?
         get() = _isCardMeOrYou
 
-
-    // 이 값들을 liveData로 바꿔서 이를 observe 할만한 게 있을까
     private var _symbolId: Int? = null // 이미지가 있는 경우 null로 보내줘야 함
     val symbolId: Int?
         get() = _symbolId
@@ -61,10 +58,10 @@ class CardCreateViewModel @Inject constructor(
     val imgIndex: Int?
         get() = _imgIndex
 
-    private var _ifChooseImg = MutableLiveData<Boolean>(false)// 갤러리 이미지나 심볼을 선택했는지 확인해주는 Bool 변수 => 나중에 버튼 enable 할때 사용
+    private var _ifChooseImg =
+        MutableLiveData<Boolean>(false)// 갤러리 이미지나 심볼을 선택했는지 확인해주는 Bool 변수 => 나중에 버튼 enable 할때 사용
     val ifChooseImg: LiveData<Boolean>
         get() = _ifChooseImg
-
 
     // card title
     var _etKeywordText = MutableLiveData<String>(null)
@@ -87,7 +84,6 @@ class CardCreateViewModel @Inject constructor(
         get() = _etDetailLength
 
 
-    // ******** 메서드 **********
     fun setUserId(id: Int) {
         if (id == -1)
             _id = null
@@ -132,8 +128,6 @@ class CardCreateViewModel @Inject constructor(
         _induceMakeMainCard.value = induceMakeMainCard
     }
 
-    // 서버 통신 메서드
-
     // 카드 작성 method
     fun makeCard(makeUriToFile: MultipartBody.Part?) { // Activity 에서 선택된 이미지 uri 만 multipart data 로 바꿔서 인자로 넣어줌
         if (isCardMeOrYou!!) {  // 카드나 작성 => friendId값 x
@@ -147,12 +141,11 @@ class CardCreateViewModel @Inject constructor(
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, null) }
                         .onSuccess {
-                            Timber.e("카드나 작성 성공 : ${it.data}")
                             _induceCardId.value = it.data.id
                             _makeInduceCardSuccess.value = true
                             _makeCardSuccess.value = true
 
-               Amplitude.getInstance().logEvent("CardPack_WritingCardna_Finish")
+                            Amplitude.getInstance().logEvent("CardPack_WritingCardna_Finish")
                         }
                         .onFailure { Timber.e("카드나 작성 실패 : ${it.message}") }
                 }
@@ -160,11 +153,9 @@ class CardCreateViewModel @Inject constructor(
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, makeUriToFile) }
                         .onSuccess {
-                            Timber.e("카드나 작성 성공 : ${it.message}")
                             _induceCardId.value = it.data.id
                             _makeInduceCardSuccess.value = true
                             _makeCardSuccess.value = true
-
 
                             Amplitude.getInstance().logEvent("CardPack_WritingCardna_Finish")
                         }
@@ -175,7 +166,6 @@ class CardCreateViewModel @Inject constructor(
                 }
             }
         } else { // 카드너 작성 => friendId 포함
-            Log.e("ㅡㅡㅡㅡㅡㅡㅡ친구뷰모델", "${id}+${symbolId}")
             if (id == -1) return
             val body = RequestCreateCardYouData(
                 etKeywordText.value!!,
@@ -188,15 +178,19 @@ class CardCreateViewModel @Inject constructor(
 
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, null) }
-                        .onSuccess { Timber.e("카드너 작성 성공 : ${it.message}")
-                            _makeCardSuccess.value = true}
+                        .onSuccess {
+                            Timber.e("카드너 작성 성공 : ${it.message}")
+                            _makeCardSuccess.value = true
+                        }
                         .onFailure { Timber.e("카드너 작성 실패 : ${it.message}") }
                 }
             } else { // 이미지 선택
                 viewModelScope.launch {
                     runCatching { cardRepository.postCreateCardMe(body, makeUriToFile) }
-                        .onSuccess { Timber.e("카드너 작성 성공 : ${it.message}")
-                            _makeCardSuccess.value = true}
+                        .onSuccess {
+                            Timber.e("카드너 작성 성공 : ${it.message}")
+                            _makeCardSuccess.value = true
+                        }
                         .onFailure {
                             Timber.e("카드너 작성 실패 : ${it.message}")
                             it.printStackTrace()

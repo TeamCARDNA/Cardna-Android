@@ -31,28 +31,10 @@ class SetNameFinishedActivity :
     }
 
     override fun initView() {
-//        getScreenHeight()
         Amplitude.getInstance().logEvent("Cardna_Membership")
         setClickListener()
         Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim() }, 670L)
 
-//        setUpAnim(R.anim.anim_translate_up_2560height, 1300L)
-    }
-
-//    private fun getScreenHeight() {
-//        val screenHeight = CardNaApplication.pixelRatio.screenHeight
-//        if (screenHeight > 2872 || screenHeight < 2560) {
-//            setUpAnim(R.anim.anim_translate_up_2560height, 1300L)
-//        } else if (screenHeight in 2560..2872) {
-//            setUpAnim(R.anim.anim_translate_up_2872height, 1300L)
-//        }
-//    }
-
-    private fun setUpAnim(animId: Int, delayMillis: Long) {
-//        val animation = AnimationUtils.loadAnimation(this, animId)
-//        binding.ctlSetnamefinished.startAnimation(animation)
-//        setFadeAnim()
-//        Handler(Looper.getMainLooper()).postDelayed({ setFadeAnim() }, delayMillis)
     }
 
     private fun setFadeAnim() {
@@ -79,7 +61,6 @@ class SetNameFinishedActivity :
         }
     }
 
-
     private fun setClickListener() {
         negativeButtonClickListener()
         positiveButtonClickListener()
@@ -96,10 +77,6 @@ class SetNameFinishedActivity :
             tvSetnamefinishedMessage3.text =
                 setGradientText(getString(R.string.setnamefinished_tv_message3))
         }
-    }
-
-    private fun setNextActivity(intent: Intent) {
-        startActivity(intent)
     }
 
     private fun negativeButtonClickListener() {
@@ -121,7 +98,6 @@ class SetNameFinishedActivity :
             })
         }
     }
-
 
     override fun onBackPressed() {
         super.onBackPressed()

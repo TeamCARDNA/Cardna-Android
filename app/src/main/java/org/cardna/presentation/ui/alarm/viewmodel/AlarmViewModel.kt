@@ -29,7 +29,6 @@ class AlarmViewModel @Inject constructor(
     private val _foldStatus = MutableLiveData(true)
     val foldStatus: LiveData<Boolean> = _foldStatus
 
-    //리스트
     private val _friendRequest = MutableLiveData<List<ResponseGetAlarmData.Data.Request.Requester?>>()
     val friendRequest: LiveData<List<ResponseGetAlarmData.Data.Request.Requester?>> = _friendRequest
 
@@ -39,7 +38,6 @@ class AlarmViewModel @Inject constructor(
     private val _currentCardId = MutableLiveData<Int>()
     val currentCardId: LiveData<Int> = _currentCardId
 
-    //엠티인지 처리
     private val _isFriendRequestEmpty = MutableLiveData(true)
     val isFriendRequestEmpty: LiveData<Boolean> = _isFriendRequestEmpty
 
@@ -49,7 +47,6 @@ class AlarmViewModel @Inject constructor(
     private val _isAllAlarmEmpty = MutableLiveData(true)
     val isAllAlarmEmpty: LiveData<Boolean> = _isAllAlarmEmpty
 
-    //거절 성공시 삭제되어야함
     private val _isRequestDeny = MutableLiveData<Boolean>()
     val isRequestDeny: LiveData<Boolean> = _isRequestDeny
 
@@ -70,7 +67,6 @@ class AlarmViewModel @Inject constructor(
                     _isFriendRequestEmpty.value = request.count == 0
                     _isWriteCardYouEmpty.value = alarm.isEmpty()
                     _isAllAlarmEmpty.value = _isFriendRequestEmpty.value == true && _isWriteCardYouEmpty.value == true
-          //          Log.e("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡgeAllAlarmㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", "${request.requester.size}+${alarm.size}+${CardNaRepository.alarmExistCount}")
                 }
             }.onFailure {
                 Timber.e(it.toString())
@@ -90,9 +86,8 @@ class AlarmViewModel @Inject constructor(
             }.onSuccess {
                 if (it.data.status == "stranger")
                     _isRequestDeny.value = true
-                Timber.e("EEE : ${it.status.toString()}")
             }.onFailure {
-                Timber.e("EEE throwable : $it")
+                Timber.e(it.toString())
             }
         }
     }
@@ -109,7 +104,6 @@ class AlarmViewModel @Inject constructor(
             }.onSuccess { it ->
                 if (it?.map { it.cardId }?.contains(cardId) == true) viewEvent(DELETED_CARD)
                 else viewEvent(EXISTED_CARD)
-
             }.onFailure {
                 Timber.e(it.toString())
             }

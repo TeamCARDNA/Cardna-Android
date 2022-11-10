@@ -47,12 +47,10 @@ class MainCardFragment :
     private val loginViewModel: LoginViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Timber.e("bottomtest MainCardFragment onCreate")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.e("bottomtest MainCardFragment onViewCreated")
         initView()
     }
 
@@ -66,8 +64,6 @@ class MainCardFragment :
         setGradientSetting()
     }
 
-
-    //click listener
     private fun setClickListener() {
         setEditCardActivity()
         setAlarmActivity()
@@ -100,7 +96,6 @@ class MainCardFragment :
     }
 
     override fun onResume() {
-        Timber.e("bottomtest MainCardFragment onResume")
         super.onResume()
         initData()
         checkUserId()
@@ -110,7 +105,6 @@ class MainCardFragment :
         mainCardViewModel.setAlarmExist()
     }
 
-    //뿌려질 데이터
     private fun initData() {
         setAlarmExist()
         mainCardViewModel.isAlarmExist.observe(viewLifecycleOwner) {
@@ -135,13 +129,10 @@ class MainCardFragment :
                 friendCardEmpty.visibility = View.VISIBLE
                 llMaincardEditLayout.visibility = View.GONE
                 clMaincardAlarm.visibility =
-                    View.INVISIBLE  //TODO 뷰갱신될때 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
+                    View.INVISIBLE
                 llMaincardMypageIconContainer.visibility =
-                    View.VISIBLE  //TODO 뷰갱신될대 너무 깜빡여서 API통신전 처리하려고 다빈이 추가
+                    View.VISIBLE
                 ivMaincardGotoCardpackBackground.visibility = View.VISIBLE
-
-
-                //친구꺼 볼때
             }
 
             val name = arguments?.getString("name")
@@ -176,9 +167,7 @@ class MainCardFragment :
         }
     }
 
-    //adapter 관련 모음
     private fun initAdapter() {
-        Timber.d("init adapter")
         mainCardAdapter = MainCardAdapter() {
             setDetailActivity()
         }
@@ -256,7 +245,6 @@ class MainCardFragment :
         val friendId = arguments?.getInt("id", 0) ?: -1
         val relation = mainCardViewModel.relation.value.toString()
         val code = myPageViewModel.myPage.value?.code
-        Timber.d("code : $code")
         with(dialogBinding) {
             when (relation) {
                 MainCardActivity.UNKNOWN -> {
@@ -269,7 +257,6 @@ class MainCardFragment :
                     clRelationProgressingCancel.visibility = View.VISIBLE
                 }
             }
-            //enable : true -> white , enable : false -> dark_gray
             btnRelationConfirm.isSelected = relation != MainCardActivity.RESPONSE
             setConfirmDialog(dialog, dialogBinding, friendId)
             setCancelDialog(dialog, dialogBinding)
@@ -341,12 +328,9 @@ class MainCardFragment :
         }
     }
 
-    //TODO 나 다빈인데 마이페이지랑 연관된 로직이 필요해서 적어뒀엉 지우지 마라조~
     override fun onDestroyView() {
         myPageViewModel.settingBtnIsValid(true)
         myPageViewModel.refreshFriendList()
         super.onDestroyView()
-        Timber.e("bottomtest MainCardFragment onDestroyView")
     }
-
 }

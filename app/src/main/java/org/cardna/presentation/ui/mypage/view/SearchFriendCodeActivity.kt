@@ -2,7 +2,6 @@ package org.cardna.presentation.ui.mypage.view
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -10,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
-import land.sungbin.systemuicontroller.setSystemBarsColor
 import org.cardna.R
 import org.cardna.databinding.ActivitySearchFriendCodeBinding
 import org.cardna.presentation.base.BaseViewUtil
@@ -94,7 +92,6 @@ class SearchFriendCodeActivity :
         val confirmBtn = dialog.findViewById<Button>(R.id.tv_cancle_friend_request_dialog_confirm)
         val cancelBtn = dialog.findViewById<Button>(R.id.tv_cancle_friend_request_dialog_cancel)
 
-        //TODO 로그아웃 확인 누르면 서버 통신
         confirmBtn.setOnClickListener {
             myPageViewModel.cancelFriendRequest()
             dialog.dismiss()
@@ -131,13 +128,8 @@ class SearchFriendCodeActivity :
         startActivity(intent)
     }
 
-    override fun onBackPressed() {
-
-        super.onBackPressed()
-    }
-
     companion object {
-        const val RELATION_ONE = 1 //모르는 인간
+        const val RELATION_ONE = 1 //모르는 사람
         const val RELATION_TWO = 2 //친구
         const val RELATION_THREE = 3 //요청중
         const val RELATION_FOUR = 4 //친구수락 대기중
