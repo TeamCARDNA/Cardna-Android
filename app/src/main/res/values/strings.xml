@@ -207,7 +207,7 @@
     <string name="dialog_break_up_friend_confirm">확인</string>
     <string name="dialog_break_up_friend_cancle">취소</string>
 
-<!--    Dialog Apply Request-->
+    <!--    Dialog Apply Request-->
     <string name="dialog_apply_request">님이 친구를 신청했어요!</string>
     <string name="dialog_apply_accept">수락</string>
     <string name="dialog_apply_reject">거절</string>

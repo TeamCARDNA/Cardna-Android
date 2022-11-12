@@ -8,6 +8,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.amplitude.api.Amplitude
 import com.google.android.material.tabs.TabLayoutMediator
@@ -25,6 +26,7 @@ class CardPackFragment :
     BaseViewUtil.BaseFragment<FragmentCardPackBinding>(org.cardna.R.layout.fragment_card_pack) {
     private val cardPackViewModel: CardPackViewModel by activityViewModels()
     private lateinit var cardPackTabLayoutAdapter: CardPackTabLayoutAdapter // tabLayout 에 data 띄워주는 adapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
