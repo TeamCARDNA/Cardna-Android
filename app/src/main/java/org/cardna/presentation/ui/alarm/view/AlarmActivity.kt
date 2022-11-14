@@ -126,7 +126,7 @@ class AlarmActivity : BaseViewUtil.BaseAppCompatActivity<ActivityAlarmBinding>(R
                 binding.tvAlarmFriendViewAll.text = VIEW_ALL
                 adapter.loadStatus = true
             }
-            friendRequestAdapter.notifyDataSetChanged()  //리스트 크기 매번 변경해야함으로 사용
+            friendRequestAdapter.notifyDataSetChanged()
         }
     }
 

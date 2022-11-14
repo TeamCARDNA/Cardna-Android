@@ -116,7 +116,7 @@ class MyPageViewModel @Inject constructor(
                 it.apply {
                     _myPage.value = it
                     _friendCount.value = friendList.size.toString()
-                    _friendList.value = it.friendList  //제일처음 친구 리스트
+                    _friendList.value = it.friendList
                     if (_isInit.value == true) {
                         setQueryState(DEFAULT_STATE)
                         _isInit.value = false
