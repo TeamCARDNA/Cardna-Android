@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.amplitude.api.Amplitude
 import dagger.hilt.android.AndroidEntryPoint
 import org.cardna.R
 import org.cardna.databinding.FragmentCardMeBinding
+import org.cardna.presentation.MainActivity
 import org.cardna.presentation.base.BaseViewUtil
 import org.cardna.presentation.ui.cardpack.adapter.CardPackMeRecyclerViewAdapter
 import org.cardna.presentation.ui.cardpack.viewmodel.CardPackViewModel
@@ -56,6 +58,7 @@ class CardMeFragment : BaseViewUtil.BaseFragment<FragmentCardMeBinding>(R.layout
             rvCardme.adapter = cardMeAdapter
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             rvCardme.layoutManager = gridLayoutManager
+
             rvCardme.addItemDecoration(SpacesItemDecorationCardPack()) // 화면 비율 조정
             rvCardme.layoutManager?.onSaveInstanceState()
             rvCardme.smoothScrollToPosition(0)

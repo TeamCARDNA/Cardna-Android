@@ -1,13 +1,9 @@
 package org.cardna
 
 //import com.google.firebase.FirebaseApp
-import android.R.id
-import android.app.Activity
 import android.app.Application
-import android.os.Bundle
 import com.amplitude.api.Amplitude
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
@@ -19,10 +15,9 @@ import timber.log.Timber
 
 
 @HiltAndroidApp
-class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks {
+class CardNaApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        registerActivityLifecycleCallbacks(this)
         initPixelUtil()
         initLogger()
         initKakaoLogin()
@@ -40,11 +35,6 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
             val token = task.result
             CardNaRepository.fireBaseToken = token.toString()
         })
-    }
-
-    override fun onTerminate() {
-        super.onTerminate()
-        unregisterActivityLifecycleCallbacks(this)
     }
 
     private fun initPixelUtil() {
@@ -74,32 +64,7 @@ class CardNaApplication : Application(), Application.ActivityLifecycleCallbacks 
         Amplitude.getInstance().initialize(this, "00c76df54b75da7bd287245491b78c37").enableForegroundTracking(this)
     }
 
-    override fun onActivityCreated(p0: Activity, p1: Bundle?) {
-    }
-
-    override fun onActivityStarted(p0: Activity) {
-        isBackground = false
-    }
-
-    override fun onActivityResumed(p0: Activity) {
-        isBackground = false
-    }
-
-    override fun onActivityPaused(p0: Activity) {
-        isBackground = true
-    }
-
-    override fun onActivityStopped(p0: Activity) {
-    }
-
-    override fun onActivitySaveInstanceState(p0: Activity, p1: Bundle) {
-    }
-
-    override fun onActivityDestroyed(p0: Activity) {
-    }
-
     companion object {
         lateinit var pixelRatio: PixelRatio
-        var isBackground = false
     }
 }

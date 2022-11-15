@@ -82,7 +82,7 @@ class MyPageFragment : BaseViewUtil.BaseFragment<FragmentMyPageBinding>(R.layout
                     MyPageViewModel.EXIST_QUERY -> myPageFriendAdapter.submitList(myPageViewModel.friendList.value?.reversed())//쿼리있는데 왔다가 온경우 ->업데이트 없어야함
                     MyPageViewModel.DEFAULT_STATE ->
                         myPageViewModel.friendList.observe(viewLifecycleOwner) { friendList ->
-                            myPageFriendAdapter.submitList(friendList.reversed()) //가장 처음엔 운래 친구리스트
+                            myPageFriendAdapter.submitList(friendList.reversed())
                         }
                 }
             }

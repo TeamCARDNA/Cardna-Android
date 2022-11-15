@@ -36,7 +36,6 @@ class FriendRequestAdapter(
                     .into(ivItemAlarmFriendRequestProfile)
 
 
-                //친구 메인뷰로 이동
                 root.setOnClickListener {
                     clickListener(data)
                 }
@@ -62,14 +61,14 @@ class FriendRequestAdapter(
     }
 
     override fun getItemCount() =
-        if (loadStatus) {  //접힌 상태
+        if (loadStatus) {
             if (AlarmActivity.DEFAULT_COUNT > currentList.size) {
                 currentList.size
             } else {
                 AlarmActivity.DEFAULT_COUNT
             }
         } else {
-            currentList.size  //펼친 상태라면 모든 아이템을 그린다
+            currentList.size
         }
 
 

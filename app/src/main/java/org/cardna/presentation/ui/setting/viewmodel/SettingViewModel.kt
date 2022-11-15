@@ -22,7 +22,7 @@ import javax.inject.Inject
 class SettingViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
-
+    val click = MutableLiveData(1)
     private val _pushAlarmOn = MutableLiveData(CardNaRepository.pushAlarmOn)
     val pushAlarmOn: LiveData<Boolean> = _pushAlarmOn
 
@@ -115,7 +115,7 @@ class SettingViewModel @Inject constructor(
         _etcContent.value = etcContent
     }
 
-    fun deleteNaverUser(context: Context){
+    fun deleteNaverUser(context: Context) {
         val deleteUserCallback = object : OAuthLoginCallback {
             override fun onSuccess() {
                 Timber.d("naver 회원탈퇴 성공")
@@ -157,7 +157,12 @@ class SettingViewModel @Inject constructor(
 
         viewModelScope.launch {
             runCatching {
-                userRepository.deleteUser(RequestDeleteUserData(_secessionReasonList.value!!, _etcContent.value ?: ""))
+                userRepository.deleteUser(
+                    RequestDeleteUserData(
+                        _secessionReasonList.value!!,
+                        _etcContent.value ?: ""
+                    )
+                )
             }.onSuccess {
                 CardNaRepository.apply {
                     if (userSocial == "kakao") {
