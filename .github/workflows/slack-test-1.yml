@@ -1,22 +1,19 @@
-# file-path: /.github/workflows/slack-alarm-webhook.yml
-
-name: "슬랙 웹훅 테스c1"
-
+# .github/workflows/slack-alarm-webhook.yml
+name: "슬랙 PR 알림"
 on:
   pull_request:
-    types: [opened] # PR 등록시, slack에 자동 알림
-  pull_request_review:
-    types: [submitted]
-  pull_request_review_comment:
-    types: [created, edited]
-
+    types: [opened, reopened]
 jobs:
-  mention_notification:
-    name: Mention Notification
+  notify:
+    name: Notify Slack on PR
     runs-on: ubuntu-latest
     steps:
-      - uses: Laurenfrost/mention-to-slack@latest
-        with:
-          configuration-path: .github/mention-to-slack.yml
-          repo-token: ${{ secrets.GH_TOKEN }}
-          slack-webhook-url: ${{ secrets.DABIN_TEST1 }}
+      - name: Send Slack message
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"새 PR이 열렸습니다: ${PR_TITLE}\n${PR_URL}\"}" \
+            "${SLACK_WEBHOOK_URL}"
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          SLACK_WEBHOOK_URL: ${{ secrets.DABIN_TEST1 }}
