@@ -2,10 +2,7 @@
 name: "리뷰 미완료 리마인더"
 
 on:
-  schedule:
-  # schedule:
-  #   - cron: "10 1 * * *"   # 테스트 중 주석 처리 (운영 시 해제)
-  workflow_dispatch:        # 수동 실행도 가능
+  workflow_dispatch:        # 수동 실행 (테스트용)
 
 permissions:
   pull-requests: read
@@ -55,11 +52,11 @@ jobs:
             url=$(echo "$pr" | jq -r '.html_url')
             created=$(echo "$pr" | jq -r '.created_at')
 
-            # PR 생성 후 24시간 경과 여부 확인
+            # PR 생성 후 경과 여부 확인 (테스트: 60초, 운영: 86400)
             created_ts=$(date -u -d "$created" +%s)
             elapsed=$(( NOW - created_ts ))
-            if [ "$elapsed" -lt 60 ]; then //TODO 시간 바꾸기
-              echo "PR #$number 24시간 미경과 — 건너뜀"
+            if [ "$elapsed" -lt 60 ]; then   # TODO: 운영 시 86400(24시간)으로
+              echo "PR #$number 경과시간 미달 — 건너뜀"
               continue
             fi
 
@@ -68,11 +65,9 @@ jobs:
             [ -z "$requested" ] && continue
 
             # 이 PR을 대기 중인 각 리뷰어 항목에 누적
-            #   한 줄(line)에 PR 한 건: "PR: #번호 제목\n대상 브랜치: ...\n링크: url"
             line="PR: #${number} ${title}\n작성자: ${author}\n대상 브랜치: ${QA_TARGET_BRANCH}\n링크: ${url}"
             while read -r reviewer; do
               [ -z "$reviewer" ] && continue
-              # 기존 값에 구분선(\n\n) 붙여 누적
               if [ -n "${PENDING_BY_REVIEWER[$reviewer]:-}" ]; then
                 PENDING_BY_REVIEWER[$reviewer]="${PENDING_BY_REVIEWER[$reviewer]}\n\n${line}"
               else
