@@ -93,7 +93,8 @@ jobs:
             body="${PENDING_BY_REVIEWER[$reviewer]}"
             text="👀 리뷰 대기 알림\n\n${mention} 님, 리뷰 대기 중인 PR이 있습니다.\n\n${body}"
 
-            payload=$(jq -n --arg t "$text" '{text: $t}')
+            # \n 을 실제 개행으로 변환 후 JSON 문자열로 안전하게 감싸기
+            payload=$(printf '%b' "$text" | jq -Rs '{text: .}')
             curl -s -X POST -H 'Content-type: application/json' \
               --data "$payload" \
               "${SLACK_WEBHOOK_URL}"
