@@ -1,19 +1,107 @@
-# .github/workflows/slack-alarm-webhook.yml
-name: "슬랙 PR 알림"
+# .github/workflows/slack-review-reminder.yml
+name: "리뷰 미완료 리마인더"
+
 on:
-  pull_request:
-    types: [opened, reopened]
+  schedule:
+  # schedule:
+  #   - cron: "10 1 * * *"   # 테스트 중 주석 처리 (운영 시 해제)
+  workflow_dispatch:        # 수동 실행도 가능
+
+permissions:
+  pull-requests: read
+  contents: read
+
 jobs:
-  notify:
-    name: Notify Slack on PR
+  remind_reviewers:
+    name: Remind pending reviewers
     runs-on: ubuntu-latest
     steps:
-      - name: Send Slack message
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"새 PR이 열렸습니다: ${PR_TITLE}\n${PR_URL}\"}" \
-            "${SLACK_WEBHOOK_URL}"
+      - name: Send reminders
         env:
-          PR_TITLE: ${{ github.event.pull_request.title }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.DABIN_TEST1 }}
+          REPO: ${{ github.repository }}
+          QA_TARGET_BRANCH: ${{ vars.QA_TARGET_BRANCH }}   # 예: release/3.64.0, QA 아니면 비움
+        run: |
+          set -euo pipefail
+
+          # QA 대상 브랜치가 설정 안 돼 있으면 종료 (QA 기간 아님)
+          if [ -z "${QA_TARGET_BRANCH}" ]; then
+            echo "QA_TARGET_BRANCH 미설정 — QA 기간 아님, 종료"
+            exit 0
+          fi
+
+          # GitHub 아이디 -> Slack 멤버 ID 매핑
+          declare -A SLACK_ID_MAP=(
+            ["MinwooP"]="U04KKJFGJQP"
+            ["dabinkimm"]="U0XXXXXXXXX"
+          )
+
+          # 리뷰어(GitHub 아이디) -> 그 사람이 리뷰 대기 중인 PR 목록(누적 문자열)
+          declare -A PENDING_BY_REVIEWER
+
+          NOW=$(date -u +%s)
+
+          # 대상 브랜치로 머지 예정인 열린 PR 목록 조회
+          prs=$(gh api "repos/${REPO}/pulls?state=open&base=${QA_TARGET_BRANCH}&per_page=100")
+
+          # 1) 모든 PR을 돌면서 사람별로 대기 PR을 모은다
+          while read -r pr; do
+            [ -z "$pr" ] && continue
+
+            number=$(echo "$pr" | jq -r '.number')
+            title=$(echo "$pr" | jq -r '.title')
+            author=$(echo "$pr" | jq -r '.user.login')
+            url=$(echo "$pr" | jq -r '.html_url')
+            created=$(echo "$pr" | jq -r '.created_at')
+
+            # PR 생성 후 24시간 경과 여부 확인
+            created_ts=$(date -u -d "$created" +%s)
+            elapsed=$(( NOW - created_ts ))
+            if [ "$elapsed" -lt 60 ]; then //TODO 시간 바꾸기
+              echo "PR #$number 24시간 미경과 — 건너뜀"
+              continue
+            fi
+
+            # 현재 리뷰 요청이 살아있는(=아직 리뷰 안 한) 리뷰어 목록
+            requested=$(echo "$pr" | jq -r '.requested_reviewers[].login')
+            [ -z "$requested" ] && continue
+
+            # 이 PR을 대기 중인 각 리뷰어 항목에 누적
+            #   한 줄(line)에 PR 한 건: "PR: #번호 제목\n대상 브랜치: ...\n링크: url"
+            line="PR: #${number} ${title}\n작성자: ${author}\n대상 브랜치: ${QA_TARGET_BRANCH}\n링크: ${url}"
+            while read -r reviewer; do
+              [ -z "$reviewer" ] && continue
+              # 기존 값에 구분선(\n\n) 붙여 누적
+              if [ -n "${PENDING_BY_REVIEWER[$reviewer]:-}" ]; then
+                PENDING_BY_REVIEWER[$reviewer]="${PENDING_BY_REVIEWER[$reviewer]}\n\n${line}"
+              else
+                PENDING_BY_REVIEWER[$reviewer]="${line}"
+              fi
+            done <<< "$requested"
+          done <<< "$(echo "$prs" | jq -c '.[]')"
+
+          # 2) 사람별로 묶은 내용을 한 번씩 전송
+          if [ ${#PENDING_BY_REVIEWER[@]} -eq 0 ]; then
+            echo "리마인드할 대상 없음 — 종료"
+            exit 0
+          fi
+
+          for reviewer in "${!PENDING_BY_REVIEWER[@]}"; do
+            slack_id="${SLACK_ID_MAP[$reviewer]:-}"
+            if [ -n "$slack_id" ]; then
+              mention="<@${slack_id}>"
+            else
+              mention="@${reviewer}"
+            fi
+
+            body="${PENDING_BY_REVIEWER[$reviewer]}"
+            text="👀 리뷰 대기 알림\n\n${mention} 님, 리뷰 대기 중인 PR이 있습니다.\n\n${body}"
+
+            payload=$(jq -n --arg t "$text" '{text: $t}')
+            curl -s -X POST -H 'Content-type: application/json' \
+              --data "$payload" \
+              "${SLACK_WEBHOOK_URL}"
+
+            echo "리뷰어 $reviewer 알림 전송 완료"
+          done
