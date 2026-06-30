@@ -1,8 +1,10 @@
 # .github/workflows/slack-review-reminder.yml
-name: "리뷰 미완료 리마인더"
+name: "🛠️ 스케쥴: 리뷰 리마인더"
 
 on:
-  workflow_dispatch:        # 수동 실행(테스트용)
+  schedule:
+    - cron: "10 1 * * *"   # UTC 01:10 = KST 10:10 (매일)
+  workflow_dispatch:
 
 permissions:
   pull-requests: read
@@ -18,7 +20,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.DABIN_TEST1 }}
           REPO: ${{ github.repository }}
-          QA_TARGET_BRANCH: ${{ vars.QA_TARGET_BRANCH }}   # 예: release/3.64.0, QA 아니면 비움
+          QA_TARGET_BRANCH: ${{ vars.ref }}
         run: |
           set -euo pipefail
 
@@ -34,7 +36,7 @@ jobs:
             ["dabinkimm"]="U0XXXXXXXXX"
           )
 
-          # 리뷰어(GitHub 아이디) -> 그 사람이 리뷰 대기 중인 PR 목록(누적 문자열)
+          # 리뷰어(GitHub 아이디)
           declare -A PENDING_BY_REVIEWER
 
           NOW=$(date -u +%s)
@@ -52,11 +54,11 @@ jobs:
             url=$(echo "$pr" | jq -r '.html_url')
             created=$(echo "$pr" | jq -r '.created_at')
 
-            # PR 생성 후 경과 여부 확인 (테스트: 60초, 운영: 86400)
+            # PR 생성 후 24시간 경과 여부 확인
             created_ts=$(date -u -d "$created" +%s)
             elapsed=$(( NOW - created_ts ))
-            if [ "$elapsed" -lt 60 ]; then   # TODO: 운영 시 86400(24시간)으로
-              echo "PR #$number 경과시간 미달 — 건너뜀"
+            if [ "$elapsed" -lt 86400 ]; then
+              echo "PR #$number 24시간 미경과 — 건너뜀"
               continue
             fi
 
