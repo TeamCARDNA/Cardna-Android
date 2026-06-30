@@ -2,7 +2,7 @@
 name: "리뷰 미완료 리마인더"
 
 on:
-  workflow_dispatch:        # 수동 실행 (테스트용)
+  workflow_dispatch:        # 수동 실행(테스트용)
 
 permissions:
   pull-requests: read
@@ -78,7 +78,7 @@ jobs:
 
           # 2) 사람별로 묶은 내용을 한 번씩 전송
           if [ ${#PENDING_BY_REVIEWER[@]} -eq 0 ]; then
-            echo "리마인드할 대상 없음 — 종료"
+            echo "리마인드 할 대상 없음 — 종료"
             exit 0
           fi
 
