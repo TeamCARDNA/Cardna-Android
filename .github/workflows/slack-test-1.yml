@@ -57,7 +57,7 @@ jobs:
             # PR 생성 후 24시간 경과 여부 확인
             created_ts=$(date -u -d "$created" +%s)
             elapsed=$(( NOW - created_ts ))
-            if [ "$elapsed" -lt 86400 ]; then
+            if [ "$elapsed" -lt 60 ]; then
               echo "PR #$number 24시간 미경과 — 건너뜀"
               continue
             fi
