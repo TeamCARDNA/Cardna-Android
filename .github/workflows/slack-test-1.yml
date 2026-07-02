@@ -3,7 +3,7 @@ name: "🛠️ 스케쥴: 리뷰 리마인더"
 
 on:
   schedule:
-  - cron: "50 1 * * *"    # UTC 02:00 = KST 11:00 (매일)
+  - cron: "10 2 * * *"    # UTC 02:00 = KST 11:00 (매일)
   workflow_dispatch:
 
 permissions:
