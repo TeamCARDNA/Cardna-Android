@@ -3,7 +3,7 @@ name: "🛠️ 스케쥴: 리뷰 리마인더"
 
 on:
   schedule:
-  - cron: "10 2 * * *"    # UTC 02:00 = KST 11:00 (매일)
+    - cron: "10 2 * * *"    # UTC 02:00 = KST 11:00 (매일)
   workflow_dispatch:
 
 permissions:
@@ -56,11 +56,11 @@ jobs:
             [ -z "$requested" ] && continue
 
             # 이 PR을 대기 중인 각 리뷰어 항목에 누적
-            line="PR: #${number} ${title}\n작성자: ${author}\n대상 브랜치: ${QA_TARGET_BRANCH}\n링크: ${url}"
+            line="PR: #${number} ${title}"$'\n'"작성자: ${author}"$'\n'"대상 브랜치: ${QA_TARGET_BRANCH}"$'\n'"링크: ${url}"
             while read -r reviewer; do
               [ -z "$reviewer" ] && continue
               if [ -n "${PENDING_BY_REVIEWER[$reviewer]:-}" ]; then
-                PENDING_BY_REVIEWER[$reviewer]="${PENDING_BY_REVIEWER[$reviewer]}\n\n${line}"
+                PENDING_BY_REVIEWER[$reviewer]="${PENDING_BY_REVIEWER[$reviewer]}"$'\n\n'"${line}"
               else
                 PENDING_BY_REVIEWER[$reviewer]="${line}"
               fi
@@ -82,10 +82,9 @@ jobs:
             fi
 
             body="${PENDING_BY_REVIEWER[$reviewer]}"
-            text="👀 리뷰 대기 알림\n\n${mention} 님, 리뷰 대기 중인 PR이 있습니다.\n\n${body}"
+            text="👀 리뷰 대기 알림"$'\n\n'"${mention} 님, 리뷰 대기 중인 PR이 있습니다."$'\n\n'"${body}"
 
-            # \n 을 실제 개행으로 변환 후 JSON 문자열로 안전하게 감싸기
-            payload=$(printf '%b' "$text" | jq -Rs '{text: .}')
+            payload=$(jq -n --arg text "$text" '{text: $text}')
             curl -s -X POST -H 'Content-type: application/json' \
               --data "$payload" \
               "${SLACK_WEBHOOK_URL}"
